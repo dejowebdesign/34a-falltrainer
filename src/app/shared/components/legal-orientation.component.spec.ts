@@ -27,6 +27,7 @@ describe('LegalOrientationComponent (Lernhilfe)', () => {
     expect(text).toContain('§ 123 StGB – Hausfriedensbruch');
     expect(text).toContain('§ 858 BGB – Verbotene Eigenmacht');
     expect(text).toContain('§ 861 BGB – Anspruch wegen Besitzentziehung');
+    expect(text).toContain('§ 862 BGB – Anspruch wegen Besitzstörung');
     expect(text).toContain('§ 127 Abs. 1 StPO – Vorläufige Festnahme');
     expect(text).toContain('§ 859 BGB – Selbsthilfe des Besitzers');
     expect(text).toContain('§ 860 BGB – Selbsthilfe des Besitzdieners');
@@ -45,6 +46,17 @@ describe('LegalOrientationComponent (Lernhilfe)', () => {
   it('zeigt die Gefahrenbegriffe ohne erzwungenen Paragraphen', () => {
     expect(text).toContain('drohende Gefahr');
     expect(text).toContain('gegenwärtige Gefahr');
+  });
+
+  it('verbindet die oberen Kästen mit "ODER" und zeigt Pfeile nach unten', () => {
+    const element = fixture.nativeElement as HTMLElement;
+    const oder = element.querySelectorAll('.areas-row .oder');
+    expect(oder.length).toBe(2);
+    for (const node of Array.from(oder)) {
+      expect((node.textContent ?? '').trim().toUpperCase()).toBe('ODER');
+    }
+    const arrows = element.querySelectorAll('.areas-row .area-arrow');
+    expect(arrows.length).toBe(3);
   });
 
   it('enthält keine Merksätze (kein "≠" und keine Automatismus-Formulierungen)', () => {

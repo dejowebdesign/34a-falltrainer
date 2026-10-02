@@ -33,33 +33,37 @@ interface OrientationArea {
           <span class="diagram-index">1</span>
           Was liegt rechtlich vor?
         </h3>
-        <div class="areas">
-          @for (area of classificationAreas; track area.key) {
-            <div class="area">
-              <div class="area-head">
-                <mat-icon aria-hidden="true">{{ area.icon }}</mat-icon>
-                <span>{{ area.label }}</span>
+        <div class="areas-row">
+          @for (area of classificationAreas; track area.key; let last = $last) {
+            <div class="area-col">
+              <div class="area">
+                <div class="area-head">
+                  <mat-icon aria-hidden="true">{{ area.icon }}</mat-icon>
+                  <span>{{ area.label }}</span>
+                </div>
+                <ul class="entries">
+                  @for (norm of normsFor(area); track norm.id) {
+                    <li class="entry">
+                      <span class="norm">{{ formatNorm(norm) }}</span>
+                      @if (formatFachlicheEinordnung(norm); as einordnung) {
+                        <span class="einordnung">{{ einordnung }}</span>
+                      }
+                    </li>
+                  }
+                  @for (concept of area.concepts; track concept) {
+                    <li class="entry concept">{{ concept }}</li>
+                  }
+                </ul>
               </div>
-              <ul class="entries">
-                @for (norm of normsFor(area); track norm.id) {
-                  <li class="entry">
-                    <span class="norm">{{ formatNorm(norm) }}</span>
-                    @if (formatFachlicheEinordnung(norm); as einordnung) {
-                      <span class="einordnung">{{ einordnung }}</span>
-                    }
-                  </li>
-                }
-                @for (concept of area.concepts; track concept) {
-                  <li class="entry concept">{{ concept }}</li>
-                }
-              </ul>
+              <div class="area-arrow" aria-hidden="true">
+                <mat-icon>south</mat-icon>
+              </div>
             </div>
+            @if (!last) {
+              <div class="oder" aria-hidden="true">ODER</div>
+            }
           }
         </div>
-      </div>
-
-      <div class="flow" aria-hidden="true">
-        <mat-icon>south</mat-icon>
       </div>
 
       <div class="diagram">
@@ -132,6 +136,49 @@ interface OrientationArea {
           grid-template-columns: repeat(3, 1fr);
         }
       }
+      /* Erste Reihe: Kästen + mittiges "ODER" + Pfeil unter jedem Kasten. */
+      .areas-row {
+        display: grid;
+        gap: 0.6rem;
+        align-items: stretch;
+        grid-template-columns: 1fr;
+      }
+      @media (min-width: 768px) {
+        .areas-row {
+          grid-template-columns: 1fr auto 1fr auto 1fr;
+          gap: 0.85rem;
+        }
+      }
+      .area-col {
+        display: flex;
+        flex-direction: column;
+        gap: 0.35rem;
+        min-width: 0;
+      }
+      .area-col .area {
+        flex: 1;
+      }
+      .oder {
+        align-self: center;
+        justify-self: center;
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--ft-muted);
+        padding: 0.15rem 0;
+      }
+      .area-arrow {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: var(--ft-primary);
+      }
+      .area-arrow mat-icon {
+        font-size: 24px;
+        width: 24px;
+        height: 24px;
+      }
       .area {
         border: 1px solid var(--ft-border);
         border-radius: 10px;
@@ -178,16 +225,6 @@ interface OrientationArea {
         font-size: 0.8rem;
         font-style: italic;
       }
-      .flow {
-        display: flex;
-        justify-content: center;
-        color: var(--ft-primary);
-      }
-      .flow mat-icon {
-        font-size: 26px;
-        width: 26px;
-        height: 26px;
-      }
     `,
   ],
 })
@@ -206,7 +243,7 @@ export class LegalOrientationComponent {
       key: 'privatrecht',
       label: 'Privatrecht',
       icon: 'handshake',
-      normIds: ['bgb-858', 'bgb-861'],
+      normIds: ['bgb-858', 'bgb-861', 'bgb-862'],
       concepts: [],
     },
     {
