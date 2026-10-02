@@ -1,6 +1,7 @@
 import { Directive, OnInit, computed, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Scenario, StageOption } from '../../core/models';
+import { LEGAL_LEVEL_LABELS } from '../../core/data/legal-classifications.data';
 import { CaseStateService } from '../../core/services/case-state.service';
 import { LegalKnowledgeService } from '../../core/services/legal-knowledge.service';
 import { ScenarioService } from '../../core/services/scenario.service';
@@ -48,6 +49,9 @@ export abstract class StagePageBase implements OnInit {
     }
     return labels;
   });
+
+  /** Anzeigenamen der Rechtsgebiete für Stufe 2. */
+  readonly legalLevelLabels = LEGAL_LEVEL_LABELS;
 
   readonly nextLabel = computed(() => {
     if (this.stage === 3) return 'Zum Ergebnis';

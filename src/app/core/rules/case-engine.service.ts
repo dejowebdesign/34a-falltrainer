@@ -70,7 +70,9 @@ export class CaseEngineService {
       verdict,
       optionVerdicts,
       correctCount,
+      partialCount,
       wrongCount,
+      missedCount: missedCorrect,
       explanation,
     };
   }
@@ -126,6 +128,23 @@ export class CaseEngineService {
       .map((option) => option.misconception as string);
   }
 
+  /**
+   * Ermittelt die Denkfehler einer konkreten Stufe aus dem Gesamtergebnis.
+   * Dadurch erscheinen Denkfehler auf der Ergebnisseite in jeder Stufe und
+   * nicht nur in Stufe 3.
+   */
+  misconceptionsForStage(scenario: Scenario, stage: 1 | 2 | 3, selectedOptionIds: string[]): string[] {
+    const options = this.optionsForStage(scenario, stage);
+    return this.collectMisconceptions(options, selectedOptionIds);
+  }
+
+  /** Optionen einer Stufe. */
+  private optionsForStage(scenario: Scenario, stage: 1 | 2 | 3): StageOption[] {
+    if (stage === 1) return scenario.stageOne.options;
+    if (stage === 2) return scenario.stageTwo.options;
+    return scenario.stageThree.options;
+  }
+
   /** Gesamtbewertung: eine falsche Stufe führt zu FALSCH. */
   private aggregateVerdict(verdicts: OptionVerdict[]): OptionVerdict {
     if (verdicts.some((verdict) => verdict === 'FALSCH')) {
@@ -138,8 +157,11 @@ export class CaseEngineService {
   }
 
   /**
-   * Punktwert 0–100. Richtig erkannte Optionen werden belohnt, falsche
-   * gewählte Optionen abgezogen. Fehlende Daten führen nicht zu Punkten.
+   * Punktwert 0–100.
+   *
+   * Richtig erkannte Optionen zählen voll, teilweise richtige zur Hälfte,
+   * falsch gewählte und übersehene richtige Optionen werden abgezogen.
+   * Fehlende Daten (keine korrekten Optionen) führen nicht zu Punkten.
    */
   private computeScore(scenario: Scenario, evaluations: StageEvaluation[]): number {
     const totalCorrect =
@@ -152,9 +174,11 @@ export class CaseEngineService {
     }
 
     const hit = evaluations.reduce((sum, entry) => sum + entry.correctCount, 0);
+    const partial = evaluations.reduce((sum, entry) => sum + entry.partialCount, 0);
     const wrong = evaluations.reduce((sum, entry) => sum + entry.wrongCount, 0);
+    const missed = evaluations.reduce((sum, entry) => sum + entry.missedCount, 0);
 
-    const raw = ((hit - wrong) / totalCorrect) * 100;
+    const raw = ((hit + 0.5 * partial - wrong - missed) / totalCorrect) * 100;
     return Math.max(0, Math.min(100, Math.round(raw)));
   }
 

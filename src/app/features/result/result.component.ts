@@ -5,6 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { CaseResult, LegalNorm, Scenario } from '../../core/models';
+import { CaseEngineService } from '../../core/rules/case-engine.service';
 import { CaseStateService } from '../../core/services/case-state.service';
 import { LegalKnowledgeService } from '../../core/services/legal-knowledge.service';
 import { ScenarioService } from '../../core/services/scenario.service';
@@ -83,20 +84,21 @@ import { VerdictBadgeComponent } from '../../shared/components/verdict-badge.com
                 <mat-card-header>
                   <mat-card-title>Stufe {{ evaluation.stage }}</mat-card-title>
                   <mat-card-subtitle>
-                    {{ evaluation.correctCount }} richtig · {{ evaluation.wrongCount }} falsch
+                    {{ evaluation.correctCount }} richtig · {{ evaluation.partialCount }} teilweise ·
+                    {{ evaluation.wrongCount }} falsch
                   </mat-card-subtitle>
                 </mat-card-header>
                 <mat-card-content>
                   <app-verdict-badge [verdict]="evaluation.verdict" />
                   <p class="stage-explanation">{{ evaluation.explanation }}</p>
-                  @if (misconceptions().length && evaluation.stage === 3) {
+                  @if (misconceptionsForStage(evaluation.stage).length) {
                     <div class="misconception-box">
                       <h4>
                         <mat-icon aria-hidden="true">lightbulb</mat-icon>
                         Typische Denkfehler
                       </h4>
                       <ul>
-                        @for (item of misconceptions(); track item) {
+                        @for (item of misconceptionsForStage(evaluation.stage); track item) {
                           <li>{{ item }}</li>
                         }
                       </ul>
@@ -323,21 +325,10 @@ export class ResultComponent implements OnInit {
   private readonly scenarios = inject(ScenarioService);
   private readonly state = inject(CaseStateService);
   private readonly knowledge = inject(LegalKnowledgeService);
+  private readonly engine = inject(CaseEngineService);
 
   readonly scenario = signal<Scenario | undefined>(undefined);
   readonly caseResult = signal<CaseResult | undefined>(undefined);
-
-  readonly misconceptions = computed(() => {
-    const scenario = this.scenario();
-    if (!scenario) {
-      return [];
-    }
-    return [
-      ...this.collectFor(scenario.stageOne.options),
-      ...this.collectFor(scenario.stageTwo.options),
-      ...this.collectFor(scenario.stageThree.options),
-    ];
-  });
 
   readonly usedNorms = computed<LegalNorm[]>(() => {
     const scenario = this.scenario();
@@ -366,25 +357,22 @@ export class ResultComponent implements OnInit {
       this.router.navigate(['/scenarios']);
       return;
     }
+    // Ohne Bearbeitungszustand (z. B. nach einem Neuladen) würde die Auswertung
+    // sonst 0 % zeigen; dann zurück zum Fallbeginn statt ein falsches Ergebnis.
+    if (this.state.progress()?.scenarioId !== id) {
+      this.router.navigate(['/scenarios', id, 'stage', 1]);
+      return;
+    }
     this.scenario.set(scenario);
-    this.state.start(id);
     this.caseResult.set(this.state.evaluate());
   }
 
-  private collectFor(options: { id: string; verdict: string; misconception?: string }[]): string[] {
-    const selected = this.state.getSelection(this.currentStageFor(options));
-    return options
-      .filter((option) => selected.includes(option.id) && option.verdict !== 'RICHTIG' && option.misconception)
-      .map((option) => option.misconception as string);
-  }
-
-  private currentStageFor(options: { id: string }[]): 1 | 2 | 3 {
+  /** Denkfehler einer Stufe aus dem Gesamtergebnis. */
+  misconceptionsForStage(stage: 1 | 2 | 3): string[] {
     const scenario = this.scenario();
     if (!scenario) {
-      return 1;
+      return [];
     }
-    if (scenario.stageOne.options === options) return 1;
-    if (scenario.stageTwo.options === options) return 2;
-    return 3;
+    return this.engine.misconceptionsForStage(scenario, stage, this.state.getSelection(stage));
   }
 }

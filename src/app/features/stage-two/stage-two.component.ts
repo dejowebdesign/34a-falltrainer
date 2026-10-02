@@ -22,6 +22,7 @@ import { StageQuizComponent } from '../../shared/components/stage-quiz.component
           [submitted]="submitted()"
           [evaluation]="evaluation()"
           [normLabels]="normLabels()"
+          [legalLevelLabels]="legalLevelLabels"
           [nextLabel]="nextLabel()"
           (toggleOption)="toggleOption($event)"
           (selectOption)="toggleOption($event)"

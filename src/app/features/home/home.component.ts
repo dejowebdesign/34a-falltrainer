@@ -4,10 +4,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { ScenarioService } from '../../core/services/scenario.service';
+import { BehaviorReferenceComponent } from '../../shared/components/behavior-reference.component';
 
 @Component({
   selector: 'app-home',
-  imports: [RouterLink, MatButtonModule, MatCardModule, MatIconModule],
+  imports: [RouterLink, MatButtonModule, MatCardModule, MatIconModule, BehaviorReferenceComponent],
   template: `
     <section class="hero">
       <div class="ft-container hero-inner">
@@ -83,7 +84,11 @@ import { ScenarioService } from '../../core/services/scenario.service';
       <p class="source-note">
         Fachliche Grundlage: §34a Legal Knowledge Base V5.3.1 (Rechtsstand 01.10.2026). Amtliche
         Gesetzestexte aus „Gesetze im Internet“ (Bundesministerium der Justiz / Bundesamt für Justiz).
+        Didaktische Grundlage der drei Stufen: Unterlage „Fallbeispiele – Themenvertiefung“
+        (30.09.2026).
       </p>
+
+      <app-behavior-reference />
     </section>
   `,
   styles: [

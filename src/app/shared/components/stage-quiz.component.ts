@@ -71,7 +71,12 @@ import { VerdictBadgeComponent } from './verdict-badge.component';
                 }
               </div>
               <div class="option-body">
-                <p class="option-text">{{ option.text }}</p>
+                <p class="option-text">
+                  @if (levelLabel(option); as level) {
+                    <span class="level-chip">{{ level }}</span>
+                  }
+                  {{ option.text }}
+                </p>
                 @if (submitted()) {
                   <div class="option-feedback">
                     <app-verdict-badge [verdict]="option.verdict" />
@@ -96,9 +101,18 @@ import { VerdictBadgeComponent } from './verdict-badge.component';
         </div>
 
         @if (submitted() && evaluation(); as evalResult) {
-          <div class="stage-summary" [class]="'summary-' + evalResult.verdict">
+          <div
+            class="stage-summary"
+            [class]="'summary-' + evalResult.verdict"
+            role="status"
+            aria-live="polite"
+          >
             <app-verdict-badge [verdict]="evalResult.verdict" />
             <p>{{ evalResult.explanation }}</p>
+            <p class="score-line">
+              {{ evalResult.correctCount }} richtig · {{ evalResult.partialCount }} teilweise richtig ·
+              {{ evalResult.wrongCount }} falsch · {{ evalResult.missedCount }} übersehen
+            </p>
           </div>
         }
       </mat-card-content>
@@ -180,6 +194,18 @@ import { VerdictBadgeComponent } from './verdict-badge.component';
         margin: 0;
         font-weight: 500;
       }
+      .level-chip {
+        display: inline-block;
+        margin-right: 0.45rem;
+        padding: 0.1rem 0.5rem;
+        border-radius: 999px;
+        background: var(--ft-primary-soft);
+        color: var(--ft-primary);
+        font-size: 0.72rem;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+        vertical-align: middle;
+      }
       .option-feedback {
         margin-top: 0.5rem;
         display: grid;
@@ -222,6 +248,10 @@ import { VerdictBadgeComponent } from './verdict-badge.component';
       .stage-summary p {
         margin: 0;
       }
+      .score-line {
+        color: var(--ft-muted);
+        font-size: 0.85rem;
+      }
       .summary-RICHTIG {
         background: #f0fdf4;
         border: 1px solid #86efac;
@@ -248,6 +278,8 @@ export class StageQuizComponent {
   readonly nextLabel = input<string>('Weiter');
   /** Auflösung von Norm-IDs zu Kurzbezeichnungen. */
   readonly normLabels = input<Record<string, string>>({});
+  /** Auflösung der Rechtsgebiete (Stufe 2) zu Anzeigenamen. */
+  readonly legalLevelLabels = input<Record<string, string>>({});
 
   readonly toggleOption = output<string>();
   readonly selectOption = output<string>();
@@ -269,5 +301,12 @@ export class StageQuizComponent {
   normsFor(option: StageOption): string[] {
     const labels = this.normLabels();
     return (option.normIds ?? []).map((id) => labels[id]).filter((label): label is string => !!label);
+  }
+
+  levelLabel(option: StageOption): string | undefined {
+    if (!option.legalLevel) {
+      return undefined;
+    }
+    return this.legalLevelLabels()[option.legalLevel];
   }
 }
