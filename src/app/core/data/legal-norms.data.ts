@@ -552,23 +552,6 @@ export const LEGAL_NORMS: LegalNorm[] = [
       '§127 Abs. 1 StPO macht eine Sicherheitskraft nicht zur Polizei. Nicht jeder Verdacht rechtfertigt automatisch eine Festnahme. Auch bei bestehender Befugnis ist die Durchführung auf das erforderliche Maß zu begrenzen.',
   },
   {
-    id: 'stpo-128',
-    law: 'StPO',
-    paragraph: '§ 128',
-    title: 'Vorführung bei vorläufiger Festnahme',
-    officialText:
-      '(1) Der Festgenommene ist, sofern er nicht wieder in Freiheit gesetzt wird, unverzüglich, spätestens am Tage nach der Festnahme, dem Richter bei dem Amtsgericht, in dessen Bezirk er festgenommen worden ist, vorzuführen. Der Richter vernimmt den Vorgeführten gemäß § 115 Abs. 3. (2) Hält der Richter die Festnahme nicht für gerechtfertigt oder ihre Gründe für beseitigt, so ordnet er die Freilassung an.',
-    explanation:
-      '§128 StPO regelt, was nach einer vorläufigen Festnahme geschieht, wenn die festgenommene Person nicht wieder freigelassen wird.',
-    mnemonic: '§127 = Festnahme. §128 = Was danach mit dem Festgenommenen geschieht.',
-    area: 'Strafprozessrecht',
-    nature: 'BEFUGNIS',
-    source: 'https://www.gesetze-im-internet.de/stpo/__128.html',
-    verificationStatus: 'VERIFIED_OFFICIAL_TEXT',
-    securityContext:
-      'Die private Sicherheitskraft wird durch §127 StPO nicht zum Richter oder zur Polizei. Die weitere strafprozessuale Behandlung richtet sich nach den gesetzlichen Zuständigkeiten.',
-  },
-  {
     id: 'stpo-374',
     law: 'StPO',
     paragraph: '§ 374',

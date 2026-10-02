@@ -178,7 +178,7 @@ export const SCENARIOS: Scenario[] = [
         reasoning:
           'Diebstahl ≠ automatisch Festhaltebefugnis. Der Tatverdacht ist von der Befugnis zu trennen; §985 BGB ist ein Anspruch, keine Gewaltbefugnis.',
         limits:
-          'Nur vorläufige Festnahme, Durchführung auf das erforderliche Maß begrenzen, Verhältnismäßigkeit beachten; bei Nichtfreilassung Vorführung nach §128 StPO.',
+          'Nur vorläufige Festnahme, Durchführung auf das erforderliche Maß begrenzen, Verhältnismäßigkeit beachten; nach der Festnahme unverzüglich die Polizei hinzuziehen.',
       },
     },
   },

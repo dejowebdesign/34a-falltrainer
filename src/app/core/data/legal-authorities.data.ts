@@ -24,7 +24,7 @@ export const LEGAL_AUTHORITIES: LegalAuthority[] = [
     limits: [
       'Nur vorläufige Festnahme – keine Entscheidung über Untersuchungshaft',
       'Durchführung auf das erforderliche Maß begrenzen (Festhalten, Fixieren, körperliche Gewalt unterscheiden)',
-      'Bei Nichtfreilassung: unverzügliche Vorführung nach §128 StPO',
+      'Nach der Festnahme unverzüglich die Polizei hinzuziehen und die Person übergeben',
     ],
     proportionality:
       'Auch bei bestehender Festnahmebefugnis gilt: geeignet, erforderlich und angemessen. Eine bestehende Festnahmebefugnis bedeutet nicht automatisch, dass jedes Mittel zulässig ist.',
