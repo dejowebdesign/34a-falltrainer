@@ -80,15 +80,15 @@ export interface ProgressStep {
       }
       .step.active .marker {
         background: var(--ft-primary);
-        color: #fff;
+        color: var(--ft-on-primary);
       }
       .step.done {
         color: var(--ft-ok);
-        border-color: #bbf7d0;
+        border-color: var(--ft-ok-border);
       }
       .step.done .marker {
         background: var(--ft-ok);
-        color: #fff;
+        color: var(--ft-on-primary);
       }
     `,
   ],

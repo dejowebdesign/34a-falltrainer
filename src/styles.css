@@ -1,17 +1,94 @@
 @import 'tailwindcss';
 
-:root {
+:root,
+html.light {
   --ft-bg: #f4f6fb;
   --ft-surface: #ffffff;
+  --ft-surface-2: #f8fafc;
   --ft-primary: #1e3a8a;
   --ft-primary-soft: #e8eefc;
   --ft-accent: #0f766e;
   --ft-warn: #b45309;
+  --ft-warn-surface: #fffbeb;
+  --ft-warn-border: #fcd34d;
+  --ft-warn-text: #78350f;
   --ft-danger: #b91c1c;
+  --ft-danger-surface: #fef2f2;
+  --ft-danger-border: #fca5a5;
+  --ft-danger-text: #7f1d1d;
   --ft-ok: #15803d;
+  --ft-ok-surface: #f0fdf4;
+  --ft-ok-border: #86efac;
+  --ft-ok-text: #14532d;
+  --ft-partial: #b45309;
+  --ft-partial-surface: #fef3c7;
+  --ft-partial-border: #fcd34d;
+  --ft-partial-text: #78350f;
   --ft-text: #0f172a;
   --ft-muted: #52627a;
   --ft-border: #dbe2ef;
+  --ft-on-primary: #ffffff;
+  --ft-hero-from: #1e3a8a;
+  --ft-hero-to: #0f766e;
+  --ft-header: #1e3a8a;
+  --ft-shadow: 0 1px 3px rgba(15, 23, 42, 0.18);
+
+  /* Material-System-Tokens an das helle Farbschema koppeln. */
+  --mat-sys-surface: #ffffff;
+  --mat-sys-surface-container-low: #f8fafc;
+  --mat-sys-surface-container: #eef2f9;
+  --mat-sys-surface-container-high: #e6ecf7;
+  --mat-sys-surface-container-highest: #dde5f2;
+  --mat-sys-surface-container-lowest: #ffffff;
+  --mat-sys-on-surface: #0f172a;
+  --mat-sys-on-surface-variant: #52627a;
+  --mat-sys-outline: #b7c1d4;
+  --mat-sys-outline-variant: #dbe2ef;
+}
+
+html.dark {
+  --ft-bg: #0b1220;
+  --ft-surface: #131c2e;
+  --ft-surface-2: #0f1828;
+  --ft-primary: #8fb0ff;
+  --ft-primary-soft: #1d2b47;
+  --ft-accent: #2dd4bf;
+  --ft-warn: #fbbf24;
+  --ft-warn-surface: #2a2410;
+  --ft-warn-border: #7c5e12;
+  --ft-warn-text: #fde68a;
+  --ft-danger: #f87171;
+  --ft-danger-surface: #2a1416;
+  --ft-danger-border: #7f2a2a;
+  --ft-danger-text: #fecaca;
+  --ft-ok: #4ade80;
+  --ft-ok-surface: #10261a;
+  --ft-ok-border: #256b3e;
+  --ft-ok-text: #bbf7d0;
+  --ft-partial: #fbbf24;
+  --ft-partial-surface: #2a2410;
+  --ft-partial-border: #7c5e12;
+  --ft-partial-text: #fde68a;
+  --ft-text: #e6ebf5;
+  --ft-muted: #9aa8c0;
+  --ft-border: #2a3550;
+  --ft-on-primary: #08101f;
+  --ft-hero-from: #101a30;
+  --ft-hero-to: #0d2b33;
+  --ft-header: #0e1729;
+  --ft-shadow: 0 1px 3px rgba(0, 0, 0, 0.55);
+
+  /* Material-System-Tokens an das dunkle Farbschema koppeln. */
+  --mat-sys-surface: #131c2e;
+  --mat-sys-surface-container-low: #0f1828;
+  --mat-sys-surface-container: #162034;
+  --mat-sys-surface-container-high: #1b2740;
+  --mat-sys-surface-container-highest: #212f4c;
+  --mat-sys-surface-container-lowest: #0b1220;
+  --mat-sys-on-surface: #e6ebf5;
+  --mat-sys-on-surface-variant: #9aa8c0;
+  --mat-sys-outline: #3a4a6b;
+  --mat-sys-outline-variant: #2a3550;
 }
 
 html,
@@ -21,6 +98,7 @@ body {
   background: var(--ft-bg);
   color: var(--ft-text);
   font-family: Roboto, 'Helvetica Neue', 'Segoe UI', Arial, sans-serif;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 body {

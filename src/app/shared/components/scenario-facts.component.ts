@@ -60,12 +60,12 @@ import { Scenario } from '../../core/models';
         align-items: flex-start;
         padding: 0.6rem 0.75rem;
         border-radius: 10px;
-        background: #f8fafc;
+        background: var(--ft-surface-2);
         border: 1px solid var(--ft-border);
       }
       .facts li.relevant {
-        background: #eff6ff;
-        border-color: #bfdbfe;
+        background: var(--ft-primary-soft);
+        border-color: var(--ft-primary);
       }
       .fact-icon {
         font-size: 18px;
