@@ -31,19 +31,19 @@ import { OptionVerdict } from '../../core/models';
         height: 16px;
       }
       .badge-ok {
-        background: #dcfce7;
-        color: #14532d;
-        border-color: #86efac;
+        background: var(--ft-ok-surface);
+        color: var(--ft-ok-text);
+        border-color: var(--ft-ok-border);
       }
       .badge-partial {
-        background: #fef3c7;
-        color: #78350f;
-        border-color: #fcd34d;
+        background: var(--ft-partial-surface);
+        color: var(--ft-partial-text);
+        border-color: var(--ft-partial-border);
       }
       .badge-bad {
-        background: #fee2e2;
-        color: #7f1d1d;
-        border-color: #fca5a5;
+        background: var(--ft-danger-surface);
+        color: var(--ft-danger-text);
+        border-color: var(--ft-danger-border);
       }
     `,
   ],

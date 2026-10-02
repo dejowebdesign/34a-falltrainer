@@ -172,16 +172,16 @@ import { VerdictBadgeComponent } from './verdict-badge.component';
         background: var(--ft-primary-soft);
       }
       .option.verdict-ok {
-        border-color: #86efac;
-        background: #f0fdf4;
+        border-color: var(--ft-ok-border);
+        background: var(--ft-ok-surface);
       }
       .option.verdict-partial {
-        border-color: #fcd34d;
-        background: #fffbeb;
+        border-color: var(--ft-partial-border);
+        background: var(--ft-partial-surface);
       }
       .option.verdict-bad {
-        border-color: #fca5a5;
-        background: #fef2f2;
+        border-color: var(--ft-danger-border);
+        background: var(--ft-danger-surface);
       }
       .option-control {
         flex: 0 0 auto;
@@ -225,7 +225,7 @@ import { VerdictBadgeComponent } from './verdict-badge.component';
         font-size: 0.88rem;
       }
       .misconception {
-        color: #7f1d1d;
+        color: var(--ft-danger-text);
       }
       .norms {
         color: var(--ft-primary);
@@ -253,16 +253,16 @@ import { VerdictBadgeComponent } from './verdict-badge.component';
         font-size: 0.85rem;
       }
       .summary-RICHTIG {
-        background: #f0fdf4;
-        border: 1px solid #86efac;
+        background: var(--ft-ok-surface);
+        border: 1px solid var(--ft-ok-border);
       }
       .summary-TEILWEISE_RICHTIG {
-        background: #fffbeb;
-        border: 1px solid #fcd34d;
+        background: var(--ft-partial-surface);
+        border: 1px solid var(--ft-partial-border);
       }
       .summary-FALSCH {
-        background: #fef2f2;
-        border: 1px solid #fca5a5;
+        background: var(--ft-danger-surface);
+        border: 1px solid var(--ft-danger-border);
       }
     `,
   ],

@@ -229,8 +229,8 @@ import { VerdictBadgeComponent } from '../../shared/components/verdict-badge.com
         margin-top: 0.9rem;
         padding: 0.8rem;
         border-radius: 10px;
-        background: #fffbeb;
-        border: 1px solid #fcd34d;
+        background: var(--ft-warn-surface);
+        border: 1px solid var(--ft-warn-border);
       }
       .misconception-box h4 {
         display: flex;
@@ -238,7 +238,7 @@ import { VerdictBadgeComponent } from '../../shared/components/verdict-badge.com
         gap: 0.4rem;
         margin: 0 0 0.4rem;
         font-size: 0.92rem;
-        color: #78350f;
+        color: var(--ft-warn-text);
       }
       .misconception-box h4 mat-icon {
         font-size: 18px;
@@ -248,7 +248,7 @@ import { VerdictBadgeComponent } from '../../shared/components/verdict-badge.com
       .misconception-box ul {
         margin: 0;
         padding-left: 1.1rem;
-        color: #78350f;
+        color: var(--ft-warn-text);
         font-size: 0.88rem;
         line-height: 1.5;
       }
@@ -306,7 +306,7 @@ import { VerdictBadgeComponent } from '../../shared/components/verdict-badge.com
       .official {
         margin: 0.5rem 0 0.25rem;
         padding: 0.75rem;
-        background: #f8fafc;
+        background: var(--ft-surface-2);
         border-radius: 8px;
         line-height: 1.55;
         font-size: 0.92rem;

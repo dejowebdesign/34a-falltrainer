@@ -1,12 +1,21 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { ThemeService } from '../../core/services/theme.service';
 
 @Component({
   selector: 'app-header',
-  imports: [RouterLink, RouterLinkActive, MatToolbarModule, MatButtonModule, MatIconModule],
+  imports: [
+    RouterLink,
+    RouterLinkActive,
+    MatToolbarModule,
+    MatButtonModule,
+    MatIconModule,
+    MatTooltipModule,
+  ],
   template: `
     <a class="skip-link" href="#main-content">Zum Inhalt springen</a>
     <mat-toolbar class="app-toolbar" role="banner">
@@ -18,12 +27,31 @@ import { MatIconModule } from '@angular/material/icon';
             <small>Sachkundeprüfung §34a GewO</small>
           </span>
         </a>
-        <nav aria-label="Hauptnavigation" class="nav">
-          <a mat-button routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-            Start
-          </a>
-          <a mat-button routerLink="/scenarios" routerLinkActive="active">Fälle</a>
-        </nav>
+        <div class="toolbar-actions">
+          <nav aria-label="Hauptnavigation" class="nav">
+            <a
+              mat-button
+              routerLink="/"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+            >
+              Start
+            </a>
+            <a mat-button routerLink="/scenarios" routerLinkActive="active">Fälle</a>
+          </nav>
+          <button
+            mat-icon-button
+            type="button"
+            class="theme-toggle"
+            (click)="theme.toggle()"
+            [attr.aria-label]="toggleLabel()"
+            [matTooltip]="toggleLabel()"
+          >
+            <mat-icon aria-hidden="true">{{
+              theme.theme() === 'dark' ? 'light_mode' : 'dark_mode'
+            }}</mat-icon>
+          </button>
+        </div>
       </div>
     </mat-toolbar>
   `,
@@ -33,8 +61,8 @@ import { MatIconModule } from '@angular/material/icon';
         position: absolute;
         left: -9999px;
         top: 0;
-        background: #0f766e;
-        color: #fff;
+        background: var(--ft-accent);
+        color: var(--ft-on-primary);
         padding: 0.75rem 1rem;
         z-index: 1000;
       }
@@ -42,12 +70,13 @@ import { MatIconModule } from '@angular/material/icon';
         left: 0;
       }
       .app-toolbar {
-        background: var(--ft-primary);
+        background: var(--ft-header);
         color: #fff;
         height: auto;
         min-height: 68px;
         padding-block: 0.5rem;
-        box-shadow: 0 1px 3px rgba(15, 23, 42, 0.18);
+        box-shadow: var(--ft-shadow);
+        transition: background-color 0.2s ease;
       }
       .toolbar-inner {
         display: flex;
@@ -76,12 +105,23 @@ import { MatIconModule } from '@angular/material/icon';
         font-size: 0.72rem;
         opacity: 0.85;
       }
+      .toolbar-actions {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
       .nav {
         display: flex;
         gap: 0.25rem;
       }
+      .nav a {
+        color: #fff;
+      }
       .nav a.active {
         background: rgba(255, 255, 255, 0.16);
+      }
+      .theme-toggle {
+        color: #fff;
       }
       @media (max-width: 480px) {
         .brand-text small {
@@ -91,4 +131,10 @@ import { MatIconModule } from '@angular/material/icon';
     `,
   ],
 })
-export class AppHeaderComponent {}
+export class AppHeaderComponent {
+  readonly theme = inject(ThemeService);
+
+  toggleLabel(): string {
+    return this.theme.theme() === 'dark' ? 'Light Mode aktivieren' : 'Dark Mode aktivieren';
+  }
+}
