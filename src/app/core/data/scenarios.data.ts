@@ -837,14 +837,6 @@ export const SCENARIOS: Scenario[] = [
           misconception: 'Gefahr → automatisch §34 StGB.',
           normIds: ['stgb-34'],
         },
-        {
-          id: 's3-e',
-          text: '§985 BGB – als Nichteigentümer die Herausgabe des Autos verlangen.',
-          verdict: 'FALSCH',
-          explanation: '§985 BGB steht dem Eigentümer zu und ist kein Instrument zur Gefahrenabwehr.',
-          misconception: 'Anspruch mit Eingriffsbefugnis verwechseln.',
-          normIds: ['bgb-985'],
-        },
       ],
       correctOptions: ['s3-a', 's3-c'],
       explanation:
