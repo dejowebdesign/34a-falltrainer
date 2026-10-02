@@ -697,7 +697,8 @@ export const SCENARIOS: Scenario[] = [
   },
 
   // ===========================================================================
-  // FALL 5 – Gefahr: Gefahr ≠ automatisch §34 StGB
+  // FALL 5 – Gefahr: Die Richtung der Einwirkung entscheidet
+  // Defensivnotstand (§228 BGB) vs. Aggressivnotstand (§904 BGB)
   // ===========================================================================
   {
     id: 'kind-im-auto',
@@ -735,7 +736,7 @@ export const SCENARIOS: Scenario[] = [
           explanation:
             'Bei gegenwärtiger Gefahr für Leben und Leib ist ein sofortiges Eingreifen geboten, wenn staatliche Hilfe nicht rechtzeitig erreichbar ist.',
           misconception: 'Gefahr unterschätzen und notwendiges sofortiges Eingreifen unterlassen.',
-          normIds: ['stgb-34', 'bgb-904'],
+          normIds: ['stgb-34', 'bgb-228'],
         },
         {
           id: 's1-d',
@@ -744,7 +745,7 @@ export const SCENARIOS: Scenario[] = [
           explanation:
             'Das Einschlagen der Scheibe kann als letztes Mittel erforderlich sein. Es ist aber erst zu prüfen, ob mildere Mittel (z. B. Fahrzeugöffnung) rechtzeitig verfügbar sind.',
           misconception: 'Sofort die Sache beschädigen, ohne mildere Mittel zu prüfen.',
-          normIds: ['bgb-904', 'bgb-228'],
+          normIds: ['bgb-228'],
         },
       ],
       correctOptions: ['s1-a', 's1-b'],
@@ -756,21 +757,21 @@ export const SCENARIOS: Scenario[] = [
       options: [
         {
           id: 's2-a',
-          text: 'Gegenwärtige Gefahr für Leben und Leib.',
+          text: 'Gegenwärtige, nicht anders abwendbare Gefahr für Leben und Leib.',
           verdict: 'RICHTIG',
           legalLevel: 'RECHTSBEGRIFF',
           explanation:
-            'Die Hitze im verschlossenen Auto und der apathische Zustand begründen eine gegenwärtige Gefahr für Leben und Leib.',
+            'Die Hitze im verschlossenen Auto und der apathische Zustand begründen eine gegenwärtige, nicht anders abwendbare Gefahr für Leben und Leib.',
           normIds: ['stgb-34'],
         },
         {
           id: 's2-b',
-          text: 'Nicht anders abwendbare Gefahr.',
+          text: 'Defensivnotstandslage: Die konkrete Gefahr geht vom Pkw als Gefahrenquelle aus.',
           verdict: 'RICHTIG',
-          legalLevel: 'RECHTSBEGRIFF',
+          legalLevel: 'PRIVATRECHT',
           explanation:
-            'Ein Schlüssel ist nicht erreichbar und staatliche Hilfe benötigt Zeit; die Gefahr ist nicht anders abwendbar.',
-          normIds: ['stgb-34'],
+            'Die Gefahr für das Kind geht von dem überhitzten, verschlossenen Pkw selbst aus. Wird zur Rettung auf genau diesen Pkw eingewirkt, ist die Richtung der Einwirkung entscheidend: Die Gefahr stammt aus der Sache, auf die eingewirkt wird – das ist die Fallgruppe des Defensivnotstands (§228 BGB). Das ist eine rechtlich zu prüfende Einordnung, keine bereits feststehende Subsumtion.',
+          normIds: ['bgb-228'],
         },
         {
           id: 's2-c',
@@ -795,42 +796,44 @@ export const SCENARIOS: Scenario[] = [
       ],
       correctOptions: ['s2-a', 's2-b'],
       explanation:
-        'Es liegt eine gegenwärtige, nicht anders abwendbare Gefahr für Leben und Leib vor.',
-      classificationIds: ['classification-gegenwaertige-gefahr', 'classification-drohende-gefahr'],
+        'Es liegt eine gegenwärtige, nicht anders abwendbare Gefahr für Leben und Leib vor. Weil die Gefahr vom Pkw als Gefahrenquelle ausgeht und die Rettung auf diesen Pkw einwirkt, liegt eine Defensivnotstandslage nach §228 BGB vor (zu prüfen).',
+      classificationIds: ['classification-gegenwaertige-gefahr', 'classification-defensivnotstandslage'],
     },
     stageThree: {
       prompt: 'Mit welcher Rechtsgrundlage dürfen Sie eingreifen?',
       options: [
         {
           id: 's3-a',
-          text: '§34 StGB – rechtfertigender Notstand bei gegenwärtiger, nicht anders abwendbarer Gefahr und überwiegendem Interesse.',
+          text: '§228 BGB – Defensivnotstand: Die Gefahr geht vom Pkw als Gefahrenquelle aus und die Einwirkung richtet sich gegen diese Sache selbst.',
           verdict: 'RICHTIG',
           explanation:
-            '§34 StGB rechtfertigt die Tat, wenn eine gegenwärtige, nicht anders abwendbare Gefahr besteht und das geschützte Interesse wesentlich überwiegt.',
-          normIds: ['stgb-34'],
+            'Da die Gefahr von dem Pkw als Gefahrenquelle ausgeht und die Rettung des Kindes eine Einwirkung auf eben diesen Pkw erfordert, ist zunächst §228 BGB als spezieller zivilrechtlicher Rechtfertigungsgrund zu prüfen. Die Einwirkung muss erforderlich sein; mildere, gleich wirksame Mittel sind vorrangig zu prüfen. Die durch die Einwirkung verursachte Beschädigung darf nicht außer Verhältnis zur abgewehrten Gefahr stehen.',
+          normIds: ['bgb-228'],
         },
         {
           id: 's3-b',
-          text: '§904 BGB – Einwirkung auf die fremde Sache (Scheibe), wenn dies zur Gefahrenabwehr notwendig ist.',
-          verdict: 'RICHTIG',
+          text: '§904 BGB – Aggressivnotstand: Einwirkung auf eine unbeteiligte fremde Sache.',
+          verdict: 'FALSCH',
           explanation:
-            'Die Einwirkung auf die fremde Sache kann nach §904 BGB zulässig sein, wenn sie zur Abwendung einer gegenwärtigen Gefahr notwendig und der drohende Schaden unverhältnismäßig groß ist.',
+            '§904 BGB betrifft grundsätzlich den aggressiven Notstand und damit die Einwirkung auf eine unbeteiligte fremde Sache. Das ist hier nicht die primäre Einordnung, weil die Gefahr gerade vom betroffenen Pkw ausgeht. §904 BGB kann abstrakt ergänzend diskutiert werden, ist für diesen konkreten Fall aber nicht die tragende Rechtsgrundlage.',
+          misconception:
+            'Fremde Sache → automatisch §904 BGB (aggressiver Notstand), ohne die Richtung der Einwirkung zu prüfen.',
           normIds: ['bgb-904'],
         },
         {
           id: 's3-c',
-          text: '§228 BGB – weil die Gefahr von der Sache ausgeht.',
+          text: '§34 StGB – rechtfertigender Notstand als ergänzender strafrechtlicher Rechtfertigungsgrund.',
           verdict: 'RICHTIG',
           explanation:
-            'Bei §228 BGB geht die Gefahr von der Sache aus; das kann hier für das Fahrzeug als Gefahrenquelle in Betracht kommen. Die Voraussetzungen sind zu prüfen.',
-          normIds: ['bgb-228'],
+            'Ergänzend ist §34 StGB als allgemeiner strafrechtlicher Rechtfertigungsgrund zu prüfen. Die §§228/904 BGB sind gegenüber §34 StGB die spezielleren zivilrechtlichen Regelungen für die Einwirkung auf eine Sache; §34 StGB tritt daher nicht an die Stelle der speziellen zivilrechtlichen Prüfung, sondern ergänzt sie.',
+          normIds: ['stgb-34'],
         },
         {
           id: 's3-d',
           text: 'Gefahr → automatisch §34 StGB, ohne weitere Prüfung.',
           verdict: 'FALSCH',
           explanation:
-            '§34 StGB verlangt zusätzlich die nicht anders abwendbare Gefahr, die Interessenabwägung und ein angemessenes Mittel.',
+            '§34 StGB verlangt zusätzlich die nicht anders abwendbare Gefahr, die Interessenabwägung und ein angemessenes Mittel. Zudem ist hier zuerst die spezielle zivilrechtliche Rechtfertigung nach §228 BGB zu prüfen.',
           misconception: 'Gefahr → automatisch §34 StGB.',
           normIds: ['stgb-34'],
         },
@@ -843,30 +846,31 @@ export const SCENARIOS: Scenario[] = [
           normIds: ['bgb-985'],
         },
       ],
-      correctOptions: ['s3-a', 's3-b', 's3-c'],
+      correctOptions: ['s3-a', 's3-c'],
       explanation:
-        'Je nach Konstellation kommen §34 StGB (rechtfertigender Notstand) und §904 BGB (aggressiver Notstand) in Betracht; für die vom Fahrzeug ausgehende Gefahr kann §228 BGB erwogen werden. Immer sind Erforderlichkeit und Interessenabwägung zu prüfen.',
-      authorityIds: ['authority-stgb-34', 'authority-bgb-904', 'authority-bgb-228'],
+        'Die Gefahr geht vom Pkw als Gefahrenquelle aus; die Rettung wirkt auf genau diesen Pkw ein. Deshalb ist zunächst §228 BGB (Defensivnotstand) als spezieller zivilrechtlicher Rechtfertigungsgrund zu prüfen – erforderlich und nicht außer Verhältnis zur Gefahr. Ergänzend ist §34 StGB als strafrechtlicher Rechtfertigungsgrund zu betrachten. §904 BGB (Aggressivnotstand) beträfe eine unbeteiligte fremde Sache und ist hier nicht die primäre Einordnung.',
+      authorityIds: ['authority-bgb-228', 'authority-stgb-34'],
     },
     result: {
       behaviorResult:
         'Rettungsdienst und Polizei verständigen, Eigensicherung, Hilfe organisieren; Sacheingriff nur als erforderliches letztes Mittel.',
       legalResult:
-        'Gegenwärtige, nicht anders abwendbare Gefahr für Leben und Leib.',
+        'Gegenwärtige, nicht anders abwendbare Gefahr für Leben und Leib; Defensivnotstandslage, weil die Gefahr vom Pkw als Gefahrenquelle ausgeht.',
       authorityResult:
-        '§34 StGB und §904 BGB (ggf. §228 BGB) – jeweils mit Erforderlichkeit und Interessenabwägung.',
+        '§228 BGB – defensiver Notstand (Gefahr geht vom Pkw aus); ergänzend §34 StGB als strafrechtlicher Rechtfertigungsgrund.',
       explanation:
-        'Gefahr begründet nicht automatisch einen Notstand. §34 StGB verlangt eine nicht anders abwendbare Gefahr und ein wesentliches Überwiegen; §904 BGB regelt die Einwirkung auf die fremde Sache.',
+        'Die Gefahr geht in dieser Konstellation vom überhitzten, verschlossenen Pkw selbst aus. Wird zur Rettung auf genau diesen Pkw eingewirkt, ist die Richtung der Einwirkung entscheidend: Die Gefahr stammt aus der Sache – das ist der Defensivnotstand (§228 BGB). §904 BGB betrifft dagegen den aggressiven Notstand und damit die Einwirkung auf eine unbeteiligte fremde Sache. Beide verlangen Erforderlichkeit und eine Prüfung der Verhältnismäßigkeit.',
       modelSolution: {
         behavior:
           'Rettungsdienst und Polizei verständigen, Eigensicherung, Hilfe organisieren, Kind beobachten.',
-        legalClassification: 'Gegenwärtige, nicht anders abwendbare Gefahr für Leben und Leib.',
+        legalClassification:
+          'Gegenwärtige, nicht anders abwendbare Gefahr für Leben und Leib; Defensivnotstandslage, weil die Gefahr vom Pkw als Gefahrenquelle ausgeht.',
         legalBasis:
-          '§34 StGB (rechtfertigender Notstand) und §904 BGB (aggressiver Notstand); §228 BGB für die vom Fahrzeug ausgehende Gefahr.',
+          '§228 BGB – defensiver Notstand; ergänzend ist §34 StGB als strafrechtlicher Rechtfertigungsgrund zu betrachten.',
         reasoning:
-          'Gefahr → nicht automatisch §34 StGB. Die Voraussetzungen (Gegenwärtigkeit, Nichtabwendbarkeit, Interessenabwägung, Angemessenheit) sind zu prüfen.',
+          'Es liegt eine gegenwärtige Gefahr für Leben und Leib des Kindes vor. Die Gefahr geht in der konkreten Konstellation vom überhitzten, verschlossenen Pkw aus. Wird zur Rettung des Kindes auf diesen Pkw selbst eingewirkt, ist zunächst der Defensivnotstand nach §228 BGB zu prüfen. Das Einschlagen der Scheibe kann gerechtfertigt sein, wenn es zur Gefahrenabwehr erforderlich ist und die Beschädigung nicht außer Verhältnis zur abgewehrten Gefahr steht. Mildere gleich geeignete Mittel sind vorrangig zu prüfen. Die §§228/904 BGB sind gegenüber §34 StGB die spezielleren zivilrechtlichen Regelungen; §34 StGB ist ergänzend zu prüfen.',
         limits:
-          'Erforderlichkeit und Verhältnismäßigkeit; mildere Mittel zuerst; Schadensersatzpflicht nach §904 BGB beachten.',
+          'Erforderlichkeit und Verhältnismäßigkeit; mildere Mittel zuerst; bei verschuldeter Gefahr Schadensersatzpflicht nach §228 BGB beachten.',
       },
     },
   },

@@ -70,7 +70,8 @@ Rules:
 - `.github/workflows/ci.yml` – `npm ci` → `npm test` → `npm run build` on push
   to `main` and on pull requests.
 - `.github/workflows/docker-image.yml` – runs the CI job first, then builds the
-  multi-stage image and pushes it to GHCR (`ghcr.io/dejowebdesign/34a-falltrainer`).
+  multi-stage image; pushes to GHCR (`ghcr.io/dejowebdesign/34a-falltrainer`)
+  only on `main` pushes or manual dispatch, never on pull requests.
 - `Dockerfile` – stage 1 builds Angular with Node, stage 2 is a minimal nginx
   runtime with only `dist/34a-falltrainer/browser`.
 - `nginx/default.conf` – SPA fallback to `index.html`, long cache for hashed

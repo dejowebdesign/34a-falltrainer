@@ -141,6 +141,69 @@ describe('Juristische Denkweise – verbotene Automatismen', () => {
     });
   });
 
+  describe('Kind im heißen Auto – Defensivnotstand (§228 BGB) statt Aggressivnotstand', () => {
+    it('führt §228 BGB als primäre Rechtsgrundlage in Stufe 3', () => {
+      const fall = scenario('kind-im-auto');
+      expect(fall.stageThree.correctOptions).toEqual(['s3-a', 's3-c']);
+      const primary = fall.stageThree.options.find((option) => option.id === 's3-a')!;
+      expect(primary.verdict).toBe('RICHTIG');
+      expect(primary.normIds).toContain('bgb-228');
+      expect(primary.normIds).not.toContain('bgb-904');
+    });
+
+    it('markiert §904 BGB nicht mehr als richtige Antwort', () => {
+      const fall = scenario('kind-im-auto');
+      const aggressiv = fall.stageThree.options.find((option) => option.id === 's3-b')!;
+      expect(aggressiv.verdict).toBe('FALSCH');
+      expect(aggressiv.normIds).toContain('bgb-904');
+      expect(aggressiv.misconception).toContain('§904');
+    });
+
+    it('nennt §228 BGB als zentrale Rechtsgrundlage der Musterlösung', () => {
+      const fall = scenario('kind-im-auto');
+      expect(fall.result.authorityResult).toContain('§228 BGB');
+      expect(fall.result.modelSolution.legalBasis).toContain('§228 BGB');
+      expect(fall.result.modelSolution.legalBasis).not.toContain('§904 BGB');
+    });
+
+    it('enthält den Begriff „Defensivnotstand“ in der Musterlösung', () => {
+      const fall = scenario('kind-im-auto');
+      const text = [
+        fall.result.modelSolution.legalClassification,
+        fall.result.modelSolution.legalBasis,
+        fall.result.modelSolution.reasoning,
+      ].join(' ');
+      expect(text).toContain('Defensivnotstand');
+    });
+
+    it('führt die Defensivnotstandslage in Stufe 2 als Einordnung (nicht als feststehende Subsumtion)', () => {
+      const fall = scenario('kind-im-auto');
+      expect(fall.stageTwo.classificationIds).toContain('classification-defensivnotstandslage');
+      const classification = LEGAL_CLASSIFICATIONS.find(
+        (entry) => entry.id === 'classification-defensivnotstandslage',
+      )!;
+      expect(classification.normIds).toContain('bgb-228');
+      expect(classification.certainty).toBe('MOEGLICH');
+    });
+
+    it('verweist in den Befugnissen nur noch auf §228 BGB und §34 StGB', () => {
+      const fall = scenario('kind-im-auto');
+      expect(fall.stageThree.authorityIds).toEqual(['authority-bgb-228', 'authority-stgb-34']);
+    });
+
+    it('führt §904 BGB höchstens als Abgrenzungswissen', () => {
+      const fall = scenario('kind-im-auto');
+      const aggressiv = fall.stageThree.options.find((option) => option.id === 's3-b')!;
+      expect(aggressiv.explanation).toContain('unbeteiligte');
+    });
+
+    it('hält den Automatismus „fremde Sache → §904 BGB“ als Denkfehler fest', () => {
+      const automatism = FORBIDDEN_AUTOMATISMS.find((entry) => entry.id === 'auto-fremde-sache-904')!;
+      expect(automatism.relatedNormIds).toContain('bgb-228');
+      expect(automatism.forbiddenConclusion).toContain('§904');
+    });
+  });
+
   describe('Angriff ≠ automatisch jede Gewalt', () => {
     it('Notwehr verlangt Erforderlichkeit und begrenzt die Gewalt', () => {
       const authority = knowledge.getAuthority('authority-stgb-32')!;

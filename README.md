@@ -275,11 +275,13 @@ Container läuft (z. B. auf Umbrel)
 | Workflow | Datei | Aufgabe |
 | --- | --- | --- |
 | CI | `.github/workflows/ci.yml` | `npm ci` → `npm test` → `npm run build` bei Push auf `main` und bei Pull Requests |
-| Docker Image | `.github/workflows/docker-image.yml` | erst CI (Tests + Build), danach Docker-Build und Push nach GHCR |
+| Docker Image | `.github/workflows/docker-image.yml` | erst CI (Tests + Build), danach Docker-Build; Push nach GHCR nur bei Push auf `main` oder manuell |
 
-Der Docker-Workflow läuft nur bei Push auf `main` (und manuell per
-`workflow_dispatch`) und veröffentlicht erst, wenn die Tests und der Build
-erfolgreich waren.
+Der Docker-Workflow läuft bei Push auf `main`, bei Pull Requests und manuell
+(`workflow_dispatch`). Auf Pull Requests wird das Image **nur gebaut** (zur
+Validierung des Dockerfiles), **nicht gepusht**. Gepusht wird ausschließlich
+bei einem Push auf `main` (oder manuell) und erst, nachdem der CI-Job – also
+Tests und Angular-Build – erfolgreich war (`needs: ci`).
 
 ### Docker Image und GHCR
 
@@ -329,24 +331,48 @@ docker run --rm -p 8085:80 34a-falltrainer:local
 
 ### Portainer Test Deployment
 
-1. **GHCR Image verfügbar machen.** Nach einem erfolgreichen Lauf von
-   *Docker Image* unter `https://github.com/dejowebdesign/34a-falltrainer/pkgs/container/34a-falltrainer`
-   prüfen. Ist das Paket privat, im Paket unter *Package settings* die
-   Sichtbarkeit auf öffentlich stellen **oder** in Portainer eine Registry
-   `ghcr.io` mit einem GitHub-Token (Scope `read:packages`) hinterlegen.
-2. **Portainer öffnen** und links **Stacks** wählen.
-3. **Neuen Stack anlegen** (*Add stack*).
-4. **`docker-compose.portainer.yml`** aus diesem Repository in den
-   Stack-Editor einfügen (oder das Repository als Git-Stack verbinden).
-5. **Stack deployen.** Portainer zieht nur das fertige Image aus GHCR.
-6. **URL aufrufen:** `http://<umbrel-host>:8085/` (der Host-Port `8085` ist in
+Voraussetzung ist ein erfolgreicher Lauf des Workflows *Docker Image* auf
+`main`, damit das Image in GHCR liegt. Das Paket ist standardmäßig **privat**.
+
+**GHCR-Paket öffentlich machen (empfohlen für den ersten Test):**
+Unter `https://github.com/dejowebdesign/34a-falltrainer/pkgs/container/34a-falltrainer`
+→ *Package settings* → *Change visibility* → *Public*. Dann kann Portainer das
+Image ohne Zugangsdaten ziehen.
+
+**GHCR-Paket privat lassen (Alternative):**
+Portainer braucht dann eine Registry mit Zugangsdaten:
+
+- In Portainer: *Registries* → *Add registry* → *Custom registry*.
+- Registry URL: `ghcr.io`
+- Benutzername: GitHub-Benutzername (z. B. `dejowebdesign`).
+- Passwort: ein **GitHub Personal Access Token (classic)** mit dem Scope
+  `read:packages`. (Feingranulare Tokens benötigen zusätzlich *Packages: Read*.)
+- Token niemals in Dateien oder ins Repository schreiben; nur in Portainer
+  hinterlegen.
+
+**Stack anlegen:**
+
+1. **Portainer öffnen** und links **Stacks** wählen.
+2. **Neuen Stack anlegen** (*Add stack*).
+3. **Repository**-Variante wählen:
+   - Repository URL: `https://github.com/dejowebdesign/34a-falltrainer.git`
+   - Reference: `main`
+   - Compose path: `docker-compose.portainer.yml`
+   (Alternativ den Inhalt von `docker-compose.portainer.yml` direkt in den
+   Web-Editor einfügen.)
+4. **Stack deployen.** Portainer liest das Compose-File, baut aber nichts –
+   es zieht ausschließlich das fertige GHCR-Image.
+5. **URL aufrufen:** `http://<umbrel-host>:8085/` (der Host-Port `8085` ist in
    der Compose-Datei frei wählbar).
-7. **Healthcheck prüfen:** In Portainer beim Container den Status *healthy*
+6. **Healthcheck prüfen:** In Portainer beim Container den Status *healthy*
    kontrollieren (HTTP-GET auf `/`).
 
-Auf dem Umbrel wird **kein npm, kein Angular-Build und kein Docker-Build**
-ausgeführt. Es wird ausschließlich das fertige GHCR-Image heruntergeladen und
-gestartet.
+Der Stack besteht aus **genau einem Container** – keine Datenbank, kein
+Backend, kein Redis, keine Queue, keine zusätzlichen Dienste.
+
+Auf dem Umbrel wird **kein npm, kein Angular-Build, kein TypeScript-Build,
+kein Testlauf und kein Docker-Build** ausgeführt. Es wird ausschließlich das
+fertige GHCR-Image heruntergeladen und gestartet.
 
 ### Sicherheit und Betrieb
 
