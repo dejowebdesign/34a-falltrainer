@@ -1,10 +1,13 @@
-import { Component, inject } from '@angular/core';
+import { Component, HostListener, inject, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ThemeService } from '../../core/services/theme.service';
+
+/** Ab dieser Scrollposition wird der Milchglas-Zustand gesetzt. */
+export const HEADER_SCROLL_THRESHOLD = 16;
 
 @Component({
   selector: 'app-header',
@@ -18,7 +21,7 @@ import { ThemeService } from '../../core/services/theme.service';
   ],
   template: `
     <a class="skip-link" href="#main-content">Zum Inhalt springen</a>
-    <mat-toolbar class="app-toolbar" role="banner">
+    <mat-toolbar class="app-toolbar" role="banner" [class.glass]="isScrolled()">
       <div class="ft-container toolbar-inner">
         <a routerLink="/" class="brand" aria-label="34a Falltrainer Startseite">
           <mat-icon aria-hidden="true">gavel</mat-icon>
@@ -57,6 +60,12 @@ import { ThemeService } from '../../core/services/theme.service';
   `,
   styles: [
     `
+      :host {
+        position: sticky;
+        top: 0;
+        z-index: 40;
+        display: block;
+      }
       .skip-link {
         position: absolute;
         left: -9999px;
@@ -76,7 +85,20 @@ import { ThemeService } from '../../core/services/theme.service';
         min-height: 68px;
         padding-block: 0.5rem;
         box-shadow: var(--ft-shadow);
-        transition: background-color 0.2s ease;
+        border-bottom: 1px solid transparent;
+        transition:
+          background-color 200ms ease,
+          backdrop-filter 200ms ease,
+          -webkit-backdrop-filter 200ms ease,
+          box-shadow 200ms ease,
+          border-color 200ms ease;
+      }
+      .app-toolbar.glass {
+        background: var(--ft-header-glass);
+        backdrop-filter: blur(16px) saturate(140%);
+        -webkit-backdrop-filter: blur(16px) saturate(140%);
+        border-bottom-color: var(--ft-header-glass-border);
+        box-shadow: 0 4px 18px rgba(15, 23, 42, 0.18);
       }
       .toolbar-inner {
         display: flex;
@@ -123,6 +145,11 @@ import { ThemeService } from '../../core/services/theme.service';
       .theme-toggle {
         color: #fff;
       }
+      @media (prefers-reduced-motion: reduce) {
+        .app-toolbar {
+          transition: none;
+        }
+      }
       @media (max-width: 480px) {
         .brand-text small {
           display: none;
@@ -133,8 +160,25 @@ import { ThemeService } from '../../core/services/theme.service';
 })
 export class AppHeaderComponent {
   readonly theme = inject(ThemeService);
+  readonly isScrolled = signal(false);
+
+  constructor() {
+    this.syncScrollState();
+  }
+
+  @HostListener('window:scroll')
+  onWindowScroll(): void {
+    this.syncScrollState();
+  }
 
   toggleLabel(): string {
     return this.theme.theme() === 'dark' ? 'Light Mode aktivieren' : 'Dark Mode aktivieren';
+  }
+
+  private syncScrollState(): void {
+    if (typeof window === 'undefined') {
+      return;
+    }
+    this.isScrolled.set(window.scrollY > HEADER_SCROLL_THRESHOLD);
   }
 }

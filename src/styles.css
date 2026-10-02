@@ -31,7 +31,16 @@ html.light {
   --ft-hero-from: #1e3a8a;
   --ft-hero-to: #0f766e;
   --ft-header: #1e3a8a;
+  --ft-header-glass: rgba(30, 58, 138, 0.72);
+  --ft-header-glass-border: rgba(255, 255, 255, 0.18);
+  --ft-glass-surface: rgba(255, 255, 255, 0.66);
+  --ft-glass-border: rgba(30, 58, 138, 0.22);
   --ft-shadow: 0 1px 3px rgba(15, 23, 42, 0.18);
+  --ft-rule-surface: #eaf2f8;
+  --ft-rule-border: #bfe0e6;
+  --ft-rule-text: #0f3b52;
+  --ft-rule-accent: #0f766e;
+  --ft-rule-item: #ffffff;
 
   /* Material-System-Tokens an das helle Farbschema koppeln. */
   --mat-sys-surface: #ffffff;
@@ -76,7 +85,16 @@ html.dark {
   --ft-hero-from: #101a30;
   --ft-hero-to: #0d2b33;
   --ft-header: #0e1729;
+  --ft-header-glass: rgba(14, 23, 41, 0.72);
+  --ft-header-glass-border: rgba(143, 176, 255, 0.18);
+  --ft-glass-surface: rgba(19, 28, 46, 0.66);
+  --ft-glass-border: rgba(143, 176, 255, 0.22);
   --ft-shadow: 0 1px 3px rgba(0, 0, 0, 0.55);
+  --ft-rule-surface: #0e2531;
+  --ft-rule-border: #1d4a58;
+  --ft-rule-text: #d7f3f0;
+  --ft-rule-accent: #2dd4bf;
+  --ft-rule-item: #102a38;
 
   /* Material-System-Tokens an das dunkle Farbschema koppeln. */
   --mat-sys-surface: #131c2e;

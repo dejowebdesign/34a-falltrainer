@@ -287,8 +287,8 @@ interface Automatism {
       }
       .principle {
         border-radius: 16px;
-        background: var(--ft-warn-surface);
-        border-color: var(--ft-warn-border);
+        background: var(--ft-rule-surface);
+        border-color: var(--ft-rule-border);
       }
       .principle-head {
         display: flex;
@@ -297,17 +297,17 @@ interface Automatism {
         margin-bottom: 1rem;
       }
       .principle-head mat-icon {
-        color: var(--ft-warn);
+        color: var(--ft-rule-accent);
         flex: 0 0 auto;
       }
       .principle h3 {
         margin: 0 0 0.2rem;
         font-size: 1.1rem;
-        color: var(--ft-warn-text);
+        color: var(--ft-rule-text);
       }
       .principle-sub {
         margin: 0;
-        color: var(--ft-warn-text);
+        color: var(--ft-rule-text);
         opacity: 0.85;
         line-height: 1.5;
       }
@@ -328,10 +328,10 @@ interface Automatism {
         display: flex;
         align-items: center;
         gap: 0.5rem;
-        padding: 0.55rem 0.7rem;
+        padding: 0.5rem 0.7rem;
         border-radius: 10px;
-        background: var(--ft-surface);
-        border: 1px solid var(--ft-warn-border);
+        background: var(--ft-rule-item);
+        border: 1px solid var(--ft-rule-border);
       }
       .automatisms .trigger {
         font-weight: 600;
@@ -339,7 +339,7 @@ interface Automatism {
         flex: 0 0 auto;
       }
       .automatisms mat-icon {
-        color: var(--ft-warn);
+        color: var(--ft-rule-accent);
         font-size: 18px;
         width: 18px;
         height: 18px;
