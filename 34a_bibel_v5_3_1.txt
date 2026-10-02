@@ -1,0 +1,5076 @@
+# §34a LEGAL KNOWLEDGE BASE V5.3.1
+
+**Rechtsstand:** 01.10.2026
+**Zweck:** Fachliche Grundlage für eine digitale Lern- und Falltrainingsplattform zur Sachkundeprüfung nach §34a GewO
+**Primärquelle für Gesetzestexte:** www.gesetze-im-internet.de
+**Status:** V5.3.1 – konsolidierte Endfassung auf Basis der V5.3-Masterdatei; Patch- und Prüfvermerke entfernt, Gesetzestexte gegen die Primärquelle geprüft.
+**Verifikationsstand:** Die als VERIFIED_OFFICIAL_TEXT gekennzeichneten Normen wurden gegen Gesetze im Internet geprüft. §263 StGB, §265a StGB und §266 StGB sind in der V5.3 nicht enthalten und wurden daher nicht in den Bestand aufgenommen (keine Stoffausweitung).
+**Fallbeispiele:** Nicht Bestandteil dieser Bible; konkrete Fälle werden im Unterricht behandelt.
+
+---
+
+# TEIL 1 – STRAFRECHT
+
+---
+
+# 1. ZIEL UND GRUNDPRINZIP
+
+Diese Knowledge Base soll nicht lediglich einzelne Vorschriften auswendig lernbar machen.
+
+Sie soll eine strukturierte juristische Prüfung ermöglichen:
+
+SACHVERHALT
+↓
+RELEVANTE TATSACHEN
+↓
+RECHTLICHE EINORDNUNG
+↓
+TATBESTAND
+↓
+ANSPRUCH / BEFUGNIS / RECHTFERTIGUNG
+↓
+ZULÄSSIGE HANDLUNG
+↓
+RECHTSFOLGE
+
+Die Software darf nicht allein aus einem Schlagwort automatisch eine Rechtsfolge erzeugen.
+
+Beispiel:
+
+„Diebstahl“
+≠
+„Sicherheitsmitarbeiter darf die Person immer festhalten.“
+
+Zunächst muss geprüft werden, **welche konkrete Rechtsgrundlage** die Handlung ermöglicht.
+
+---
+
+# 2. DIE VIER KERNKATEGORIEN
+
+## 2.1 ANSPRUCH
+
+### Prüfungsfrage
+
+> **Wer kann von wem was verlangen?**
+
+Ein Anspruch ist grundsätzlich ein rechtliches Verlangen einer Person gegen eine andere Person.
+
+Beispiele:
+
+- §812 BGB
+- §823 BGB
+- §861 BGB
+- §862 BGB
+- §985 BGB
+- §1004 BGB
+
+### Merksatz
+
+**Anspruch = Was kann ich verlangen?**
+
+---
+
+## 2.2 BEFUGNIS / RECHTLICHE HANDLUNGSMÖGLICHKEIT
+
+### Prüfungsfrage
+
+> **Was darf ich selbst tun?**
+
+Beispiele:
+
+- §127 StPO
+- §859 BGB
+- §860 BGB
+- §229 BGB
+- je nach Sachverhalt weitere Rechtfertigungs- oder Selbsthilferegelungen
+
+### Merksatz
+
+**Befugnis = Was darf ich selbst tun?**
+
+---
+
+## 2.3 RECHTFERTIGUNG
+
+### Prüfungsfrage
+
+> **Warum ist eine grundsätzlich tatbestandsmäßige Handlung ausnahmsweise nicht rechtswidrig?**
+
+Beispiele:
+
+- §32 StGB
+- §34 StGB
+- §227 BGB
+- §228 BGB
+- §904 BGB
+
+### Merksatz
+
+**Rechtfertigung = Warum ist die Handlung trotz Tatbestand erlaubt?**
+
+---
+
+## 2.4 ENTSCHULDIGUNG
+
+### Prüfungsfrage
+
+> **Warum entfällt trotz rechtswidriger Handlung ausnahmsweise die Schuld?**
+
+Beispiele:
+
+- §33 StGB
+- §35 StGB
+
+### Merksatz
+
+**Entschuldigung ≠ Rechtfertigung.**
+
+---
+
+# 3. STRAFRECHTLICHE GRUNDLAGEN
+
+## §15 StGB – Vorsätzliches und fahrlässiges Handeln
+
+### OFFIZIELLE ÜBERSCHRIFT
+
+Vorsätzliches und fahrlässiges Handeln
+
+### AMTLICHER GESETZESTEXT
+
+„Strafbar ist nur vorsätzliches Handeln, wenn nicht das Gesetz fahrlässiges Handeln ausdrücklich mit Strafe bedroht.“
+
+### VERIFICATION_STATUS
+
+VERIFIED_OFFICIAL_TEXT
+
+### SOURCE
+
+https://www.gesetze-im-internet.de/stgb/__15.html
+
+### VEREINFACHTE ERKLÄRUNG
+
+Grundsätzlich setzt die Strafbarkeit vorsätzliches Handeln voraus.
+
+Fahrlässigkeit ist nur strafbar, wenn das jeweilige Gesetz dies ausdrücklich vorsieht.
+
+### PRÜFUNGSMERKSATZ
+
+**§15 = Vorsatz grundsätzlich erforderlich; Fahrlässigkeit nur bei ausdrücklicher Strafbarkeit.**
+
+---
+
+## §16 StGB – Irrtum über Tatumstände
+
+### OFFIZIELLE ÜBERSCHRIFT
+
+Irrtum über Tatumstände
+
+### AMTLICHER GESETZESTEXT
+
+„(1) Wer bei Begehung der Tat einen Umstand nicht kennt, der zum gesetzlichen Tatbestand gehört, handelt nicht vorsätzlich. Die Strafbarkeit wegen fahrlässiger Begehung bleibt unberührt.“
+
+„(2) Wer bei Begehung der Tat irrig Umstände annimmt, welche den Tatbestand eines milderen Gesetzes verwirklichen würden, kann wegen vorsätzlicher Begehung nur nach dem milderen Gesetz bestraft werden.“
+
+### VERIFICATION_STATUS
+
+VERIFIED_OFFICIAL_TEXT
+
+### SOURCE
+
+https://www.gesetze-im-internet.de/stgb/__16.html
+
+### VEREINFACHTE ERKLÄRUNG
+
+§16 betrifft den Irrtum über tatsächliche Umstände, die zum gesetzlichen Tatbestand gehören.
+
+Kennt der Täter einen tatbestandlichen Umstand nicht, fehlt grundsätzlich der Vorsatz hinsichtlich dieses Umstands.
+
+Eine mögliche fahrlässige Strafbarkeit bleibt bestehen, wenn das betreffende Delikt Fahrlässigkeit ausdrücklich unter Strafe stellt.
+
+Absatz 2 betrifft den sogenannten Erlaubnis- bzw. Privilegierungssachverhalt hinsichtlich eines milderen Gesetzes.
+
+### PRÜFUNGSMERKSATZ
+
+**§16 = Irrtum über Tatsachen des Tatbestands.**
+
+---
+
+# 4. VERSUCH
+
+## §22 StGB – Begriffsbestimmung
+
+### OFFIZIELLE ÜBERSCHRIFT
+
+Begriffsbestimmung
+
+### AMTLICHER GESETZESTEXT
+
+„Eine Straftat versucht, wer nach seiner Vorstellung von der Tat zur Verwirklichung des Tatbestandes unmittelbar ansetzt.“
+
+### VERIFICATION_STATUS
+
+VERIFIED_OFFICIAL_TEXT
+
+### SOURCE
+
+https://www.gesetze-im-internet.de/stgb/__22.html
+
+### VEREINFACHTE ERKLÄRUNG
+
+Der Täter muss nach seiner Vorstellung die Schwelle zur unmittelbaren Tatbestandsverwirklichung überschritten haben.
+
+### MERKSATZ
+
+**§22 = unmittelbares Ansetzen.**
+
+---
+
+## §23 StGB – Strafbarkeit des Versuchs
+
+### OFFIZIELLE ÜBERSCHRIFT
+
+Strafbarkeit des Versuchs
+
+### AMTLICHER GESETZESTEXT
+
+„(1) Der Versuch eines Verbrechens ist stets strafbar, der Versuch eines Vergehens nur dann, wenn das Gesetz es ausdrücklich bestimmt.“
+
+„(2) Der Versuch kann milder bestraft werden als die vollendete Tat (§ 49 Abs. 1).“
+
+„(3) Hat der Täter aus grobem Unverstand verkannt, daß der Versuch nach der Art des Gegenstandes, an dem, oder des Mittels, mit dem die Tat begangen werden sollte, überhaupt nicht zur Vollendung führen konnte, so kann das Gericht von Strafe absehen oder die Strafe nach seinem Ermessen mildern (§ 49 Abs. 2).“
+
+### VERIFICATION_STATUS
+
+VERIFIED_OFFICIAL_TEXT
+
+### SOURCE
+
+https://www.gesetze-im-internet.de/stgb/__23.html
+
+### MERKSATZ
+
+**§22 = Wann liegt Versuch vor?**
+
+**§23 = Wann ist der Versuch strafbar?**
+
+---
+
+# 5. BETEILIGUNG
+
+## §25 StGB – Täterschaft
+
+### OFFIZIELLE ÜBERSCHRIFT
+
+Täterschaft
+
+### AMTLICHER GESETZESTEXT
+
+„(1) Als Täter wird bestraft, wer die Straftat selbst oder durch einen anderen begeht.“
+
+„(2) Begehen mehrere die Straftat gemeinschaftlich, so wird jeder als Täter bestraft (Mittäter).“
+
+### VERIFICATION_STATUS
+
+VERIFIED_OFFICIAL_TEXT
+
+### SOURCE
+
+https://www.gesetze-im-internet.de/stgb/__25.html
+
+### SYSTEMATIK
+
+Zu unterscheiden sind insbesondere:
+
+- unmittelbare Täterschaft
+- mittelbare Täterschaft
+- Mittäterschaft
+
+### PRÜFUNGSMERKSATZ
+
+**§25 = Wer ist Täter?**
+
+---
+
+## §26 StGB – Anstiftung
+
+### OFFIZIELLE ÜBERSCHRIFT
+
+Anstiftung
+
+### AMTLICHER GESETZESTEXT
+
+„Als Anstifter wird gleich einem Täter bestraft, wer vorsätzlich einen anderen zu dessen vorsätzlich begangener rechtswidriger Tat bestimmt hat.“
+
+### VERIFICATION_STATUS
+
+VERIFIED_OFFICIAL_TEXT
+
+### SOURCE
+
+https://www.gesetze-im-internet.de/stgb/__26.html
+
+### VEREINFACHTE ERKLÄRUNG
+
+Anstiftung bedeutet das vorsätzliche Bestimmen eines anderen zu dessen vorsätzlich begangener rechtswidriger Tat.
+
+Der Anstifter begeht die Haupttat grundsätzlich nicht selbst, sondern veranlasst den anderen zur Tat.
+
+### MERKSATZ
+
+**§26 = einen anderen zur Tat bestimmen.**
+
+---
+
+## §27 StGB – Beihilfe
+
+### OFFIZIELLE ÜBERSCHRIFT
+
+Beihilfe
+
+### AMTLICHER GESETZESTEXT
+
+„(1) Als Gehilfe wird bestraft, wer vorsätzlich einem anderen zu dessen vorsätzlich begangener rechtswidriger Tat Hilfe geleistet hat.“
+
+„(2) Die Strafe für den Gehilfen richtet sich nach der Strafdrohung für den Täter. Sie ist nach § 49 Abs. 1 zu mildern.“
+
+### VERIFICATION_STATUS
+
+VERIFIED_OFFICIAL_TEXT
+
+### SOURCE
+
+https://www.gesetze-im-internet.de/stgb/__27.html
+
+### VEREINFACHTE ERKLÄRUNG
+
+Beihilfe ist die vorsätzliche Unterstützung einer vorsätzlich begangenen rechtswidrigen Tat eines anderen.
+
+Die Unterstützung kann beispielsweise durch Förderung oder Hilfeleistung erfolgen.
+
+### MERKSATZ
+
+**§27 = fremde Tat vorsätzlich fördern/unterstützen.**
+
+---
+
+# 6. RECHTFERTIGUNG UND ENTSCHULDIGUNG IM STRAFRECHT
+
+## §32 StGB – Notwehr
+
+### OFFIZIELLE ÜBERSCHRIFT
+
+Notwehr
+
+### AMTLICHER GESETZESTEXT
+
+„(1) Wer eine Tat begeht, die durch Notwehr geboten ist, handelt nicht rechtswidrig.“
+
+„(2) Notwehr ist die Verteidigung, die erforderlich ist, um einen gegenwärtigen rechtswidrigen Angriff von sich oder einem anderen abzuwenden.“
+
+### VERIFICATION_STATUS
+
+VERIFIED_OFFICIAL_TEXT
+
+### SOURCE
+
+https://www.gesetze-im-internet.de/stgb/__32.html
+
+### VEREINFACHTE ERKLÄRUNG
+
+Notwehr setzt insbesondere voraus:
+
+1. Angriff
+2. Gegenwärtigkeit
+3. Rechtswidrigkeit
+4. Verteidigung
+5. Erforderlichkeit
+
+### MERKSATZ
+
+**§32 = gegenwärtiger rechtswidriger Angriff → erforderliche Verteidigung.**
+
+---
+
+## §33 StGB – Überschreitung der Notwehr
+
+### OFFIZIELLE ÜBERSCHRIFT
+
+Überschreitung der Notwehr
+
+### AMTLICHER GESETZESTEXT
+
+„Überschreitet der Täter die Grenzen der Notwehr aus Verwirrung, Furcht oder Schrecken, so wird er nicht bestraft.“
+
+### VERIFICATION_STATUS
+
+VERIFIED_OFFICIAL_TEXT
+
+### SOURCE
+
+https://www.gesetze-im-internet.de/stgb/__33.html
+
+### VEREINFACHTE ERKLÄRUNG
+
+§33 betrifft die Überschreitung der Grenzen der Notwehr aus bestimmten sogenannten asthenischen Affekten:
+
+- Verwirrung
+- Furcht
+- Schrecken
+
+Die Vorschrift ist eine Entschuldigungsregelung.
+
+### MERKSATZ
+
+**§32 rechtfertigt – §33 kann entschuldigen.**
+
+---
+
+## §34 StGB – Rechtfertigender Notstand
+
+### OFFIZIELLE ÜBERSCHRIFT
+
+Rechtfertigender Notstand
+
+### AMTLICHER GESETZESTEXT
+
+„Wer in einer gegenwärtigen, nicht anders abwendbaren Gefahr für Leben, Leib, Freiheit, Ehre, Eigentum oder ein anderes Rechtsgut eine Tat begeht, um die Gefahr von sich oder einem anderen abzuwenden, handelt nicht rechtswidrig, wenn bei Abwägung der widerstreitenden Interessen, namentlich der betroffenen Rechtsgüter und des Grades der ihnen drohenden Gefahren, das geschützte Interesse das beeinträchtigte wesentlich überwiegt. Dies gilt jedoch nur, soweit die Tat ein angemessenes Mittel ist, die Gefahr abzuwenden.“
+
+### VERIFICATION_STATUS
+
+VERIFIED_OFFICIAL_TEXT
+
+### SOURCE
+
+https://www.gesetze-im-internet.de/stgb/__34.html
+
+### VEREINFACHTE PRÜFUNG
+
+Zu prüfen sind insbesondere:
+
+- gegenwärtige Gefahr
+- Gefahr für ein geschütztes Rechtsgut
+- nicht anders abwendbare Gefahr
+- Handlung zur Gefahrenabwehr
+- Interessenabwägung
+- wesentliches Überwiegen des geschützten Interesses
+- Angemessenheit des Mittels
+
+### MERKSATZ
+
+**§34 = gegenwärtige, nicht anders abwendbare Gefahr + Interessenabwägung.**
+
+---
+
+## §35 StGB – Entschuldigender Notstand
+
+### OFFIZIELLE ÜBERSCHRIFT
+
+Entschuldigender Notstand
+
+### AMTLICHER GESETZESTEXT
+
+„(1) Wer in einer gegenwärtigen, nicht anders abwendbaren Gefahr für Leben, Leib oder Freiheit eine rechtswidrige Tat begeht, um die Gefahr von sich, einem Angehörigen oder einer anderen ihm nahestehenden Person abzuwenden, handelt ohne Schuld. Dies gilt nicht, soweit dem Täter nach den Umständen, namentlich weil er die Gefahr selbst verursacht hat oder weil er in einem besonderen Rechtsverhältnis stand, zugemutet werden konnte, die Gefahr hinzunehmen; jedoch kann die Strafe nach § 49 Abs. 1 gemildert werden, wenn der Täter nicht mit Rücksicht auf ein besonderes Rechtsverhältnis die Gefahr hinzunehmen hatte.“
+
+„(2) Nimmt der Täter bei Begehung der Tat irrig Umstände an, welche ihn nach Absatz 1 entschuldigen würden, so wird er nur dann bestraft, wenn er den Irrtum vermeiden konnte. Die Strafe ist nach § 49 Abs. 1 zu mildern.“
+
+### VERIFICATION_STATUS
+
+VERIFIED_OFFICIAL_TEXT
+
+### SOURCE
+
+https://www.gesetze-im-internet.de/stgb/__35.html
+
+### VEREINFACHTE ERKLÄRUNG
+
+§35 betrifft den entschuldigenden Notstand.
+
+Im Unterschied zu §34 führt die Vorschrift nicht zur Rechtfertigung der Tat, sondern kann die Schuld entfallen lassen.
+
+Geschützt sind:
+
+- Leben
+- Leib
+- Freiheit
+
+Die Gefahr muss gegenwärtig und nicht anders abwendbar sein.
+
+### MERKSATZ
+
+**§34 = Rechtfertigung.**
+
+**§35 = Entschuldigung.**
+
+---
+
+# 7. HAUSFRIEDENSBRUCH UND VERWANDTE NORMEN
+
+## §123 StGB – Hausfriedensbruch
+
+### HINWEIS
+
+Der vollständige amtliche Gesetzestext zu §123 StGB ist in dieser Datei in einem eigenen, konsolidierten Abschnitt („§123 StGB – Hausfriedensbruch – amtlicher Gesetzestext“) enthalten. Der nachfolgende Abschnitt enthält ausschließlich die Erklärung.
+
+### VEREINFACHTE ERKLÄRUNG
+
+Geschützt wird insbesondere das Hausrecht.
+
+Für die Prüfung ist zwischen dem:
+
+- Betreten gegen den Willen des Berechtigten
+- Verweilen trotz Aufforderung zum Entfernen
+
+zu unterscheiden.
+
+### §34a-BEZUG
+
+Sicherheitsmitarbeiter müssen insbesondere erkennen:
+
+Hausverbot / Hausrecht
+↓
+Betreten oder Verweilen
+↓
+§123 StGB?
+↓
+ggf. weitere Rechtsgrundlage für eigenes Handeln prüfen
+
+### MERKSATZ
+
+**§123 = geschützten Bereich unbefugt betreten oder trotz Aufforderung nicht gehen.**
+
+---
+
+## §124 StGB – Schwerer Hausfriedensbruch
+
+### HINWEIS
+
+Der vollständige amtliche Gesetzestext zu §124 StGB ist in dieser Datei in einem eigenen, konsolidierten Abschnitt („§124 StGB – Schwerer Hausfriedensbruch – amtlicher Gesetzestext“) enthalten. Der nachfolgende Abschnitt enthält ausschließlich die Erklärung.
+
+### VEREINFACHTE ERKLÄRUNG
+
+§124 stellt qualifizierte Formen des Hausfriedensbruchs unter Strafe.
+
+Die konkreten gesetzlichen Voraussetzungen müssen vollständig am Tatbestand geprüft werden.
+
+### WICHTIG
+
+**§124 StGB = Schwerer Hausfriedensbruch.**
+
+**§132 StGB = Amtsanmaßung.**
+
+Diese Normen dürfen nicht verwechselt werden.
+
+---
+
+## §132 StGB – Amtsanmaßung
+
+### HINWEIS
+
+Der vollständige amtliche Gesetzestext zu §132 StGB ist in dieser Datei in einem eigenen, konsolidierten Abschnitt („§132 StGB – Amtsanmaßung – amtlicher Gesetzestext“) enthalten. Der nachfolgende Abschnitt enthält ausschließlich die Erklärung.
+
+### VEREINFACHTE ERKLÄRUNG
+
+§132 schützt die staatliche Hoheitsordnung vor dem unbefugten Auftreten als Amtsträger bzw. der unbefugten Vornahme bestimmter hoheitlicher Handlungen.
+
+### §34a-BEZUG
+
+Ein Sicherheitsmitarbeiter ist grundsätzlich **kein Polizeibeamter**.
+
+Daher muss insbesondere vermieden werden:
+
+private Sicherheitskraft
+≠
+Polizei
+
+### MERKSATZ
+
+**§132 = unbefugtes Auftreten als staatliche Autorität.**
+
+---
+
+## §132a StGB – Missbrauch von Titeln, Berufsbezeichnungen und Abzeichen
+
+### HINWEIS
+
+Der vollständige amtliche Gesetzestext zu §132a StGB ist in dieser Datei in einem eigenen, konsolidierten Abschnitt („§132a StGB – Missbrauch von Titeln, Berufsbezeichnungen und Abzeichen – amtlicher Gesetzestext“) enthalten. Der nachfolgende Abschnitt enthält ausschließlich die Erklärung.
+
+### VEREINFACHTE ERKLÄRUNG
+
+Die Norm schützt die geschützte Verwendung bestimmter Titel, Berufsbezeichnungen, Abzeichen und vergleichbarer Bezeichnungen.
+
+### MERKSATZ
+
+**§132a = geschützte Amts-/Berufs-/Titelbezeichnungen nicht unbefugt verwenden.**
+
+---
+
+# 8. BELEIDIGUNG
+
+## §185 StGB
+
+### VEREINFACHTE ERKLÄRUNG
+
+§185 StGB stellt die Beleidigung unter Strafe.
+
+Für die Prüfung sind insbesondere Äußerung, Kontext und Ehrverletzung zu betrachten.
+
+### WICHTIG
+
+Die Frage des Strafantrags darf nicht mit dem Tatbestand selbst vermischt werden.
+
+### MERKSATZ
+
+**§185 = Angriff auf die Ehre durch Beleidigung.**
+
+---
+
+# 9. KÖRPERVERLETZUNGSDELIKTE
+
+## §223 StGB – Körperverletzung
+
+### OFFIZIELLE ÜBERSCHRIFT
+
+Körperverletzung
+
+### AMTLICHER GESETZESTEXT
+
+„Wer eine andere Person körperlich mißhandelt oder an der Gesundheit schädigt, wird mit Freiheitsstrafe bis zu fünf Jahren oder mit Geldstrafe bestraft.“
+
+„Der Versuch ist strafbar.“
+
+### VERIFICATION_STATUS
+
+VERIFIED_OFFICIAL_TEXT
+
+### SOURCE
+
+https://www.gesetze-im-internet.de/stgb/__223.html
+
+### TATBESTAND
+
+Objektiv:
+
+- andere Person
+- körperliche Misshandlung oder Gesundheitsschädigung
+
+Subjektiv:
+
+- Vorsatz
+
+### MERKSATZ
+
+**§223 = körperlich misshandeln oder Gesundheit schädigen.**
+
+---
+
+## §224 StGB – Gefährliche Körperverletzung
+
+### PRÜFUNG
+
+§224 ist eine Qualifikation zu §223.
+
+Es muss daher zunächst eine Körperverletzung vorliegen.
+
+Danach ist zu prüfen, ob eine der gesetzlichen Qualifikationen erfüllt ist.
+
+### TYPISCHE QUALIFIKATIONEN
+
+Unter anderem können relevant sein:
+
+- Beibringung von Gift oder anderen gesundheitsschädlichen Stoffen
+- Waffe oder gefährliches Werkzeug
+- hinterlistiger Überfall
+- gemeinschaftliche Begehung
+- lebensgefährdende Behandlung
+
+### MERKSATZ
+
+**§223 + besondere Begehungsweise = §224 prüfen.**
+
+---
+
+## §226 StGB – Schwere Körperverletzung
+
+### PRÜFUNG
+
+§226 setzt eine Körperverletzung und zusätzlich eine gesetzlich bestimmte schwere Folge voraus.
+
+Beispiele sind bestimmte dauerhafte schwere Beeinträchtigungen.
+
+### WICHTIG
+
+Eine bloße Verletzung reicht **nicht automatisch** für §226.
+
+### MERKSATZ
+
+**§226 = Körperverletzung + gesetzlich bestimmte schwere Folge.**
+
+---
+
+## §227 StGB – Körperverletzung mit Todesfolge
+
+### OFFIZIELLE ÜBERSCHRIFT
+
+Körperverletzung mit Todesfolge
+
+### AMTLICHER GESETZESTEXT
+
+„Hat der Täter durch die Körperverletzung (§§ 223 bis 226) den Tod der verletzten Person verursacht, so ist die Strafe Freiheitsstrafe nicht unter drei Jahren.“
+
+„In minder schweren Fällen ist auf Freiheitsstrafe von einem Jahr bis zu zehn Jahren zu erkennen.“
+
+### VERIFICATION_STATUS
+
+VERIFIED_OFFICIAL_TEXT
+
+### SOURCE
+
+https://www.gesetze-im-internet.de/stgb/__227.html
+
+### MERKSATZ
+
+**§227 = Körperverletzung → Tod.**
+
+---
+
+# 10. NÖTIGUNG
+
+## §240 StGB
+
+### OFFIZIELLE ÜBERSCHRIFT
+
+Nötigung
+
+### AMTLICHER GESETZESTEXT
+
+„(1) Wer einen Menschen rechtswidrig mit Gewalt oder durch Drohung mit einem empfindlichen Übel zu einer Handlung, Duldung oder Unterlassung nötigt, wird mit Freiheitsstrafe bis zu drei Jahren oder mit Geldstrafe bestraft.“
+
+„(2) Rechtswidrig ist die Tat, wenn die Anwendung der Gewalt oder die Androhung des Übels zu dem angestrebten Zweck als verwerflich anzusehen ist.“
+
+„(3) Der Versuch ist strafbar.“
+
+„(4) In besonders schweren Fällen ist die Strafe Freiheitsstrafe von sechs Monaten bis zu fünf Jahren. Ein besonders schwerer Fall liegt in der Regel vor, wenn der Täter
+
+1. eine Schwangere zum Schwangerschaftsabbruch nötigt oder
+
+2. seine Befugnisse oder seine Stellung als Amtsträger mißbraucht.“
+
+### VERIFICATION_STATUS
+
+VERIFIED_OFFICIAL_TEXT
+
+### SOURCE
+
+https://www.gesetze-im-internet.de/stgb/__240.html
+
+### PRÜFUNGSSCHEMA
+
+Gewalt
+ODER
+Drohung mit empfindlichem Übel
+↓
+Nötigungsziel
+↓
+Handlung / Duldung / Unterlassung
+↓
+Kausalität
+↓
+Rechtswidrigkeit
+
+### MERKSATZ
+
+**§240 = Gewalt/Drohung → jemanden zu etwas zwingen.**
+
+---
+
+# 11. DIEBSTAHL
+
+## §242 StGB
+
+### VEREINFACHTE ERKLÄRUNG
+
+Grundstruktur:
+
+fremde bewegliche Sache
+↓
+Wegnahme
+↓
+Vorsatz
+↓
+Zueignungsabsicht
+
+### MERKSATZ
+
+**§242 = fremde bewegliche Sache wegnehmen + Zueignungsabsicht.**
+
+---
+
+## §243 StGB – Besonders schwerer Fall
+
+### SYSTEMATIK
+
+§243 enthält gesetzliche Regelbeispiele für besonders schwere Fälle des Diebstahls.
+
+Wichtig:
+
+**§243 ist nicht einfach ein eigener Grundtatbestand neben §242.**
+
+Zunächst ist der Diebstahl nach §242 zu prüfen.
+
+Danach kommt §243 als besonders schwerer Fall in Betracht.
+
+### MERKSATZ
+
+**§242 = Diebstahl.**
+
+**§243 = besonders schwerer Fall.**
+
+---
+
+## §247 StGB – Haus- und Familiendiebstahl
+
+### VEREINFACHTE ERKLÄRUNG
+
+§247 enthält eine besondere Strafverfolgungsregelung für bestimmte persönliche Beziehungen.
+
+### MERKSATZ
+
+**§247 = besondere Beziehung zwischen Täter und Verletztem.**
+
+---
+
+## §248a StGB – Diebstahl und Unterschlagung geringwertiger Sachen
+
+### VEREINFACHTE ERKLÄRUNG
+
+§248a enthält eine besondere Regelung zur Strafverfolgung bei geringwertigen Sachen.
+
+Die Vorschrift ist deshalb insbesondere bei der Frage relevant:
+
+Straftatbestand?
+↓
+Strafantrag erforderlich?
+↓
+§248a?
+
+---
+
+# 12. RAUB UND RÄUBERISCHE DELIKTE
+
+## §249 StGB – Raub
+
+### VEREINFACHTE ERKLÄRUNG
+
+Raub verbindet eine Wegnahme mit qualifizierter Gewalt bzw. Drohung.
+
+### MERKSATZ
+
+**Raub = Wegnahme + qualifizierte Gewalt/Drohung.**
+
+---
+
+## §252 StGB – Räuberischer Diebstahl
+
+### WICHTIG
+
+§252 ist **nicht** „Raub“.
+
+Die Norm betrifft den Täter, der bei einem Diebstahl auf frischer Tat betroffen wird und bestimmte Gewalt-/Drohungshandlungen einsetzt, um den Besitz an der gestohlenen Sache zu behalten.
+
+### MERKSATZ
+
+**§252 = Diebstahl bereits geschehen + Gewalt/Drohung zur Beutesicherung.**
+
+---
+
+## §253 StGB – Erpressung
+
+### VEREINFACHTE ERKLÄRUNG
+
+Erpressung betrifft die rechtswidrige Nötigung zu einer vermögensschädigenden Handlung, Duldung oder Unterlassung mit Bereicherungsabsicht.
+
+### MERKSATZ
+
+**§253 = Nötigung + Vermögensnachteil + Bereicherungsabsicht.**
+
+---
+
+## §255 StGB – Räuberische Erpressung
+
+### VEREINFACHTE ERKLÄRUNG
+
+§255 qualifiziert bestimmte Formen der Erpressung durch Anwendung von Gewalt gegen eine Person oder Drohung mit gegenwärtiger Gefahr für Leib oder Leben.
+
+### MERKSATZ
+
+**§255 = Erpressung mit raubähnlichem Gewalt-/Drohungsmittel.**
+
+---
+
+# 13. SACHBESCHÄDIGUNG
+
+## §303 StGB
+
+### OFFIZIELLE ÜBERSCHRIFT
+
+Sachbeschädigung
+
+### AMTLICHER GESETZESTEXT
+
+„(1) Wer rechtswidrig eine fremde Sache beschädigt oder zerstört, wird mit Freiheitsstrafe bis zu zwei Jahren oder mit Geldstrafe bestraft.“
+
+„(2) Ebenso wird bestraft, wer unbefugt das Erscheinungsbild einer fremden Sache nicht nur unerheblich und nicht nur vorübergehend verändert.“
+
+„(3) Der Versuch ist strafbar.“
+
+### VERIFICATION_STATUS
+
+VERIFIED_OFFICIAL_TEXT
+
+### SOURCE
+
+https://www.gesetze-im-internet.de/stgb/__303.html
+
+### MERKSATZ
+
+**§303 = fremde Sache beschädigen, zerstören oder bestimmte erhebliche Veränderungen vornehmen.**
+
+---
+
+## §303c StGB – Strafantrag
+
+### AMTLICHER GESETZESTEXT
+
+„In den Fällen der §§ 303, 303a Abs. 1 und 2 sowie § 303b Abs. 1 bis 3 wird die Tat nur auf Antrag verfolgt, es sei denn, daß die Strafverfolgungsbehörde wegen des besonderen öffentlichen Interesses an der Strafverfolgung ein Einschreiten von Amts wegen für geboten hält.“
+
+### VERIFICATION_STATUS
+
+VERIFIED_OFFICIAL_TEXT
+
+### SOURCE
+
+https://www.gesetze-im-internet.de/stgb/__303c.html
+
+### VEREINFACHTE ERKLÄRUNG
+
+§303c enthält die Strafantragsregelung für die Sachbeschädigung.
+
+### WICHTIG
+
+Nicht verwechseln:
+
+§303
+→ Tatbestand
+
+§303c
+→ Strafantrag / Strafverfolgung
+
+---
+
+# 14. STRAFANTRAG UND OFFIZIALDELIKT
+
+Die Bible muss zwischen drei Kategorien unterscheiden:
+
+## Offizialdelikt
+
+Die Strafverfolgung erfolgt grundsätzlich von Amts wegen.
+
+## Antragsdelikt
+
+Für die Strafverfolgung ist grundsätzlich ein Strafantrag erforderlich, soweit das Gesetz nichts anderes vorsieht.
+
+## Privatklagedelikt
+
+Bestimmte Delikte können unter den gesetzlichen Voraussetzungen im Wege der Privatklage verfolgt werden.
+
+### PRÜFUNGSMERKSATZ
+
+**Tatbestand und Strafverfolgung sind zwei unterschiedliche Fragen.**
+
+---
+
+# 15. PRIVATKLAGE
+
+Für die Lernplattform ist insbesondere §374 StPO relevant.
+
+Dort werden Straftaten aufgeführt, bei denen die Privatklage zulässig ist.
+
+Für die App muss deshalb getrennt gespeichert werden:
+
+OFFENCE
+↓
+Verfolgungsart
+↓
+Strafantrag?
+↓
+Privatklage möglich?
+↓
+Besondere gesetzliche Voraussetzungen?
+
+
+---
+
+# 16. EINHEITLICHES DATENSCHEMA FÜR STRAFTATBESTÄNDE
+
+Jeder relevante Straftatbestand soll in der Datenbank möglichst folgende Felder besitzen:
+
+norm_id
+law
+paragraph
+official_title
+
+official_text
+official_source
+
+legal_good
+
+objective_elements
+subjective_elements
+
+intent_required
+negligence_possible
+
+attempt
+completion
+
+classification
+sentencing_range
+
+application_required
+application_deadline
+official_offence
+private_prosecution
+
+qualifications
+privileges
+
+distinctions
+
+typical_security_context
+
+civil_consequences
+
+possible_authorities
+possible_justifications
+possible_excuses
+
+
+Wichtig:
+
+`official_text` darf ausschließlich den tatsächlich verifizierten Gesetzeswortlaut enthalten.
+
+Die Erklärung gehört in:
+
+`simplified_explanation`
+
+Der Prüfungssatz gehört in:
+
+`exam_mnemonic`
+
+
+---
+
+# 17. GOLDENE TRENNUNG
+
+§242
+→ Straftatbestand
+
+§127 StPO
+→ vorläufige Festnahme
+
+§859 BGB
+→ Besitzerselbsthilfe
+
+§861 BGB
+→ Anspruch auf Wiedereinräumung
+
+§985 BGB
+→ Herausgabeanspruch
+
+§903 BGB
+→ Eigentümerbefugnisse
+
+§32 StGB
+→ Rechtfertigung
+
+§33 StGB
+→ Entschuldigung
+
+§34 StGB
+→ Rechtfertigung
+
+§35 StGB
+→ Entschuldigung
+
+
+Diese Zuordnung darf in der Software nicht vermischt werden.
+
+
+---
+
+# 18. PRÜFUNGSLOGIK STRAFRECHT
+
+Bei einem Sachverhalt:
+
+1. Was ist passiert?
+↓
+2. Welches Rechtsgut ist betroffen?
+↓
+3. Welcher Tatbestand könnte erfüllt sein?
+↓
+4. Sind alle objektiven Merkmale erfüllt?
+↓
+5. Ist Vorsatz/Fahrlässigkeit gegeben?
+↓
+6. Versuch oder Vollendung?
+↓
+7. Rechtswidrigkeit?
+↓
+8. Rechtfertigungsgrund?
+↓
+9. Schuld?
+↓
+10. Entschuldigungsgrund?
+↓
+11. Strafantrag / Offizialdelikt / Privatklage?
+↓
+12. Welche Handlung darf die Sicherheitskraft selbst vornehmen?
+
+
+---
+
+# 19. WICHTIGER SOFTWAREGRUNDSATZ
+
+Die Anwendung darf niemals aus einem einzelnen Tatbestandsnamen automatisch eine Befugnis ableiten.
+
+Falsch:
+
+Diebstahl erkannt
+→ Person festhalten
+
+
+Richtig:
+
+möglicher Diebstahl
+↓
+Tatbestand prüfen
+↓
+Situation der frischen Tat?
+↓
+§127 StPO prüfen
+↓
+Fluchtverdacht?
+↓
+Identität nicht sofort feststellbar?
+↓
+Verhältnismäßigkeit
+↓
+zulässige Handlung
+
+
+---
+
+# 20. STATUS DIESES TEILS
+
+Dieser Teil bildet den strafrechtlichen Kern der V5.3.
+
+Die konkreten Unterrichtsfälle sind bewusst nicht Bestandteil der Knowledge Base.
+
+Die abstrakte Entscheidungslogik bleibt Bestandteil der Bible.
+
+
+---
+
+# TEIL 2 – STPO, BESITZ, EIGENTUM UND SELBSTHILFE
+
+---
+
+# 21. §127 STPO – VORLÄUFIGE FESTNAHME
+
+## RECHTSNATUR
+
+§127 StPO betrifft die **vorläufige Festnahme**.
+
+Es handelt sich nicht um eine allgemeine polizeiliche Befugnis und auch nicht um einen allgemeinen Anspruch.
+
+Es ist eine gesetzliche Jedermann-Befugnis unter engen Voraussetzungen.
+
+
+---
+
+## PRÜFUNGSLOGIK
+
+(
+    betroffen_auf_frischer_tat
+    ODER
+    verfolgt_auf_frischer_tat
+)
+UND
+(
+    fluchtverdacht
+    ODER
+    identitaet_nicht_sofort_feststellbar
+)
+
+
+### BESONDERS WICHTIG
+
+Die Vorschrift ist eng am konkreten Sachverhalt zu prüfen.
+
+Nicht jeder Verdacht rechtfertigt automatisch eine Festnahme.
+
+
+---
+
+## ABGRENZUNG
+
+§127 StPO
+→ strafprozessuale vorläufige Festnahme
+
+§859 BGB
+→ Besitzerselbsthilfe
+
+§229 BGB
+→ zivilrechtliche Selbsthilfe
+
+
+Diese Normen haben unterschiedliche Voraussetzungen und unterschiedliche Zwecke.
+
+
+---
+
+# 22. §128 STPO – VORFÜHRUNG BEI VORLÄUFIGER FESTNAHME
+
+### VEREINFACHTE ERKLÄRUNG
+
+Wer aufgrund gesetzlicher Voraussetzungen vorläufig festgenommen wurde und nicht freigelassen wird, muss unverzüglich, spätestens am Tag nach der Festnahme, dem zuständigen Gericht vorgeführt werden.
+
+### §34a-BEZUG
+
+Eine Sicherheitskraft entscheidet nicht selbst über Untersuchungshaft.
+
+Die Sicherheitskraft kann unter den Voraussetzungen des §127 StPO vorläufig festnehmen.
+
+Die weitere strafprozessuale Behandlung erfolgt durch die zuständigen staatlichen Stellen.
+
+### MERKSATZ
+
+**§127 = vorläufig festnehmen.**
+
+**§128 = gerichtliche Vorführung.**
+
+
+---
+
+# 23. BESITZ UND EIGENTUM
+
+## §854 BGB – ERWERB DES BESITZES
+
+### AMTLICHER GESETZESTEXT
+
+„(1) Der Besitz einer Sache wird durch die Erlangung der tatsächlichen Gewalt über die Sache erworben.“
+
+„(2) Die Einigung des bisherigen Besitzers und des Erwerbers genügt zum Erwerb, wenn der Erwerber in der Lage ist, die Gewalt über die Sache auszuüben.“
+
+### VERIFICATION_STATUS
+
+VERIFIED_OFFICIAL_TEXT
+
+### SOURCE
+
+https://www.gesetze-im-internet.de/bgb/__854.html
+
+### SYSTEMATIK
+
+Besitz knüpft grundsätzlich an die tatsächliche Sachherrschaft an.
+
+### §34a-BEZUG
+
+Für Sicherheitskräfte ist zunächst zu unterscheiden:
+
+- Wer besitzt die Sache?
+- Wer ist Eigentümer?
+- Wer hat ein Recht zum Besitz?
+
+Diese Fragen können unterschiedliche Personen betreffen.
+
+
+---
+
+# 24. §855 BGB – BESITZDIENER
+
+### AMTLICHER GESETZESTEXT
+
+„Übt jemand die tatsächliche Gewalt über eine Sache für einen anderen in dessen Haushalt oder Erwerbsgeschäft oder in einem ähnlichen Verhältnis aus, vermöge dessen er den sich auf die Sache beziehenden Weisungen des anderen Folge zu leisten hat, so ist nur der andere Besitzer.“
+
+### VERIFICATION_STATUS
+
+VERIFIED_OFFICIAL_TEXT
+
+### SOURCE
+
+https://www.gesetze-im-internet.de/bgb/__855.html
+
+### VEREINFACHTE ERKLÄRUNG
+
+Der Besitzdiener übt die tatsächliche Gewalt über eine Sache für einen anderen aus und ist dabei dessen Weisungen unterworfen.
+
+### §34a-BEZUG
+
+Ein Mitarbeiter eines Unternehmens kann unter den gesetzlichen Voraussetzungen Besitzdiener sein.
+
+Das ist für §860 BGB relevant.
+
+### MERKSATZ
+
+**§855 = tatsächliche Gewalt für einen anderen.**
+
+
+---
+
+# 25. §858 BGB – VERBOTENE EIGENMACHT
+
+### AMTLICHER GESETZESTEXT
+
+„(1) Wer dem Besitzer ohne dessen Willen den Besitz entzieht oder ihn im Besitz stört, handelt, sofern nicht das Gesetz die Entziehung oder die Störung gestattet, widerrechtlich (verbotene Eigenmacht).“
+
+„(2) Der durch verbotene Eigenmacht erlangte Besitz ist fehlerhaft. Die Fehlerhaftigkeit muss der Nachfolger im Besitz gegen sich gelten lassen, wenn er Erbe des Besitzers ist oder die Fehlerhaftigkeit des Besitzes seines Vorgängers bei dem Erwerb kennt.“
+
+### VERIFICATION_STATUS
+
+VERIFIED_OFFICIAL_TEXT
+
+### SOURCE
+
+https://www.gesetze-im-internet.de/bgb/__858.html
+
+### VEREINFACHTE ERKLÄRUNG
+
+Verbotene Eigenmacht liegt insbesondere vor, wenn jemand dem Besitzer ohne dessen Willen den Besitz entzieht oder den Besitz ohne gesetzliche Gestattung stört.
+
+### ZENTRALE FRAGE
+
+Besitz?
+↓
+Entzug oder Störung?
+↓
+ohne Willen?
+↓
+keine gesetzliche Gestattung?
+↓
+verbotene Eigenmacht?
+
+
+### MERKSATZ
+
+**§858 = verbotener Eingriff in fremden Besitz.**
+
+
+---
+
+# 26. §859 BGB – BESITZERSSELBSTHILFE
+
+### AMTLICHER GESETZESTEXT
+
+„Der Besitzer darf sich verbotener Eigenmacht mit Gewalt erwehren.“
+
+„Wird eine bewegliche Sache dem Besitzer mittels verbotener Eigenmacht weggenommen, so darf er sie dem auf frischer Tat betroffenen oder verfolgten Täter mit Gewalt wieder abnehmen.“
+
+„Wird dem Besitzer eines Grundstücks der Besitz durch verbotene Eigenmacht entzogen, so darf er sofort nach der Entziehung sich des Besitzes durch Entsetzung des Täters wieder bemächtigen.“
+
+„Die gleichen Rechte stehen dem Besitzer gegen denjenigen zu, welcher nach §858 Abs. 2 die Fehlerhaftigkeit des Besitzes gegen sich gelten lassen muss.“
+
+### VERIFICATION_STATUS
+
+VERIFIED_OFFICIAL_TEXT
+
+### SOURCE
+
+https://www.gesetze-im-internet.de/bgb/__859.html
+
+### ENTSCHEIDEND
+
+§859 ist eine **unmittelbare Besitzerselbsthilfe**.
+
+Er ist kein allgemeiner Freibrief zur Gewaltanwendung.
+
+### MERKSATZ
+
+**§859 = Besitzer darf sich unmittelbar gegen verbotene Eigenmacht wehren.**
+
+
+---
+
+# 27. §860 BGB – BESITZDIENER
+
+### AMTLICHER GESETZESTEXT
+
+„Zur Ausübung der dem Besitzer nach §859 zustehenden Rechte ist auch derjenige befugt, welcher die tatsächliche Gewalt nach §855 für den Besitzer ausübt.“
+
+### VERIFICATION_STATUS
+
+VERIFIED_OFFICIAL_TEXT
+
+### SOURCE
+
+https://www.gesetze-im-internet.de/bgb/__860.html
+
+### VEREINFACHTE ERKLÄRUNG
+
+Unter den Voraussetzungen der §§855 und 859 kann der Besitzdiener die entsprechenden Rechte des Besitzers ausüben.
+
+### WICHTIG
+
+§860 ist **keine allgemeine Festnahmebefugnis**.
+
+### MERKSATZ
+
+**§860 = Besitzdiener darf §859-Rechte ausüben.**
+
+
+---
+
+# 28. §861 BGB – BESITZENTZIEHUNG
+
+### TYP
+
+**Anspruch**
+
+### GESETZ
+
+Bürgerliches Gesetzbuch (BGB)
+
+### PARAGRAPH
+
+§861 BGB
+
+### AMTLICHER TITEL
+
+Anspruch wegen Besitzentziehung
+
+### AMTLICHER GESETZESTEXT
+
+„(1) Wird der Besitz durch verbotene Eigenmacht dem Besitzer entzogen, so kann dieser die Wiedereinräumung des Besitzes von demjenigen verlangen, welcher ihm gegenüber fehlerhaft besitzt.“
+
+„(2) Der Anspruch ist ausgeschlossen, wenn der entzogene Besitz dem gegenwärtigen Besitzer oder dessen Rechtsvorgänger gegenüber fehlerhaft war und in dem letzten Jahre vor der Entziehung erlangt worden ist.“
+
+### VERIFICATION_STATUS
+
+VERIFIED_OFFICIAL_TEXT
+
+### SOURCE
+
+https://www.gesetze-im-internet.de/bgb/__861.html
+
+### RECHTSNATUR
+
+**Anspruch**
+
+§861 BGB ist keine unmittelbare Selbsthilfebefugnis.
+
+Die Norm beantwortet grundsätzlich die Frage:
+
+> **Was kann der Besitzer verlangen, wenn ihm der Besitz durch verbotene Eigenmacht entzogen wurde?**
+
+### VORAUSSETZUNGEN
+
+1. Besitz des Anspruchstellers
+2. Entziehung des Besitzes
+3. Entziehung durch verbotene Eigenmacht
+4. gegenwärtiger Besitzer besitzt dem Anspruchsteller gegenüber fehlerhaft
+5. keine Ausschlusswirkung nach §861 Abs.2 BGB
+
+### RECHTSFOLGE
+
+Der Anspruchsteller kann die **Wiedereinräumung des Besitzes** verlangen.
+
+### VEREINFACHTE ERKLÄRUNG
+
+Nach einer Besitzentziehung kann der bisherige Besitzer unter den gesetzlichen Voraussetzungen Wiedereinräumung des Besitzes verlangen.
+
+### WICHTIGE ABGRENZUNG
+
+§861 BGB
+→ Was kann ich verlangen?
+
+§859 BGB
+→ Was darf ich als Besitzer unmittelbar selbst tun?
+
+### MERKSATZ
+
+**§861 = Besitz zurückverlangen.**
+---
+
+# 29. §862 BGB – BESITZSTÖRUNG
+
+### TYP
+
+**Anspruch**
+
+### AMTLICHER GESETZESTEXT
+
+„(1) Wird der Besitzer durch verbotene Eigenmacht im Besitz gestört, so kann er von dem Störer die Beseitigung der Störung verlangen. Sind weitere Störungen zu besorgen, so kann der Besitzer auf Unterlassung klagen.“
+
+„(2) Der Anspruch ist ausgeschlossen, wenn der Besitzer dem Störer oder dessen Rechtsvorgänger gegenüber fehlerhaft besitzt und der Besitz in dem letzten Jahre vor der Störung erlangt worden ist.“
+
+### VERIFICATION_STATUS
+
+VERIFIED_OFFICIAL_TEXT
+
+### SOURCE
+
+https://www.gesetze-im-internet.de/bgb/__862.html
+
+### VEREINFACHTE ERKLÄRUNG
+
+Bei einer Besitzstörung kann der Besitzer unter den gesetzlichen Voraussetzungen Beseitigung und bei Wiederholungsgefahr Unterlassung verlangen.
+
+### MERKSATZ
+
+**§862 = Besitzstörung → Beseitigung / Unterlassung.**
+
+
+---
+
+# 30. §903 BGB – BEFUGNISSE DES EIGENTÜMERS
+
+### AMTLICHER GESETZESTEXT
+
+„Der Eigentümer einer Sache kann, soweit nicht das Gesetz oder Rechte Dritter entgegenstehen, mit der Sache nach Belieben verfahren und andere von jeder Einwirkung ausschließen. Der Eigentümer eines Tieres hat bei der Ausübung seiner Befugnisse die besonderen Vorschriften zum Schutz der Tiere zu beachten.“
+
+### VERIFICATION_STATUS
+
+VERIFIED_OFFICIAL_TEXT
+
+### SOURCE
+
+https://www.gesetze-im-internet.de/bgb/__903.html
+
+### VEREINFACHTE ERKLÄRUNG
+
+Der Eigentümer darf grundsätzlich über die Sache verfügen und andere ausschließen, soweit keine gesetzlichen Schranken oder Rechte Dritter entgegenstehen.
+
+### WICHTIGE ABGRENZUNG
+
+§903 ist **kein Herausgabeanspruch**.
+
+### MERKSATZ
+
+**§903 = Eigentümerbefugnis.**
+
+
+---
+
+# 31. §985 BGB – HERAUSGABEANSPRUCH
+
+### TYP
+
+**Anspruch**
+
+### AMTLICHER GESETZESTEXT
+
+„Der Eigentümer kann von dem Besitzer die Herausgabe der Sache verlangen.“
+
+### VERIFICATION_STATUS
+
+VERIFIED_OFFICIAL_TEXT
+
+### SOURCE
+
+https://www.gesetze-im-internet.de/bgb/__985.html
+
+### VEREINFACHTE ERKLÄRUNG
+
+Der Eigentümer kann grundsätzlich vom Besitzer die Herausgabe der Sache verlangen.
+
+### PRÜFUNG
+
+Eigentümer?
+↓
+Besitzer?
+↓
+Recht zum Besitz?
+↓
+§986?
+↓
+§985?
+
+
+### MERKSATZ
+
+**§985 = Eigentümer verlangt Sache vom Besitzer heraus.**
+
+
+---
+
+# 32. §986 BGB – RECHT ZUM BESITZ
+
+### TYP
+
+**Einwendung / Recht zum Besitz**
+
+### AMTLICHER GESETZESTEXT
+
+„(1) Der Besitzer kann die Herausgabe der Sache verweigern, wenn er oder der mittelbare Besitzer, von dem er sein Recht zum Besitz ableitet, dem Eigentümer gegenüber zum Besitz berechtigt ist. Ist der mittelbare Besitzer dem Eigentümer gegenüber zur Überlassung des Besitzes an den Besitzer nicht befugt, so kann der Eigentümer von dem Besitzer die Herausgabe der Sache an den mittelbaren Besitzer oder, wenn dieser den Besitz nicht wieder übernehmen kann oder will, an sich selbst verlangen.“
+
+„(2) Der Besitzer einer Sache, die nach § 931 durch Abtretung des Anspruchs auf Herausgabe veräußert worden ist, kann dem neuen Eigentümer die Einwendungen entgegensetzen, welche ihm gegen den abgetretenen Anspruch zustehen.“
+
+### VERIFICATION_STATUS
+
+VERIFIED_OFFICIAL_TEXT
+
+### SOURCE
+
+https://www.gesetze-im-internet.de/bgb/__986.html
+
+### VEREINFACHTE ERKLÄRUNG
+
+Der Besitzer kann dem Herausgabeanspruch insbesondere entgegenhalten, dass ihm ein Recht zum Besitz zusteht.
+
+### MERKSATZ
+
+**§985 fragt: Herausgabe?**
+
+**§986 fragt: Darf der Besitzer die Sache behalten?**
+
+
+---
+
+# 33. §1004 BGB – BESEITIGUNGS- UND UNTERLASSUNGSANSPRUCH
+
+### TYP
+
+**Anspruch**
+
+### AMTLICHER GESETZESTEXT
+
+„(1) Wird das Eigentum in anderer Weise als durch Entziehung oder Vorenthaltung des Besitzes beeinträchtigt, so kann der Eigentümer von dem Störer die Beseitigung der Beeinträchtigung verlangen. Sind weitere Beeinträchtigungen zu besorgen, so kann der Eigentümer auf Unterlassung klagen.“
+
+„(2) Der Anspruch ist ausgeschlossen, wenn der Eigentümer zur Duldung verpflichtet ist.“
+
+### VERIFICATION_STATUS
+
+VERIFIED_OFFICIAL_TEXT
+
+### SOURCE
+
+https://www.gesetze-im-internet.de/bgb/__1004.html
+
+### VEREINFACHTE ERKLÄRUNG
+
+Bei einer Eigentumsbeeinträchtigung können unter den gesetzlichen Voraussetzungen Beseitigung und bei Wiederholungsgefahr Unterlassung verlangt werden.
+
+### MERKSATZ
+
+**§1004 = Eigentumsstörung → Beseitigung / Unterlassung.**
+
+
+---
+
+# 34. §227 BGB – NOTWEHR
+
+### AMTLICHER GESETZESTEXT
+
+„(1) Eine durch Notwehr gebotene Handlung ist nicht widerrechtlich.“
+
+„(2) Notwehr ist diejenige Verteidigung, welche erforderlich ist, um einen gegenwärtigen rechtswidrigen Angriff von sich oder einem anderen abzuwenden.“
+
+### VERIFICATION_STATUS
+
+VERIFIED_OFFICIAL_TEXT
+
+### SOURCE
+
+https://www.gesetze-im-internet.de/bgb/__227.html
+
+### SYSTEMATIK
+
+§227 BGB enthält die zivilrechtliche Notwehrregelung.
+
+Sie ist von §32 StGB zu unterscheiden.
+
+§227 BGB
+→ zivilrechtliche Notwehr
+
+§32 StGB
+→ strafrechtliche Notwehr
+
+
+---
+
+# 35. §228 BGB – DEFENSIVER NOTSTAND
+
+### AMTLICHER GESETZESTEXT
+
+„Wer eine fremde Sache beschädigt oder zerstört, um eine durch sie drohende Gefahr von sich oder einem anderen abzuwenden, handelt nicht widerrechtlich, wenn die Beschädigung oder die Zerstörung zur Abwendung der Gefahr erforderlich ist und der Schaden nicht außer Verhältnis zu der Gefahr steht. Hat der Handelnde die Gefahr verschuldet, so ist er zum Schadensersatz verpflichtet.“
+
+### VERIFICATION_STATUS
+
+VERIFIED_OFFICIAL_TEXT
+
+### SOURCE
+
+https://www.gesetze-im-internet.de/bgb/__228.html
+
+### PRÜFUNGSFRAGE
+
+**Woher kommt die Gefahr?**
+
+Bei §228 geht die Gefahr von der Sache aus.
+
+### MERKSATZ
+
+**§228 = Gefahr geht von der Sache aus.**
+
+
+---
+
+# 36. §229 BGB – SELBSTHILFE
+
+### AMTLICHER GESETZESTEXT
+
+„Wer zum Zwecke der Selbsthilfe eine Sache wegnimmt, zerstört oder beschädigt oder wer zum Zwecke der Selbsthilfe einen Verpflichteten, welcher der Flucht verdächtig ist, festnimmt oder den Widerstand des Verpflichteten gegen eine Handlung, die dieser zu dulden verpflichtet ist, beseitigt, handelt nicht widerrechtlich, wenn obrigkeitliche Hilfe nicht rechtzeitig zu erlangen ist und ohne sofortiges Eingreifen die Gefahr besteht, dass die Verwirklichung des Anspruchs vereitelt oder wesentlich erschwert werde.“
+
+### VERIFICATION_STATUS
+
+VERIFIED_OFFICIAL_TEXT
+
+### SOURCE
+
+https://www.gesetze-im-internet.de/bgb/__229.html
+
+### VEREINFACHTE ERKLÄRUNG
+
+§229 BGB ist eine besondere zivilrechtliche Selbsthilferegelung.
+
+Voraussetzungen sind insbesondere:
+
+- Anspruch
+- obrigkeitliche Hilfe nicht rechtzeitig erreichbar
+- Gefahr der Vereitelung oder wesentlichen Erschwerung
+- sofortiges Eingreifen
+
+### MERKSATZ
+
+**§229 = Anspruch sichern, wenn staatliche Hilfe nicht rechtzeitig erreichbar ist.**
+
+
+---
+
+# 37. §230 BGB – GRENZEN DER SELBSTHILFE
+
+### AMTLICHER GESETZESTEXT
+
+„(1) Die Selbsthilfe darf nicht weiter gehen, als zur Abwendung der Gefahr erforderlich ist.“
+
+„(2) Im Falle der Wegnahme von Sachen ist, sofern nicht Zwangsvollstreckung erwirkt wird, der dingliche Arrest zu beantragen.“
+
+„(3) Im Falle der Festnahme des Verpflichteten ist, sofern er nicht wieder in Freiheit gesetzt wird, der persönliche Sicherheitsarrest bei dem Amtsgericht zu beantragen, in dessen Bezirk die Festnahme erfolgt ist; der Verpflichtete ist unverzüglich dem Gericht vorzuführen.“
+
+„(4) Wird der Arrestantrag verzögert oder abgelehnt, so hat die Rückgabe der weggenommenen Sachen und die Freilassung des Festgenommenen unverzüglich zu erfolgen.“
+
+### VERIFICATION_STATUS
+
+VERIFIED_OFFICIAL_TEXT
+
+### SOURCE
+
+https://www.gesetze-im-internet.de/bgb/__230.html
+
+### MERKSATZ
+
+**§229 erlaubt Selbsthilfe – §230 begrenzt sie.**
+
+
+---
+
+# 38. §231 BGB – IRRTÜMLICHE SELBSTHILFE
+
+### AMTLICHER GESETZESTEXT
+
+„Wer eine der in § 229 bezeichneten Handlungen in der irrigen Annahme vornimmt, dass die für den Ausschluss der Widerrechtlichkeit erforderlichen Voraussetzungen vorhanden seien, ist dem anderen Teil zum Schadensersatz verpflichtet, auch wenn der Irrtum nicht auf Fahrlässigkeit beruht.“
+
+### VERIFICATION_STATUS
+
+VERIFIED_OFFICIAL_TEXT
+
+### SOURCE
+
+https://www.gesetze-im-internet.de/bgb/__231.html
+
+### VEREINFACHTE ERKLÄRUNG
+
+§231 regelt die Folgen einer Selbsthilfe, wenn sich die Voraussetzungen später als nicht gegeben herausstellen.
+
+### §34a-BEZUG
+
+Eine Sicherheitskraft darf nicht einfach davon ausgehen, dass eine Selbsthilfebefugnis besteht.
+
+Die Voraussetzungen müssen vor dem Eingriff geprüft werden.
+
+
+---
+
+# 39. §904 BGB – AGGRESSIVER NOTSTAND
+
+### AMTLICHER GESETZESTEXT
+
+„Der Eigentümer einer Sache ist nicht berechtigt, die Einwirkung eines anderen auf die Sache zu verbieten, wenn die Einwirkung zur Abwendung einer gegenwärtigen Gefahr notwendig und der drohende Schaden gegenüber dem aus der Einwirkung dem Eigentümer entstehenden Schaden unverhältnismäßig groß ist. Der Eigentümer kann Ersatz des ihm entstehenden Schadens verlangen.“
+
+### VERIFICATION_STATUS
+
+VERIFIED_OFFICIAL_TEXT
+
+### SOURCE
+
+https://www.gesetze-im-internet.de/bgb/__904.html
+
+### VEREINFACHTE ERKLÄRUNG
+
+Hier wird auf eine fremde Sache eingewirkt, um eine gegenwärtige Gefahr abzuwenden.
+
+### MERKSATZ
+
+**§904 = fremde Sache benutzen, um größere gegenwärtige Gefahr abzuwenden.**
+
+
+---
+
+# 40. ZENTRALE BESITZ-/EIGENTUMSMATRIX
+
+| Frage | Normtyp | Beispiel |
+|---|---|---|
+| Wer besitzt? | Besitzrecht | §854 BGB |
+| Wer übt Besitz für einen anderen aus? | Besitzdiener | §855 BGB |
+| Was ist verbotene Eigenmacht? | Besitzschutz | §858 BGB |
+| Was darf der Besitzer sofort tun? | Selbsthilfe | §859 BGB |
+| Was darf der Besitzdiener tun? | Selbsthilfe | §860 BGB |
+| Was kann der frühere Besitzer verlangen? | Anspruch | §861 BGB |
+| Was kann der gestörte Besitzer verlangen? | Anspruch | §862 BGB |
+| Was darf der Eigentümer grundsätzlich tun? | Eigentümerbefugnis | §903 BGB |
+| Was kann der Eigentümer verlangen? | Anspruch | §985 BGB |
+| Darf der Besitzer die Sache behalten? | Recht zum Besitz | §986 BGB |
+| Wie kann Eigentumsstörung beseitigt werden? | Anspruch | §1004 BGB |
+
+
+---
+
+# 41. KERNABGRENZUNGEN
+
+## §859 ≠ §861
+
+§859
+→ Was darf ich unmittelbar selbst tun?
+
+§861
+→ Was kann ich rechtlich verlangen?
+
+
+## §860 ≠ §859
+
+§859
+→ Besitzer
+
+§860
+→ Besitzdiener
+
+
+## §903 ≠ §985
+
+§903
+→ Eigentümerbefugnis
+
+§985
+→ Herausgabeanspruch
+
+
+## §985 ≠ §986
+
+§985
+→ Anspruch
+
+§986
+→ Recht zum Besitz / Einwendung
+
+
+## §904 ≠ §228
+
+§228
+→ Gefahr geht von der Sache aus
+
+§904
+→ Einwirkung auf fremde Sache zur Gefahrenabwehr
+
+
+## §229 ≠ §127 StPO
+
+§229 BGB
+→ zivilrechtliche Selbsthilfe
+
+§127 StPO
+→ strafprozessuale vorläufige Festnahme
+
+
+---
+
+# 42. PRÜFUNGSFRAGE: „DARF ICH EINGREIFEN?“
+
+Nicht:
+
+> „Welche Vorschrift klingt passend?“
+
+Sondern:
+
+Was ist passiert?
+↓
+Welches Rechtsgut / welcher Rechtszustand ist betroffen?
+↓
+Wer ist Anspruchsinhaber?
+↓
+Welcher Anspruch besteht?
+↓
+Gibt es eine eigene Befugnis?
+↓
+Welche konkrete Handlung ist erlaubt?
+↓
+Welche Grenzen gelten?
+↓
+Ist die Handlung erforderlich und verhältnismäßig?
+
+
+---
+
+# 43. SICHERHEITSDIENST ≠ STAATLICHE HOHEITSTRÄGER
+
+Grundsatz:
+
+Sicherheitsmitarbeiter
+↓
+Privatrechtliche Befugnisse
++
+gesetzlich eingeräumte Befugnisse
+
+
+Nicht automatisch:
+
+Sicherheitsmitarbeiter
+=
+Polizei
+
+
+Insbesondere §127 StPO ist nicht deshalb anwendbar, weil eine Person eine Uniform trägt oder für ein Unternehmen im Sicherheitsdienst arbeitet.
+
+
+---
+
+# 44. SOFTWARE-DATENMODELL FÜR DIESE NORMEN
+
+LEGAL_NORM
+ ├── law
+ ├── paragraph
+ ├── title
+ ├── official_text
+ ├── source
+ ├── effective_date
+ └── verification_status
+
+LEGAL_CLAIM
+ ├── claimant
+ ├── respondent
+ ├── object
+ ├── prerequisites
+ └── legal_consequence
+
+LEGAL_AUTHORITY
+ ├── holder
+ ├── prerequisites
+ ├── permitted_action
+ ├── limits
+ └── proportionality
+
+JUSTIFICATION
+ ├── trigger
+ ├── requirements
+ ├── permitted_action
+ └── limits
+
+EXCUSE
+ ├── requirements
+ └── legal_consequence
+
+
+---
+
+# 45. DIDAKTISCHE AUSGABE
+
+Die App soll dem Lernenden nicht nur eine Normnummer zeigen.
+
+Beispiel:
+
+RECHTLICHE FRAGE
+↓
+Welche Art von Rechtsinstrument?
+
+[ Anspruch ]
+[ Befugnis ]
+[ Rechtfertigung ]
+[ Entschuldigung ]
+[ Rechtsfolge ]
+
+
+Erst danach wird die konkrete Norm angezeigt.
+
+
+---
+
+# 46. GOLDENE REGEL
+
+> **§985 BGB beantwortet nicht automatisch die Frage, ob ich die Sache selbst mit Gewalt zurücknehmen darf.**
+
+Ebenso:
+
+> **§861 BGB beantwortet nicht automatisch die Frage, ob ich den Besitz selbst mit Gewalt wiederherstellen darf.**
+
+Und:
+
+> **Ein Straftatverdacht beantwortet nicht automatisch die Frage, ob eine Sicherheitskraft eine Person festhalten darf.**
+
+
+---
+
+# 47. ZIEL FÜR DIE §34a-APP
+
+Die Software soll deshalb drei Ebenen auseinanderhalten:
+
+EBENE 1
+Was ist rechtlich passiert?
+
+EBENE 2
+Welche Rechtsfolge besteht?
+
+EBENE 3
+Was darf die konkrete Person selbst tun?
+
+                     ▼
+              ZULÄSSIGE HANDLUNG
+                     │
+                     ▼
+                RECHTSFOLGE
+
+
+---
+
+# 72. MUSTER DER JURISTISCHEN ENTSCHEIDUNG
+
+Jeder Fall soll grundsätzlich nach folgendem Muster aufgebaut werden:
+
+## 1. SACHVERHALT
+
+Was ist tatsächlich passiert?
+
+Nur Tatsachen erfassen.
+
+---
+
+## 2. RECHTLICHE FRAGE
+
+Was muss rechtlich entschieden werden?
+
+Beispiele:
+
+- Liegt eine Straftat vor?
+- Besteht ein Anspruch?
+- Darf die Person festgehalten werden?
+- Darf eine Sache weggenommen werden?
+- Darf Gewalt angewendet werden?
+- Besteht ein Rechtfertigungsgrund?
+
+---
+
+## 3. RECHTSGRUNDLAGE
+
+Welche konkrete Norm kommt in Betracht?
+
+---
+
+## 4. VORAUSSETZUNGEN
+
+Welche Tatbestandsmerkmale bzw. Voraussetzungen müssen erfüllt sein?
+
+---
+
+## 5. SUBSUMTION
+
+Welche konkreten Tatsachen erfüllen welche Voraussetzungen?
+
+---
+
+## 6. RECHTSFOLGE
+
+Was folgt daraus rechtlich?
+
+---
+
+## 7. KONKRETE HANDLUNG
+
+Was darf die Sicherheitskraft jetzt tatsächlich tun?
+
+---
+
+## 8. GRENZEN
+
+Welche Grenzen gelten für die Handlung?
+
+---
+
+# 73. CLAIM / AUTHORITY / JUSTIFICATION / EXCUSE
+
+Die vier Kernkategorien müssen in der Software als eigene Datentypen behandelt werden.
+
+## CLAIM
+
+Frage:
+
+> **Wer kann von wem was verlangen?**
+
+Beispiele:
+
+- §812 BGB
+- §823 BGB
+- §861 BGB
+- §862 BGB
+- §985 BGB
+- §1004 BGB
+
+---
+
+## AUTHORITY
+
+Frage:
+
+> **Was darf ich selbst tun?**
+
+Beispiele:
+
+- §127 StPO
+- §859 BGB
+- §860 BGB
+- §229 BGB
+
+---
+
+## JUSTIFICATION
+
+Frage:
+
+> **Warum ist die Handlung trotz Tatbestandsmäßigkeit nicht rechtswidrig?**
+
+Beispiele:
+
+- §32 StGB
+- §34 StGB
+- §227 BGB
+- §228 BGB
+- §904 BGB
+
+---
+
+## EXCUSE
+
+Frage:
+
+> **Warum entfällt trotz rechtswidriger Handlung die Schuld?**
+
+Beispiele:
+
+- §33 StGB
+- §35 StGB
+
+
+---
+
+# 74. FALLENGINE – ABSTRAKTE FALLSTRUKTUR
+
+Die Fallengine darf keine konkreten Unterrichtsfälle enthalten.
+
+Sie arbeitet mit abstrakten Variablen.
+
+Beispiel:
+
+```text
+PERSON_A
+PERSON_B
+SACHE_X
+ORT_X
+HANDLUNG_X
+ZEITPUNKT_X
+GEFAHR_X
+ANGRIFF_X
+ANSPRUCH_X
+Weiter:
+
+IF
+Person bei Straftat betroffen
+AND
+frische Tat
+AND
+Fluchtverdacht
+OR
+Identität nicht sofort feststellbar
+
+THEN
+§127 StPO prüfen
+
+Wichtig:
+
+**„prüfen“ bedeutet nicht automatisch „liegt vor“.**
+
+---
+
+# 60. PROPORTIONALITÄT
+
+Bei jeder tatsächlichen Intervention muss die Software mindestens unterscheiden:
+
+
+Geeignetheit
+↓
+erforderlich?
+↓
+angemessen?
+
+
+Dabei darf Verhältnismäßigkeit nicht als pauschale Freigabeformel verwendet werden.
+
+Zuerst muss eine **grundsätzliche Rechtsgrundlage** bestehen.
+
+---
+
+# 61. AKTIONEN
+
+Die Datenbank sollte Handlungen getrennt speichern.
+
+Beispiel:
+
+
+ACTION
+- ansprechen
+- auffordern
+- Hausverbot kommunizieren
+- Person begleiten
+- Gegenstand sichern
+- festhalten
+- durchsuchen
+- körperlich abwehren
+- Sache zurücknehmen
+- Polizei verständigen
+
+
+Jede Aktion bekommt:
+
+
+legal_basis
+prerequisites
+limits
+proportionality
+prohibited_conditions
+
+
+---
+
+# 62. VERBOTENE AUTOMATISMEN
+
+Die Software darf folgende Kurz shortcuts nicht verwenden:
+
+
+Diebstahl
+→ immer festhalten
+
+Hausfriedensbruch
+→ immer Gewalt anwenden
+
+Eigentum
+→ immer Sache wegnehmen
+
+Besitz
+→ immer Gewalt erlaubt
+
+Gefahr
+→ immer Notstand
+
+Angriff
+→ immer Notwehr
+
+Uniform
+→ Polizeibefugnisse
+
+
+Jede dieser Aussagen ist ohne weitere Prüfung zu pauschal.
+
+---
+
+# 63. DATENMODELL
+
+## LEGAL_NORM
+
+
+nid
+law
+paragraph
+official_title
+official_text
+source_url
+source_date
+effective_from
+effective_until
+verification_status
+
+
+---
+
+## OFFENCE
+
+
+nid
+norm_id
+legal_good
+objective_elements
+subjective_elements
+intent
+negligence
+attempt
+completion
+sentencing
+classification
+application
+official_prosecution
+private_prosecution
+qualifications
+privileges
+distinctions
+
+
+---
+
+## LEGAL_CLAIM
+
+
+nid
+norm_id
+claimant
+respondent
+object
+requirements
+exceptions
+legal_consequence
+
+
+---
+
+## LEGAL_AUTHORITY
+
+
+nid
+norm_id
+holder
+trigger
+requirements
+permitted_action
+limits
+proportionality
+
+
+---
+
+## JUSTIFICATION
+
+
+nid
+norm_id
+trigger
+requirements
+scope
+limits
+
+
+---
+
+## EXCUSE
+
+
+nid
+norm_id
+requirements
+legal_effect
+
+
+---
+
+## SCENARIO
+
+Konkrete Unterrichtsfälle werden nicht in die Bible eingebaut.
+
+Die App kann sie später separat speichern:
+
+
+SCENARIO
+↓
+FACT
+↓
+LEGAL_RULE
+↓
+LEGAL_RESULT
+↓
+EXPLANATION
+
+
+---
+
+# 64. SOURCE-MODELL
+
+Jede Norm soll eine Quelle besitzen:
+
+
+SOURCE
+- source_id
+- publisher
+- url
+- law
+- paragraph
+- retrieved_at
+- effective_date
+- verification_status
+
+
+Für Gesetzestexte:
+
+
+publisher = Bundesministerium der Justiz /
+            Bundesamt für Justiz
+source = Gesetze im Internet
+
+
+---
+
+# 65. OFFIZIELLER GESETZESTEXT VS. ERKLÄRUNG
+
+Strikte Trennung:
+
+
+AMTLICHER GESETZESTEXT
+↓
+exakter Wortlaut
+
+VEREINFACHTE ERKLÄRUNG
+↓
+didaktische Darstellung
+
+PRÜFUNGSMERKSATZ
+↓
+Kurzform zum Lernen
+
+
+Ein Merksatz darf niemals als Gesetzestext gespeichert werden.
+
+---
+
+# 66. FEHLERREGISTER
+
+Jede festgestellte Korrektur soll nachvollziehbar sein:
+
+
+ERROR_ID
+OLD_VALUE
+CORRECT_VALUE
+NORM
+ERROR_TYPE
+SEVERITY
+SOURCE
+STATUS
+
+
+Beispiel:
+
+
+ERR-001
+Norm: §132 StGB
+Problem:
+falsch als „schwerer Hausfriedensbruch“ bezeichnet
+
+Korrektur:
+§132 StGB = Amtsanmaßung
+
+Quelle:
+Gesetze im Internet
+
+Status:
+CORRECTED
+
+
+---
+
+# 67. QA-CHECKLISTE
+
+Vor Freigabe einer Version:
+
+### Gesetzestext
+
+- [ ] Paragraph stimmt
+- [ ] offizieller Titel stimmt
+- [ ] Wortlaut stammt aus amtlicher Quelle
+- [ ] keine Übersetzung
+- [ ] keine englischen Fragmente
+- [ ] keine Paraphrase im Feld `official_text`
+- [ ] Absatzstruktur erhalten
+
+### Strafrecht
+
+- [ ] Tatbestand
+- [ ] objektive Merkmale
+- [ ] subjektive Merkmale
+- [ ] Vorsatz
+- [ ] Fahrlässigkeit
+- [ ] Versuch
+- [ ] Vollendung
+- [ ] Strafrahmen
+- [ ] Vergehen/Verbrechen
+- [ ] Strafantrag
+- [ ] Offizialdelikt
+- [ ] Privatklage
+- [ ] Qualifikationen
+
+### Zivilrecht
+
+- [ ] Anspruch oder Befugnis?
+- [ ] Anspruchsteller
+- [ ] Anspruchsgegner
+- [ ] Anspruchsziel
+- [ ] Voraussetzungen
+- [ ] Einwendungen
+- [ ] Rechtsfolge
+
+### Befugnisse
+
+- [ ] Wer darf handeln?
+- [ ] Wann?
+- [ ] Gegen wen?
+- [ ] Welche Handlung?
+- [ ] Welche Grenzen?
+- [ ] Verhältnismäßigkeit?
+
+---
+
+# 68. BESONDERE QA-PUNKTE
+
+Folgende dürfen nicht wieder auftreten:
+
+
+§132 StGB
+≠
+schwerer Hausfriedensbruch
+
+§124 StGB
+=
+schwerer Hausfriedensbruch
+
+§27 StGB
+=
+Beihilfe
+
+§26 StGB
+=
+Anstiftung
+
+§22 StGB
+=
+Versuch
+
+§230 BGB
+≠
+§230 StGB
+
+§859 BGB
+≠
+§861 BGB
+
+§860 BGB
+≠
+§859 BGB
+
+§903 BGB
+≠
+§985 BGB
+
+§32 StGB
+≠
+§33 StGB
+
+§34 StGB
+≠
+§35 StGB
+
+§127 StPO
+≠
+allgemeine Polizeibefugnis
+
+
+---
+
+# 69. QUALITÄTSREGEL FÜR DIE KI
+
+Die KI darf:
+
+- Sachverhalte strukturieren
+- relevante Tatsachen erkennen
+- Normen aus der Datenbank auswählen
+- Tatbestandsmerkmale erklären
+- Ansprüche erklären
+- Befugnisse erklären
+- Rechtfertigungsgründe erklären
+- Prüfungsschritte darstellen
+- Musterlösungen didaktisch formulieren
+
+Die KI darf nicht:
+
+- neue Rechtsgrundlagen erfinden
+- fehlende Normen halluzinieren
+- einen Anspruch als Befugnis darstellen
+- einen Tatverdacht als feststehende Straftat behandeln
+- aus einem Schlagwort automatisch eine Eingriffsbefugnis ableiten
+- einen nicht verifizierten Wortlaut als amtlichen Gesetzestext ausgeben
+
+---
+
+# 70. AUSGABEFORMAT FÜR DIE LERNPLATTFORM
+
+Für jede Rechtsnorm:
+
+
+[NORM]
+
+Gesetz:
+Paragraph:
+Amtlicher Titel:
+
+AMTLICHER GESETZESTEXT:
+[exakter Wortlaut]
+
+VEREINFACHTE ERKLÄRUNG:
+[verständliche Erklärung]
+
+PRÜFUNGSMERKSATZ:
+[ein Satz]
+
+RECHTSGEBIET:
+[Strafrecht / Zivilrecht / StPO ...]
+
+RECHTSNATUR:
+[Anspruch / Befugnis / Rechtfertigung / Entschuldigung ...]
+
+VORAUSSETZUNGEN:
+[...]
+
+RECHTSFOLGE:
+[...]
+
+ABGRENZUNG:
+[...]
+
+§34a-BEZUG:
+[...]
+
+QUELLE:
+[amtliche Quelle]
+
+
+---
+
+# 71. GESAMTLOGIK DER APP
+
+
+                SACHVERHALT
+                     │
+                     ▼
+                TATSACHEN
+                     │
+                     ▼
+          RECHTLICHE EINORDNUNG
+                     │
+          ┌──────────┼───────────┐
+          ▼          ▼           ▼
+       STRAFTAT    ANSPRUCH    GEFAHR/ANGRIFF
+          │          │           │
+          ▼          ▼           ▼
+       TATBESTAND  ANSPRUCH   RECHTFERTIGUNG
+          │          │           │
+          └──────────┼───────────┘
+                     ▼
+              BEFUGNIS PRÜFEN
+                     │
+                     ▼
+             ZULÄSSIGE HANDLUNG
+                     │
+                     ▼
+                GRENZEN
+                     │
+                     ▼
+              MUSTERLÖSUNG
+
+
+---
+
+# 72. DIE DREI FRAGEN DER §34a-PRÜFUNG
+
+Die konkrete Fallbearbeitung kann auf drei Kernfragen reduziert werden:
+
+## 1. Wie verhalte ich mich?
+
+Praktisches Verhalten:
+
+- ruhig bleiben
+- Lage erfassen
+- deeskalieren
+- Eigenschutz beachten
+- weitere Personen schützen
+- Polizei/Rettungsdienst hinzuziehen, soweit erforderlich
+
+## 2. Was liegt rechtlich vor?
+
+Beispielsweise:
+
+- Straftat
+- Diebstahl
+- Körperverletzung
+- Hausfriedensbruch
+- Besitzentziehung
+- Besitzstörung
+- Anspruch
+- Gefahr
+- Angriff
+
+## 3. Welche Rechtsgrundlage ermöglicht mein Handeln?
+
+Erst hier wird die konkrete Befugnis/Rechtfertigung geprüft.
+
+Beispielsweise:
+
+- §127 StPO
+- §859 BGB
+- §860 BGB
+- §229 BGB
+- §32 StGB
+- §34 StGB
+- weitere einschlägige Norm
+
+---
+
+# 73. ENDGÜLTIGES PRÜFUNGSMODELL
+
+
+1. SACHVERHALT ERFASSEN
+
+2. RELEVANTE TATSACHEN HERAUSARBEITEN
+
+3. RECHTLICH EINORDNEN
+
+4. MÖGLICHE NORM IDENTIFIZIEREN
+
+5. TATBESTAND PRÜFEN
+
+6. ANSPRUCH PRÜFEN
+
+7. BEFUGNIS PRÜFEN
+
+8. RECHTFERTIGUNG PRÜFEN
+
+9. ENTSCHULDIGUNG PRÜFEN
+
+10. STRAFANTRAG / VERFOLGUNGSART PRÜFEN
+
+11. ZULÄSSIGE HANDLUNG BESTIMMEN
+
+12. GRENZEN UND VERHÄLTNISMÄSSIGKEIT PRÜFEN
+
+13. ERGEBNIS FORMULIEREN
+
+
+---
+
+# 74. ZEHN GOLDENE REGELN
+
+**1.** Anspruch ist nicht Befugnis.
+
+**2.** Befugnis ist nicht automatisch Rechtfertigung.
+
+**3.** Rechtfertigung ist nicht Entschuldigung.
+
+**4.** Ein Tatverdacht ist nicht automatisch eine feststehende Straftat.
+
+**5.** Ein Straftatbestand ist nicht automatisch eine Festnahmebefugnis.
+
+**6.** Eigentum ist nicht dasselbe wie Besitz.
+
+**7.** §859 ist nicht §861.
+
+**8.** §903 ist nicht §985.
+
+**9.** §127 StPO macht eine Sicherheitskraft nicht zur Polizei.
+
+**10.** Der amtliche Gesetzestext muss vom erklärenden Lerntext getrennt bleiben.
+
+---
+
+# 75. STATUS V5.3
+
+Die V5.3 ist als **vollständige strukturelle Weiterentwicklung der V5.2** gedacht.
+
+Die konkreten sechs Unterrichtsfälle sind bewusst ausgelagert.
+
+Die Knowledge Base bildet stattdessen die juristischen Bausteine ab, aus denen später beliebige Fälle generiert und geprüft werden können.
+
+Die zentrale Architektur lautet:
+
+
+LEGAL KNOWLEDGE BASE
+        ↓
+RULE ENGINE
+        ↓
+SCENARIO FACTS
+        ↓
+LEGAL CLASSIFICATION
+        ↓
+LEGAL RESULT
+        ↓
+DIDACTIC EXPLANATION
+
+
+Die KI erklärt die hinterlegten Regeln.
+
+Sie soll nicht selbst neue Rechtsregeln erfinden.
+
+---
+
+# 76. ENDE DER V5.3
+
+**Rechtsstand:** 01.10.2026
+
+**Primärquelle für Gesetzestexte:** Gesetze im Internet
+
+**Konkrete Fallbeispiele:** separat
+
+**Kernprinzip:**
+
+> **Erst rechtlich einordnen. Dann Anspruch/Befugnis/Rechtfertigung unterscheiden. Erst danach die konkrete Handlung bestimmen.**
+
+## §123 StGB – Hausfriedensbruch
+
+### OFFIZIELLE ÜBERSCHRIFT
+
+Hausfriedensbruch
+
+### AMTLICHER GESETZESTEXT
+
+„(1) Wer in die Wohnung, in die Geschäftsräume oder in das befriedete Besitztum eines anderen oder in abgeschlossene Räume, welche zum öffentlichen Dienst oder Verkehr bestimmt sind, widerrechtlich eindringt, oder wer, wenn er ohne Befugnis darin verweilt, auf die Aufforderung des Berechtigten sich nicht entfernt, wird mit Freiheitsstrafe bis zu einem Jahr oder mit Geldstrafe bestraft.“
+
+„(2) Die Tat wird nur auf Antrag verfolgt.“
+
+### VERIFICATION_STATUS
+
+VERIFIED_OFFICIAL_TEXT
+
+### VEREINFACHTE ERKLÄRUNG
+
+§123 StGB schützt insbesondere das Hausrecht.
+
+Zu prüfen sind insbesondere:
+
+- geschützter Bereich
+- Eindringen gegen den Willen bzw. widerrechtliches Eindringen
+- oder unbefugtes Verweilen trotz Aufforderung des Berechtigten
+- Vorsatz
+- Rechtswidrigkeit
+
+### STRAFANTRAG
+
+§123 Abs.2 StGB bestimmt ausdrücklich:
+
+Die Tat wird nur auf Antrag verfolgt.
+
+### §34a-BEZUG
+
+Für Sicherheitskräfte ist insbesondere zu unterscheiden:
+
+Hausrecht
+↓
+Hausverbot / Aufforderung zum Verlassen
+↓
+Verhalten der betroffenen Person
+↓
+ggf. §123 StGB
+
+Der mögliche Hausfriedensbruch beantwortet nicht automatisch die Frage, welche konkrete Handlung die Sicherheitskraft selbst vornehmen darf.
+
+### MERKSATZ
+
+**§123 = unbefugt eindringen oder trotz Aufforderung unbefugt bleiben.**
+
+---
+
+# §124 StGB – Schwerer Hausfriedensbruch
+
+### OFFIZIELLE ÜBERSCHRIFT
+
+Schwerer Hausfriedensbruch
+
+### AMTLICHER GESETZESTEXT
+
+„Wenn sich eine Menschenmenge öffentlich zusammenrottet und in der Absicht, Gewalttätigkeiten gegen Personen oder Sachen mit vereinten Kräften zu begehen, in die Wohnung, in die Geschäftsräume oder in das befriedete Besitztum eines anderen oder in abgeschlossene Räume, welche zum öffentlichen Dienst bestimmt sind, widerrechtlich eindringt, so wird jeder, welcher an diesen Handlungen teilnimmt, mit Freiheitsstrafe bis zu zwei Jahren oder mit Geldstrafe bestraft.“
+
+### VERIFICATION_STATUS
+
+VERIFIED_OFFICIAL_TEXT
+
+### VEREINFACHTE ERKLÄRUNG
+
+§124 ist kein allgemeiner „verschärfter“ Hausfriedensbruch für jeden einzelnen Verstoß gegen ein Hausverbot.
+
+Erforderlich sind insbesondere die besonderen Voraussetzungen des §124:
+
+- Menschenmenge
+- öffentliches Zusammenrotten
+- Absicht, Gewalttätigkeiten gegen Personen oder Sachen mit vereinten Kräften zu begehen
+- widerrechtliches Eindringen in den gesetzlich geschützten Bereich
+- Teilnahme an diesen Handlungen
+
+### ABGRENZUNG
+
+§123 StGB
+→ Hausfriedensbruch
+
+§124 StGB
+→ Schwerer Hausfriedensbruch mit zusätzlichen qualifizierenden Voraussetzungen
+
+### MERKSATZ
+
+**§124 = Menschenmenge + Zusammenrottung + Gewaltabsicht + widerrechtliches Eindringen.**
+
+---
+
+# §132 StGB – Amtsanmaßung
+
+### OFFIZIELLE ÜBERSCHRIFT
+
+Amtsanmaßung
+
+### AMTLICHER GESETZESTEXT
+
+„Wer unbefugt sich mit der Ausübung eines öffentlichen Amtes befaßt oder eine Handlung vornimmt, welche nur kraft eines öffentlichen Amtes vorgenommen werden darf, wird mit Freiheitsstrafe bis zu zwei Jahren oder mit Geldstrafe bestraft.“
+
+### VERIFICATION_STATUS
+
+VERIFIED_OFFICIAL_TEXT
+
+### VEREINFACHTE ERKLÄRUNG
+
+§132 StGB schützt die staatliche Hoheitsordnung.
+
+Die Norm erfasst insbesondere:
+
+- unbefugtes Befassen mit der Ausübung eines öffentlichen Amtes
+- oder die unbefugte Vornahme einer Handlung, die nur kraft eines öffentlichen Amtes vorgenommen werden darf
+
+### §34a-BEZUG
+
+Eine private Sicherheitskraft wird durch Uniform, Dienstausweis oder ihre Tätigkeit nicht zu einem Polizeibeamten.
+
+Deshalb:
+
+Sicherheitskraft
+≠
+Polizeibeamter
+
+und:
+
+private Befugnis
+≠
+staatliche Hoheitsbefugnis
+
+### MERKSATZ
+
+**§132 = unbefugte Ausübung eines öffentlichen Amtes bzw. einer nur kraft öffentlichen Amtes möglichen Handlung.**
+
+---
+
+# §132a StGB – Mißbrauch von Titeln, Berufsbezeichnungen und Abzeichen
+
+### OFFIZIELLE ÜBERSCHRIFT
+
+Mißbrauch von Titeln, Berufsbezeichnungen und Abzeichen
+
+### AMTLICHER GESETZESTEXT
+
+„(1) Wer unbefugt
+
+1. inländische oder ausländische Amts- oder Dienstbezeichnungen, akademische Grade, Titel oder öffentliche Würden führt,
+
+2. die Berufsbezeichnung Arzt, Zahnarzt, Psychologischer Psychotherapeut, Kinder- und Jugendlichenpsychotherapeut, Psychotherapeut, Tierarzt, Apotheker, Rechtsanwalt, Patentanwalt, Wirtschaftsprüfer, vereidigter Buchprüfer, Steuerberater oder Steuerbevollmächtigter führt,
+
+3. die Bezeichnung öffentlich bestellter Sachverständiger führt oder
+
+4. inländische oder ausländische Uniformen, Amtskleidungen oder Amtsabzeichen trägt,
+
+wird mit Freiheitsstrafe bis zu einem Jahr oder mit Geldstrafe bestraft.“
+
+„(2) Den in Absatz 1 genannten Bezeichnungen, akademischen Graden, Titeln, Würden, Uniformen, Amtskleidungen oder Amtsabzeichen stehen solche gleich, die ihnen zum Verwechseln ähnlich sind.“
+
+„(3) Die Absätze 1 und 2 gelten auch für Amtsbezeichnungen, Titel, Würden, Amtskleidungen und Amtsabzeichen der Kirchen und anderen Religionsgesellschaften des öffentlichen Rechts.“
+
+„(4) Gegenstände, auf die sich eine Straftat nach Absatz 1 Nr. 4, allein oder in Verbindung mit Absatz 2 oder 3, bezieht, können eingezogen werden.“
+
+### VERIFICATION_STATUS
+
+VERIFIED_OFFICIAL_TEXT
+
+### VEREINFACHTE ERKLÄRUNG
+
+§132a betrifft den unbefugten Gebrauch bestimmter geschützter:
+
+- Amts- und Dienstbezeichnungen
+- akademischer Grade
+- Titel
+- öffentlichen Würden
+- Berufsbezeichnungen
+- Uniformen
+- Amtskleidungen
+- Amtsabzeichen
+
+### ABGRENZUNG
+
+§132 StGB
+→ Amtsanmaßung
+
+§132a StGB
+→ Missbrauch geschützter Titel, Berufsbezeichnungen oder Abzeichen
+
+### MERKSATZ
+
+**§132a = geschützte Bezeichnungen und Abzeichen nicht unbefugt führen oder tragen.**
+
+---
+
+# §240 StGB – Nötigung
+
+### HINWEIS
+
+Der vollständige amtliche Gesetzestext zu §240 StGB ist in dieser Datei in Kapitel 10 (Teil 1) sowie im thematischen Abschnitt zu §240 StGB (Teil 7) enthalten. Der nachfolgende Abschnitt enthält ausschließlich die Erklärung.
+
+### VEREINFACHTE PRÜFUNG
+
+Zu prüfen sind insbesondere:
+
+1. Nötigungshandlung
+2. Gewalt oder Drohung mit einem empfindlichen Übel
+3. Nötigungsziel
+4. Kausalität
+5. Vorsatz
+6. Rechtswidrigkeit
+7. Verwerflichkeit nach §240 Abs.2 StGB
+8. gegebenenfalls Versuch
+9. gegebenenfalls besonders schwerer Fall
+
+### WICHTIG
+
+Die bloße Anwendung von Druck ist nicht automatisch ausreichend.
+
+Die gesetzlichen Voraussetzungen des §240 müssen vollständig geprüft werden.
+
+### §34a-BEZUG
+
+Insbesondere bei:
+
+- Zwang
+- Drohungen
+- körperlichem Druck
+- Erzwingen eines bestimmten Verhaltens
+
+muss geprüft werden, ob §240 StGB betroffen sein kann.
+
+Gleichzeitig muss geprüft werden, ob für die konkrete Handlung eine eigene Befugnis oder ein Rechtfertigungsgrund besteht.
+
+### MERKSATZ
+
+**§240 = Gewalt oder empfindliches Übel → Handlung, Duldung oder Unterlassung erzwingen; zusätzlich Rechtswidrigkeit nach §240 Abs.2 prüfen.**
+
+---
+
+# §185 StGB – Beleidigung
+
+### OFFIZIELLE ÜBERSCHRIFT
+
+Beleidigung
+
+### HINWEIS
+
+Der vollständige amtliche Gesetzestext zu §185 StGB ist in dieser Datei im Abschnitt „§185 StGB – Beleidigung – amtlicher Gesetzestext“ enthalten. Der nachfolgende Abschnitt enthält ausschließlich die Erklärung.
+
+### VEREINFACHTE ERKLÄRUNG
+
+§185 StGB schützt die Ehre.
+
+Für die Prüfung sind insbesondere zu betrachten:
+
+- konkrete Äußerung oder Handlung
+- objektiver Erklärungsinhalt
+- Kontext
+- Bezug zur betroffenen Person
+- Vorsatz
+- mögliche Rechtfertigungsgründe, insbesondere die Abgrenzung zur zulässigen Meinungsäußerung
+
+### WICHTIG
+
+Die Frage des Strafantrags darf nicht mit dem Tatbestand selbst vermischt werden.
+
+### MERKSATZ
+
+**§185 = Beleidigung → Ehrverletzung; Tatbestand und Strafverfolgung getrennt prüfen.**
+
+---
+
+# §224 StGB – Gefährliche Körperverletzung
+
+### OFFIZIELLE ÜBERSCHRIFT
+
+Gefährliche Körperverletzung
+
+### HINWEIS
+
+Der vollständige amtliche Gesetzestext zu §224 StGB ist in dieser Datei im Abschnitt „§224 StGB – Gefährliche Körperverletzung – amtlicher Gesetzestext“ enthalten. Der nachfolgende Abschnitt enthält ausschließlich die Erklärung.
+
+### SYSTEMATIK
+
+§224 StGB ist eine Qualifikation zu §223 StGB.
+
+Deshalb:
+
+§223
+↓
+Körperverletzung
+↓
+zusätzliche qualifizierende Begehungsweise
+↓
+§224 prüfen
+
+### TYPISCHE QUALIFIKATIONEN
+
+Unter anderem:
+
+- Beibringung von Gift oder anderen gesundheitsschädlichen Stoffen
+- Verwendung einer Waffe oder eines anderen gefährlichen Werkzeugs
+- hinterlistiger Überfall
+- gemeinschaftliche Begehung mit einem anderen Beteiligten
+- lebensgefährdende Behandlung
+
+### WICHTIG
+
+Nicht jede Körperverletzung ist automatisch eine gefährliche Körperverletzung.
+
+### MERKSATZ
+
+**§224 = §223 + gesetzliche Qualifikation.**
+
+---
+
+# §226 StGB – Schwere Körperverletzung
+
+### OFFIZIELLE ÜBERSCHRIFT
+
+Schwere Körperverletzung
+
+### HINWEIS
+
+Der vollständige amtliche Gesetzestext zu §226 StGB ist in dieser Datei im Abschnitt „§226 StGB – Schwere Körperverletzung – amtlicher Gesetzestext“ enthalten. Der nachfolgende Abschnitt enthält ausschließlich die Erklärung.
+
+### SYSTEMATIK
+
+§226 setzt eine Körperverletzung und zusätzlich eine gesetzlich bestimmte schwere Folge voraus.
+
+Die konkrete Folge muss mit dem gesetzlichen Katalog abgeglichen werden.
+
+### WICHTIG
+
+Eine erhebliche Verletzung allein reicht nicht automatisch für §226.
+
+### MERKSATZ
+
+**§226 = Körperverletzung + gesetzlich bestimmte schwere Folge.**
+
+---
+
+# §242 StGB – Diebstahl
+
+### OFFIZIELLE ÜBERSCHRIFT
+
+Diebstahl
+
+### HINWEIS
+
+Der vollständige amtliche Gesetzestext zu §242 StGB ist in dieser Datei im Abschnitt „§242 StGB – Diebstahl – amtlicher Gesetzestext“ enthalten. Der nachfolgende Abschnitt enthält ausschließlich die Erklärung.
+
+### PRÜFUNGSSTRUKTUR
+
+Fremde bewegliche Sache
+↓
+Wegnahme
+↓
+Vorsatz
+↓
+Zueignungsabsicht
+
+### WICHTIGE BEGRIFFE
+
+Fremd
+→ Die Sache steht nicht im Alleineigentum des Täters.
+
+Beweglich
+→ Die Sache kann tatsächlich fortbewegt werden.
+
+Wegnahme
+→ Bruch fremden und Begründung neuen Gewahrsams.
+
+Zueignungsabsicht
+→ Absicht, sich oder einem Dritten die Sache zumindest vorübergehend zuzueignen und den Eigentümer dauerhaft zu enteignen.
+
+### §34a-BEZUG
+
+Ein möglicher Diebstahl beantwortet nicht automatisch die Frage nach einer Festhaltebefugnis.
+
+Dafür ist eine gesonderte Prüfung der einschlägigen Befugnis erforderlich, insbesondere ggf. §127 StPO.
+
+### MERKSATZ
+
+**§242 = fremde bewegliche Sache + Wegnahme + Zueignungsabsicht.**
+
+---
+
+# §243 StGB – Besonders schwerer Fall des Diebstahls
+
+### OFFIZIELLE ÜBERSCHRIFT
+
+Besonders schwerer Fall des Diebstahls
+
+### HINWEIS
+
+Der vollständige amtliche Gesetzestext zu §243 StGB ist in dieser Datei im Abschnitt „§243 StGB – Besonders schwerer Fall des Diebstahls – amtlicher Gesetzestext“ enthalten. Der nachfolgende Abschnitt enthält ausschließlich die Erklärung.
+
+### SYSTEMATIK
+
+§242
+↓
+Diebstahl
+↓
+besonders schwerer Fall?
+↓
+§243 prüfen
+
+§243 enthält Regelbeispiele für besonders schwere Fälle des Diebstahls.
+
+### WICHTIG
+
+§243 ist nicht einfach ein eigenständiger Grundtatbestand des Diebstahls.
+
+Zunächst muss §242 geprüft werden.
+
+### MERKSATZ
+
+**§242 = Grundtatbestand.**
+
+**§243 = besonders schwerer Fall.**
+
+---
+
+# §247 StGB – Haus- und Familiendiebstahl
+
+### OFFIZIELLE ÜBERSCHRIFT
+
+Haus- und Familiendiebstahl
+
+### HINWEIS
+
+Der vollständige amtliche Gesetzestext zu §247 StGB ist in dieser Datei im Abschnitt „§247 StGB – Haus- und Familiendiebstahl – amtlicher Gesetzestext“ enthalten. Der nachfolgende Abschnitt enthält ausschließlich die Erklärung.
+
+### VEREINFACHTE ERKLÄRUNG
+
+§247 enthält eine besondere Regelung zur Strafverfolgung bei bestimmten persönlichen Beziehungen zwischen Täter und Verletztem.
+
+Die Vorschrift betrifft damit nicht den Grundtatbestand des Diebstahls selbst, sondern insbesondere die Frage der Strafverfolgung.
+
+### MERKSATZ
+
+**§247 = besondere persönliche Beziehung → besondere Strafverfolgungsregel.**
+
+---
+
+# §248a StGB – Diebstahl und Unterschlagung geringwertiger Sachen
+
+### OFFIZIELLE ÜBERSCHRIFT
+
+Diebstahl und Unterschlagung geringwertiger Sachen
+
+### HINWEIS
+
+Der vollständige amtliche Gesetzestext zu §248a StGB ist in dieser Datei im Abschnitt „§248a StGB – Diebstahl und Unterschlagung geringwertiger Sachen – amtlicher Gesetzestext“ enthalten. Der nachfolgende Abschnitt enthält ausschließlich die Erklärung.
+
+### VEREINFACHTE ERKLÄRUNG
+
+§248a enthält eine besondere Strafverfolgungsregelung für Diebstahl und Unterschlagung geringwertiger Sachen.
+
+Die Vorschrift ist daher insbesondere bei der Frage relevant:
+
+Tatbestand
+↓
+geringwertige Sache?
+↓
+besondere Strafverfolgungsvoraussetzungen?
+↓
+§248a prüfen
+
+### WICHTIG
+
+§248a darf nicht mit dem eigentlichen Diebstahlstatbestand des §242 verwechselt werden.
+
+### MERKSATZ
+
+**§248a = besondere Strafverfolgungsregel bei geringwertigen Sachen.**
+
+---
+
+---
+
+# §185 StGB – BELEIDIGUNG
+
+### GESETZ
+
+Strafgesetzbuch (StGB)
+
+### PARAGRAPH
+
+§185 StGB
+
+### AMTLICHER TITEL
+
+Beleidigung
+
+### AMTLICHER GESETZESTEXT
+
+Die Beleidigung wird mit Freiheitsstrafe bis zu einem Jahr oder mit Geldstrafe und, wenn die Beleidigung öffentlich, in einer Versammlung, durch Verbreiten eines Inhalts (§ 11 Absatz 3) oder mittels einer Tätlichkeit begangen wird, mit Freiheitsstrafe bis zu zwei Jahren oder mit Geldstrafe bestraft.
+
+### RECHTSGUT
+
+Ehre.
+
+### TATBESTAND
+
+Der Tatbestand setzt eine Beleidigung voraus.
+
+Für die konkrete Prüfung sind insbesondere zu berücksichtigen:
+
+- konkrete Äußerung oder Handlung
+- Kontext
+- objektiver Erklärungsgehalt
+- Bezug zur betroffenen Person
+- ehrverletzender Charakter
+
+### SUBJEKTIVER TATBESTAND
+
+Grundsätzlich ist Vorsatz erforderlich.
+
+### VERSUCH
+
+Der Versuch ist nicht ausdrücklich strafbar.
+
+### VOLLENDUNG
+
+Die Tat ist vollendet, wenn die tatbestandliche Beleidigung verwirklicht ist.
+
+### STRAFRAHMEN
+
+Grundfall:
+
+- Freiheitsstrafe bis zu einem Jahr
+- oder Geldstrafe
+
+Bei den im Gesetz genannten qualifizierten Begehungsformen:
+
+- Freiheitsstrafe bis zu zwei Jahren
+- oder Geldstrafe
+
+### WICHTIG
+
+Die Strafverfolgungsfrage ist von der Tatbestandsprüfung zu trennen.
+
+Für die Strafantragsregelung ist insbesondere §194 StGB relevant.
+
+### ABGRENZUNG
+
+Nicht jede unhöfliche, unangenehme oder schroffe Äußerung ist automatisch eine strafbare Beleidigung.
+
+Der konkrete Inhalt und Kontext müssen geprüft werden.
+
+### §34a-BEZUG
+
+Beleidigende Äußerungen können im Sicherheitsdienst vorkommen.
+
+Die Sicherheitskraft muss zwischen:
+
+unangenehme Äußerung
+
+und
+
+strafbare Beleidigung
+
+unterscheiden.
+
+### MERKSATZ
+
+**§185 = Beleidigung → Schutz der Ehre.**
+
+### QUELLE
+
+https://www.gesetze-im-internet.de/stgb/__185.html
+
+
+---
+
+# §224 StGB – GEFÄHRLICHE KÖRPERVERLETZUNG
+
+### GESETZ
+
+Strafgesetzbuch (StGB)
+
+### PARAGRAPH
+
+§224 StGB
+
+### AMTLICHER TITEL
+
+Gefährliche Körperverletzung
+
+### SYSTEMATIK
+
+§224 ist eine Qualifikation zu §223 StGB.
+
+Daher:
+
+§223 Körperverletzung
+↓
+zusätzliche Qualifikationsmerkmale
+↓
+§224 gefährliche Körperverletzung
+
+### AMTLICHER GESETZESTEXT
+
+(1) Wer die Körperverletzung
+
+1.
+durch Beibringung von Gift oder anderen gesundheitsschädlichen Stoffen,
+
+2.
+mittels einer Waffe oder eines anderen gefährlichen Werkzeugs,
+
+3.
+mittels eines hinterlistigen Überfalls,
+
+4.
+mit einem anderen Beteiligten gemeinschaftlich oder
+
+5.
+mittels einer das Leben gefährdenden Behandlung
+
+begeht, wird mit Freiheitsstrafe von sechs Monaten bis zu zehn Jahren, in minder schweren Fällen mit Freiheitsstrafe von drei Monaten bis zu fünf Jahren bestraft.
+
+(2) Der Versuch ist strafbar.
+
+### QUALIFIKATIONSMERKMALE
+
+Es muss mindestens eine der gesetzlichen Begehungsweisen erfüllt sein:
+
+1. Gift oder andere gesundheitsschädliche Stoffe
+2. Waffe oder anderes gefährliches Werkzeug
+3. hinterlistiger Überfall
+4. gemeinschaftliche Begehung
+5. das Leben gefährdende Behandlung
+
+### SUBJEKTIVER TATBESTAND
+
+Die jeweilige Qualifikation muss vom Vorsatz umfasst sein.
+
+### VERSUCH
+
+Der Versuch ist ausdrücklich strafbar.
+
+### STRAFRAHMEN
+
+Grundfall:
+
+- Freiheitsstrafe von sechs Monaten bis zu zehn Jahren
+
+Minder schwere Fälle:
+
+- Freiheitsstrafe von drei Monaten bis zu fünf Jahren
+
+### ABGRENZUNG ZU §223
+
+§223
+→ einfache Körperverletzung
+
+§224
+→ Körperverletzung + gesetzliche Qualifikation
+
+### WICHTIG FÜR DIE APP
+
+Nicht automatisch:
+
+Waffe vorhanden
+→ §224
+
+Sondern:
+
+Körperverletzung?
+↓
+welche konkrete Begehungsweise?
+↓
+gesetzliches Merkmal des §224 erfüllt?
+↓
+Vorsatz darauf?
+↓
+§224 prüfen
+
+### MERKSATZ
+
+**§224 = Körperverletzung + mindestens eine gesetzliche Qualifikation.**
+
+### QUELLE
+
+https://www.gesetze-im-internet.de/stgb/__224.html
+
+
+---
+
+# §226 StGB – SCHWERE KÖRPERVERLETZUNG
+
+### GESETZ
+
+Strafgesetzbuch (StGB)
+
+### PARAGRAPH
+
+§226 StGB
+
+### AMTLICHER TITEL
+
+Schwere Körperverletzung
+
+### SYSTEMATIK
+
+§226 setzt eine Körperverletzung voraus und verlangt zusätzlich eine der gesetzlich bestimmten schweren Folgen.
+
+### AMTLICHER GESETZESTEXT
+
+(1) Hat die Körperverletzung zur Folge, daß die verletzte Person
+
+1.
+das Sehvermögen auf einem Auge oder beiden Augen, das Gehör, das Sprechvermögen oder die Fortpflanzungsfähigkeit verliert,
+
+2.
+ein wichtiges Glied des Körpers verliert oder dauernd nicht mehr gebrauchen kann oder
+
+3.
+in erheblicher Weise dauernd entstellt wird oder in Siechtum, Lähmung oder geistige Krankheit oder Behinderung verfällt,
+
+so ist die Strafe Freiheitsstrafe von einem Jahr bis zu zehn Jahren.
+
+(2) Verursacht der Täter eine der in Absatz 1 bezeichneten Folgen absichtlich oder wissentlich, so ist die Strafe Freiheitsstrafe nicht unter drei Jahren.
+
+(3) In minder schweren Fällen des Absatzes 1 ist auf Freiheitsstrafe von sechs Monaten bis zu fünf Jahren, in minder schweren Fällen des Absatzes 2 auf Freiheitsstrafe von einem Jahr bis zu zehn Jahren zu erkennen.
+
+### SCHWERE FOLGEN
+
+Insbesondere:
+
+- Verlust des Sehvermögens
+- Verlust des Gehörs
+- Verlust des Sprechvermögens
+- Verlust der Fortpflanzungsfähigkeit
+- Verlust eines wichtigen Gliedes
+- dauernde Gebrauchsunfähigkeit eines wichtigen Gliedes
+- erhebliche dauernde Entstellung
+- Siechtum
+- Lähmung
+- geistige Krankheit oder Behinderung
+
+### WICHTIG
+
+Eine schwere Verletzung im umgangssprachlichen Sinn reicht nicht automatisch aus.
+
+Es muss eine gesetzlich bestimmte schwere Folge vorliegen.
+
+### SUBJEKTIVER ASPEKT
+
+Bei §226 ist insbesondere zwischen Absatz 1 und Absatz 2 zu unterscheiden.
+
+Absatz 2 verlangt hinsichtlich der schweren Folge Absicht oder Wissentlichkeit.
+
+### STRAFRAHMEN
+
+§226 Abs.1:
+
+- Freiheitsstrafe von einem Jahr bis zu zehn Jahren
+
+§226 Abs.2:
+
+- Freiheitsstrafe nicht unter drei Jahren
+
+Minder schwere Fälle:
+
+- nach §226 Abs.3
+
+### ABGRENZUNG
+
+§223
+→ Körperverletzung
+
+§224
+→ qualifizierte Art der Körperverletzung
+
+§226
+→ besonders schwere gesetzliche Folge
+
+### §34a-BEZUG
+
+Bei einem Sachverhalt darf nicht allein aus einer starken Verletzung automatisch auf §226 geschlossen werden.
+
+Zuerst muss die konkrete Folge festgestellt und anschließend mit §226 abgeglichen werden.
+
+### MERKSATZ
+
+**§226 = Körperverletzung + gesetzlich bestimmte schwere Folge.**
+
+### QUELLE
+
+https://www.gesetze-im-internet.de/stgb/__226.html
+
+
+---
+
+# §242 StGB – DIEBSTAHL
+
+### GESETZ
+
+Strafgesetzbuch (StGB)
+
+### PARAGRAPH
+
+§242 StGB
+
+### AMTLICHER TITEL
+
+Diebstahl
+
+### AMTLICHER GESETZESTEXT
+
+(1) Wer eine fremde bewegliche Sache einem anderen in der Absicht wegnimmt, die Sache sich oder einem Dritten rechtswidrig zuzueignen, wird mit Freiheitsstrafe bis zu fünf Jahren oder mit Geldstrafe bestraft.
+
+(2) Der Versuch ist strafbar.
+
+### OBJEKTIVER TATBESTAND
+
+Erforderlich sind insbesondere:
+
+1. fremde
+2. bewegliche
+3. Sache
+4. Wegnahme
+
+### SUBJEKTIVER TATBESTAND
+
+Erforderlich sind insbesondere:
+
+- Vorsatz
+- Absicht rechtswidriger Zueignung
+
+### ZUEIGNUNGSABSICHT
+
+Die Prüfung muss insbesondere zwischen
+
+Aneignung
+
+und
+
+Enteignung
+
+unterscheiden.
+
+### VERSUCH
+
+Der Versuch ist ausdrücklich strafbar.
+
+### VOLLENDUNG
+
+Der Diebstahl ist vollendet, wenn die tatbestandliche Wegnahme verwirklicht wurde und die subjektiven Voraussetzungen vorliegen.
+
+### STRAFRAHMEN
+
+- Freiheitsstrafe bis zu fünf Jahren
+- oder Geldstrafe
+
+### RECHTSGUT
+
+Eigentum und Gewahrsam als geschützte vermögensrechtliche Positionen.
+
+### WICHTIGE ABGRENZUNG
+
+§242
+→ Diebstahl
+
+§243
+→ besonders schwerer Fall des Diebstahls
+
+§244
+→ qualifizierte Formen des Diebstahls
+
+### §34a-BEZUG
+
+Ein möglicher Diebstahl beantwortet noch nicht automatisch die Frage:
+
+„Darf ich die Person festhalten?“
+
+Dafür ist insbesondere eine gesonderte Prüfung des §127 StPO erforderlich.
+
+### MERKSATZ
+
+**§242 = fremde bewegliche Sache wegnehmen + rechtswidrige Zueignungsabsicht.**
+
+### QUELLE
+
+https://www.gesetze-im-internet.de/stgb/__242.html
+
+
+---
+
+# §243 StGB – BESONDERS SCHWERER FALL DES DIEBSTAHS
+
+### GESETZ
+
+Strafgesetzbuch (StGB)
+
+### PARAGRAPH
+
+§243 StGB
+
+### AMTLICHER TITEL
+
+Besonders schwerer Fall des Diebstahls
+
+### SYSTEMATIK
+
+§243 baut auf dem Diebstahl nach §242 auf.
+
+Die Norm enthält gesetzliche Regelbeispiele für besonders schwere Fälle.
+
+### AMTLICHER GESETZESTEXT
+
+(1) In besonders schweren Fällen wird der Diebstahl mit Freiheitsstrafe von drei Monaten bis zu zehn Jahren bestraft. Ein besonders schwerer Fall liegt in der Regel vor, wenn der Täter
+
+1.
+zur Ausführung der Tat in ein Gebäude, einen Dienst- oder Geschäftsraum oder in einen anderen umschlossenen Raum einbricht, einsteigt, mit einem falschen Schlüssel oder einem anderen nicht zur ordnungsmäßigen Öffnung bestimmten Werkzeug eindringt oder sich in dem Raum verborgen hält,
+
+2.
+eine Sache stiehlt, die durch ein verschlossenes Behältnis oder eine andere Schutzvorrichtung gegen Wegnahme besonders gesichert ist,
+
+3.
+gewerbsmäßig stiehlt,
+
+4.
+aus einer Kirche oder einem anderen der Religionsausübung dienenden Gebäude oder Raum eine Sache stiehlt, die dem Gottesdienst gewidmet ist oder der religiösen Verehrung dient,
+
+5.
+eine Sache von Bedeutung für Wissenschaft, Kunst oder Geschichte oder für die technische Entwicklung stiehlt, die sich in einer allgemein zugänglichen Sammlung befindet oder öffentlich ausgestellt ist,
+
+6.
+stiehlt, indem er die Hilflosigkeit einer anderen Person, einen Unglücksfall oder eine gemeine Gefahr ausnutzt oder
+
+7.
+eine Handfeuerwaffe, zu deren Erwerb es nach dem Waffengesetz der Erlaubnis bedarf, ein Maschinengewehr, eine Maschinenpistole, ein voll- oder halbautomatisches Gewehr oder eine Sprengstoff enthaltende Kriegswaffe im Sinne des Kriegswaffenkontrollgesetzes oder Sprengstoff stiehlt.
+
+(2) In den Fällen des Absatzes 1 Satz 2 Nummer 1 bis 6 ist ein besonders schwerer Fall ausgeschlossen, wenn sich die Tat auf eine geringwertige Sache bezieht.
+
+### WICHTIG
+
+§243 ist kein eigenständiger Grundtatbestand des Diebstahls.
+
+Prüfungslogik:
+
+§242 erfüllt?
+↓
+besonders schwerer Fall?
+↓
+§243 prüfen
+
+### REGELBEISPIELE
+
+Die Regelbeispiele umfassen unter anderem:
+
+- Einbruch oder Eindringen in bestimmte Räume
+- besonders gesicherte Sachen
+- gewerbsmäßigen Diebstahl
+- Diebstahl bestimmter religiös gewidmeter Sachen
+- Diebstahl bestimmter bedeutender Sachen
+- Ausnutzung bestimmter Not- oder Gefahrensituationen
+- Diebstahl bestimmter Waffen oder Sprengstoff
+
+### WICHTIGE EINSCHRÄNKUNG
+
+Bei den Fällen des §243 Abs.1 Satz 2 Nummer 1 bis 6 schließt §243 Abs.2 einen besonders schweren Fall aus, wenn sich die Tat auf eine geringwertige Sache bezieht.
+
+### STRAFRAHMEN
+
+- Freiheitsstrafe von drei Monaten bis zu zehn Jahren
+
+### ABGRENZUNG
+
+§242
+→ Grundtatbestand Diebstahl
+
+§243
+→ besonders schwerer Fall
+
+§244
+→ eigenständige Qualifikationen des Diebstahls
+
+### MERKSATZ
+
+**§243 = Diebstahl + gesetzliches Regelbeispiel eines besonders schweren Falls.**
+
+### QUELLE
+
+https://www.gesetze-im-internet.de/stgb/__243.html
+
+
+---
+
+# §247 StGB – HAUS- UND FAMILIENDIEBSTAHL
+
+### GESETZ
+
+Strafgesetzbuch (StGB)
+
+### PARAGRAPH
+
+§247 StGB
+
+### AMTLICHER TITEL
+
+Haus- und Familiendiebstahl
+
+### AMTLICHER GESETZESTEXT
+
+Ist durch einen Diebstahl oder eine Unterschlagung ein Angehöriger, der Vormund oder der Betreuer verletzt oder lebt der Verletzte mit dem Täter in häuslicher Gemeinschaft, so wird die Tat nur auf Antrag verfolgt.
+
+### RECHTSNATUR
+
+§247 ist insbesondere eine Strafverfolgungsregelung.
+
+Die Norm verändert nicht den Grundtatbestand des Diebstahls.
+
+### PRÜFUNGSLOGIK
+
+Diebstahl oder Unterschlagung?
+↓
+besondere persönliche Beziehung?
+↓
+§247?
+↓
+Strafantrag erforderlich
+
+### WICHTIG
+
+Nicht verwechseln:
+
+§242
+→ Tatbestand Diebstahl
+
+§247
+→ besondere Strafverfolgungsregelung
+
+### MERKSATZ
+
+**§247 = besondere persönliche Beziehung → nur auf Antrag.**
+
+### QUELLE
+
+https://www.gesetze-im-internet.de/stgb/__247.html
+
+
+---
+
+# §248a StGB – DIEBSTAHL UND UNTERSCHLAGUNG GERINGWERTIGER SACHEN
+
+### GESETZ
+
+Strafgesetzbuch (StGB)
+
+### PARAGRAPH
+
+§248a StGB
+
+### AMTLICHER TITEL
+
+Diebstahl und Unterschlagung geringwertiger Sachen
+
+### AMTLICHER GESETZESTEXT
+
+Der Diebstahl und die Unterschlagung geringwertiger Sachen werden in den Fällen der §§ 242 und 246 nur auf Antrag verfolgt, es sei denn, daß die Strafverfolgungsbehörde wegen des besonderen öffentlichen Interesses an der Strafverfolgung ein Einschreiten von Amts wegen für geboten hält.
+
+### RECHTSNATUR
+
+§248a ist eine Strafverfolgungsregelung.
+
+### WICHTIG
+
+§248a beseitigt nicht automatisch den Straftatbestand.
+
+Vielmehr betrifft die Vorschrift die Frage der Strafverfolgung.
+
+### PRÜFUNGSLOGIK
+
+§242 oder §246 erfüllt?
+↓
+Sache geringwertig?
+↓
+§248a prüfen
+↓
+grundsätzlich Strafantrag
+↓
+Ausnahme:
+besonderes öffentliches Interesse
+→ Strafverfolgung von Amts wegen möglich
+
+### ABGRENZUNG
+
+§242
+→ Diebstahl
+
+§248a
+→ Strafverfolgung bei geringwertiger Sache
+
+### §34a-BEZUG
+
+Die Sicherheitskraft darf nicht aus §248a allein eine eigene Eingriffsbefugnis ableiten.
+
+Die Vorschrift beantwortet insbesondere die Frage der Strafverfolgung, nicht die Frage:
+
+„Was darf ich selbst tun?“
+
+### MERKSATZ
+
+**§248a = geringwertige Sache → grundsätzlich Strafantrag, außer besonderes öffentliches Interesse.**
+
+### QUELLE
+
+https://www.gesetze-im-internet.de/stgb/__248a.html
+
+
+---
+
+# VERBINDENDE PRÜFUNGSLOGIK
+
+Für Diebstahlsfälle:
+
+Fremde bewegliche Sache?
+↓
+Wegnahme?
+↓
+Zueignungsabsicht?
+↓
+§242
+↓
+Versuch oder Vollendung?
+↓
+§243 prüfen?
+↓
+§244 prüfen?
+↓
+§247 prüfen?
+↓
+§248a prüfen?
+↓
+Strafantrag / Verfolgungsart
+↓
+separate Prüfung einer konkreten Eingriffsbefugnis
+
+### ABSOLUTE SOFTWARE-REGEL
+
+§242 erfüllt
+≠
+§127 automatisch erfüllt
+
+§243 erfüllt
+≠
+§127 automatisch erfüllt
+
+§248a
+≠
+Festnahmebefugnis
+
+Die Tatbestandsprüfung und die Befugnisprüfung bleiben getrennte Prüfschritte.
+
+---# TEIL 7 – NÖTIGUNG, RAUB, RÄUBERISCHER DIEBSTAHL UND ERPRESSUNGSDELIKTE
+
+---
+
+# TEIL 7 – NÖTIGUNG, RAUB, RÄUBERISCHER DIEBSTAHL UND ERPRESSUNGSDELIKTE
+
+---
+
+# §240 StGB – Nötigung
+
+## AMTLICHER TITEL
+
+Nötigung
+
+## AMTLICHER GESETZESTEXT
+
+(1) Wer einen Menschen rechtswidrig mit Gewalt oder durch Drohung mit einem empfindlichen Übel zu einer Handlung, Duldung oder Unterlassung nötigt, wird mit Freiheitsstrafe bis zu drei Jahren oder mit Geldstrafe bestraft.
+
+(2) Rechtswidrig ist die Tat, wenn die Anwendung der Gewalt oder die Androhung des Übels zu dem angestrebten Zweck als verwerflich anzusehen ist.
+
+(3) Der Versuch ist strafbar.
+
+(4) In besonders schweren Fällen ist die Strafe Freiheitsstrafe von sechs Monaten bis zu fünf Jahren. Ein besonders schwerer Fall liegt in der Regel vor, wenn der Täter
+
+1. eine Schwangere zum Schwangerschaftsabbruch nötigt oder
+
+2. seine Befugnisse oder seine Stellung als Amtsträger missbraucht.
+
+## RECHTSGUT
+
+Geschützt wird insbesondere die Freiheit der Willensentschließung und Willensbetätigung.
+
+## OBJEKTIVER TATBESTAND
+
+Erforderlich sind insbesondere:
+
+- ein Mensch als Nötigungsopfer
+- Gewalt oder Drohung mit einem empfindlichen Übel
+- Nötigung zu einer Handlung, Duldung oder Unterlassung
+- Kausalität zwischen Nötigungsmittel und Nötigungserfolg
+
+## SUBJEKTIVER TATBESTAND
+
+Vorsatz.
+
+## RECHTSWIDRIGKEIT
+
+Die Rechtswidrigkeit richtet sich bei §240 StGB nach der besonderen Verwerflichkeitsprüfung des §240 Abs.2 StGB.
+
+Nicht jede Gewaltanwendung oder Drohung erfüllt deshalb automatisch den rechtswidrigen Tatbestand der Nötigung.
+
+## VERSUCH
+
+Der Versuch ist nach §240 Abs.3 StGB ausdrücklich strafbar.
+
+## STRAFRAHMEN
+
+Grundfall:
+
+- Freiheitsstrafe bis zu drei Jahren
+- oder Geldstrafe
+
+Besonders schwerer Fall:
+
+- Freiheitsstrafe von sechs Monaten bis zu fünf Jahren
+
+## ABGRENZUNG
+
+### §240 StGB
+
+Nötigung.
+
+### §223 StGB
+
+Körperverletzung.
+
+### §249 StGB
+
+Raub.
+
+### §253 StGB
+
+Erpressung.
+
+### §255 StGB
+
+Räuberische Erpressung.
+
+## §34a-BEZUG
+
+Bei einer Sicherheitskraft ist besonders wichtig:
+
+Eine Person darf nicht allein deshalb mit Gewalt zu einem bestimmten Verhalten gezwungen werden, weil die Sicherheitskraft dieses Verhalten für wünschenswert hält.
+
+Vor einer Zwangshandlung ist zu prüfen:
+
+1. Was soll die Person tun, dulden oder unterlassen?
+2. Welche konkrete Rechtsgrundlage besteht?
+3. Besteht eine eigene Befugnis der Sicherheitskraft?
+4. Welches Mittel soll eingesetzt werden?
+5. Ist dieses Mittel erforderlich?
+6. Gibt es eine mildere Handlungsmöglichkeit?
+
+## MERKSATZ
+
+**§240 = Gewalt oder Drohung → Handlung, Duldung oder Unterlassung erzwingen.**
+
+## SOFTWARE-REGEL
+
+```text
+Nötigungsmittel
+→ Gewalt ODER Drohung
+→ Nötigungsziel
+→ Handlung / Duldung / Unterlassung
+→ Kausalität
+→ Vorsatz
+→ besondere Rechtswidrigkeitsprüfung
+```
+
+---
+
+# §249 StGB – Raub
+
+## AMTLICHER TITEL
+
+Raub
+
+## AMTLICHER GESETZESTEXT
+
+(1) Wer mit Gewalt gegen eine Person oder unter Anwendung von Drohungen mit gegenwärtiger Gefahr für Leib oder Leben eine fremde bewegliche Sache einem anderen in der Absicht wegnimmt, die Sache sich oder einem Dritten rechtswidrig zuzueignen, wird mit Freiheitsstrafe nicht unter einem Jahr bestraft.
+
+(2) In minder schweren Fällen ist die Strafe Freiheitsstrafe von sechs Monaten bis zu fünf Jahren.
+
+## RECHTSGUT
+
+Insbesondere:
+
+- Eigentum
+- Gewahrsam
+- persönliche Freiheit bzw. körperliche Integrität
+
+## OBJEKTIVER TATBESTAND
+
+Erforderlich sind insbesondere:
+
+- fremde bewegliche Sache
+- Wegnahme
+- Gewalt gegen eine Person oder Drohung mit gegenwärtiger Gefahr für Leib oder Leben
+
+## SUBJEKTIVER TATBESTAND
+
+Zusätzlich erforderlich:
+
+- Vorsatz
+- Absicht rechtswidriger Zueignung
+
+## VERHÄLTNIS ZU §242 StGB
+
+§249 StGB ist nicht lediglich ein „schwerer Diebstahl“.
+
+Die Wegnahme wird durch ein qualifiziertes Nötigungsmittel geprägt.
+
+## ABGRENZUNG ZUM DIEBSTAHL
+
+### §242 StGB
+
+Wegnahme einer fremden beweglichen Sache mit Zueignungsabsicht.
+
+### §249 StGB
+
+Wegnahme + Gewalt gegen eine Person oder Drohung mit gegenwärtiger Gefahr für Leib oder Leben.
+
+## ABGRENZUNG ZU §252 StGB
+
+§249:
+
+Das qualifizierte Gewalt-/Drohungsmittel steht im Zusammenhang mit der Wegnahme.
+
+§252:
+
+Der Täter ist bereits bei einem Diebstahl auf frischer Tat betroffen und setzt Gewalt oder Drohung ein, um den Besitz an der Beute zu erhalten.
+
+## §34a-BEZUG
+
+Das Vorliegen eines möglichen Raubes bedeutet nicht automatisch, dass jede Sicherheitskraft beliebige Zwangsmittel einsetzen darf.
+
+Für eine eigene Festhaltebefugnis ist die konkrete Rechtsgrundlage gesondert zu prüfen, insbesondere §127 StPO.
+
+## MERKSATZ
+
+**§249 = Wegnahme + Gewalt gegen Person oder Drohung mit gegenwärtiger Gefahr für Leib oder Leben.**
+
+---
+
+# §252 StGB – Räuberischer Diebstahl
+
+## AMTLICHER TITEL
+
+Räuberischer Diebstahl
+
+## AMTLICHER GESETZESTEXT
+
+„Wer, bei einem Diebstahl auf frischer Tat betroffen, gegen eine Person Gewalt verübt oder Drohungen mit gegenwärtiger Gefahr für Leib oder Leben anwendet, um sich im Besitz des gestohlenen Gutes zu erhalten, ist gleich einem Räuber zu bestrafen.“
+
+## SYSTEMATIK
+
+§252 setzt einen Diebstahl voraus.
+
+Danach kommt es zu einem weiteren Geschehen:
+
+1. Täter wird bei einem Diebstahl auf frischer Tat betroffen
+2. Täter setzt Gewalt gegen eine Person ein oder droht mit gegenwärtiger Gefahr für Leib oder Leben
+3. Zweck ist die Erhaltung des Besitzes am gestohlenen Gut
+
+## WICHTIG
+
+§252 StGB ist nicht einfach ein Synonym für §249 StGB.
+
+Der zeitliche Ablauf ist entscheidend.
+
+### §249
+
+Gewalt/Drohung steht im Zusammenhang mit der Wegnahme.
+
+### §252
+
+Der Diebstahl ist bereits im Geschehen und der Täter setzt Gewalt/Drohung ein, um die Beute zu behalten.
+
+## SUBJEKTIVER TATBESTAND
+
+Erforderlich ist insbesondere die Absicht, sich im Besitz des gestohlenen Gutes zu erhalten.
+
+## §34a-BEZUG
+
+Für Sicherheitskräfte ist insbesondere die Situation der „frischen Tat“ relevant.
+
+Davon getrennt ist die Frage:
+
+> Darf die Sicherheitskraft die Person selbst festhalten?
+
+Hier ist insbesondere §127 StPO gesondert zu prüfen.
+
+## MERKSATZ
+
+**§252 = Diebstahl auf frischer Tat + Gewalt/Drohung zur Beutesicherung.**
+
+---
+
+# §253 StGB – Erpressung
+
+## AMTLICHER TITEL
+
+Erpressung
+
+## AMTLICHER GESETZESTEXT
+
+(1) Wer einen Menschen rechtswidrig mit Gewalt oder durch Drohung mit einem empfindlichen Übel zu einer Handlung, Duldung oder Unterlassung nötigt und dadurch dem Vermögen des Genötigten oder eines anderen Nachteil zufügt, um sich oder einen Dritten zu Unrecht zu bereichern, wird mit Freiheitsstrafe bis zu fünf Jahren oder mit Geldstrafe bestraft.
+
+(2) Rechtswidrig ist die Tat, wenn die Anwendung der Gewalt oder die Androhung des Übels zu dem angestrebten Zweck als verwerflich anzusehen ist.
+
+(3) Der Versuch ist strafbar.
+
+(4) In besonders schweren Fällen ist die Strafe Freiheitsstrafe nicht unter einem Jahr. Ein besonders schwerer Fall liegt in der Regel vor, wenn der Täter gewerbsmäßig oder als Mitglied einer Bande handelt, die sich zur fortgesetzten Begehung einer Erpressung verbunden hat.
+
+## RECHTSGUT
+
+Insbesondere:
+
+- Vermögen
+- Freiheit der Willensentschließung und Willensbetätigung
+
+## OBJEKTIVER TATBESTAND
+
+Erforderlich sind insbesondere:
+
+- Gewalt oder Drohung mit einem empfindlichen Übel
+- Nötigung eines Menschen
+- Handlung, Duldung oder Unterlassung
+- Vermögensnachteil
+- Kausalität zwischen Nötigung und Vermögensnachteil
+
+## SUBJEKTIVER TATBESTAND
+
+Erforderlich sind insbesondere:
+
+- Vorsatz
+- Absicht, sich oder einen Dritten zu Unrecht zu bereichern
+
+## ABGRENZUNG ZU §240
+
+### §240 StGB
+
+Nötigung ohne notwendige Vermögenskomponente.
+
+### §253 StGB
+
+Nötigung + Vermögensnachteil + Bereicherungsabsicht.
+
+## ABGRENZUNG ZU §249
+
+§249 betrifft die Wegnahme einer fremden beweglichen Sache.
+
+§253 betrifft einen durch Nötigung herbeigeführten Vermögensnachteil.
+
+## §34a-BEZUG
+
+Auch hier gilt:
+
+Die strafrechtliche Einordnung eines Verhaltens ist von der Frage zu trennen, welche eigene Handlungsmöglichkeit eine Sicherheitskraft besitzt.
+
+## MERKSATZ
+
+**§253 = Nötigung + Vermögensnachteil + rechtswidrige Bereicherungsabsicht.**
+
+---
+
+# §255 StGB – Räuberische Erpressung
+
+## AMTLICHER TITEL
+
+Räuberische Erpressung
+
+## AMTLICHER GESETZESTEXT
+
+„Wird die Erpressung durch Gewalt gegen eine Person oder unter Anwendung von Drohungen mit gegenwärtiger Gefahr für Leib oder Leben begangen, so ist der Täter gleich einem Räuber zu bestrafen.“
+
+## SYSTEMATIK
+
+§255 StGB ist eine Qualifikation der Erpressung.
+
+Zunächst ist deshalb zu prüfen:
+
+1. Liegt eine Erpressung nach §253 StGB vor?
+2. Wurde Gewalt gegen eine Person angewendet oder
+3. wurde mit gegenwärtiger Gefahr für Leib oder Leben gedroht?
+4. Dann kommt §255 StGB in Betracht.
+
+## ABGRENZUNG ZU §249
+
+Die Abgrenzung zwischen Raub und räuberischer Erpressung kann insbesondere anhand der konkreten Vermögensverschiebung und der Handlung des Opfers erforderlich werden.
+
+Für die Prüfung dürfen §249 und §§253, 255 deshalb nicht allein anhand des Wortes „Gewalt“ gleichgesetzt werden.
+
+## MERKSATZ
+
+**§255 = Erpressung + Gewalt gegen Person oder Drohung mit gegenwärtiger Gefahr für Leib oder Leben.**
+
+---
+
+# VERKNÜPFUNGSMATRIX
+
+| Norm | Kerngedanke | Entscheidende Frage |
+|---|---|---|
+| §240 StGB | Nötigung | Wird jemand zu Handlung, Duldung oder Unterlassung gezwungen? |
+| §242 StGB | Diebstahl | Wird eine fremde bewegliche Sache weggenommen? |
+| §249 StGB | Raub | Erfolgt die Wegnahme mit qualifizierter Gewalt/Drohung? |
+| §252 StGB | Räuberischer Diebstahl | Wird nach Entdeckung bei frischer Tat Gewalt/Drohung zur Beutesicherung eingesetzt? |
+| §253 StGB | Erpressung | Wird durch Nötigung ein Vermögensnachteil herbeigeführt? |
+| §255 StGB | Räuberische Erpressung | Wird die Erpressung mit qualifizierter Gewalt/Drohung begangen? |
+
+---
+
+# PRÜFUNGSLOGIK
+
+```text
+SACHVERHALT
+↓
+Vermögensdelikt?
+↓
+Wegnahme?
+│
+├─ JA
+│  ↓
+│  §242 prüfen
+│  ↓
+│  Gewalt/Drohung bei der Wegnahme?
+│  └─ JA → §249 prüfen
+│
+└─ NEIN
+   ↓
+   Nötigung?
+   ↓
+   §240 prüfen
+   ↓
+   Vermögensnachteil + Bereicherungsabsicht?
+   └─ JA → §253 prüfen
+          ↓
+          qualifizierte Gewalt/Drohung?
+          └─ JA → §255 prüfen
+```
+
+---
+
+# SOFTWARE-REGEL
+
+Eine erkannte Gewalt- oder Drohungshandlung darf nicht automatisch einem bestimmten Delikt zugeordnet werden.
+
+Die Engine muss mindestens unterscheiden:
+
+```text
+Gewalt / Drohung
+↓
+Zeitpunkt
+↓
+Zweck
+↓
+Wegnahme?
+↓
+Vermögensnachteil?
+↓
+Beutesicherung?
+↓
+Bereicherungsabsicht?
+↓
+qualifiziertes Nötigungsmittel?
+```
+
+Erst danach darf eine konkrete Deliktsprüfung erfolgen.
+
+---
+
+# §34a-PRÜFUNG – STRAFDELIKT ≠ EIGENE BEFUGNIS
+
+Besonders wichtig für die digitale Lernplattform:
+
+```text
+möglicher Raub / Diebstahl / Erpressung / Nötigung
+≠
+automatische Befugnis der Sicherheitskraft
+```
+
+Deshalb immer getrennt prüfen:
+
+```text
+1. Was ist strafrechtlich passiert?
+↓
+2. Welcher Tatbestand könnte erfüllt sein?
+↓
+3. Welche Beweissituation liegt vor?
+↓
+4. Besteht eine gesetzliche Eingriffsbefugnis?
+↓
+5. Welche konkrete Handlung ist erlaubt?
+↓
+6. Welche Grenzen gelten?
+```
+
+Insbesondere darf nicht aus
+
+```text
+„Diebstahl erkannt“
+```
+
+automatisch
+
+```text
+„Sicherheitsmitarbeiter darf die Person festhalten“
+```
+
+abgeleitet werden.
+
+Die Festhaltebefugnis ist gesondert zu prüfen, insbesondere anhand der Voraussetzungen des §127 StPO.
+
+---
+
+# MERKSÄTZE DES TEILS 7
+
+**§240 = Nötigung**
+
+**§249 = Raub**
+
+**§252 = Gewalt/Drohung zur Beutesicherung nach Diebstahl auf frischer Tat**
+
+**§253 = Erpressung**
+
+**§255 = räuberische Erpressung**
+
+**Strafbarkeit und Eingriffsbefugnis sind getrennte Prüfungen.**
+```
+
+# TEIL 8 – STRAFPROZESSRECHT: VORLÄUFIGE FESTNAHME UND PRIVATKLAGE
+
+---
+
+# 22. §127 StPO – VORLÄUFIGE FESTNAHME
+
+## OFFIZIELLE ÜBERSCHRIFT
+
+Vorläufige Festnahme
+
+## AMTLICHER GESETZESTEXT
+
+(1) Wird jemand auf frischer Tat betroffen oder verfolgt, so ist, wenn er der Flucht verdächtig ist oder seine Identität nicht sofort festgestellt werden kann, jedermann befugt, ihn auch ohne richterliche Anordnung vorläufig festzunehmen. Die Feststellung der Identität einer Person durch die Staatsanwaltschaft oder die Beamten des Polizeidienstes bestimmt sich nach § 163b Abs. 1.
+
+(2) Die Staatsanwaltschaft und die Beamten des Polizeidienstes sind bei Gefahr im Verzug auch dann zur vorläufigen Festnahme befugt, wenn die Voraussetzungen eines Haftbefehls oder eines Unterbringungsbefehls vorliegen.
+
+(3) Ist eine Straftat nur auf Antrag verfolgbar, so ist die vorläufige Festnahme auch dann zulässig, wenn ein Antrag noch nicht gestellt ist. Dies gilt entsprechend, wenn eine Straftat nur mit Ermächtigung oder auf Strafverlangen verfolgbar ist.
+
+(4) Für die vorläufige Festnahme durch die Staatsanwaltschaft und die Beamten des Polizeidienstes gelten die §§ 114a bis 114c entsprechend.
+
+## BEDEUTUNG FÜR SICHERHEITSKRÄFTE
+
+Für private Sicherheitskräfte ist insbesondere §127 Abs.1 StPO relevant.
+
+Die Norm spricht ausdrücklich von:
+
+**„jedermann“**
+
+Die Befugnis ist daher nicht ausschließlich auf Polizeibeamte beschränkt.
+
+## VORAUSSETZUNGEN NACH §127 ABS.1
+
+Es müssen mehrere Voraussetzungen zusammenkommen:
+
+### 1. FRISCHE TAT
+
+Die Person muss:
+
+- auf frischer Tat betroffen
+- oder auf frischer Tat verfolgt
+
+werden.
+
+### 2. ZUSÄTZLICHE VORAUSSETZUNG
+
+Zusätzlich muss entweder:
+
+- Fluchtverdacht bestehen
+
+ODER
+
+- die Identität der Person nicht sofort feststellbar sein.
+
+## PRÜFUNGSSCHEMA
+
+```text
+Person?
+↓
+Straftat?
+↓
+auf frischer Tat betroffen
+ODER
+auf frischer Tat verfolgt?
+↓
+Fluchtverdacht
+ODER
+Identität nicht sofort feststellbar?
+↓
+§127 Abs.1 StPO
+↓
+vorläufige Festnahme zulässig
+```
+
+## WICHTIGE ABGRENZUNG
+
+Nicht ausreichend ist allein:
+
+> „Ich glaube, die Person hat etwas gestohlen.“
+
+Erforderlich ist die konkrete Situation der frischen Tat bzw. Verfolgung und zusätzlich eine der in §127 Abs.1 genannten Voraussetzungen.
+
+## „AUF FRISCHER TAT BETROFFEN“
+
+Das bedeutet vereinfacht:
+
+Die Person wird während der Tat oder unmittelbar im Zusammenhang mit der Tat angetroffen.
+
+## „AUF FRISCHER TAT VERFOLGT“
+
+Es muss eine unmittelbare Verfolgung im Zusammenhang mit der Tat bestehen.
+
+## FLUCHTVERDACHT
+
+Es reicht nicht automatisch, dass die Person lediglich weggehen möchte.
+
+Es muss ein konkreter Fluchtverdacht vorliegen.
+
+## IDENTITÄT NICHT SOFORT FESTSTELLBAR
+
+Die Alternative zum Fluchtverdacht kann darin bestehen, dass die Identität nicht sofort festgestellt werden kann.
+
+## WICHTIG FÜR DIE PRAXIS
+
+§127 StPO ist eine **vorläufige Festnahmebefugnis**.
+
+Sie ist kein allgemeines Recht, Personen nach eigenem Ermessen festzuhalten.
+
+## VERHÄLTNISMÄSSIGKEIT
+
+Auch bei bestehender Befugnis ist die konkrete Durchführung der Festnahme auf das erforderliche Maß zu begrenzen.
+
+Es ist insbesondere zu unterscheiden zwischen:
+
+- Festhalten
+- Fixieren
+- körperlicher Gewalt
+- weitergehenden Zwangsmitteln
+
+Eine bestehende Festnahmebefugnis bedeutet nicht automatisch, dass jedes Mittel zulässig ist.
+
+## ABGRENZUNG ZU BGB
+
+§127 StPO:
+
+**strafprozessuale vorläufige Festnahme**
+
+§859 BGB:
+
+**Besitzerselbsthilfe**
+
+§229 BGB:
+
+**zivilrechtliche Selbsthilfe**
+
+Diese Rechtsgrundlagen dürfen nicht miteinander vermischt werden.
+
+## MERKSATZ
+
+**§127 = frische Tat + Fluchtverdacht oder Identität nicht sofort feststellbar.**
+
+## SOFTWARE-REGEL
+
+```text
+fresh_tat =
+    betroffen_auf_frischer_tat
+    OR
+    verfolgt_auf_frischer_tat
+
+zusatz =
+    fluchtverdacht
+    OR
+    identitaet_nicht_sofort_feststellbar
+
+§127 StPO möglich =
+    fresh_tat
+    AND
+    zusatz
+```
+
+---
+
+# 23. §128 StPO – VORFÜHRUNG BEI VORLÄUFIGER FESTNAHME
+
+## OFFIZIELLE ÜBERSCHRIFT
+
+Vorführung bei vorläufiger Festnahme
+
+## AMTLICHER GESETZESTEXT
+
+(1) Der Festgenommene ist, sofern er nicht wieder in Freiheit gesetzt wird, unverzüglich, spätestens am Tage nach der Festnahme, dem Richter bei dem Amtsgericht, in dessen Bezirk er festgenommen worden ist, vorzuführen. Der Richter vernimmt den Vorgeführten gemäß § 115 Abs. 3.
+
+(2) Hält der Richter die Festnahme nicht für gerechtfertigt oder ihre Gründe für beseitigt, so ordnet er die Freilassung an. Andernfalls erläßt er auf Antrag der Staatsanwaltschaft oder, wenn ein Staatsanwalt nicht erreichbar ist, von Amts wegen einen Haftbefehl oder einen Unterbringungsbefehl. § 115 Abs. 4 gilt entsprechend.
+
+## BEDEUTUNG
+
+§128 StPO regelt, was nach einer vorläufigen Festnahme geschieht, wenn die festgenommene Person nicht wieder freigelassen wird.
+
+## WICHTIG
+
+Die private Sicherheitskraft wird durch §127 StPO nicht zum Richter oder zur Polizei.
+
+Die weitere strafprozessuale Behandlung richtet sich nach den gesetzlichen Zuständigkeiten.
+
+## ABLAUF
+
+```text
+§127 StPO
+↓
+vorläufige Festnahme
+↓
+Person wird nicht freigelassen
+↓
+unverzügliche Vorführung
+↓
+spätestens am Tag nach der Festnahme
+↓
+Richter beim zuständigen Amtsgericht
+↓
+richterliche Entscheidung
+```
+
+## MERKSATZ
+
+**§127 = Festnahme.**
+
+**§128 = Was danach mit dem Festgenommenen geschieht.**
+
+---
+
+# 24. §374 StPO – ZULÄSSIGKEIT DER PRIVATKLAGE
+
+## OFFIZIELLE ÜBERSCHRIFT
+
+Zulässigkeit; Privatklageberechtigte
+
+## AMTLICHER GESETZESTEXT
+
+(1) Im Wege der Privatklage können vom Verletzten verfolgt werden, ohne daß es einer vorgängigen Anrufung der Staatsanwaltschaft bedarf,
+
+1. ein Hausfriedensbruch (§ 123 des Strafgesetzbuches),
+
+2. eine Beleidigung (§§ 185 bis 189 des Strafgesetzbuches), wenn sie nicht gegen eine der in § 194 Abs. 4 des Strafgesetzbuches genannten politischen Körperschaften gerichtet ist,
+
+2a. eine Verletzung des höchstpersönlichen Lebensbereichs und von Persönlichkeitsrechten durch Bildaufnahmen (§ 201a Absatz 1 und 2 des Strafgesetzbuches),
+
+3. eine Verletzung des Briefgeheimnisses (§ 202 des Strafgesetzbuches),
+
+4. eine Körperverletzung (§§ 223 und 229 des Strafgesetzbuches),
+
+5. eine Nötigung (§ 240 Absatz 1 bis 3 des Strafgesetzbuches) oder eine Bedrohung (§ 241 Absatz 1 bis 3 des Strafgesetzbuches),
+
+5a. eine Bestechlichkeit oder Bestechung im geschäftlichen Verkehr (§ 299 des Strafgesetzbuches),
+
+6. eine Sachbeschädigung (§ 303 des Strafgesetzbuches),
+
+6a. eine Straftat nach § 323a des Strafgesetzbuches, wenn die im Rausch begangene Tat ein in den Nummern 1 bis 6 genanntes Vergehen ist,
+
+7. eine Straftat nach § 16 des Gesetzes gegen den unlauteren Wettbewerb und § 23 des Gesetzes zum Schutz von Geschäftsgeheimnissen,
+
+8. eine Straftat nach § 142 Abs. 1 des Patentgesetzes, § 25 Abs. 1 des Gebrauchsmustergesetzes, § 10 Abs. 1 des Halbleiterschutzgesetzes, § 39 Abs. 1 des Sortenschutzgesetzes, § 143 Abs. 1 und § 144 Absatz 1 des Markengesetzes, § 51 Abs. 1 und § 65 Abs. 1 des Designgesetzes, den §§ 106 bis 108 sowie § 108b Abs. 1 und 2 des Urheberrechtsgesetzes und § 33 des Gesetzes betreffend das Urheberrecht an Werken der bildenden Künste und der Photographie.
+
+(2) Die Privatklage kann auch erheben, wer neben dem Verletzten oder an seiner Stelle berechtigt ist, Strafantrag zu stellen. Die in § 77 Abs. 2 des Strafgesetzbuches genannten Personen können die Privatklage auch dann erheben, wenn der vor ihnen Berechtigte den Strafantrag gestellt hat.
+
+(3) Hat der Verletzte einen gesetzlichen Vertreter, so wird die Befugnis zur Erhebung der Privatklage durch diesen und, wenn Körperschaften, Gesellschaften und andere Personenvereine, die als solche in bürgerlichen Rechtsstreitigkeiten klagen können, die Verletzten sind, durch dieselben Personen wahrgenommen, durch die sie in bürgerlichen Rechtsstreitigkeiten vertreten werden.
+
+## FÜR §34a BESONDERS RELEVANTE DELIKTE
+
+§374 StPO nennt unter anderem:
+
+- §123 StGB – Hausfriedensbruch
+- §§185–189 StGB – Beleidigungsdelikte
+- §§223 und 229 StGB – Körperverletzung und fahrlässige Körperverletzung
+- §240 Abs.1–3 StGB – Nötigung
+- §241 Abs.1–3 StGB – Bedrohung
+- §303 StGB – Sachbeschädigung
+
+## WICHTIGE TRENNUNG
+
+Privatklage bedeutet nicht:
+
+> „Die Polizei darf nicht tätig werden.“
+
+Vielmehr regelt §374 StPO, welche Straftaten unter den gesetzlichen Voraussetzungen im Wege der Privatklage verfolgt werden können.
+
+## ABGRENZUNG ZUM STRAFANTRAG
+
+Strafantrag und Privatklage sind unterschiedliche Rechtsinstitute.
+
+```text
+Strafantrag
+↓
+Voraussetzung für bestimmte Formen der Strafverfolgung
+
+Privatklage
+↓
+eigenständige gesetzliche Möglichkeit der strafrechtlichen Verfolgung bestimmter Delikte
+```
+
+## MERKSATZ
+
+**§374 = Welche Straftaten können grundsätzlich Privatklagedelikte sein?**
+
+---
+
+# 25. §376 StPO – ANKLAGEERHEBUNG BEI PRIVATKLAGEDELIKTEN
+
+## AMTLICHE ÜBERSCHRIFT
+
+Anklageerhebung bei Privatklagedelikten
+
+## AMTLICHER GESETZESTEXT
+
+„Die öffentliche Klage wird wegen der in § 374 bezeichneten Straftaten von der Staatsanwaltschaft nur dann erhoben, wenn dies im öffentlichen Interesse liegt.“
+
+## BEDEUTUNG
+
+Bei den in §374 StPO genannten Straftaten besteht grundsätzlich die Möglichkeit der Privatklage.
+
+Die Staatsanwaltschaft erhebt die öffentliche Klage nur, wenn ein öffentliches Interesse besteht.
+
+## MERKSATZ
+
+**§374 = Privatklage möglich.**
+
+**§376 = öffentliche Klage durch Staatsanwaltschaft nur bei öffentlichem Interesse.**
+
+---
+
+# 26. VERKNÜPFUNG §127 / §128 / §374 STPO
+
+```text
+STRAFTAT
+↓
+Welches Delikt?
+↓
+Tatbestand prüfen
+↓
+Verfolgungsart prüfen
+↓
+ggf. Strafantrag?
+↓
+ggf. Privatklage?
+↓
+bei frischer Tat:
+§127 StPO prüfen
+↓
+vorläufige Festnahme möglich?
+↓
+falls nicht freigelassen:
+§128 StPO
+```
+
+---
+
+# 27. GOLDENE TRENNUNG IM STRAFPROZESSRECHT
+
+```text
+§127 StPO
+→ vorläufige Festnahme
+
+§128 StPO
+→ Vorführung nach vorläufiger Festnahme
+
+§374 StPO
+→ Zulässigkeit der Privatklage
+
+§376 StPO
+→ öffentliche Klage bei Privatklagedelikten
+```
+
+Diese Vorschriften beantworten unterschiedliche Fragen und dürfen in der Software nicht zu einer einzigen „Festnahme-/Strafverfolgungsregel“ zusammengefasst werden.
+
+---
+
+# 28. §34a-ENTSCHEIDUNGSLOGIK
+
+Bei einem konkreten Sachverhalt soll die Software zunächst zwischen folgenden Ebenen unterscheiden:
+
+```text
+EBENE 1
+Was ist möglicherweise passiert?
+↓
+EBENE 2
+Welcher Straftatbestand kommt in Betracht?
+↓
+EBENE 3
+Wie wird die Straftat verfolgt?
+↓
+EBENE 4
+Besteht eine eigene Eingriffsbefugnis?
+↓
+EBENE 5
+Welche konkrete Handlung darf die Sicherheitskraft vornehmen?
+```
+
+Insbesondere:
+
+```text
+Diebstahl erkannt
+≠
+automatische Festnahme
+
+§127 erfüllt
+≠
+beliebige Gewalt zulässig
+
+Privatklagedelikt
+≠
+keine Straftat
+
+Strafantrag erforderlich
+≠
+Tatbestand nicht erfüllt
+```
+
+---
+
+# 29. PRÜFUNGSMATRIX
+
+| Vorschrift | Kernfrage | Kategorie |
+|---|---|---|
+| §127 StPO | Darf die Person vorläufig festgenommen werden? | Eingriffsbefugnis |
+| §128 StPO | Was geschieht nach der vorläufigen Festnahme? | Verfahren |
+| §374 StPO | Ist Privatklage für das Delikt zulässig? | Verfolgungsart |
+| §376 StPO | Wann erhebt die Staatsanwaltschaft öffentliche Klage? | Verfolgungsart |
+
+---
+
+# 30. SOFTWARE-DATENMODELL
+
+Für die StPO-Normen sollen mindestens folgende Felder getrennt gespeichert werden:
+
+```text
+norm_id
+law
+paragraph
+official_title
+official_text
+official_source
+
+legal_function
+
+trigger_conditions
+authorized_persons
+authorized_action
+temporal_requirements
+additional_requirements
+
+proportionality
+limits
+
+follow_up_procedure
+court_involvement
+
+application_required
+private_prosecution
+public_prosecution
+
+typical_security_context
+exam_mnemonic
+```
+
+## BESONDERS WICHTIG
+
+Bei §127 StPO muss `authorized_persons` nicht pauschal mit „Polizei“ gefüllt werden.
+
+§127 Abs.1 verwendet ausdrücklich:
+
+**„jedermann“**
+
+Die Absätze 2 und 4 betreffen dagegen besondere Befugnisse bzw. Regelungen für Staatsanwaltschaft und Polizeidienst.
+
+---
+
+# 31. MERKSÄTZE TEIL 8
+
+**§127 = vorläufige Festnahme.**
+
+**§127 Abs.1 = frische Tat + Fluchtverdacht oder Identität nicht sofort feststellbar.**
+
+**§128 = Vorführung nach nicht beendeter vorläufiger Festnahme.**
+
+**§374 = gesetzlich bestimmte Privatklagedelikte.**
+
+**§376 = öffentliche Klage bei Privatklagedelikten nur bei öffentlichem Interesse.**
+
+**Festnahmebefugnis ≠ allgemeine Polizeibefugnis.**
+
+**Strafverfolgungsart ≠ Eingriffsbefugnis.**
+
+---
+
+# TEIL 9 – QUELLENREGISTER UND ÄNDERUNGSREGISTER (V5.3.1)
+
+## 1. QUELLENREGISTER
+
+Maßgebliche Prüfquelle für alle Gesetzestexte: **Gesetze im Internet** (Bundesministerium der Justiz / Bundesamt für Justiz), www.gesetze-im-internet.de.
+
+### 1.1 Geprüfte Normen mit amtlichem Gesetzestext (VERIFIED_OFFICIAL_TEXT)
+
+| Norm | Gegenstand | Quelle | Status |
+|---|---|---|---|
+| §15 StGB | Vorsätzliches und fahrlässiges Handeln | https://www.gesetze-im-internet.de/stgb/__15.html | VERIFIED_OFFICIAL_TEXT |
+| §16 StGB | Irrtum über Tatumstände | https://www.gesetze-im-internet.de/stgb/__16.html | VERIFIED_OFFICIAL_TEXT |
+| §22 StGB | Begriffsbestimmung (Versuch) | https://www.gesetze-im-internet.de/stgb/__22.html | VERIFIED_OFFICIAL_TEXT |
+| §23 StGB | Strafbarkeit des Versuchs | https://www.gesetze-im-internet.de/stgb/__23.html | VERIFIED_OFFICIAL_TEXT |
+| §25 StGB | Täterschaft | https://www.gesetze-im-internet.de/stgb/__25.html | VERIFIED_OFFICIAL_TEXT |
+| §26 StGB | Anstiftung | https://www.gesetze-im-internet.de/stgb/__26.html | VERIFIED_OFFICIAL_TEXT |
+| §27 StGB | Beihilfe | https://www.gesetze-im-internet.de/stgb/__27.html | VERIFIED_OFFICIAL_TEXT |
+| §32 StGB | Notwehr | https://www.gesetze-im-internet.de/stgb/__32.html | VERIFIED_OFFICIAL_TEXT |
+| §33 StGB | Überschreitung der Notwehr | https://www.gesetze-im-internet.de/stgb/__33.html | VERIFIED_OFFICIAL_TEXT |
+| §34 StGB | Rechtfertigender Notstand | https://www.gesetze-im-internet.de/stgb/__34.html | VERIFIED_OFFICIAL_TEXT |
+| §35 StGB | Entschuldigender Notstand | https://www.gesetze-im-internet.de/stgb/__35.html | VERIFIED_OFFICIAL_TEXT |
+| §123 StGB | Hausfriedensbruch | https://www.gesetze-im-internet.de/stgb/__123.html | VERIFIED_OFFICIAL_TEXT |
+| §124 StGB | Schwerer Hausfriedensbruch | https://www.gesetze-im-internet.de/stgb/__124.html | VERIFIED_OFFICIAL_TEXT |
+| §132 StGB | Amtsanmaßung | https://www.gesetze-im-internet.de/stgb/__132.html | VERIFIED_OFFICIAL_TEXT |
+| §132a StGB | Missbrauch von Titeln, Berufsbezeichnungen und Abzeichen | https://www.gesetze-im-internet.de/stgb/__132a.html | VERIFIED_OFFICIAL_TEXT |
+| §185 StGB | Beleidigung | https://www.gesetze-im-internet.de/stgb/__185.html | VERIFIED_OFFICIAL_TEXT |
+| §223 StGB | Körperverletzung | https://www.gesetze-im-internet.de/stgb/__223.html | VERIFIED_OFFICIAL_TEXT |
+| §224 StGB | Gefährliche Körperverletzung | https://www.gesetze-im-internet.de/stgb/__224.html | VERIFIED_OFFICIAL_TEXT |
+| §226 StGB | Schwere Körperverletzung | https://www.gesetze-im-internet.de/stgb/__226.html | VERIFIED_OFFICIAL_TEXT |
+| §227 StGB | Körperverletzung mit Todesfolge | https://www.gesetze-im-internet.de/stgb/__227.html | VERIFIED_OFFICIAL_TEXT |
+| §240 StGB | Nötigung | https://www.gesetze-im-internet.de/stgb/__240.html | VERIFIED_OFFICIAL_TEXT |
+| §242 StGB | Diebstahl | https://www.gesetze-im-internet.de/stgb/__242.html | VERIFIED_OFFICIAL_TEXT |
+| §243 StGB | Besonders schwerer Fall des Diebstahls | https://www.gesetze-im-internet.de/stgb/__243.html | VERIFIED_OFFICIAL_TEXT |
+| §247 StGB | Haus- und Familiendiebstahl | https://www.gesetze-im-internet.de/stgb/__247.html | VERIFIED_OFFICIAL_TEXT |
+| §248a StGB | Diebstahl und Unterschlagung geringwertiger Sachen | https://www.gesetze-im-internet.de/stgb/__248a.html | VERIFIED_OFFICIAL_TEXT |
+| §249 StGB | Raub | https://www.gesetze-im-internet.de/stgb/__249.html | VERIFIED_OFFICIAL_TEXT |
+| §252 StGB | Räuberischer Diebstahl | https://www.gesetze-im-internet.de/stgb/__252.html | VERIFIED_OFFICIAL_TEXT |
+| §253 StGB | Erpressung | https://www.gesetze-im-internet.de/stgb/__253.html | VERIFIED_OFFICIAL_TEXT |
+| §255 StGB | Räuberische Erpressung | https://www.gesetze-im-internet.de/stgb/__255.html | VERIFIED_OFFICIAL_TEXT |
+| §303 StGB | Sachbeschädigung | https://www.gesetze-im-internet.de/stgb/__303.html | VERIFIED_OFFICIAL_TEXT |
+| §303c StGB | Strafantrag | https://www.gesetze-im-internet.de/stgb/__303c.html | VERIFIED_OFFICIAL_TEXT |
+| §127 StPO | Vorläufige Festnahme | https://www.gesetze-im-internet.de/stpo/__127.html | VERIFIED_OFFICIAL_TEXT |
+| §128 StPO | Vorführung bei vorläufiger Festnahme | https://www.gesetze-im-internet.de/stpo/__128.html | VERIFIED_OFFICIAL_TEXT |
+| §374 StPO | Zulässigkeit; Privatklageberechtigte | https://www.gesetze-im-internet.de/stpo/__374.html | VERIFIED_OFFICIAL_TEXT |
+| §376 StPO | Anklageerhebung bei Privatklagedelikten | https://www.gesetze-im-internet.de/stpo/__376.html | VERIFIED_OFFICIAL_TEXT |
+| §227 BGB | Notwehr | https://www.gesetze-im-internet.de/bgb/__227.html | VERIFIED_OFFICIAL_TEXT |
+| §228 BGB | Notstand (defensiver Notstand) | https://www.gesetze-im-internet.de/bgb/__228.html | VERIFIED_OFFICIAL_TEXT |
+| §229 BGB | Selbsthilfe | https://www.gesetze-im-internet.de/bgb/__229.html | VERIFIED_OFFICIAL_TEXT |
+| §230 BGB | Grenzen der Selbsthilfe | https://www.gesetze-im-internet.de/bgb/__230.html | VERIFIED_OFFICIAL_TEXT |
+| §231 BGB | Irrtümliche Selbsthilfe | https://www.gesetze-im-internet.de/bgb/__231.html | VERIFIED_OFFICIAL_TEXT |
+| §854 BGB | Erwerb des Besitzes | https://www.gesetze-im-internet.de/bgb/__854.html | VERIFIED_OFFICIAL_TEXT (amtlicher Wortlaut nachgetragen) |
+| §855 BGB | Besitzdiener | https://www.gesetze-im-internet.de/bgb/__855.html | VERIFIED_OFFICIAL_TEXT (amtlicher Wortlaut nachgetragen) |
+| §858 BGB | Verbotene Eigenmacht | https://www.gesetze-im-internet.de/bgb/__858.html | VERIFIED_OFFICIAL_TEXT (amtlicher Wortlaut nachgetragen) |
+| §859 BGB | Selbsthilfe des Besitzers | https://www.gesetze-im-internet.de/bgb/__859.html | VERIFIED_OFFICIAL_TEXT |
+| §860 BGB | Selbsthilfe des Besitzdieners | https://www.gesetze-im-internet.de/bgb/__860.html | VERIFIED_OFFICIAL_TEXT |
+| §861 BGB | Anspruch wegen Besitzentziehung | https://www.gesetze-im-internet.de/bgb/__861.html | VERIFIED_OFFICIAL_TEXT |
+| §862 BGB | Anspruch wegen Besitzstörung | https://www.gesetze-im-internet.de/bgb/__862.html | VERIFIED_OFFICIAL_TEXT (amtlicher Wortlaut nachgetragen) |
+| §903 BGB | Befugnisse des Eigentümers | https://www.gesetze-im-internet.de/bgb/__903.html | VERIFIED_OFFICIAL_TEXT |
+| §904 BGB | Notstand (aggressiver Notstand) | https://www.gesetze-im-internet.de/bgb/__904.html | VERIFIED_OFFICIAL_TEXT |
+| §985 BGB | Herausgabeanspruch | https://www.gesetze-im-internet.de/bgb/__985.html | VERIFIED_OFFICIAL_TEXT (amtlicher Wortlaut nachgetragen) |
+| §986 BGB | Einwendungen des Besitzers | https://www.gesetze-im-internet.de/bgb/__986.html | VERIFIED_OFFICIAL_TEXT (amtlicher Wortlaut nachgetragen) |
+| §1004 BGB | Beseitigungs- und Unterlassungsanspruch | https://www.gesetze-im-internet.de/bgb/__1004.html | VERIFIED_OFFICIAL_TEXT (amtlicher Wortlaut nachgetragen) |
+
+Hinweis: Bei den mit „amtlicher Wortlaut nachgetragen“ gekennzeichneten BGB-Normen enthielt die V5.3 nur eine erklärende Paraphrase; der amtliche Wortlaut wurde in V5.3.1 ergänzt und geprüft.
+
+### 1.2 Im Bestand der V5.3 nicht enthaltene, in der Aufgabenstellung genannte Normen
+
+- §263 StGB (Betrug), §265a StGB (Erschleichen von Leistungen), §266 StGB (Untreue): in der V5.3 nicht enthalten; es wird keine Behauptung einer Prüfung aufgestellt.
+- §812 BGB, §823 BGB: nur als Beispiel für Ansprüche erwähnt (Kapitel 2.1 / 73), ohne eigenen Normabschnitt.
+- §828 BGB, §833 BGB: in der V5.3 nicht enthalten.
+
+### 1.3 Keine Pauschalaussage
+
+Es wird ausdrücklich **nicht** behauptet, dass „alle 59 Normen“ geprüft worden seien. Geprüft wurden die in der Datei tatsächlich enthaltenen und oben aufgeführten Normen.
+
+## 2. ÄNDERUNGSREGISTER V5.3 → V5.3.1
+
+| ID | Norm/Abschnitt | Änderung | Grund |
+|---|---|---|---|
+| Ä-01 | §23 StGB | Amtlichen Wortlaut um Absatznummern (1)–(3) ergänzt; „wegen der Art des Gegenstandes“ → „nach der Art des Gegenstandes“; „mildern“ → „mildern (§ 49 Abs. 2)“ | Abweichung vom amtlichen Wortlaut |
+| Ä-02 | §229 BGB | „festhält“ → „festnimmt“ | Abweichung vom amtlichen Wortlaut |
+| Ä-03 | §230 BGB | Falschen (rekonstruierten) Absätze-Wortlaut durch amtliche Absätze (1)–(4) ersetzt | Wortlaut entsprach nicht dem Gesetz |
+| Ä-04 | §903 BGB | Satz 2 (Tierschutz) ergänzt | Vollständigkeit des amtlichen Wortlauts |
+| Ä-05 | §303 StGB | Absatznummern (1)–(3) ergänzt | Vollständigkeit des amtlichen Wortlauts |
+| Ä-06 | §253 StGB Abs. 4 | Strafrahmen „nicht unter einem Jahr“ und „einer Erpressung“ korrigiert | Abweichung vom amtlichen Wortlaut |
+| Ä-07 | §240 StGB | VERIFICATION_OPEN-Stub in Teil 1 durch vollständigen amtlichen Wortlaut (Abs. 1–4, inkl. Verwerflichkeitsklausel) ersetzt | Widerspruch und Unvollständigkeit |
+| Ä-08 | §861 BGB | Erklärenden Abschnitt um amtlichen Wortlaut (Abs. 1–2) ergänzt | Kein amtlicher Text vorhanden |
+| Ä-09 | §303c StGB | Erklärenden Abschnitt um amtlichen Wortlaut ergänzt | Kein amtlicher Text vorhanden |
+| Ä-10 | §227 BGB, §231 BGB | Amtlichen Wortlaut ergänzt | Kein amtlicher Text vorhanden |
+| Ä-11 | §123, §124, §132, §132a, §185, §224, §226, §242, §243, §247, §248a StGB | Doppelte bzw. unvollständige Parallelfassungen zusammengeführt; Stub-Abschnitte durch Hinweis auf den konsolidierten amtlichen Abschnitt ersetzt | Doppelungen und Patchreste |
+| Ä-12 | §240 StGB (Teil 7) | Doppelte Nötigungsfassung entfernt | Doppelung |
+| Ä-13 | Teil 7 / Teil 8 | Doppelte Teil-Überschriften und doppelte §127-StPO-Fassung entfernt; defekte Code-Zäune bereinigt | Technische Beschädigung / Doppelung |
+| Ä-14 | Dateistruktur | PATCH-Überschriften (Teil 4–6) und PATCH-STATUS-Block entfernt | Veraltete Patch-/Prüfvermerke |
+| Ä-15 | §15-Kapitel (Teil 1) | Doppelte Kapitelüberschrift „15. PRIVATKLAGE“ entfernt | Doppelung |
+| Ä-16 | Dateistruktur | Nicht ausgewogene Code-Zäune (```) korrigiert | Technische Beschädigung |
+| Ä-17 | Quellen-/Änderungsregister | Neu erstellt (Teil 9) | Aufgabenstellung |
+| Ä-18 | §854, §855, §858, §862, §985, §986, §1004 BGB | Amtlichen Wortlaut ergänzt (bisher nur Paraphrase) | Kein amtlicher Text vorhanden |
+
+Es wird keine Prüfung behauptet, die nicht tatsächlich durchgeführt wurde.
