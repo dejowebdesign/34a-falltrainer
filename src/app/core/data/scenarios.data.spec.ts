@@ -2,6 +2,7 @@ import { LEGAL_AUTHORITIES } from './legal-authorities.data';
 import { LEGAL_CLASSIFICATIONS } from './legal-classifications.data';
 import { LEGAL_NORMS } from './legal-norms.data';
 import { SCENARIOS } from './scenarios.data';
+import { BEHAVIOR_CATALOG } from './behavior-catalog.data';
 
 const normIds = new Set(LEGAL_NORMS.map((norm) => norm.id));
 const authorityIds = new Set(LEGAL_AUTHORITIES.map((authority) => authority.id));
@@ -12,9 +13,23 @@ describe('Seed-Szenarien – Datenintegrität', () => {
     expect(SCENARIOS.length).toBeGreaterThanOrEqual(3);
   });
 
+  it('enthält die aus der Themenvertiefung abgeleiteten Szenarien', () => {
+    const ids = SCENARIOS.map((scenario) => scenario.id);
+    expect(ids).toContain('klopapier-einkaufswagen');
+    expect(ids).toContain('marktschliessung-hausverbot');
+  });
+
   it('vergibt eindeutige Szenario-IDs', () => {
     const ids = SCENARIOS.map((scenario) => scenario.id);
     expect(new Set(ids).size).toBe(ids.length);
+  });
+
+  it('ordnet Stufe-2-Optionen einem Rechtsgebiet zu (didaktisches Modell)', () => {
+    for (const scenario of SCENARIOS) {
+      for (const option of scenario.stageTwo.options) {
+        expect(option.legalLevel).withContext(`${scenario.id}/${option.id}`).toBeDefined();
+      }
+    }
   });
 
   for (const scenario of SCENARIOS) {
@@ -86,4 +101,25 @@ describe('Seed-Szenarien – Datenintegrität', () => {
       });
     });
   }
+});
+
+describe('Verhaltenskatalog – Stufe 1 (Themenvertiefung)', () => {
+  it('enthält die didaktischen Kernbausteine', () => {
+    const ids = BEHAVIOR_CATALOG.map((entry) => entry.id);
+    expect(ids).toContain('ruhe-bewahren');
+    expect(ids).toContain('vernebelungstechnik');
+    expect(ids).toContain('eigensicherung');
+    expect(ids).toContain('polizei-verstaendigen');
+    expect(ids).toContain('rettungsdienst-verstaendigen');
+    expect(ids).toContain('personalien-aufnehmen');
+    expect(ids).toContain('vorfall-protokollieren');
+    expect(ids).toContain('strafantrag-stellen');
+    expect(ids).toContain('hausverbot-erteilen');
+  });
+
+  it('gibt zu jedem Baustein eine Begründung an', () => {
+    for (const entry of BEHAVIOR_CATALOG) {
+      expect(entry.explanation.length).withContext(entry.id).toBeGreaterThan(0);
+    }
+  });
 });

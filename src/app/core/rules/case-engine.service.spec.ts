@@ -40,6 +40,16 @@ describe('CaseEngineService', () => {
       const result = service.evaluateStage(1, options, ['a'], 'Erklärung', ['b']);
       expect(result.verdict).toBe('TEILWEISE_RICHTIG');
       expect(result.correctCount).toBe(0);
+      expect(result.partialCount).toBe(1);
+    });
+
+    it('zählt teilweise richtige und übersehene richtige Optionen', () => {
+      const result = service.evaluateStage(1, options, ['a', 'b'], 'Erklärung', ['a', 'c']);
+      expect(result.correctCount).toBe(1);
+      expect(result.partialCount).toBe(0);
+      expect(result.wrongCount).toBe(1);
+      expect(result.missedCount).toBe(1);
+      expect(result.verdict).toBe('FALSCH');
     });
 
     it('ignoriert unbekannte Options-IDs', () => {
@@ -94,6 +104,19 @@ describe('CaseEngineService', () => {
     it('sammelt Denkfehler nur aus nicht-richtigen gewählten Optionen', () => {
       const result = service.collectMisconceptions(options, ['a', 'c']);
       expect(result).toEqual(['Denkfehler C']);
+    });
+
+    it('liefert Denkfehler je Stufe (nicht nur Stufe 3)', () => {
+      const scenario = SCENARIOS[0];
+      const stage1 = service.misconceptionsForStage(scenario, 1, ['s1-c']);
+      const stage3 = service.misconceptionsForStage(scenario, 3, ['s3-c']);
+      expect(stage1.length).toBeGreaterThan(0);
+      expect(stage3.length).toBeGreaterThan(0);
+    });
+
+    it('liefert keine Denkfehler für richtige Antworten', () => {
+      const scenario = SCENARIOS[0];
+      expect(service.misconceptionsForStage(scenario, 1, scenario.stageOne.correctOptions)).toEqual([]);
     });
   });
 
