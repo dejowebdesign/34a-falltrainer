@@ -43,6 +43,8 @@ export interface LegalNorm {
   law: string;
   /** Paragraph, z. B. "§ 127". */
   paragraph: string;
+  /** Absatz, soweit für die Anzeige erforderlich, z. B. "Abs. 1". */
+  absatz?: string;
   /** Amtlicher Titel. */
   title: string;
   /** Amtlicher Gesetzestext (Wortlaut aus der Bibel). Leer, wenn in der Bibel nicht vorhanden. */
@@ -55,6 +57,12 @@ export interface LegalNorm {
   area: LegalArea;
   /** Rechtsnatur – Anspruch/Befugnis/Rechtfertigung/Entschuldigung. */
   nature: LegalNature;
+  /**
+   * Fachliche Einordnung, soweit sie vom offiziellen Gesetzestitel abweicht
+   * (z. B. §228 BGB → "Defensivnotstand"). Der offizielle Titel bleibt in
+   * `title`; diese Einordnung wird getrennt davon angezeigt.
+   */
+  fachlicheEinordnung?: string;
   /** Amtliche Quelle (Gesetze im Internet). */
   source: string;
   /** Verifikationsstatus des amtlichen Wortlauts. */
@@ -65,6 +73,6 @@ export interface LegalNorm {
   legalConsequence?: string;
   /** Abgrenzungen zu anderen Normen. */
   distinctions?: string[];
-  /** Bezug zur Tätigkeit einer Sicherheitskraft (§34a-Bezug). */
+  /** Bezug zur Tätigkeit einer Sicherheitskraft (§ 34a-Bezug). */
   securityContext?: string;
 }

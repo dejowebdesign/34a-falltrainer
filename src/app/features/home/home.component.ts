@@ -6,6 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { ScenarioService } from '../../core/services/scenario.service';
 import { BehaviorReferenceComponent } from '../../shared/components/behavior-reference.component';
+import { LegalOrientationComponent } from '../../shared/components/legal-orientation.component';
 
 interface HomeStep {
   number: string;
@@ -29,12 +30,13 @@ interface Automatism {
     MatIconModule,
     MatExpansionModule,
     BehaviorReferenceComponent,
+    LegalOrientationComponent,
   ],
   template: `
     <section class="hero">
       <div class="ft-container hero-inner">
         <div class="hero-text">
-          <p class="eyebrow">Sachkundeprüfung §34a GewO</p>
+          <p class="eyebrow">Sachkundeprüfung § 34a GewO</p>
           <h1>Rechtssicher handeln. Situationen richtig einordnen.</h1>
           <p class="hero-sub">
             Vom Verhalten zur rechtlichen Einordnung zur konkreten Rechtsgrundlage.
@@ -117,10 +119,26 @@ interface Automatism {
         </mat-accordion>
       </section>
 
+      <section class="lernhilfe">
+        <h2>Lernhilfe: Rechtliche Orientierung</h2>
+        <p class="section-sub">
+          Von der rechtlichen Einordnung zur möglichen Rechtsgrundlage. Alle Paragraphen mit
+          offiziellem Gesetzestitel.
+        </p>
+        <mat-accordion>
+          <mat-expansion-panel class="lernhilfe-panel">
+            <mat-expansion-panel-header>
+              <mat-panel-title>Orientierungsdiagramme anzeigen</mat-panel-title>
+            </mat-expansion-panel-header>
+            <app-legal-orientation />
+          </mat-expansion-panel>
+        </mat-accordion>
+      </section>
+
       <p class="source-note">
         <mat-icon aria-hidden="true">verified</mat-icon>
         <span>
-          Fachliche Grundlage: §34a Legal Knowledge Base V5.3.1 (Rechtsstand 01.10.2026). Amtliche
+          Fachliche Grundlage: § 34a Legal Knowledge Base V5.3.1 (Rechtsstand 01.10.2026). Amtliche
           Gesetzestexte aus „Gesetze im Internet“ (BMJ / Bundesamt für Justiz).
         </span>
       </p>
@@ -396,7 +414,7 @@ export class HomeComponent {
       badge: 'Stufe 3',
       title: 'Mit welcher Rechtsgrundlage?',
       icon: 'verified',
-      text: 'Erst hier wird die konkrete Befugnis oder Rechtfertigung bestimmt – etwa §127 StPO, §859 BGB, §32 StGB oder §34 StGB.',
+      text: 'Erst hier wird die konkrete Befugnis oder Rechtfertigung bestimmt – etwa § 127 Abs. 1 StPO – Vorläufige Festnahme, § 859 BGB – Selbsthilfe des Besitzers, § 32 StGB – Notwehr oder § 34 StGB – Rechtfertigender Notstand.',
     },
   ];
 
@@ -404,7 +422,7 @@ export class HomeComponent {
     { trigger: 'Diebstahl', consequence: 'nicht automatisch Festhaltebefugnis' },
     { trigger: 'Hausverbot', consequence: 'nicht automatisch Gewalt' },
     { trigger: 'Eigentum', consequence: 'nicht automatisch Selbsthilfe' },
-    { trigger: 'Gefahr', consequence: 'nicht automatisch §34 StGB' },
+    { trigger: 'Gefahr', consequence: 'nicht automatisch § 34 StGB' },
     { trigger: 'Angriff', consequence: 'nicht automatisch jede Gewalt' },
   ];
 }

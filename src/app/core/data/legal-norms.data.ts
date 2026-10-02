@@ -528,6 +528,7 @@ export const LEGAL_NORMS: LegalNorm[] = [
     id: 'stpo-127',
     law: 'StPO',
     paragraph: '§ 127',
+    absatz: 'Abs. 1',
     title: 'Vorläufige Festnahme',
     officialText:
       '(1) Wird jemand auf frischer Tat betroffen oder verfolgt, so ist, wenn er der Flucht verdächtig ist oder seine Identität nicht sofort festgestellt werden kann, jedermann befugt, ihn auch ohne richterliche Anordnung vorläufig festzunehmen. Die Feststellung der Identität einer Person durch die Staatsanwaltschaft oder die Beamten des Polizeidienstes bestimmt sich nach § 163b Abs. 1. (2) Die Staatsanwaltschaft und die Beamten des Polizeidienstes sind bei Gefahr im Verzug auch dann zur vorläufigen Festnahme befugt, wenn die Voraussetzungen eines Haftbefehls oder eines Unterbringungsbefehls vorliegen. (3) Ist eine Straftat nur auf Antrag verfolgbar, so ist die vorläufige Festnahme auch dann zulässig, wenn ein Antrag noch nicht gestellt ist. (4) Für die vorläufige Festnahme durch die Staatsanwaltschaft und die Beamten des Polizeidienstes gelten die §§ 114a bis 114c entsprechend.',
@@ -787,7 +788,8 @@ export const LEGAL_NORMS: LegalNorm[] = [
     id: 'bgb-228',
     law: 'BGB',
     paragraph: '§ 228',
-    title: 'Defensiver Notstand',
+    title: 'Notstand',
+    fachlicheEinordnung: 'Defensivnotstand',
     officialText:
       'Wer eine fremde Sache beschädigt oder zerstört, um eine durch sie drohende Gefahr von sich oder einem anderen abzuwenden, handelt nicht widerrechtlich, wenn die Beschädigung oder die Zerstörung zur Abwendung der Gefahr erforderlich ist und der Schaden nicht außer Verhältnis zu der Gefahr steht. Hat der Handelnde die Gefahr verschuldet, so ist er zum Schadensersatz verpflichtet.',
     explanation: 'Bei §228 geht die Gefahr von der Sache aus.',
@@ -850,7 +852,8 @@ export const LEGAL_NORMS: LegalNorm[] = [
     id: 'bgb-904',
     law: 'BGB',
     paragraph: '§ 904',
-    title: 'Aggressiver Notstand',
+    title: 'Notstand',
+    fachlicheEinordnung: 'Aggressivnotstand',
     officialText:
       'Der Eigentümer einer Sache ist nicht berechtigt, die Einwirkung eines anderen auf die Sache zu verbieten, wenn die Einwirkung zur Abwendung einer gegenwärtigen Gefahr notwendig und der drohende Schaden gegenüber dem aus der Einwirkung dem Eigentümer entstehenden Schaden unverhältnismäßig groß ist. Der Eigentümer kann Ersatz des ihm entstehenden Schadens verlangen.',
     explanation: 'Hier wird auf eine fremde Sache eingewirkt, um eine gegenwärtige Gefahr abzuwenden.',

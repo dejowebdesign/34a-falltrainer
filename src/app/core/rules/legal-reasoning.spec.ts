@@ -156,14 +156,14 @@ describe('Juristische Denkweise – verbotene Automatismen', () => {
       const aggressiv = fall.stageThree.options.find((option) => option.id === 's3-b')!;
       expect(aggressiv.verdict).toBe('FALSCH');
       expect(aggressiv.normIds).toContain('bgb-904');
-      expect(aggressiv.misconception).toContain('§904');
+      expect(aggressiv.misconception).toContain('§ 904');
     });
 
     it('nennt §228 BGB als zentrale Rechtsgrundlage der Musterlösung', () => {
       const fall = scenario('kind-im-auto');
-      expect(fall.result.authorityResult).toContain('§228 BGB');
-      expect(fall.result.modelSolution.legalBasis).toContain('§228 BGB');
-      expect(fall.result.modelSolution.legalBasis).not.toContain('§904 BGB');
+      expect(fall.result.authorityResult).toContain('§ 228 BGB');
+      expect(fall.result.modelSolution.legalBasis).toContain('§ 228 BGB');
+      expect(fall.result.modelSolution.legalBasis).not.toContain('§ 904 BGB');
     });
 
     it('enthält den Begriff „Defensivnotstand“ in der Musterlösung', () => {

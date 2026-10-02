@@ -60,7 +60,7 @@ export const SCENARIOS: Scenario[] = [
           text: 'Die Person laut beschimpfen, um sie zum Stehenbleiben zu bewegen.',
           verdict: 'FALSCH',
           explanation:
-            'Beschimpfungen eskalieren die Lage und widersprechen deeskalierender Kommunikation. Zudem kann eine Ehrverletzung §185 StGB erfüllen.',
+            'Beschimpfungen eskalieren die Lage und widersprechen deeskalierender Kommunikation. Zudem kann eine Ehrverletzung § 185 StGB erfüllen.',
           misconception: 'Beleidigungen eskalieren lassen, statt deeskalierend zu kommunizieren.',
           normIds: ['stgb-185'],
         },
@@ -74,7 +74,7 @@ export const SCENARIOS: Scenario[] = [
       options: [
         {
           id: 's2-a',
-          text: 'Möglicher Diebstahl nach §242 StGB (Tatverdacht).',
+          text: 'Möglicher Diebstahl nach § 242 StGB (Tatverdacht).',
           verdict: 'RICHTIG',
           legalLevel: 'STRAFRECHT',
           explanation:
@@ -93,7 +93,7 @@ export const SCENARIOS: Scenario[] = [
         },
         {
           id: 's2-c',
-          text: 'Verbotene Eigenmacht nach §858 BGB.',
+          text: 'Verbotene Eigenmacht nach § 858 BGB.',
           verdict: 'RICHTIG',
           legalLevel: 'PRIVATRECHT',
           explanation:
@@ -113,7 +113,7 @@ export const SCENARIOS: Scenario[] = [
       ],
       correctOptions: ['s2-a', 's2-c'],
       explanation:
-        'Rechtlich liegen ein möglicher Diebstahl (§242 StGB) und eine verbotene Eigenmacht (§858 BGB) vor.',
+        'Rechtlich liegen ein möglicher Diebstahl (§ 242 StGB) und eine verbotene Eigenmacht (§ 858 BGB) vor.',
       classificationIds: ['classification-diebstahl-verdacht', 'classification-verbotene-eigenmacht'],
     },
     stageThree: {
@@ -121,19 +121,19 @@ export const SCENARIOS: Scenario[] = [
       options: [
         {
           id: 's3-a',
-          text: '§127 Abs. 1 StPO prüfen: frische Tat und zusätzlich Fluchtverdacht oder Identität nicht sofort feststellbar.',
+          text: '§ 127 Abs. 1 StPO – Vorläufige Festnahme prüfen: frische Tat und zusätzlich Fluchtverdacht oder Identität nicht sofort feststellbar.',
           verdict: 'RICHTIG',
           explanation:
-            'Die Person ist auf frischer Tat betroffen und geht zügig in Richtung Ausgang (Fluchtverdacht); die Identität ist nicht bekannt. Damit sind die Voraussetzungen des §127 Abs. 1 StPO zu prüfen.',
+            'Die Person ist auf frischer Tat betroffen und geht zügig in Richtung Ausgang (Fluchtverdacht); die Identität ist nicht bekannt. Damit sind die Voraussetzungen des § 127 Abs. 1 StPO zu prüfen.',
           normIds: ['stpo-127'],
         },
         {
           id: 's3-b',
-          text: '§985 BGB – als Eigentümer die Sache selbst mit Gewalt zurücknehmen.',
+          text: '§ 985 BGB – Herausgabeanspruch: als Eigentümer die Sache selbst mit Gewalt zurücknehmen.',
           verdict: 'FALSCH',
           explanation:
-            '§985 BGB ist ein Herausgabeanspruch und keine unmittelbare Gewaltbefugnis.',
-          misconception: 'Anspruch mit Befugnis verwechseln: §985 BGB beantwortet nicht, ob die Sache selbst weggenommen werden darf.',
+            '§ 985 BGB ist ein Herausgabeanspruch und keine unmittelbare Gewaltbefugnis.',
+          misconception: 'Anspruch mit Befugnis verwechseln: § 985 BGB beantwortet nicht, ob die Sache selbst weggenommen werden darf.',
           normIds: ['bgb-985'],
         },
         {
@@ -148,37 +148,37 @@ export const SCENARIOS: Scenario[] = [
         },
         {
           id: 's3-d',
-          text: '§34 StGB rechtfertigender Notstand wegen der Gefahr durch den Diebstahl.',
+          text: '§ 34 StGB – Rechtfertigender Notstand wegen der Gefahr durch den Diebstahl.',
           verdict: 'FALSCH',
           explanation:
-            '§34 StGB setzt eine gegenwärtige, nicht anders abwendbare Gefahr für ein Rechtsgut voraus. Ein Diebstahl begründet nicht automatisch einen Notstand.',
-          misconception: 'Gefahr → automatisch §34 StGB.',
+            '§ 34 StGB setzt eine gegenwärtige, nicht anders abwendbare Gefahr für ein Rechtsgut voraus. Ein Diebstahl begründet nicht automatisch einen Notstand.',
+          misconception: 'Gefahr → automatisch § 34 StGB.',
           normIds: ['stgb-34'],
         },
       ],
       correctOptions: ['s3-a'],
       explanation:
-        'Als Eingriffsgrundlage kommt §127 Abs. 1 StPO in Betracht. Die Voraussetzungen (frische Tat + Fluchtverdacht oder Identität nicht sofort feststellbar) müssen kumulativ erfüllt sein.',
+        'Als Eingriffsgrundlage kommt § 127 Abs. 1 StPO in Betracht. Die Voraussetzungen (frische Tat + Fluchtverdacht oder Identität nicht sofort feststellbar) müssen kumulativ erfüllt sein.',
       authorityIds: ['authority-stpo-127'],
     },
     result: {
       behaviorResult:
         'Ruhiges, deeskalierendes Ansprechen, Eigensicherung und Hinzuziehen von Verstärkung bzw. Polizei.',
       legalResult:
-        'Möglicher Diebstahl (§242 StGB) als Tatverdacht und verbotene Eigenmacht (§858 BGB).',
+        'Möglicher Diebstahl (§ 242 StGB) als Tatverdacht und verbotene Eigenmacht (§ 858 BGB).',
       authorityResult:
-        '§127 Abs. 1 StPO prüfen – nur bei frischer Tat und Fluchtverdacht oder nicht sofort feststellbarer Identität.',
+        '§ 127 Abs. 1 StPO prüfen – nur bei frischer Tat und Fluchtverdacht oder nicht sofort feststellbarer Identität.',
       explanation:
-        'Ein Diebstahlsverdacht begründet keine automatische Festhaltebefugnis. Erst nach rechtlicher Einordnung wird die konkrete Befugnis geprüft. §127 Abs. 1 StPO ist eine Jedermann-Befugnis unter engen Voraussetzungen.',
+        'Ein Diebstahlsverdacht begründet keine automatische Festhaltebefugnis. Erst nach rechtlicher Einordnung wird die konkrete Befugnis geprüft. § 127 Abs. 1 StPO ist eine Jedermann-Befugnis unter engen Voraussetzungen.',
       modelSolution: {
         behavior:
           'Ruhe bewahren, professionell ansprechen, deeskalieren, Eigensicherung beachten, Verstärkung und Polizei hinzuziehen.',
         legalClassification:
-          'Möglicher Diebstahl nach §242 StGB (Tatverdacht) und verbotene Eigenmacht nach §858 BGB.',
+          'Möglicher Diebstahl nach § 242 StGB (Tatverdacht) und verbotene Eigenmacht nach § 858 BGB.',
         legalBasis:
-          '§127 Abs. 1 StPO – vorläufige Festnahme, wenn die Person auf frischer Tat betroffen oder verfolgt wird und zusätzlich Fluchtverdacht besteht oder die Identität nicht sofort feststellbar ist.',
+          '§ 127 Abs. 1 StPO – Vorläufige Festnahme, wenn die Person auf frischer Tat betroffen oder verfolgt wird und zusätzlich Fluchtverdacht besteht oder die Identität nicht sofort feststellbar ist.',
         reasoning:
-          'Diebstahl ≠ automatisch Festhaltebefugnis. Der Tatverdacht ist von der Befugnis zu trennen; §985 BGB ist ein Anspruch, keine Gewaltbefugnis.',
+          'Diebstahl ≠ automatisch Festhaltebefugnis. Der Tatverdacht ist von der Befugnis zu trennen; § 985 BGB ist ein Anspruch, keine Gewaltbefugnis.',
         limits:
           'Nur vorläufige Festnahme, Durchführung auf das erforderliche Maß begrenzen, Verhältnismäßigkeit beachten; nach der Festnahme unverzüglich die Polizei hinzuziehen.',
       },
@@ -250,16 +250,16 @@ export const SCENARIOS: Scenario[] = [
       options: [
         {
           id: 's2-a',
-          text: 'Möglicher Hausfriedensbruch nach §123 StGB (unbefugtes Verweilen trotz Aufforderung).',
+          text: 'Möglicher Hausfriedensbruch nach § 123 StGB (unbefugtes Verweilen trotz Aufforderung).',
           verdict: 'RICHTIG',
           legalLevel: 'STRAFRECHT',
           explanation:
-            'Wer ohne Befugnis in geschützten Räumen verweilt und sich trotz Aufforderung des Berechtigten nicht entfernt, kann §123 StGB erfüllen. Die Tat wird nur auf Antrag verfolgt.',
+            'Wer ohne Befugnis in geschützten Räumen verweilt und sich trotz Aufforderung des Berechtigten nicht entfernt, kann § 123 StGB erfüllen. Die Tat wird nur auf Antrag verfolgt.',
           normIds: ['stgb-123'],
         },
         {
           id: 's2-b',
-          text: 'Verbotene Eigenmacht nach §858 BGB durch das Verweilen.',
+          text: 'Verbotene Eigenmacht nach § 858 BGB durch das Verweilen.',
           verdict: 'RICHTIG',
           legalLevel: 'PRIVATRECHT',
           explanation:
@@ -268,17 +268,17 @@ export const SCENARIOS: Scenario[] = [
         },
         {
           id: 's2-c',
-          text: 'Schwerer Hausfriedensbruch nach §124 StGB.',
+          text: 'Schwerer Hausfriedensbruch nach § 124 StGB.',
           verdict: 'FALSCH',
           legalLevel: 'STRAFRECHT',
           explanation:
-            '§124 StGB setzt Menschenmenge, öffentliches Zusammenrotten und Gewaltabsicht voraus. Diese Voraussetzungen sind hier nicht erkennbar.',
-          misconception: '§123 StGB und §124 StGB verwechseln; §124 verlangt zusätzliche Voraussetzungen.',
+            '§ 124 StGB setzt Menschenmenge, öffentliches Zusammenrotten und Gewaltabsicht voraus. Diese Voraussetzungen sind hier nicht erkennbar.',
+          misconception: '§ 123 StGB und § 124 StGB verwechseln; § 124 verlangt zusätzliche Voraussetzungen.',
           normIds: ['stgb-124'],
         },
         {
           id: 's2-d',
-          text: 'Raub nach §249 StGB.',
+          text: 'Raub nach § 249 StGB.',
           verdict: 'FALSCH',
           legalLevel: 'STRAFRECHT',
           explanation: 'Eine Wegnahme mit qualifizierter Gewalt oder Drohung liegt nicht vor.',
@@ -288,7 +288,7 @@ export const SCENARIOS: Scenario[] = [
       ],
       correctOptions: ['s2-a', 's2-b'],
       explanation:
-        'Es kommt ein Hausfriedensbruch nach §123 StGB (Antragsdelikt) sowie eine verbotene Eigenmacht nach §858 BGB in Betracht.',
+        'Es kommt ein Hausfriedensbruch nach § 123 StGB (Antragsdelikt) sowie eine verbotene Eigenmacht nach § 858 BGB in Betracht.',
       classificationIds: ['classification-hausfriedensbruch', 'classification-verbotene-eigenmacht'],
     },
     stageThree: {
@@ -296,10 +296,10 @@ export const SCENARIOS: Scenario[] = [
       options: [
         {
           id: 's3-a',
-          text: '§860 BGB i. V. m. §859 BGB – nur bei verbotener Eigenmacht und nur im erforderlichen Maß.',
+          text: '§ 860 BGB – Selbsthilfe des Besitzdieners i. V. m. § 859 BGB – Selbsthilfe des Besitzers: nur bei verbotener Eigenmacht und nur im erforderlichen Maß.',
           verdict: 'RICHTIG',
           explanation:
-            'Als Besitzdiener darf die Sicherheitskraft die Rechte des Besitzers nach §859 BGB ausüben. Voraussetzung ist eine verbotene Eigenmacht; die Selbsthilfe ist auf das erforderliche Maß begrenzt.',
+            'Als Besitzdiener darf die Sicherheitskraft die Rechte des Besitzers nach § 859 BGB ausüben. Voraussetzung ist eine verbotene Eigenmacht; die Selbsthilfe ist auf das erforderliche Maß begrenzt.',
           normIds: ['bgb-860', 'bgb-859', 'bgb-858'],
         },
         {
@@ -307,53 +307,53 @@ export const SCENARIOS: Scenario[] = [
           text: 'Allein wegen des Hausverbots ist körperliche Gewalt automatisch erlaubt.',
           verdict: 'FALSCH',
           explanation:
-            'Ein Hausverbot begründet keine automatische Gewaltbefugnis. §859 BGB setzt verbotene Eigenmacht voraus und ist kein Freibrief zur Gewalt.',
+            'Ein Hausverbot begründet keine automatische Gewaltbefugnis. § 859 BGB setzt verbotene Eigenmacht voraus und ist kein Freibrief zur Gewalt.',
           misconception: 'Hausverbot → automatisch Gewalt.',
           normIds: ['stgb-123', 'bgb-859'],
         },
         {
           id: 's3-c',
-          text: '§127 StPO, weil ein Hausverbot besteht.',
+          text: '§ 127 Abs. 1 StPO – Vorläufige Festnahme, weil ein Hausverbot besteht.',
           verdict: 'FALSCH',
           explanation:
-            '§127 StPO setzt eine frische Tat und zusätzlich Fluchtverdacht oder nicht sofort feststellbare Identität voraus. Das Hausverbot allein genügt nicht.',
+            '§ 127 StPO setzt eine frische Tat und zusätzlich Fluchtverdacht oder nicht sofort feststellbare Identität voraus. Das Hausverbot allein genügt nicht.',
           misconception: 'Aus einem Hausverbot automatisch eine Festnahmebefugnis ableiten.',
           normIds: ['stpo-127'],
         },
         {
           id: 's3-d',
-          text: '§985 BGB – die Person ist wie eine Sache herauszugeben.',
+          text: '§ 985 BGB – Herausgabeanspruch: die Person ist wie eine Sache herauszugeben.',
           verdict: 'FALSCH',
-          explanation: '§985 BGB betrifft die Herausgabe einer Sache und ist kein Instrument gegen Personen.',
+          explanation: '§ 985 BGB betrifft die Herausgabe einer Sache und ist kein Instrument gegen Personen.',
           misconception: 'Anspruch und Personenbezug vermischen.',
           normIds: ['bgb-985'],
         },
       ],
       correctOptions: ['s3-a'],
       explanation:
-        'Als Besitzdiener kommen die §§860, 859 BGB in Betracht, aber nur bei verbotener Eigenmacht und nur im erforderlichen Maß. Ein Hausverbot allein begründet keine Gewaltbefugnis.',
+        'Als Besitzdiener kommen die §§ 860, 859 BGB in Betracht, aber nur bei verbotener Eigenmacht und nur im erforderlichen Maß. Ein Hausverbot allein begründet keine Gewaltbefugnis.',
       authorityIds: ['authority-bgb-860', 'authority-bgb-859'],
     },
     result: {
       behaviorResult:
         'Hausverbot ruhig kommunizieren, Deeskalation, Person begleiten, ggf. Polizei verständigen.',
       legalResult:
-        'Möglicher Hausfriedensbruch nach §123 StGB (Antragsdelikt) und verbotene Eigenmacht nach §858 BGB.',
+        'Möglicher Hausfriedensbruch nach § 123 StGB (Antragsdelikt) und verbotene Eigenmacht nach § 858 BGB.',
       authorityResult:
-        '§§860, 859 BGB als Besitzdiener – nur bei verbotener Eigenmacht und nur im erforderlichen Maß.',
+        '§§ 860, 859 BGB als Besitzdiener – nur bei verbotener Eigenmacht und nur im erforderlichen Maß.',
       explanation:
         'Ein Hausverbot oder Hausfriedensbruch begründet keine automatische Gewaltbefugnis. Die konkrete Selbsthilfebefugnis setzt verbotene Eigenmacht voraus und ist begrenzt.',
       modelSolution: {
         behavior:
           'Ruhig und eindeutig kommunizieren, deeskalieren, begleiten, bei Bedarf Polizei hinzuziehen.',
         legalClassification:
-          'Möglicher Hausfriedensbruch (§123 StGB, nur auf Antrag) und verbotene Eigenmacht (§858 BGB).',
+          'Möglicher Hausfriedensbruch (§ 123 StGB, nur auf Antrag) und verbotene Eigenmacht (§ 858 BGB).',
         legalBasis:
-          '§860 BGB i. V. m. §859 BGB – Besitzdiener darf die Rechte des Besitzers ausüben, wenn verbotene Eigenmacht vorliegt.',
+          '§ 860 BGB – Selbsthilfe des Besitzdieners i. V. m. § 859 BGB – Selbsthilfe des Besitzers: darf die Rechte des Besitzers ausüben, wenn verbotene Eigenmacht vorliegt.',
         reasoning:
-          'Hausverbot ≠ automatisch Gewalt. §123 StGB und §858 BGB sind zunächst rechtlich einzuordnen; die Befugnis folgt daraus nicht automatisch.',
+          'Hausverbot ≠ automatisch Gewalt. § 123 StGB und § 858 BGB sind zunächst rechtlich einzuordnen; die Befugnis folgt daraus nicht automatisch.',
         limits:
-          'Selbsthilfe nur im erforderlichen Maß; keine allgemeine Gewaltbefugnis; §230 BGB-Grenzen beachten.',
+          'Selbsthilfe nur im erforderlichen Maß; keine allgemeine Gewaltbefugnis; § 230 BGB – Grenzen der Selbsthilfe beachten.',
       },
     },
   },
@@ -425,42 +425,42 @@ export const SCENARIOS: Scenario[] = [
           verdict: 'RICHTIG',
           legalLevel: 'RECHTSBEGRIFF',
           explanation:
-            'Der fortdauernde Faustschlag ist ein gegenwärtiger rechtswidriger Angriff im Sinne des §32 StGB.',
+            'Der fortdauernde Faustschlag ist ein gegenwärtiger rechtswidriger Angriff im Sinne des § 32 StGB.',
           normIds: ['stgb-32'],
         },
         {
           id: 's2-b',
-          text: 'Mögliche Körperverletzung nach §223 StGB.',
+          text: 'Mögliche Körperverletzung nach § 223 StGB.',
           verdict: 'RICHTIG',
           legalLevel: 'STRAFRECHT',
           explanation:
-            'Die körperliche Misshandlung kann den Tatbestand des §223 StGB erfüllen.',
+            'Die körperliche Misshandlung kann den Tatbestand des § 223 StGB erfüllen.',
           normIds: ['stgb-223'],
         },
         {
           id: 's2-c',
-          text: 'Mögliche gefährliche Körperverletzung nach §224 StGB.',
+          text: 'Mögliche gefährliche Körperverletzung nach § 224 StGB.',
           verdict: 'TEILWEISE_RICHTIG',
           legalLevel: 'STRAFRECHT',
           explanation:
-            '§224 setzt eine besondere Begehungsweise voraus (z. B. Waffe, gefährliches Werkzeug, gemeinschaftliche Begehung). Ob eine solche vorliegt, ist gesondert zu prüfen.',
-          misconception: 'Körperverletzung ohne Prüfung der Qualifikationsmerkmale als §224 einordnen.',
+            '§ 224 setzt eine besondere Begehungsweise voraus (z. B. Waffe, gefährliches Werkzeug, gemeinschaftliche Begehung). Ob eine solche vorliegt, ist gesondert zu prüfen.',
+          misconception: 'Körperverletzung ohne Prüfung der Qualifikationsmerkmale als § 224 einordnen.',
           normIds: ['stgb-224'],
         },
         {
           id: 's2-d',
-          text: 'Gegenwärtige Gefahr im Sinne des §34 StGB.',
+          text: 'Gegenwärtige Gefahr im Sinne des § 34 StGB.',
           verdict: 'FALSCH',
           legalLevel: 'RECHTSBEGRIFF',
           explanation:
-            'Hier liegt ein Angriff vor, der über die Notwehr (§32 StGB) behandelt wird. Angriff ≠ automatisch Notstand.',
+            'Hier liegt ein Angriff vor, der über die Notwehr (§ 32 StGB) behandelt wird. Angriff ≠ automatisch Notstand.',
           misconception: 'Angriff und Gefahr vermischen.',
           normIds: ['stgb-34', 'stgb-32'],
         },
       ],
       correctOptions: ['s2-a', 's2-b'],
       explanation:
-        'Es liegt ein gegenwärtiger rechtswidriger Angriff und eine mögliche Körperverletzung nach §223 StGB vor.',
+        'Es liegt ein gegenwärtiger rechtswidriger Angriff und eine mögliche Körperverletzung nach § 223 StGB vor.',
       classificationIds: ['classification-angriff', 'classification-koerperverletzung'],
     },
     stageThree: {
@@ -468,7 +468,7 @@ export const SCENARIOS: Scenario[] = [
       options: [
         {
           id: 's3-a',
-          text: '§32 StGB – erforderliche Verteidigung gegen den gegenwärtigen rechtswidrigen Angriff.',
+          text: '§ 32 StGB – Notwehr: erforderliche Verteidigung gegen den gegenwärtigen rechtswidrigen Angriff.',
           verdict: 'RICHTIG',
           explanation:
             'Notwehr erlaubt die erforderliche Verteidigung, um den gegenwärtigen rechtswidrigen Angriff abzuwenden.',
@@ -476,11 +476,11 @@ export const SCENARIOS: Scenario[] = [
         },
         {
           id: 's3-b',
-          text: '§34 StGB – rechtfertigender Notstand, weil eine Gefahr besteht.',
+          text: '§ 34 StGB – Rechtfertigender Notstand, weil eine Gefahr besteht.',
           verdict: 'FALSCH',
           explanation:
-            'Ein Angriff ist über §32 StGB zu behandeln. §34 StGB verlangt eine nicht anders abwendbare Gefahr und eine Interessenabwägung.',
-          misconception: 'Angriff → automatisch Notwehr bzw. Gefahr → automatisch §34 StGB.',
+            'Ein Angriff ist über § 32 StGB zu behandeln. § 34 StGB verlangt eine nicht anders abwendbare Gefahr und eine Interessenabwägung.',
+          misconception: 'Angriff → automatisch Notwehr bzw. Gefahr → automatisch § 34 StGB.',
           normIds: ['stgb-34'],
         },
         {
@@ -494,37 +494,37 @@ export const SCENARIOS: Scenario[] = [
         },
         {
           id: 's3-d',
-          text: '§127 StPO – weil ein Angriff auf frischer Tat vorliegt.',
+          text: '§ 127 Abs. 1 StPO – Vorläufige Festnahme, weil ein Angriff auf frischer Tat vorliegt.',
           verdict: 'TEILWEISE_RICHTIG',
           explanation:
-            '§127 StPO kann zusätzlich in Betracht kommen, wenn die Person auf frischer Tat betroffen und Fluchtverdacht oder die Identität nicht sofort feststellbar ist. Die Notwehrlage selbst wird über §32 StGB gelöst.',
-          misconception: '§127 StPO mit der Notwehrlage gleichsetzen.',
+            '§ 127 StPO kann zusätzlich in Betracht kommen, wenn die Person auf frischer Tat betroffen und Fluchtverdacht oder die Identität nicht sofort feststellbar ist. Die Notwehrlage selbst wird über § 32 StGB gelöst.',
+          misconception: '§ 127 StPO mit der Notwehrlage gleichsetzen.',
           normIds: ['stpo-127', 'stgb-32'],
         },
       ],
       correctOptions: ['s3-a'],
       explanation:
-        'Die Verteidigung richtet sich nach §32 StGB. Sie muss erforderlich sein; §127 StPO kann zusätzlich, aber nur unter seinen eigenen Voraussetzungen, in Betracht kommen.',
+        'Die Verteidigung richtet sich nach § 32 StGB. Sie muss erforderlich sein; § 127 StPO kann zusätzlich, aber nur unter seinen eigenen Voraussetzungen, in Betracht kommen.',
       authorityIds: ['authority-stgb-32'],
     },
     result: {
       behaviorResult:
         'Eigensicherung, Verstärkung, Personen trennen, Angriff unterbinden, danach Rettungsdienst und Polizei.',
-      legalResult: 'Gegenwärtiger rechtswidriger Angriff und mögliche Körperverletzung nach §223 StGB.',
-      authorityResult: '§32 StGB – erforderliche Verteidigung gegen den gegenwärtigen rechtswidrigen Angriff.',
+      legalResult: 'Gegenwärtiger rechtswidriger Angriff und mögliche Körperverletzung nach § 223 StGB.',
+      authorityResult: '§ 32 StGB – erforderliche Verteidigung gegen den gegenwärtigen rechtswidrigen Angriff.',
       explanation:
         'Ein Angriff begründet Notwehr, aber nicht jede beliebige Gewalt. Die Verteidigung muss erforderlich sein.',
       modelSolution: {
         behavior:
           'Eigensicherung, Verstärkung, Trennen der Personen, Unterbinden des Angriffs, Erste Hilfe, Polizei.',
         legalClassification:
-          'Gegenwärtiger rechtswidriger Angriff und mögliche Körperverletzung nach §223 StGB.',
+          'Gegenwärtiger rechtswidriger Angriff und mögliche Körperverletzung nach § 223 StGB.',
         legalBasis:
-          '§32 StGB – Notwehr als erforderliche Verteidigung gegen einen gegenwärtigen rechtswidrigen Angriff.',
+          '§ 32 StGB – Notwehr als erforderliche Verteidigung gegen einen gegenwärtigen rechtswidrigen Angriff.',
         reasoning:
           'Angriff ≠ automatisch jede beliebige Gewalt. Die Verteidigung muss erforderlich und das mildeste geeignete Mittel sein.',
         limits:
-          'Erforderlichkeit; Überschreitung kann nur unter den Voraussetzungen des §33 StGB entschuldigt sein.',
+          'Erforderlichkeit; Überschreitung kann nur unter den Voraussetzungen des § 33 StGB entschuldigt sein.',
       },
     },
   },
@@ -592,16 +592,16 @@ export const SCENARIOS: Scenario[] = [
       options: [
         {
           id: 's2-a',
-          text: 'Möglicher Diebstahl nach §242 StGB.',
+          text: 'Möglicher Diebstahl nach § 242 StGB.',
           verdict: 'RICHTIG',
           legalLevel: 'STRAFRECHT',
           explanation:
-            'Die Wegnahme einer fremden beweglichen Sache mit Zueignungsabsicht deutet auf §242 StGB hin.',
+            'Die Wegnahme einer fremden beweglichen Sache mit Zueignungsabsicht deutet auf § 242 StGB hin.',
           normIds: ['stgb-242'],
         },
         {
           id: 's2-b',
-          text: 'Verbotene Eigenmacht nach §858 BGB.',
+          text: 'Verbotene Eigenmacht nach § 858 BGB.',
           verdict: 'RICHTIG',
           legalLevel: 'PRIVATRECHT',
           explanation:
@@ -610,27 +610,27 @@ export const SCENARIOS: Scenario[] = [
         },
         {
           id: 's2-c',
-          text: 'Besitzentziehung mit Anspruch nach §861 BGB.',
+          text: 'Besitzentziehung mit Anspruch nach § 861 BGB.',
           verdict: 'RICHTIG',
           legalLevel: 'PRIVATRECHT',
           explanation:
-            'Der frühere Besitzer kann unter den Voraussetzungen des §861 BGB die Wiedereinräumung des Besitzes verlangen.',
+            'Der frühere Besitzer kann unter den Voraussetzungen des § 861 BGB die Wiedereinräumung des Besitzes verlangen.',
           normIds: ['bgb-861'],
         },
         {
           id: 's2-d',
-          text: 'Raub nach §249 StGB.',
+          text: 'Raub nach § 249 StGB.',
           verdict: 'FALSCH',
           legalLevel: 'STRAFRECHT',
           explanation:
-            'Für §249 StGB fehlt es an Gewalt gegen eine Person oder an einer Drohung mit gegenwärtiger Gefahr für Leib oder Leben.',
+            'Für § 249 StGB fehlt es an Gewalt gegen eine Person oder an einer Drohung mit gegenwärtiger Gefahr für Leib oder Leben.',
           misconception: 'Jeden Diebstahl mit qualifiziertem Nötigungsmittel als Raub einordnen.',
           normIds: ['stgb-249'],
         },
       ],
       correctOptions: ['s2-a', 's2-b', 's2-c'],
       explanation:
-        'Es liegen ein möglicher Diebstahl, verbotene Eigenmacht und ein Anspruch nach §861 BGB vor.',
+        'Es liegen ein möglicher Diebstahl, verbotene Eigenmacht und ein Anspruch nach § 861 BGB vor.',
       classificationIds: [
         'classification-diebstahl-verdacht',
         'classification-verbotene-eigenmacht',
@@ -642,7 +642,7 @@ export const SCENARIOS: Scenario[] = [
       options: [
         {
           id: 's3-a',
-          text: '§859 BGB – als Besitzer die Sache dem auf frischer Tat betroffenen oder verfolgten Täter mit Gewalt wieder abnehmen.',
+          text: '§ 859 BGB – Selbsthilfe des Besitzers: die Sache dem auf frischer Tat betroffenen oder verfolgten Täter mit Gewalt wieder abnehmen.',
           verdict: 'RICHTIG',
           explanation:
             'Bei verbotener Eigenmacht darf sich der Besitzer mit Gewalt erwehren und die weggenommene Sache dem auf frischer Tat betroffenen oder verfolgten Täter mit Gewalt wieder abnehmen.',
@@ -650,19 +650,19 @@ export const SCENARIOS: Scenario[] = [
         },
         {
           id: 's3-b',
-          text: '§985 BGB – als Eigentümer die Sache selbst mit Gewalt wegnehmen.',
+          text: '§ 985 BGB – Herausgabeanspruch: als Eigentümer die Sache selbst mit Gewalt wegnehmen.',
           verdict: 'FALSCH',
-          explanation: '§985 BGB ist ein Herausgabeanspruch, keine unmittelbare Gewaltbefugnis.',
-          misconception: '§985 BGB als automatische Gewaltbefugnis behandeln.',
+          explanation: '§ 985 BGB ist ein Herausgabeanspruch, keine unmittelbare Gewaltbefugnis.',
+          misconception: '§ 985 BGB als automatische Gewaltbefugnis behandeln.',
           normIds: ['bgb-985'],
         },
         {
           id: 's3-c',
-          text: '§903 BGB – als Eigentümer darf man mit der Sache nach Belieben verfahren.',
+          text: '§ 903 BGB – Befugnisse des Eigentümers: als Eigentümer darf man mit der Sache nach Belieben verfahren.',
           verdict: 'FALSCH',
           explanation:
-            '§903 BGB beschreibt die Eigentümerbefugnis, ist aber kein Herausgabeanspruch und keine Gewaltbefugnis gegen Personen.',
-          misconception: '§903 BGB mit §985 BGB bzw. einer Eingriffsbefugnis verwechseln.',
+            '§ 903 BGB beschreibt die Eigentümerbefugnis, ist aber kein Herausgabeanspruch und keine Gewaltbefugnis gegen Personen.',
+          misconception: '§ 903 BGB mit § 985 BGB bzw. einer Eingriffsbefugnis verwechseln.',
           normIds: ['bgb-903', 'bgb-985'],
         },
         {
@@ -677,36 +677,36 @@ export const SCENARIOS: Scenario[] = [
       ],
       correctOptions: ['s3-a'],
       explanation:
-        'Als Besitzer kommt §859 BGB in Betracht: Wiederabnahme der Sache vom auf frischer Tat betroffenen oder verfolgten Täter, nur im erforderlichen Maß. §985 BGB ist nur ein Anspruch.',
+        'Als Besitzer kommt § 859 BGB in Betracht: Wiederabnahme der Sache vom auf frischer Tat betroffenen oder verfolgten Täter, nur im erforderlichen Maß. § 985 BGB ist nur ein Anspruch.',
       authorityIds: ['authority-bgb-859'],
     },
     result: {
       behaviorResult:
         'Ruhe bewahren, Eigentümer unterstützen, Polizei verständigen, Eigensicherung, Dokumentation und Zeugen.',
       legalResult:
-        'Möglicher Diebstahl (§242 StGB), verbotene Eigenmacht (§858 BGB) und Anspruch nach §861 BGB.',
+        'Möglicher Diebstahl (§ 242 StGB), verbotene Eigenmacht (§ 858 BGB) und Anspruch nach § 861 BGB.',
       authorityResult:
-        '§859 BGB – Besitzerselbsthilfe gegen verbotene Eigenmacht, nur im erforderlichen Maß.',
+        '§ 859 BGB – Selbsthilfe des Besitzers gegen verbotene Eigenmacht, nur im erforderlichen Maß.',
       explanation:
-        'Eigentum ist nicht dasselbe wie Besitz. §985 BGB ist ein Anspruch, keine Gewaltbefugnis; §859 BGB erlaubt die Besitzerselbsthilfe nur bei verbotener Eigenmacht.',
+        'Eigentum ist nicht dasselbe wie Besitz. § 985 BGB ist ein Anspruch, keine Gewaltbefugnis; § 859 BGB erlaubt die Besitzerselbsthilfe nur bei verbotener Eigenmacht.',
       modelSolution: {
         behavior:
           'Ruhe bewahren, Eigentümer unterstützen, Polizei, Eigensicherung, Dokumentation, Zeugen.',
         legalClassification:
-          'Möglicher Diebstahl (§242 StGB), verbotene Eigenmacht (§858 BGB), Anspruch nach §861 BGB.',
+          'Möglicher Diebstahl (§ 242 StGB), verbotene Eigenmacht (§ 858 BGB), Anspruch nach § 861 BGB.',
         legalBasis:
-          '§859 BGB – Selbsthilfe des Besitzers gegen verbotene Eigenmacht; Wiederabnahme vom auf frischer Tat betroffenen oder verfolgten Täter.',
+          '§ 859 BGB – Selbsthilfe des Besitzers gegen verbotene Eigenmacht; Wiederabnahme vom auf frischer Tat betroffenen oder verfolgten Täter.',
         reasoning:
-          '§985 BGB beantwortet nicht, ob die Sache selbst mit Gewalt zurückgenommen werden darf. Eigentum ≠ Besitz.',
+          '§ 985 BGB beantwortet nicht, ob die Sache selbst mit Gewalt zurückgenommen werden darf. Eigentum ≠ Besitz.',
         limits:
-          'Gewalt nur im erforderlichen Maß; kein allgemeiner Freibrief; §230 BGB-Grenzen und Verhältnismäßigkeit.',
+          'Gewalt nur im erforderlichen Maß; kein allgemeiner Freibrief; § 230 BGB – Grenzen der Selbsthilfe und Verhältnismäßigkeit.',
       },
     },
   },
 
   // ===========================================================================
   // FALL 5 – Gefahr: Die Richtung der Einwirkung entscheidet
-  // Defensivnotstand (§228 BGB) vs. Aggressivnotstand (§904 BGB)
+  // Defensivnotstand (§ 228 BGB) vs. Aggressivnotstand (§ 904 BGB)
   // ===========================================================================
   {
     id: 'kind-im-auto',
@@ -780,7 +780,7 @@ export const SCENARIOS: Scenario[] = [
           verdict: 'RICHTIG',
           legalLevel: 'PRIVATRECHT',
           explanation:
-            'Die Gefahr für das Kind geht von dem überhitzten, verschlossenen Pkw selbst aus. Wird zur Rettung auf genau diesen Pkw eingewirkt, ist die Richtung der Einwirkung entscheidend: Die Gefahr stammt aus der Sache, auf die eingewirkt wird – das ist die Fallgruppe des Defensivnotstands (§228 BGB). Das ist eine rechtlich zu prüfende Einordnung, keine bereits feststehende Subsumtion.',
+            'Die Gefahr für das Kind geht von dem überhitzten, verschlossenen Pkw selbst aus. Wird zur Rettung auf genau diesen Pkw eingewirkt, ist die Richtung der Einwirkung entscheidend: Die Gefahr stammt aus der Sache, auf die eingewirkt wird – das ist die Fallgruppe des Defensivnotstands (§ 228 BGB). Das ist eine rechtlich zu prüfende Einordnung, keine bereits feststehende Subsumtion.',
           normIds: ['bgb-228'],
         },
         {
@@ -806,7 +806,7 @@ export const SCENARIOS: Scenario[] = [
       ],
       correctOptions: ['s2-a', 's2-b'],
       explanation:
-        'Es liegt eine gegenwärtige, nicht anders abwendbare Gefahr für Leben und Leib vor. Weil die Gefahr vom Pkw als Gefahrenquelle ausgeht und die Rettung auf diesen Pkw einwirkt, liegt eine Defensivnotstandslage nach §228 BGB vor (zu prüfen).',
+        'Es liegt eine gegenwärtige, nicht anders abwendbare Gefahr für Leben und Leib vor. Weil die Gefahr vom Pkw als Gefahrenquelle ausgeht und die Rettung auf diesen Pkw einwirkt, liegt eine Defensivnotstandslage nach § 228 BGB vor (zu prüfen).',
       classificationIds: ['classification-gegenwaertige-gefahr', 'classification-defensivnotstandslage'],
     },
     stageThree: {
@@ -814,43 +814,43 @@ export const SCENARIOS: Scenario[] = [
       options: [
         {
           id: 's3-a',
-          text: '§228 BGB – Defensivnotstand: Die Gefahr geht vom Pkw als Gefahrenquelle aus und die Einwirkung richtet sich gegen diese Sache selbst.',
+          text: '§ 228 BGB – Notstand (fachliche Einordnung: Defensivnotstand): Die Gefahr geht vom Pkw als Gefahrenquelle aus und die Einwirkung richtet sich gegen diese Sache selbst.',
           verdict: 'RICHTIG',
           explanation:
-            'Da die Gefahr von dem Pkw als Gefahrenquelle ausgeht und die Rettung des Kindes eine Einwirkung auf eben diesen Pkw erfordert, ist zunächst §228 BGB als spezieller zivilrechtlicher Rechtfertigungsgrund zu prüfen. Die Einwirkung muss erforderlich sein; mildere, gleich wirksame Mittel sind vorrangig zu prüfen. Die durch die Einwirkung verursachte Beschädigung darf nicht außer Verhältnis zur abgewehrten Gefahr stehen.',
+            'Da die Gefahr von dem Pkw als Gefahrenquelle ausgeht und die Rettung des Kindes eine Einwirkung auf eben diesen Pkw erfordert, ist zunächst § 228 BGB als spezieller zivilrechtlicher Rechtfertigungsgrund zu prüfen. Die Einwirkung muss erforderlich sein; mildere, gleich wirksame Mittel sind vorrangig zu prüfen. Die durch die Einwirkung verursachte Beschädigung darf nicht außer Verhältnis zur abgewehrten Gefahr stehen.',
           normIds: ['bgb-228'],
         },
         {
           id: 's3-b',
-          text: '§904 BGB – Aggressivnotstand: Einwirkung auf eine unbeteiligte fremde Sache.',
+          text: '§ 904 BGB – Notstand (fachliche Einordnung: Aggressivnotstand): Einwirkung auf eine unbeteiligte fremde Sache.',
           verdict: 'FALSCH',
           explanation:
-            '§904 BGB betrifft grundsätzlich den aggressiven Notstand und damit die Einwirkung auf eine unbeteiligte fremde Sache. Das ist hier nicht die primäre Einordnung, weil die Gefahr gerade vom betroffenen Pkw ausgeht. §904 BGB kann abstrakt ergänzend diskutiert werden, ist für diesen konkreten Fall aber nicht die tragende Rechtsgrundlage.',
+            '§ 904 BGB betrifft grundsätzlich den aggressiven Notstand und damit die Einwirkung auf eine unbeteiligte fremde Sache. Das ist hier nicht die primäre Einordnung, weil die Gefahr gerade vom betroffenen Pkw ausgeht. § 904 BGB kann abstrakt ergänzend diskutiert werden, ist für diesen konkreten Fall aber nicht die tragende Rechtsgrundlage.',
           misconception:
-            'Fremde Sache → automatisch §904 BGB (aggressiver Notstand), ohne die Richtung der Einwirkung zu prüfen.',
+            'Fremde Sache → automatisch § 904 BGB (aggressiver Notstand), ohne die Richtung der Einwirkung zu prüfen.',
           normIds: ['bgb-904'],
         },
         {
           id: 's3-c',
-          text: '§34 StGB – rechtfertigender Notstand als ergänzender strafrechtlicher Rechtfertigungsgrund.',
+          text: '§ 34 StGB – Rechtfertigender Notstand als ergänzender strafrechtlicher Rechtfertigungsgrund.',
           verdict: 'RICHTIG',
           explanation:
-            'Ergänzend ist §34 StGB als allgemeiner strafrechtlicher Rechtfertigungsgrund zu prüfen. Die §§228/904 BGB sind gegenüber §34 StGB die spezielleren zivilrechtlichen Regelungen für die Einwirkung auf eine Sache; §34 StGB tritt daher nicht an die Stelle der speziellen zivilrechtlichen Prüfung, sondern ergänzt sie.',
+            'Ergänzend ist § 34 StGB als allgemeiner strafrechtlicher Rechtfertigungsgrund zu prüfen. Die §§ 228/904 BGB sind gegenüber § 34 StGB die spezielleren zivilrechtlichen Regelungen für die Einwirkung auf eine Sache; § 34 StGB tritt daher nicht an die Stelle der speziellen zivilrechtlichen Prüfung, sondern ergänzt sie.',
           normIds: ['stgb-34'],
         },
         {
           id: 's3-d',
-          text: 'Gefahr → automatisch §34 StGB, ohne weitere Prüfung.',
+          text: 'Gefahr → automatisch § 34 StGB, ohne weitere Prüfung.',
           verdict: 'FALSCH',
           explanation:
-            '§34 StGB verlangt zusätzlich die nicht anders abwendbare Gefahr, die Interessenabwägung und ein angemessenes Mittel. Zudem ist hier zuerst die spezielle zivilrechtliche Rechtfertigung nach §228 BGB zu prüfen.',
-          misconception: 'Gefahr → automatisch §34 StGB.',
+            '§ 34 StGB verlangt zusätzlich die nicht anders abwendbare Gefahr, die Interessenabwägung und ein angemessenes Mittel. Zudem ist hier zuerst die spezielle zivilrechtliche Rechtfertigung nach § 228 BGB zu prüfen.',
+          misconception: 'Gefahr → automatisch § 34 StGB.',
           normIds: ['stgb-34'],
         },
       ],
       correctOptions: ['s3-a', 's3-c'],
       explanation:
-        'Die Gefahr geht vom Pkw als Gefahrenquelle aus; die Rettung wirkt auf genau diesen Pkw ein. Deshalb ist zunächst §228 BGB (Defensivnotstand) als spezieller zivilrechtlicher Rechtfertigungsgrund zu prüfen – erforderlich und nicht außer Verhältnis zur Gefahr. Ergänzend ist §34 StGB als strafrechtlicher Rechtfertigungsgrund zu betrachten. §904 BGB (Aggressivnotstand) beträfe eine unbeteiligte fremde Sache und ist hier nicht die primäre Einordnung.',
+        'Die Gefahr geht vom Pkw als Gefahrenquelle aus; die Rettung wirkt auf genau diesen Pkw ein. Deshalb ist zunächst § 228 BGB – Notstand (fachliche Einordnung: Defensivnotstand) als spezieller zivilrechtlicher Rechtfertigungsgrund zu prüfen – erforderlich und nicht außer Verhältnis zur Gefahr. Ergänzend ist § 34 StGB – Rechtfertigender Notstand als strafrechtlicher Rechtfertigungsgrund zu betrachten. § 904 BGB – Notstand (fachliche Einordnung: Aggressivnotstand) beträfe eine unbeteiligte fremde Sache und ist hier nicht die primäre Einordnung.',
       authorityIds: ['authority-bgb-228', 'authority-stgb-34'],
     },
     result: {
@@ -859,20 +859,20 @@ export const SCENARIOS: Scenario[] = [
       legalResult:
         'Gegenwärtige, nicht anders abwendbare Gefahr für Leben und Leib; Defensivnotstandslage, weil die Gefahr vom Pkw als Gefahrenquelle ausgeht.',
       authorityResult:
-        '§228 BGB – defensiver Notstand (Gefahr geht vom Pkw aus); ergänzend §34 StGB als strafrechtlicher Rechtfertigungsgrund.',
+        '§ 228 BGB – Notstand (fachliche Einordnung: Defensivnotstand; Gefahr geht vom Pkw aus); ergänzend § 34 StGB – Rechtfertigender Notstand.',
       explanation:
-        'Die Gefahr geht in dieser Konstellation vom überhitzten, verschlossenen Pkw selbst aus. Wird zur Rettung auf genau diesen Pkw eingewirkt, ist die Richtung der Einwirkung entscheidend: Die Gefahr stammt aus der Sache – das ist der Defensivnotstand (§228 BGB). §904 BGB betrifft dagegen den aggressiven Notstand und damit die Einwirkung auf eine unbeteiligte fremde Sache. Beide verlangen Erforderlichkeit und eine Prüfung der Verhältnismäßigkeit.',
+        'Die Gefahr geht in dieser Konstellation vom überhitzten, verschlossenen Pkw selbst aus. Wird zur Rettung auf genau diesen Pkw eingewirkt, ist die Richtung der Einwirkung entscheidend: Die Gefahr stammt aus der Sache – das ist der Defensivnotstand (§ 228 BGB). § 904 BGB betrifft dagegen den aggressiven Notstand und damit die Einwirkung auf eine unbeteiligte fremde Sache. Beide verlangen Erforderlichkeit und eine Prüfung der Verhältnismäßigkeit.',
       modelSolution: {
         behavior:
           'Rettungsdienst und Polizei verständigen, Eigensicherung, Hilfe organisieren, Kind beobachten.',
         legalClassification:
           'Gegenwärtige, nicht anders abwendbare Gefahr für Leben und Leib; Defensivnotstandslage, weil die Gefahr vom Pkw als Gefahrenquelle ausgeht.',
         legalBasis:
-          '§228 BGB – defensiver Notstand; ergänzend ist §34 StGB als strafrechtlicher Rechtfertigungsgrund zu betrachten.',
+          '§ 228 BGB – Notstand (fachliche Einordnung: Defensivnotstand); ergänzend ist § 34 StGB – Rechtfertigender Notstand zu betrachten.',
         reasoning:
-          'Es liegt eine gegenwärtige Gefahr für Leben und Leib des Kindes vor. Die Gefahr geht in der konkreten Konstellation vom überhitzten, verschlossenen Pkw aus. Wird zur Rettung des Kindes auf diesen Pkw selbst eingewirkt, ist zunächst der Defensivnotstand nach §228 BGB zu prüfen. Das Einschlagen der Scheibe kann gerechtfertigt sein, wenn es zur Gefahrenabwehr erforderlich ist und die Beschädigung nicht außer Verhältnis zur abgewehrten Gefahr steht. Mildere gleich geeignete Mittel sind vorrangig zu prüfen. Die §§228/904 BGB sind gegenüber §34 StGB die spezielleren zivilrechtlichen Regelungen; §34 StGB ist ergänzend zu prüfen.',
+          'Es liegt eine gegenwärtige Gefahr für Leben und Leib des Kindes vor. Die Gefahr geht in der konkreten Konstellation vom überhitzten, verschlossenen Pkw aus. Wird zur Rettung des Kindes auf diesen Pkw selbst eingewirkt, ist zunächst der Defensivnotstand nach § 228 BGB zu prüfen. Das Einschlagen der Scheibe kann gerechtfertigt sein, wenn es zur Gefahrenabwehr erforderlich ist und die Beschädigung nicht außer Verhältnis zur abgewehrten Gefahr steht. Mildere gleich geeignete Mittel sind vorrangig zu prüfen. Die §§ 228/904 BGB sind gegenüber § 34 StGB die spezielleren zivilrechtlichen Regelungen; § 34 StGB ist ergänzend zu prüfen.',
         limits:
-          'Erforderlichkeit und Verhältnismäßigkeit; mildere Mittel zuerst; bei verschuldeter Gefahr Schadensersatzpflicht nach §228 BGB beachten.',
+          'Erforderlichkeit und Verhältnismäßigkeit; mildere Mittel zuerst; bei verschuldeter Gefahr Schadensersatzpflicht nach § 228 BGB beachten.',
       },
     },
   },
@@ -916,7 +916,7 @@ export const SCENARIOS: Scenario[] = [
           text: 'Den Besucher zurückbeleidigen.',
           verdict: 'FALSCH',
           explanation:
-            'Eine zurückbeleidigende Äußerung kann selbst §185 StGB erfüllen und eskaliert die Lage.',
+            'Eine zurückbeleidigende Äußerung kann selbst § 185 StGB erfüllen und eskaliert die Lage.',
           misconception: 'Beleidigungen nicht eskalieren lassen – hier wird eskaliert.',
           normIds: ['stgb-185'],
         },
@@ -939,16 +939,16 @@ export const SCENARIOS: Scenario[] = [
       options: [
         {
           id: 's2-a',
-          text: 'Mögliche Beleidigung nach §185 StGB.',
+          text: 'Mögliche Beleidigung nach § 185 StGB.',
           verdict: 'RICHTIG',
           legalLevel: 'STRAFRECHT',
           explanation:
-            'Eine ehrverletzende Äußerung kann §185 StGB erfüllen. Tatbestand und Strafverfolgung sind getrennt zu prüfen.',
+            'Eine ehrverletzende Äußerung kann § 185 StGB erfüllen. Tatbestand und Strafverfolgung sind getrennt zu prüfen.',
           normIds: ['stgb-185'],
         },
         {
           id: 's2-b',
-          text: 'Mögliche Nötigung nach §240 StGB.',
+          text: 'Mögliche Nötigung nach § 240 StGB.',
           verdict: 'FALSCH',
           legalLevel: 'STRAFRECHT',
           explanation:
@@ -972,13 +972,13 @@ export const SCENARIOS: Scenario[] = [
           verdict: 'RICHTIG',
           legalLevel: 'STRAFRECHT',
           explanation:
-            '§185 StGB ist ein Antragsdelikt und gehört zu den in §374 StPO genannten Privatklagedelikten.',
+            '§ 185 StGB ist ein Antragsdelikt und gehört zu den in § 374 StPO genannten Privatklagedelikten.',
           normIds: ['stgb-185', 'stpo-374'],
         },
       ],
       correctOptions: ['s2-a', 's2-d'],
       explanation:
-        'Es kommt eine mögliche Beleidigung nach §185 StGB in Betracht; sie ist antrags- und privatklagefähig.',
+        'Es kommt eine mögliche Beleidigung nach § 185 StGB in Betracht; sie ist antrags- und privatklagefähig.',
       classificationIds: ['classification-beleidigung'],
     },
     stageThree: {
@@ -986,24 +986,24 @@ export const SCENARIOS: Scenario[] = [
       options: [
         {
           id: 's3-a',
-          text: 'Keine Gewaltbefugnis aus §185 StGB; der Sachverhalt ist zu dokumentieren und ggf. Strafantrag/Privatklage zu prüfen.',
+          text: 'Keine Gewaltbefugnis aus § 185 StGB; der Sachverhalt ist zu dokumentieren und ggf. Strafantrag/Privatklage zu prüfen.',
           verdict: 'RICHTIG',
           explanation:
-            '§185 StGB begründet keine Eingriffs- oder Gewaltbefugnis. Bei Beleidigung kommt die Dokumentation und ggf. der Strafantrag bzw. die Privatklage in Betracht.',
+            '§ 185 StGB begründet keine Eingriffs- oder Gewaltbefugnis. Bei Beleidigung kommt die Dokumentation und ggf. der Strafantrag bzw. die Privatklage in Betracht.',
           normIds: ['stgb-185', 'stpo-374', 'stpo-376'],
         },
         {
           id: 's3-b',
-          text: '§127 StPO – die Beleidigung rechtfertigt automatisch die Festnahme.',
+          text: '§ 127 Abs. 1 StPO – Vorläufige Festnahme: die Beleidigung rechtfertigt automatisch die Festnahme.',
           verdict: 'FALSCH',
           explanation:
-            '§127 StPO verlangt frische Tat und zusätzlich Fluchtverdacht oder nicht sofort feststellbare Identität. Die Beleidigung allein genügt nicht.',
+            '§ 127 StPO verlangt frische Tat und zusätzlich Fluchtverdacht oder nicht sofort feststellbare Identität. Die Beleidigung allein genügt nicht.',
           misconception: 'Straftatbestand → automatisch Festhaltebefugnis.',
           normIds: ['stpo-127'],
         },
         {
           id: 's3-c',
-          text: '§32 StGB – Notwehr gegen die Beleidigung.',
+          text: '§ 32 StGB – Notwehr gegen die Beleidigung.',
           verdict: 'FALSCH',
           explanation: 'Es fehlt an einem gegenwärtigen rechtswidrigen Angriff; eine Beleidigung begründet keine Notwehrlage.',
           misconception: 'Angriff → automatisch Notwehr.',
@@ -1011,33 +1011,33 @@ export const SCENARIOS: Scenario[] = [
         },
         {
           id: 's3-d',
-          text: '§34 StGB – Notstand wegen der Ehrverletzung.',
+          text: '§ 34 StGB – Rechtfertigender Notstand wegen der Ehrverletzung.',
           verdict: 'FALSCH',
-          explanation: '§34 StGB verlangt eine gegenwärtige, nicht anders abwendbare Gefahr und eine Interessenabwägung.',
-          misconception: 'Gefahr → automatisch §34 StGB.',
+          explanation: '§ 34 StGB verlangt eine gegenwärtige, nicht anders abwendbare Gefahr und eine Interessenabwägung.',
+          misconception: 'Gefahr → automatisch § 34 StGB.',
           normIds: ['stgb-34'],
         },
       ],
       correctOptions: ['s3-a'],
       explanation:
-        'Aus §185 StGB folgt keine Gewaltbefugnis. Zu prüfen sind Dokumentation sowie Strafantrag bzw. Privatklage (§§374, 376 StPO).',
+        'Aus § 185 StGB folgt keine Gewaltbefugnis. Zu prüfen sind Dokumentation sowie Strafantrag bzw. Privatklage (§§ 374, 376 StPO).',
       authorityIds: [],
     },
     result: {
       behaviorResult:
         'Ruhig bleiben, nicht provozieren lassen, deeskalierend und mit Ich-Botschaften kommunizieren.',
-      legalResult: 'Mögliche Beleidigung nach §185 StGB (Antrags- und Privatklagedelikt).',
+      legalResult: 'Mögliche Beleidigung nach § 185 StGB (Antrags- und Privatklagedelikt).',
       authorityResult:
-        'Keine Gewaltbefugnis aus §185 StGB; Dokumentation und ggf. Strafantrag/Privatklage (§§374, 376 StPO).',
+        'Keine Gewaltbefugnis aus § 185 StGB; Dokumentation und ggf. Strafantrag/Privatklage (§§ 374, 376 StPO).',
       explanation:
         'Ein Straftatbestand ist nicht automatisch eine Eingriffsbefugnis. Eine Beleidigung begründet weder Notwehr noch eine Festhaltebefugnis.',
       modelSolution: {
         behavior: 'Selbstbeherrschung, Deeskalation, nicht-aggressive Wortwahl, Ich-Botschaften.',
-        legalClassification: 'Mögliche Beleidigung nach §185 StGB; Antrags- und Privatklagedelikt.',
+        legalClassification: 'Mögliche Beleidigung nach § 185 StGB; Antrags- und Privatklagedelikt.',
         legalBasis:
-          'Keine Gewaltbefugnis. Dokumentation sowie Strafantrag bzw. Privatklage nach §§374, 376 StPO prüfen.',
+          'Keine Gewaltbefugnis. Dokumentation sowie Strafantrag bzw. Privatklage nach §§ 374, 376 StPO prüfen.',
         reasoning:
-          'Straftatbestand ≠ Eingriffsbefugnis. §185 StGB begründet keine Notwehrlage und keine Festhaltebefugnis.',
+          'Straftatbestand ≠ Eingriffsbefugnis. § 185 StGB begründet keine Notwehrlage und keine Festhaltebefugnis.',
         limits: 'Keine Gewalt; Verhältnismäßigkeit; Strafverfolgungsart beachten.',
       },
     },
@@ -1045,7 +1045,7 @@ export const SCENARIOS: Scenario[] = [
 
   // ===========================================================================
   // FALL 7 – Besitzentziehung im Laden (Klopapier): Besitzer ≠ automatisch
-  // beliebige Gewalt; §859 BGB setzt verbotene Eigenmacht voraus.
+  // beliebige Gewalt; § 859 BGB setzt verbotene Eigenmacht voraus.
   // Didaktische Grundlage: Fallbeispiel 4 der Themenvertiefung.
   // ===========================================================================
   {
@@ -1088,7 +1088,7 @@ export const SCENARIOS: Scenario[] = [
           explanation:
             'Der Besitzstand allein rechtfertigt keine beliebige Gewalt. Eine Selbsthilfe setzt die konkreten Voraussetzungen der einschlägigen Norm voraus.',
           misconception:
-            'Besitzer → darf immer Gewalt anwenden. §859 BGB ist kein allgemeiner Freibrief zur Gewalt.',
+            'Besitzer → darf immer Gewalt anwenden. § 859 BGB ist kein allgemeiner Freibrief zur Gewalt.',
           normIds: ['bgb-859', 'bgb-858'],
         },
         {
@@ -1110,7 +1110,7 @@ export const SCENARIOS: Scenario[] = [
       options: [
         {
           id: 's2-a',
-          text: 'Verbotene Eigenmacht nach §858 BGB.',
+          text: 'Verbotene Eigenmacht nach § 858 BGB.',
           verdict: 'RICHTIG',
           legalLevel: 'PRIVATRECHT',
           explanation:
@@ -1119,26 +1119,26 @@ export const SCENARIOS: Scenario[] = [
         },
         {
           id: 's2-b',
-          text: 'Besitzentziehung mit Anspruch nach §861 BGB.',
+          text: 'Besitzentziehung mit Anspruch nach § 861 BGB.',
           verdict: 'RICHTIG',
           legalLevel: 'PRIVATRECHT',
           explanation:
-            'Die frühere Besitzerin A kann unter den Voraussetzungen des §861 BGB die Wiedereinräumung des Besitzes verlangen.',
+            'Die frühere Besitzerin A kann unter den Voraussetzungen des § 861 BGB die Wiedereinräumung des Besitzes verlangen.',
           normIds: ['bgb-861'],
         },
         {
           id: 's2-c',
-          text: 'Möglicher Diebstahl nach §242 StGB.',
+          text: 'Möglicher Diebstahl nach § 242 StGB.',
           verdict: 'FALSCH',
           legalLevel: 'STRAFRECHT',
           explanation:
-            'Das Eigentum liegt beim Markt; Person B nimmt die Rolle nicht einem Dritten weg, um sie sich rechtswidrig zuzueignen, sondern streitig aus dem Wagen. Die Voraussetzungen des §242 StGB sind gesondert zu prüfen und hier nicht ohne Weiteres erfüllt.',
+            'Das Eigentum liegt beim Markt; Person B nimmt die Rolle nicht einem Dritten weg, um sie sich rechtswidrig zuzueignen, sondern streitig aus dem Wagen. Die Voraussetzungen des § 242 StGB sind gesondert zu prüfen und hier nicht ohne Weiteres erfüllt.',
           misconception: 'Jede Wegnahme automatisch als Diebstahl einordnen.',
           normIds: ['stgb-242'],
         },
         {
           id: 's2-d',
-          text: 'Mögliche Körperverletzung nach §223 StGB.',
+          text: 'Mögliche Körperverletzung nach § 223 StGB.',
           verdict: 'FALSCH',
           legalLevel: 'STRAFRECHT',
           explanation:
@@ -1149,7 +1149,7 @@ export const SCENARIOS: Scenario[] = [
       ],
       correctOptions: ['s2-a', 's2-b'],
       explanation:
-        'Rechtlich liegen eine verbotene Eigenmacht nach §858 BGB und ein Anspruch nach §861 BGB vor.',
+        'Rechtlich liegen eine verbotene Eigenmacht nach § 858 BGB und ein Anspruch nach § 861 BGB vor.',
       classificationIds: ['classification-verbotene-eigenmacht', 'classification-besitzentziehung'],
     },
     stageThree: {
@@ -1157,29 +1157,29 @@ export const SCENARIOS: Scenario[] = [
       options: [
         {
           id: 's3-a',
-          text: '§859 BGB – als Besitzer der verbotenen Eigenmacht mit Gewalt begegnen bzw. die Sache dem auf frischer Tat betroffenen oder verfolgten Täter wieder abnehmen, nur im erforderlichen Maß.',
+          text: '§ 859 BGB – Selbsthilfe des Besitzers: der verbotenen Eigenmacht mit Gewalt begegnen bzw. die Sache dem auf frischer Tat betroffenen oder verfolgten Täter wieder abnehmen, nur im erforderlichen Maß.',
           verdict: 'RICHTIG',
           explanation:
-            'Bei verbotener Eigenmacht darf sich der Besitzer nach §859 BGB mit Gewalt erwehren und eine weggenommene bewegliche Sache dem auf frischer Tat betroffenen oder verfolgten Täter mit Gewalt wieder abnehmen.',
+            'Bei verbotener Eigenmacht darf sich der Besitzer nach § 859 BGB mit Gewalt erwehren und eine weggenommene bewegliche Sache dem auf frischer Tat betroffenen oder verfolgten Täter mit Gewalt wieder abnehmen.',
           normIds: ['bgb-859', 'bgb-858'],
         },
         {
           id: 's3-b',
-          text: '§861 BGB – die Wiedereinräumung des Besitzes selbst mit Gewalt durchsetzen.',
+          text: '§ 861 BGB – Anspruch wegen Besitzentziehung: die Wiedereinräumung des Besitzes selbst mit Gewalt durchsetzen.',
           verdict: 'FALSCH',
           explanation:
-            '§861 BGB ist ein Anspruch auf Wiedereinräumung, keine unmittelbare Gewaltbefugnis.',
+            '§ 861 BGB ist ein Anspruch auf Wiedereinräumung, keine unmittelbare Gewaltbefugnis.',
           misconception:
-            'Anspruch mit Befugnis verwechseln: §861 BGB beantwortet nicht, ob ich den Besitz selbst mit Gewalt wiederherstellen darf.',
+            'Anspruch mit Befugnis verwechseln: § 861 BGB beantwortet nicht, ob ich den Besitz selbst mit Gewalt wiederherstellen darf.',
           normIds: ['bgb-861'],
         },
         {
           id: 's3-c',
-          text: '§985 BGB – als Eigentümer die Sache selbst mit Gewalt wegnehmen.',
+          text: '§ 985 BGB – Herausgabeanspruch: als Eigentümer die Sache selbst mit Gewalt wegnehmen.',
           verdict: 'FALSCH',
           explanation:
-            '§985 BGB ist ein Herausgabeanspruch des Eigentümers, keine unmittelbare Gewaltbefugnis.',
-          misconception: '§985 BGB als automatische Gewaltbefugnis behandeln.',
+            '§ 985 BGB ist ein Herausgabeanspruch des Eigentümers, keine unmittelbare Gewaltbefugnis.',
+          misconception: '§ 985 BGB als automatische Gewaltbefugnis behandeln.',
           normIds: ['bgb-985'],
         },
         {
@@ -1187,36 +1187,36 @@ export const SCENARIOS: Scenario[] = [
           text: 'Allein wegen des Besitzes ist jede beliebige Gewalt erlaubt.',
           verdict: 'FALSCH',
           explanation:
-            '§859 BGB ist kein allgemeiner Freibrief; die Selbsthilfe ist auf das erforderliche Maß begrenzt.',
+            '§ 859 BGB ist kein allgemeiner Freibrief; die Selbsthilfe ist auf das erforderliche Maß begrenzt.',
           misconception: 'Besitzer → darf immer Gewalt anwenden.',
           normIds: ['bgb-859'],
         },
       ],
       correctOptions: ['s3-a'],
       explanation:
-        'Als Besitzer kommt §859 BGB in Betracht, aber nur bei verbotener Eigenmacht und nur im erforderlichen Maß. §861 und §985 BGB sind Ansprüche, keine Gewaltbefugnisse.',
+        'Als Besitzer kommt § 859 BGB in Betracht, aber nur bei verbotener Eigenmacht und nur im erforderlichen Maß. § 861 und § 985 BGB sind Ansprüche, keine Gewaltbefugnisse.',
       authorityIds: ['authority-bgb-859'],
     },
     result: {
       behaviorResult:
         'Ruhe bewahren, Beteiligte trennen, Personalien aufnehmen und Vorfall dokumentieren; keine Gewalt, keine Beschimpfungen.',
       legalResult:
-        'Verbotene Eigenmacht (§858 BGB) und Anspruch auf Wiedereinräumung des Besitzes (§861 BGB).',
+        'Verbotene Eigenmacht (§ 858 BGB) und Anspruch auf Wiedereinräumung des Besitzes (§ 861 BGB).',
       authorityResult:
-        '§859 BGB – Besitzerselbsthilfe gegen verbotene Eigenmacht, nur im erforderlichen Maß.',
+        '§ 859 BGB – Selbsthilfe des Besitzers gegen verbotene Eigenmacht, nur im erforderlichen Maß.',
       explanation:
-        'Besitz begründet keine beliebige Gewalt. §861 BGB ist ein Anspruch, keine Selbsthilfebefugnis; §859 BGB setzt verbotene Eigenmacht voraus und ist auf das erforderliche Maß begrenzt.',
+        'Besitz begründet keine beliebige Gewalt. § 861 BGB ist ein Anspruch, keine Selbsthilfebefugnis; § 859 BGB setzt verbotene Eigenmacht voraus und ist auf das erforderliche Maß begrenzt.',
       modelSolution: {
         behavior:
           'Ruhe bewahren, Beteiligte trennen, Personalien aufnehmen, Vorfall dokumentieren.',
         legalClassification:
-          'Verbotene Eigenmacht (§858 BGB) und Besitzentziehung mit Anspruch nach §861 BGB.',
+          'Verbotene Eigenmacht (§ 858 BGB) und Besitzentziehung mit Anspruch nach § 861 BGB.',
         legalBasis:
-          '§859 BGB – Besitzerselbsthilfe gegen verbotene Eigenmacht; Wiederabnahme vom auf frischer Tat betroffenen oder verfolgten Täter.',
+          '§ 859 BGB – Selbsthilfe des Besitzers gegen verbotene Eigenmacht; Wiederabnahme vom auf frischer Tat betroffenen oder verfolgten Täter.',
         reasoning:
-          'Besitzer ≠ automatisch beliebige Gewalt. §861 BGB ist ein Anspruch; die Selbsthilfebefugnis folgt aus §859 BGB nur bei verbotener Eigenmacht.',
+          'Besitzer ≠ automatisch beliebige Gewalt. § 861 BGB ist ein Anspruch; die Selbsthilfebefugnis folgt aus § 859 BGB nur bei verbotener Eigenmacht.',
         limits:
-          'Erforderlichkeit; §859 BGB ist kein allgemeiner Freibrief; §230 BGB-Grenzen und Verhältnismäßigkeit.',
+          'Erforderlichkeit; § 859 BGB ist kein allgemeiner Freibrief; § 230 BGB – Grenzen der Selbsthilfe und Verhältnismäßigkeit.',
       },
     },
   },
@@ -1286,16 +1286,16 @@ export const SCENARIOS: Scenario[] = [
       options: [
         {
           id: 's2-a',
-          text: 'Möglicher Hausfriedensbruch nach §123 StGB (unbefugtes Verweilen trotz Aufforderung).',
+          text: 'Möglicher Hausfriedensbruch nach § 123 StGB (unbefugtes Verweilen trotz Aufforderung).',
           verdict: 'RICHTIG',
           legalLevel: 'STRAFRECHT',
           explanation:
-            'Wer ohne Befugnis in Geschäftsräumen verweilt und sich trotz Aufforderung des Berechtigten nicht entfernt, kann §123 StGB erfüllen. Die Tat wird nur auf Antrag verfolgt.',
+            'Wer ohne Befugnis in Geschäftsräumen verweilt und sich trotz Aufforderung des Berechtigten nicht entfernt, kann § 123 StGB erfüllen. Die Tat wird nur auf Antrag verfolgt.',
           normIds: ['stgb-123'],
         },
         {
           id: 's2-b',
-          text: 'Verbotene Eigenmacht nach §858 BGB durch das Verweilen.',
+          text: 'Verbotene Eigenmacht nach § 858 BGB durch das Verweilen.',
           verdict: 'RICHTIG',
           legalLevel: 'PRIVATRECHT',
           explanation: 'Das unbefugte Verweilen kann eine Störung des Besitzes des Berechtigten darstellen.',
@@ -1303,17 +1303,17 @@ export const SCENARIOS: Scenario[] = [
         },
         {
           id: 's2-c',
-          text: 'Schwerer Hausfriedensbruch nach §124 StGB.',
+          text: 'Schwerer Hausfriedensbruch nach § 124 StGB.',
           verdict: 'FALSCH',
           legalLevel: 'STRAFRECHT',
           explanation:
-            '§124 StGB setzt eine Menschenmenge, öffentliches Zusammenrotten und Gewaltabsicht voraus. Diese Voraussetzungen sind hier nicht erkennbar.',
-          misconception: '§123 StGB und §124 StGB verwechseln; §124 verlangt zusätzliche Voraussetzungen.',
+            '§ 124 StGB setzt eine Menschenmenge, öffentliches Zusammenrotten und Gewaltabsicht voraus. Diese Voraussetzungen sind hier nicht erkennbar.',
+          misconception: '§ 123 StGB und § 124 StGB verwechseln; § 124 verlangt zusätzliche Voraussetzungen.',
           normIds: ['stgb-124'],
         },
         {
           id: 's2-d',
-          text: 'Mögliche Nötigung nach §240 StGB durch das Verweilen.',
+          text: 'Mögliche Nötigung nach § 240 StGB durch das Verweilen.',
           verdict: 'FALSCH',
           legalLevel: 'STRAFRECHT',
           explanation:
@@ -1324,7 +1324,7 @@ export const SCENARIOS: Scenario[] = [
       ],
       correctOptions: ['s2-a', 's2-b'],
       explanation:
-        'Es kommt ein Hausfriedensbruch nach §123 StGB (Antragsdelikt) sowie eine verbotene Eigenmacht nach §858 BGB in Betracht.',
+        'Es kommt ein Hausfriedensbruch nach § 123 StGB (Antragsdelikt) sowie eine verbotene Eigenmacht nach § 858 BGB in Betracht.',
       classificationIds: ['classification-hausfriedensbruch', 'classification-verbotene-eigenmacht'],
     },
     stageThree: {
@@ -1332,10 +1332,10 @@ export const SCENARIOS: Scenario[] = [
       options: [
         {
           id: 's3-a',
-          text: '§860 BGB i. V. m. §859 BGB – nur bei verbotener Eigenmacht und nur im erforderlichen Maß.',
+          text: '§ 860 BGB – Selbsthilfe des Besitzdieners i. V. m. § 859 BGB – Selbsthilfe des Besitzers: nur bei verbotener Eigenmacht und nur im erforderlichen Maß.',
           verdict: 'RICHTIG',
           explanation:
-            'Als Besitzdiener darf die Sicherheitskraft die Rechte des Besitzers nach §859 BGB ausüben. Voraussetzung ist eine verbotene Eigenmacht; die Selbsthilfe ist auf das erforderliche Maß begrenzt.',
+            'Als Besitzdiener darf die Sicherheitskraft die Rechte des Besitzers nach § 859 BGB ausüben. Voraussetzung ist eine verbotene Eigenmacht; die Selbsthilfe ist auf das erforderliche Maß begrenzt.',
           normIds: ['bgb-860', 'bgb-859', 'bgb-858'],
         },
         {
@@ -1343,22 +1343,22 @@ export const SCENARIOS: Scenario[] = [
           text: 'Allein wegen des Hausverbots ist körperliche Gewalt automatisch erlaubt.',
           verdict: 'FALSCH',
           explanation:
-            'Ein Hausverbot begründet keine automatische Gewaltbefugnis. §859 BGB setzt verbotene Eigenmacht voraus.',
+            'Ein Hausverbot begründet keine automatische Gewaltbefugnis. § 859 BGB setzt verbotene Eigenmacht voraus.',
           misconception: 'Hausverbot → automatisch Gewalt.',
           normIds: ['stgb-123', 'bgb-859'],
         },
         {
           id: 's3-c',
-          text: '§127 StPO – der Hausfriedensbruch rechtfertigt automatisch die Festnahme.',
+          text: '§ 127 Abs. 1 StPO – Vorläufige Festnahme: der Hausfriedensbruch rechtfertigt automatisch die Festnahme.',
           verdict: 'FALSCH',
           explanation:
-            '§127 StPO verlangt frische Tat und zusätzlich Fluchtverdacht oder nicht sofort feststellbare Identität. Der Hausfriedensbruch allein genügt nicht.',
+            '§ 127 StPO verlangt frische Tat und zusätzlich Fluchtverdacht oder nicht sofort feststellbare Identität. Der Hausfriedensbruch allein genügt nicht.',
           misconception: 'Straftatbestand → automatisch Festhaltebefugnis.',
           normIds: ['stpo-127', 'stgb-123'],
         },
         {
           id: 's3-d',
-          text: '§32 StGB – Notwehr gegen das Verweilen.',
+          text: '§ 32 StGB – Notwehr gegen das Verweilen.',
           verdict: 'FALSCH',
           explanation:
             'Ein bloßes Verweilen ohne gegenwärtigen rechtswidrigen Angriff begründet keine Notwehrlage.',
@@ -1368,25 +1368,25 @@ export const SCENARIOS: Scenario[] = [
       ],
       correctOptions: ['s3-a'],
       explanation:
-        'Als Besitzdiener kommen §860 BGB i. V. m. §859 BGB in Betracht, aber nur bei verbotener Eigenmacht und nur im erforderlichen Maß. Hausverbot ≠ automatisch Gewalt; §127 StPO hat eigene Voraussetzungen.',
+        'Als Besitzdiener kommen § 860 BGB i. V. m. § 859 BGB in Betracht, aber nur bei verbotener Eigenmacht und nur im erforderlichen Maß. Hausverbot ≠ automatisch Gewalt; § 127 StPO hat eigene Voraussetzungen.',
       authorityIds: ['authority-bgb-860', 'authority-bgb-859'],
     },
     result: {
       behaviorResult:
         'Ruhig und eindeutig kommunizieren, deeskalierend begleiten, ggf. Polizei verständigen; keine Gewalt.',
       legalResult:
-        'Möglicher Hausfriedensbruch (§123 StGB, Antragsdelikt) und verbotene Eigenmacht (§858 BGB).',
+        'Möglicher Hausfriedensbruch (§ 123 StGB, Antragsdelikt) und verbotene Eigenmacht (§ 858 BGB).',
       authorityResult:
-        '§860 BGB i. V. m. §859 BGB – Besitzdienerrechte nur bei verbotener Eigenmacht und nur im erforderlichen Maß.',
+        '§ 860 BGB – Selbsthilfe des Besitzdieners i. V. m. § 859 BGB – Selbsthilfe des Besitzers: nur bei verbotener Eigenmacht und nur im erforderlichen Maß.',
       explanation:
-        'Hausverbot ≠ automatisch Gewalt. §859 BGB ist kein allgemeiner Freibrief und setzt verbotene Eigenmacht voraus; §127 StPO ist keine automatische Folge eines Straftatbestands.',
+        'Hausverbot ≠ automatisch Gewalt. § 859 BGB ist kein allgemeiner Freibrief und setzt verbotene Eigenmacht voraus; § 127 StPO ist keine automatische Folge eines Straftatbestands.',
       modelSolution: {
         behavior:
           'Ruhe bewahren, Hausrecht ruhig und eindeutig kommunizieren, deeskalierend begleiten, Polizei verständigen.',
         legalClassification:
-          'Möglicher Hausfriedensbruch (§123 StGB) und verbotene Eigenmacht (§858 BGB).',
+          'Möglicher Hausfriedensbruch (§ 123 StGB) und verbotene Eigenmacht (§ 858 BGB).',
         legalBasis:
-          '§860 BGB i. V. m. §859 BGB – Ausübung der Besitzerrechte durch den Besitzdiener, nur bei verbotener Eigenmacht.',
+          '§ 860 BGB – Selbsthilfe des Besitzdieners i. V. m. § 859 BGB – Selbsthilfe des Besitzers: Ausübung der Besitzerrechte durch den Besitzdiener, nur bei verbotener Eigenmacht.',
         reasoning:
           'Hausverbot → nicht automatisch Gewalt. Die Selbsthilfe setzt verbotene Eigenmacht voraus und ist auf das erforderliche Maß begrenzt.',
         limits:

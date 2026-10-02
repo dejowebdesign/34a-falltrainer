@@ -1,0 +1,55 @@
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideNoopAnimations } from '@angular/platform-browser/animations';
+import { LegalOrientationComponent } from './legal-orientation.component';
+
+describe('LegalOrientationComponent (Lernhilfe)', () => {
+  let fixture: ComponentFixture<LegalOrientationComponent>;
+  let text: string;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [LegalOrientationComponent],
+      providers: [provideNoopAnimations()],
+    }).compileComponents();
+    fixture = TestBed.createComponent(LegalOrientationComponent);
+    fixture.detectChanges();
+    text = (fixture.nativeElement as HTMLElement).textContent ?? '';
+  });
+
+  it('zeigt beide Diagrammtitel', () => {
+    expect(text).toContain('Was liegt rechtlich vor?');
+    expect(text).toContain('Mit welcher Rechtsgrundlage dürfen Sie eingreifen?');
+  });
+
+  it('zeigt Paragraphen mit offiziellem Gesetzestitel', () => {
+    expect(text).toContain('§ 242 StGB – Diebstahl');
+    expect(text).toContain('§ 223 StGB – Körperverletzung');
+    expect(text).toContain('§ 123 StGB – Hausfriedensbruch');
+    expect(text).toContain('§ 858 BGB – Verbotene Eigenmacht');
+    expect(text).toContain('§ 861 BGB – Anspruch wegen Besitzentziehung');
+    expect(text).toContain('§ 127 Abs. 1 StPO – Vorläufige Festnahme');
+    expect(text).toContain('§ 859 BGB – Selbsthilfe des Besitzers');
+    expect(text).toContain('§ 860 BGB – Selbsthilfe des Besitzdieners');
+    expect(text).toContain('§ 34 StGB – Rechtfertigender Notstand');
+  });
+
+  it('zeigt §228/§904 mit offiziellem Titel "Notstand" und getrennter Einordnung', () => {
+    expect(text).toContain('§ 228 BGB – Notstand');
+    expect(text).toContain('§ 904 BGB – Notstand');
+    expect(text).toContain('Defensivnotstand');
+    expect(text).toContain('Aggressivnotstand');
+    expect(text).not.toContain('§ 228 BGB – Defensivnotstand');
+    expect(text).not.toContain('§ 904 BGB – Aggressivnotstand');
+  });
+
+  it('zeigt die Gefahrenbegriffe ohne erzwungenen Paragraphen', () => {
+    expect(text).toContain('drohende Gefahr');
+    expect(text).toContain('gegenwärtige Gefahr');
+  });
+
+  it('enthält keine Merksätze (kein "≠" und keine Automatismus-Formulierungen)', () => {
+    expect(text).not.toContain('≠');
+    expect(text).not.toContain('automatisch');
+    expect(text).not.toContain('nicht automatisch');
+  });
+});
