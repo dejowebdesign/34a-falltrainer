@@ -108,7 +108,15 @@ export interface Scenario {
   title: string;
   /** Kurzbeschreibung für die Übersicht. */
   description: string;
-  /** Ausgangssachverhalt. */
+  /**
+   * Vollständiger, kurzer mündlicher Prüfungssachverhalt. Wird dem Lernenden
+   * vor der Bearbeitung angezeigt und bleibt über „Sachverhalt anzeigen“
+   * während aller drei Stufen sowie im Ergebnis erreichbar.
+   *
+   * Enthält ausschließlich Tatsachen, keine rechtliche Lösung.
+   */
+  originalCaseText: string;
+  /** Ausgangssachverhalt (Kurzfassung für die Bearbeitung). */
   facts: ScenarioFact[];
   stageOne: StageOne;
   stageTwo: StageTwo;

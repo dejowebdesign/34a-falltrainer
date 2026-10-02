@@ -17,6 +17,8 @@ export const SCENARIOS: Scenario[] = [
     title: 'Ladendiebstahl im Supermarkt',
     description:
       'Eine Person steckt eine Flasche Spirituosen ein und passiert den Kassenbereich, ohne zu zahlen.',
+    originalCaseText:
+      'Sie sind als Sicherheitsmitarbeiter in einem Supermarkt eingesetzt. Sie beobachten, wie eine Person eine Flasche Spirituosen in ihre Jacke steckt und anschließend den Kassenbereich passiert, ohne zu bezahlen. Danach geht die Person zügig in Richtung Ausgang. Sie kennen die Person nicht.',
     facts: [
       { id: 'f1', text: 'Sie sind als Sicherheitskraft im Verkaufsraum eines Supermarkts tätig.', legallyRelevant: false },
       { id: 'f2', text: 'Sie beobachten, wie eine Person eine Flasche Spirituosen in die Jacke steckt.', legallyRelevant: true },
@@ -191,6 +193,8 @@ export const SCENARIOS: Scenario[] = [
     title: 'Hausverbot im Einkaufszentrum',
     description:
       'Eine Person mit bestehendem Hausverbot betritt die Geschäftsräume und weigert sich, sie zu verlassen.',
+    originalCaseText:
+      'Sie sind als Sicherheitsmitarbeiter in einem Einkaufszentrum eingesetzt. Gegen eine Person besteht bereits ein Hausverbot. Trotzdem betritt sie erneut die Geschäftsräume und weigert sich trotz Aufforderung, diese zu verlassen. Die Person verhält sich verbal aggressiv, wird aber nicht tätlich.',
     facts: [
       { id: 'f1', text: 'Gegen die Person besteht ein wirksames Hausverbot für das Einkaufszentrum.', legallyRelevant: true },
       { id: 'f2', text: 'Die Person betritt die Geschäftsräume und verweilt dort.', legallyRelevant: true },
@@ -362,6 +366,8 @@ export const SCENARIOS: Scenario[] = [
     title: 'Tätlicher Angriff im Gastraum',
     description:
       'Ein Gast schlägt unvermittelt auf einen anderen Gast ein. Sie werden als Sicherheitskraft hinzugerufen.',
+    originalCaseText:
+      'Sie sind als Sicherheitsmitarbeiter in einem Gastraum eingesetzt. Plötzlich schlägt ein Gast einem anderen Gast mit der Faust ins Gesicht. Der Angriff dauert an, während weitere Gäste in unmittelbarer Nähe stehen. Der Angreifer ist Ihnen unbekannt und wirkt entschlossen, weiterzumachen.',
     facts: [
       { id: 'f1', text: 'Ein Gast schlägt einem anderen Gast mit der Faust ins Gesicht.', legallyRelevant: true },
       { id: 'f2', text: 'Der Angriff dauert an; der Angegriffene wehrt sich nicht.', legallyRelevant: true },
@@ -531,6 +537,8 @@ export const SCENARIOS: Scenario[] = [
     title: 'Fahrraddiebstahl vor dem Markt',
     description:
       'Eine Person nimmt ein abgestelltes Fahrrad und fährt davon. Der Eigentümer beobachtet dies.',
+    originalCaseText:
+      'Sie sind als Sicherheitsmitarbeiter vor einem Markt eingesetzt. Ein Kunde kommt gerade aus dem Markt und sieht, wie eine fremde Person sein abgestelltes Fahrrad nimmt und damit wegfährt. Die Person befindet sich noch in Sichtweite und wird von mehreren Personen verfolgt.',
     facts: [
       { id: 'f1', text: 'Das Fahrrad gehört dem Eigentümer und stand in dessen Besitz.', legallyRelevant: true },
       { id: 'f2', text: 'Eine fremde Person nimmt das Fahrrad und fährt davon.', legallyRelevant: true },
@@ -705,6 +713,8 @@ export const SCENARIOS: Scenario[] = [
     title: 'Kind im heißen Auto',
     description:
       'Ein kleines Kind ist bei großer Hitze allein in einem verschlossenen Auto eingeschlossen und wirkt apathisch.',
+    originalCaseText:
+      'Sie sind als Sicherheitsmitarbeiter vor einem Markt eingesetzt. Bei großer Hitze entdecken Sie ein kleines Kind allein in einem verschlossenen Auto. Das Kind wirkt apathisch und reagiert kaum. Die Eltern sind nicht auffindbar und der Rettungsdienst sowie die Polizei benötigen noch Zeit.',
     facts: [
       { id: 'f1', text: 'Bei sommerlicher Hitze ist ein kleines Kind allein in einem verschlossenen Auto.', legallyRelevant: true },
       { id: 'f2', text: 'Das Kind wirkt apathisch und reagiert kaum.', legallyRelevant: true },
@@ -875,6 +885,8 @@ export const SCENARIOS: Scenario[] = [
     title: 'Beleidigung an der Einlasskontrolle',
     description:
       'Ein Besucher beschimpft die Sicherheitskraft lautstark, wird aber nicht tätlich.',
+    originalCaseText:
+      'Sie sind als Sicherheitsmitarbeiter an der Einlasskontrolle einer Veranstaltung eingesetzt. Ein Besucher beschimpft Sie lautstark und ehrverletzend. Der Besucher wird dabei weder körperlich tätlich noch bedroht Sie. Mehrere andere Besucher beobachten die Situation.',
     facts: [
       { id: 'f1', text: 'Sie kontrollieren den Einlass einer Veranstaltung.', legallyRelevant: false },
       { id: 'f2', text: 'Ein Besucher beschimpft Sie lautstark und ehrverletzend.', legallyRelevant: true },
@@ -1041,6 +1053,8 @@ export const SCENARIOS: Scenario[] = [
     title: 'Wegnahme aus dem Einkaufswagen',
     description:
       'Person B nimmt Person A die letzte Rolle Klopapier aus dem Einkaufswagen und legt sie in den eigenen Wagen.',
+    originalCaseText:
+      'Sie sind als Sicherheitsmitarbeiter in einem Supermarkt eingesetzt. Person A hat gerade die letzte Rolle Klopapier in ihren Einkaufswagen gelegt. Person B nimmt die Rolle ohne Zustimmung aus dem Einkaufswagen der A und legt sie in den eigenen Einkaufswagen.',
     facts: [
       { id: 'f1', text: 'Person A hat die letzte Rolle Klopapier aus der Verkaufsfläche genommen und in ihren Einkaufswagen gelegt.', legallyRelevant: true },
       { id: 'f2', text: 'Person B beobachtet dies und nimmt die Rolle aus dem Einkaufswagen der A.', legallyRelevant: true },
@@ -1216,6 +1230,8 @@ export const SCENARIOS: Scenario[] = [
     title: 'Marktschließung und Hausverbot',
     description:
       'Der Markt schließt; ein Kunde weigert sich trotz mehrfacher Aufforderung, das Geschäft zu verlassen.',
+    originalCaseText:
+      'Sie sind als Sicherheitsmitarbeiter in einem Markt eingesetzt. Der Markt soll geschlossen werden und die Mitarbeiterinnen A und B fordern den Kunden K mehrfach auf, das Geschäft zu verlassen. K ist mit seinem Einkauf noch nicht fertig und weigert sich trotzdem zu gehen. Er verhält sich dabei nicht körperlich aggressiv.',
     facts: [
       { id: 'f1', text: 'Der Markt wird geschlossen; die Mitarbeiterinnen A und B fordern den Kunden K zum Verlassen auf.', legallyRelevant: true },
       { id: 'f2', text: 'Der Kunde K ist mit seinem Einkauf noch nicht fertig.', legallyRelevant: false },
