@@ -9,6 +9,7 @@ import { CaseEngineService } from '../../core/rules/case-engine.service';
 import { CaseStateService } from '../../core/services/case-state.service';
 import { LegalKnowledgeService } from '../../core/services/legal-knowledge.service';
 import { ScenarioService } from '../../core/services/scenario.service';
+import { formatFachlicheEinordnung, formatNorm } from '../../core/utils/norm-format';
 import { ProgressStepperComponent } from '../../shared/components/progress-stepper.component';
 import { VerdictBadgeComponent } from '../../shared/components/verdict-badge.component';
 
@@ -130,8 +131,10 @@ import { VerdictBadgeComponent } from '../../shared/components/verdict-badge.com
                   @for (norm of usedNorms(); track norm.id) {
                     <li>
                       <div class="norm-head">
-                        <strong>{{ norm.paragraph }} {{ norm.law }}</strong>
-                        <span class="norm-title">{{ norm.title }}</span>
+                        <strong>{{ formatNorm(norm) }}</strong>
+                        @if (formatFachlicheEinordnung(norm); as einordnung) {
+                          <span class="norm-einordnung">Fachliche Einordnung: {{ einordnung }}</span>
+                        }
                       </div>
                       <p class="mnemonic">{{ norm.mnemonic }}</p>
                       @if (norm.verificationStatus !== 'VERIFIED_OFFICIAL_TEXT') {
@@ -304,6 +307,12 @@ import { VerdictBadgeComponent } from '../../shared/components/verdict-badge.com
         color: var(--ft-muted);
         font-size: 0.9rem;
       }
+      .norm-einordnung {
+        display: inline-block;
+        color: var(--ft-muted);
+        font-size: 0.85rem;
+        font-style: italic;
+      }
       .mnemonic {
         margin: 0.3rem 0 0;
         color: var(--ft-primary);
@@ -402,4 +411,10 @@ export class ResultComponent implements OnInit {
     }
     return this.engine.misconceptionsForStage(scenario, stage, this.state.getSelection(stage));
   }
+
+  /** Zentrale Normdarstellung: § [Paragraph] [Absatz] [Gesetz] – [Titel]. */
+  formatNorm = formatNorm;
+
+  /** Fachliche Einordnung, getrennt vom offiziellen Gesetzestitel. */
+  formatFachlicheEinordnung = formatFachlicheEinordnung;
 }

@@ -5,6 +5,7 @@ import { LEGAL_LEVEL_LABELS } from '../../core/data/legal-classifications.data';
 import { CaseStateService } from '../../core/services/case-state.service';
 import { LegalKnowledgeService } from '../../core/services/legal-knowledge.service';
 import { ScenarioService } from '../../core/services/scenario.service';
+import { formatNorm } from '../../core/utils/norm-format';
 
 /** Stufendaten, die eine konkrete Stufenseite bereitstellen muss. */
 export interface StageData {
@@ -45,7 +46,7 @@ export abstract class StagePageBase implements OnInit {
   readonly normLabels = computed<Record<string, string>>(() => {
     const labels: Record<string, string> = {};
     for (const norm of this.knowledge.getNorms()) {
-      labels[norm.id] = `${norm.paragraph} ${norm.law}`;
+      labels[norm.id] = formatNorm(norm);
     }
     return labels;
   });

@@ -201,13 +201,29 @@ Zentrale Typen (`src/app/core/models`):
 - `Scenario` – id, title, description, facts
 - `StageOne` / `StageTwo` / `StageThree` – options, correctOptions, explanations
 - `StageOption` – id, text, verdict, explanation, misconception, normIds, legalLevel (Stufe 2)
-- `LegalNorm` – id, law, paragraph, title, officialText, source, verificationStatus
+- `LegalNorm` – id, law, paragraph, absatz, title, fachlicheEinordnung, officialText, source, verificationStatus
 - `LegalClassification` – id, name, level, normIds, certainty, prerequisites, explanation
 - `LegalAuthority` – id, normId, kind, holder, prerequisites, permittedAction, limits, proportionality
 - `Result` – behaviorResult, legalResult, authorityResult, explanation, modelSolution
 
 Szenarien sind separate Seed-Daten und nicht Teil der juristischen Knowledge
 Base. Dadurch können beliebig viele Fälle ergänzt werden.
+
+### Normdarstellung (offizieller Gesetzestitel)
+
+Paragraphen werden in der gesamten App einheitlich über die zentrale Funktion
+`formatNorm(norm)` (`src/app/core/utils/norm-format.ts`) dargestellt:
+
+```
+§ [Paragraph] [Absatz] [Gesetz] – [offizieller Titel]
+§ 127 Abs. 1 StPO – Vorläufige Festnahme
+```
+
+Der offizielle Titel stammt ausschließlich aus der zentralen Normdatenquelle
+(`legal-norms.data.ts`), nicht aus manuell eingetragenen Texten. Fachliche
+Kurzbezeichnungen werden nie als amtlicher Titel ausgegeben: §228 BGB und
+§904 BGB haben beide den Gesetzestitel „Notstand“; „Defensivnotstand“ und
+„Aggressivnotstand“ stehen als `fachlicheEinordnung` getrennt daneben.
 
 ## Juristische Datenquelle
 

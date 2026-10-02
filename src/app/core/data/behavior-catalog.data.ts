@@ -2,7 +2,7 @@
  * Verhaltensbausteine der Stufe 1 („Wie verhalten Sie sich?“).
  *
  * Didaktische Grundlage ist die Unterlage „Fallbeispiele – Themenvertiefung“
- * (30.09.2026, Sachkundeprüfung §34a GewO), Abschnitt „Umgang mit Menschen“.
+ * (30.09.2026, Sachkundeprüfung § 34a GewO), Abschnitt „Umgang mit Menschen“.
  *
  * Diese Bausteine sind Verhaltensempfehlungen, keine Rechtsgrundlagen. Sie
  * werden deshalb strikt getrennt von der juristischen Knowledge Base gehalten

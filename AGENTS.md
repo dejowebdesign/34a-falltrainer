@@ -55,6 +55,12 @@ Rules:
   binding.
 - Stufe-2 options carry a `legalLevel`; keep it in sync when adding options.
 - New scenarios are seed data, never part of the knowledge base.
+- Display every paragraph via `formatNorm(norm)` (`core/utils/norm-format.ts`):
+  `§ [Paragraph] [Absatz] [Gesetz] – [offizieller Titel]`. The title comes only
+  from `legal-norms.data.ts`. Never print a bare paragraph number, and never use
+  a fachliche Kurzbezeichnung as the official title (§228/§904 BGB → title
+  "Notstand"; "Defensivnotstand"/"Aggressivnotstand" go into
+  `fachlicheEinordnung`).
 
 ## Testing notes
 

@@ -120,6 +120,23 @@ describe('Seed-Szenarien – Datenintegrität', () => {
         }
       });
 
+      it('gibt keine fachliche Einordnung als offiziellen Gesetzestitel aus', () => {
+        const allOptions = [
+          ...scenario.stageOne.options,
+          ...scenario.stageTwo.options,
+          ...scenario.stageThree.options,
+        ];
+        const texts = [
+          ...allOptions.map((option) => option.text),
+          scenario.result.modelSolution.legalBasis,
+          scenario.result.modelSolution.reasoning,
+        ];
+        for (const text of texts) {
+          expect(text).withContext(scenario.id).not.toMatch(/§\s*228\s*BGB\s*[–-]\s*Defensivnotstand/);
+          expect(text).withContext(scenario.id).not.toMatch(/§\s*904\s*BGB\s*[–-]\s*Aggressivnotstand/);
+        }
+      });
+
       it('enthält eine vollständige Musterlösung', () => {
         const solution = scenario.result.modelSolution;
         expect(solution.behavior.length).toBeGreaterThan(0);
