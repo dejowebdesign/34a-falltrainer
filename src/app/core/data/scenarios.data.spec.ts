@@ -32,6 +32,35 @@ describe('Seed-Szenarien – Datenintegrität', () => {
     }
   });
 
+  it('bietet in keiner Stufe mehr als vier Antwortmöglichkeiten an', () => {
+    for (const scenario of SCENARIOS) {
+      const stages = [
+        { stage: 1, data: scenario.stageOne },
+        { stage: 2, data: scenario.stageTwo },
+        { stage: 3, data: scenario.stageThree },
+      ];
+      for (const { stage, data } of stages) {
+        expect(data.options.length)
+          .withContext(`${scenario.id}/Stufe ${stage} hat ${data.options.length} Optionen`)
+          .toBeLessThanOrEqual(4);
+      }
+    }
+  });
+
+  it('Kind im heißen Auto: Stufe 3 bietet genau vier Optionen mit der gewünschten Abgrenzung', () => {
+    const fall = SCENARIOS.find((entry) => entry.id === 'kind-im-auto')!;
+    expect(fall.stageThree.options.length).toBe(4);
+    expect(fall.stageThree.correctOptions).toEqual(['s3-a', 's3-c']);
+
+    const verdict = (id: string) => fall.stageThree.options.find((option) => option.id === id)?.verdict;
+    expect(verdict('s3-a')).toBe('RICHTIG');
+    expect(verdict('s3-b')).toBe('FALSCH');
+    expect(verdict('s3-c')).toBe('RICHTIG');
+    expect(verdict('s3-d')).toBe('FALSCH');
+
+    expect(fall.stageThree.options.some((option) => option.id === 's3-e')).toBe(false);
+  });
+
   for (const scenario of SCENARIOS) {
     describe(scenario.id, () => {
       it('hat für jede Stufe mindestens eine korrekte Option', () => {
