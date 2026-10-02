@@ -43,9 +43,14 @@ describe('LegalOrientationComponent (Lernhilfe)', () => {
     expect(text).not.toContain('§ 904 BGB – Aggressivnotstand');
   });
 
-  it('zeigt die Gefahrenbegriffe ohne erzwungenen Paragraphen', () => {
+  it('zeigt die Gefahrenbegriffe nach Lage und Quelle, mit "Mensch"', () => {
+    expect(text).toContain('Gefahrenlage');
     expect(text).toContain('drohende Gefahr');
     expect(text).toContain('gegenwärtige Gefahr');
+    expect(text).toContain('Gefahrenquelle');
+    expect(text).toContain('Gefahr geht von einem Menschen aus');
+    expect(text).toContain('Gefahr geht von einer Sache aus');
+    expect(text).not.toContain('Gefahr geht von einer Person aus');
   });
 
   it('verbindet die oberen Kästen mit "ODER" und zeigt Pfeile nach unten', () => {
@@ -57,6 +62,28 @@ describe('LegalOrientationComponent (Lernhilfe)', () => {
     }
     const arrows = element.querySelectorAll('.areas-row .area-arrow');
     expect(arrows.length).toBe(3);
+  });
+
+  it('zeigt zwischen den Ebenen einen zentrierten Pfeil mit neutraler Beschriftung', () => {
+    const element = fixture.nativeElement as HTMLElement;
+    const link = element.querySelector('.level-link');
+    expect(link).toBeTruthy();
+    expect(link?.querySelector('mat-icon')?.textContent?.trim()).toBe('south');
+    expect((link?.textContent ?? '')).toContain('rechtlich einordnen');
+  });
+
+  it('hält die Karten einer Reihe auf gleicher Höhe', () => {
+    const element = fixture.nativeElement as HTMLElement;
+    for (const row of Array.from(element.querySelectorAll<HTMLElement>('.areas, .areas-row'))) {
+      const cards = Array.from(row.querySelectorAll<HTMLElement>(':scope > .area, :scope > .area-col > .area'));
+      if (cards.length < 2) {
+        continue;
+      }
+      const heights = cards.map((card) => Math.round(card.getBoundingClientRect().height));
+      expect(new Set(heights).size)
+        .withContext(`Kartenhöhen: ${heights.join(', ')}`)
+        .toBe(1);
+    }
   });
 
   it('enthält keine Merksätze (kein "≠" und keine Automatismus-Formulierungen)', () => {

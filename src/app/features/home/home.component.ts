@@ -16,11 +16,6 @@ interface HomeStep {
   text: string;
 }
 
-interface Automatism {
-  trigger: string;
-  consequence: string;
-}
-
 @Component({
   selector: 'app-home',
   imports: [
@@ -82,27 +77,6 @@ interface Automatism {
           </mat-card>
         }
       </div>
-
-      <mat-card appearance="outlined" class="principle">
-        <mat-card-content>
-          <div class="principle-head">
-            <mat-icon aria-hidden="true">balance</mat-icon>
-            <div>
-              <h3>Die Grundregel</h3>
-              <p class="principle-sub">Nicht vom Sachverhalt direkt zur Rechtsfolge springen.</p>
-            </div>
-          </div>
-          <ul class="automatisms">
-            @for (item of automatisms; track item.trigger) {
-              <li>
-                <span class="trigger">{{ item.trigger }}</span>
-                <mat-icon aria-hidden="true">arrow_forward</mat-icon>
-                <span class="consequence">{{ item.consequence }}</span>
-              </li>
-            }
-          </ul>
-        </mat-card-content>
-      </mat-card>
 
       <section class="lernhilfe">
         <h2>Lernhilfe: Umgang mit Menschen</h2>
@@ -303,70 +277,6 @@ interface Automatism {
         color: var(--ft-muted);
         line-height: 1.55;
       }
-      .principle {
-        border-radius: 16px;
-        background: var(--ft-rule-surface);
-        border-color: var(--ft-rule-border);
-      }
-      .principle-head {
-        display: flex;
-        gap: 0.9rem;
-        align-items: flex-start;
-        margin-bottom: 1rem;
-      }
-      .principle-head mat-icon {
-        color: var(--ft-rule-accent);
-        flex: 0 0 auto;
-      }
-      .principle h3 {
-        margin: 0 0 0.2rem;
-        font-size: 1.1rem;
-        color: var(--ft-rule-text);
-      }
-      .principle-sub {
-        margin: 0;
-        color: var(--ft-rule-text);
-        opacity: 0.85;
-        line-height: 1.5;
-      }
-      .automatisms {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-        display: grid;
-        gap: 0.6rem;
-        grid-template-columns: 1fr;
-      }
-      @media (min-width: 768px) {
-        .automatisms {
-          grid-template-columns: repeat(2, 1fr);
-        }
-      }
-      .automatisms li {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        padding: 0.5rem 0.7rem;
-        border-radius: 10px;
-        background: var(--ft-rule-item);
-        border: 1px solid var(--ft-rule-border);
-      }
-      .automatisms .trigger {
-        font-weight: 600;
-        color: var(--ft-text);
-        flex: 0 0 auto;
-      }
-      .automatisms mat-icon {
-        color: var(--ft-rule-accent);
-        font-size: 18px;
-        width: 18px;
-        height: 18px;
-        flex: 0 0 auto;
-      }
-      .automatisms .consequence {
-        color: var(--ft-muted);
-        font-size: 0.92rem;
-      }
       .lernhilfe-panel {
         border-radius: 14px;
       }
@@ -416,13 +326,5 @@ export class HomeComponent {
       icon: 'verified',
       text: 'Erst hier wird die konkrete Befugnis oder Rechtfertigung bestimmt – etwa § 127 Abs. 1 StPO – Vorläufige Festnahme, § 859 BGB – Selbsthilfe des Besitzers, § 32 StGB – Notwehr oder § 34 StGB – Rechtfertigender Notstand.',
     },
-  ];
-
-  readonly automatisms: Automatism[] = [
-    { trigger: 'Diebstahl', consequence: 'nicht automatisch Festhaltebefugnis' },
-    { trigger: 'Hausverbot', consequence: 'nicht automatisch Gewalt' },
-    { trigger: 'Eigentum', consequence: 'nicht automatisch Selbsthilfe' },
-    { trigger: 'Gefahr', consequence: 'nicht automatisch § 34 StGB' },
-    { trigger: 'Angriff', consequence: 'nicht automatisch jede Gewalt' },
   ];
 }

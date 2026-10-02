@@ -5,14 +5,19 @@ import { LegalNorm } from '../../core/models';
 import { LegalKnowledgeService } from '../../core/services/legal-knowledge.service';
 import { formatFachlicheEinordnung, formatNorm } from '../../core/utils/norm-format';
 
+interface OrientationGroup {
+  label: string;
+  items: string[];
+}
+
 interface OrientationArea {
   key: string;
   label: string;
   icon: string;
-  /** Norm-IDs; leer, wenn der Bereich nur einen allgemeinen Rechtsbegriff zeigt. */
+  /** Norm-IDs; leer, wenn der Bereich nur allgemeine Rechtsbegriffe zeigt. */
   normIds: string[];
-  /** Allgemeine Rechtsbegriffe ohne Paragraph (z. B. Gefahrenbegriffe). */
-  concepts: string[];
+  /** Begriffgruppen ohne Paragraph (z. B. Gefahrenlage / Gefahrenquelle). */
+  groups: OrientationGroup[];
 }
 
 /**
@@ -50,8 +55,15 @@ interface OrientationArea {
                       }
                     </li>
                   }
-                  @for (concept of area.concepts; track concept) {
-                    <li class="entry concept">{{ concept }}</li>
+                  @for (group of area.groups; track group.label) {
+                    <li class="group">
+                      <span class="group-label">{{ group.label }}</span>
+                      <ul class="group-items">
+                        @for (item of group.items; track item) {
+                          <li>{{ item }}</li>
+                        }
+                      </ul>
+                    </li>
                   }
                 </ul>
               </div>
@@ -64,6 +76,11 @@ interface OrientationArea {
             }
           }
         </div>
+      </div>
+
+      <div class="level-link" aria-hidden="true">
+        <span class="level-link-label">rechtlich einordnen</span>
+        <mat-icon>south</mat-icon>
       </div>
 
       <div class="diagram">
@@ -85,6 +102,16 @@ interface OrientationArea {
                     @if (formatFachlicheEinordnung(norm); as einordnung) {
                       <span class="einordnung">Fachliche Einordnung: {{ einordnung }}</span>
                     }
+                  </li>
+                }
+                @for (group of area.groups; track group.label) {
+                  <li class="group">
+                    <span class="group-label">{{ group.label }}</span>
+                    <ul class="group-items">
+                      @for (item of group.items; track item) {
+                        <li>{{ item }}</li>
+                      }
+                    </ul>
                   </li>
                 }
               </ul>
@@ -130,13 +157,15 @@ interface OrientationArea {
         display: grid;
         gap: 0.85rem;
         grid-template-columns: 1fr;
+        align-items: stretch;
       }
       @media (min-width: 768px) {
         .areas {
           grid-template-columns: repeat(3, 1fr);
         }
       }
-      /* Erste Reihe: Kästen + mittiges "ODER" + Pfeil unter jedem Kasten. */
+      /* Erste Reihe: drei gleich breite Karten, dazwischen das mittige "ODER".
+         Die Karten strecken sich auf gleiche Höhe (align-items: stretch). */
       .areas-row {
         display: grid;
         gap: 0.6rem;
@@ -145,7 +174,7 @@ interface OrientationArea {
       }
       @media (min-width: 768px) {
         .areas-row {
-          grid-template-columns: 1fr auto 1fr auto 1fr;
+          grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr);
           gap: 0.85rem;
         }
       }
@@ -166,7 +195,9 @@ interface OrientationArea {
         letter-spacing: 0.12em;
         text-transform: uppercase;
         color: var(--ft-muted);
-        padding: 0.15rem 0;
+        padding: 0.15rem 0.3rem;
+        border-radius: 999px;
+        background: var(--ft-surface);
       }
       .area-arrow {
         display: flex;
@@ -179,11 +210,31 @@ interface OrientationArea {
         width: 24px;
         height: 24px;
       }
+      .level-link {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.1rem;
+        color: var(--ft-primary);
+        padding-block: 0.15rem;
+      }
+      .level-link-label {
+        font-size: 0.72rem;
+        letter-spacing: 0.04em;
+        color: var(--ft-muted);
+      }
+      .level-link mat-icon {
+        font-size: 26px;
+        width: 26px;
+        height: 26px;
+      }
       .area {
         border: 1px solid var(--ft-border);
         border-radius: 10px;
         background: var(--ft-surface-2);
         padding: 0.75rem 0.85rem;
+        display: flex;
+        flex-direction: column;
       }
       .area-head {
         display: flex;
@@ -217,8 +268,23 @@ interface OrientationArea {
       .entry .norm {
         color: var(--ft-text);
       }
-      .entry.concept {
+      .group {
+        display: grid;
+        gap: 0.25rem;
+        font-size: 0.92rem;
+        line-height: 1.4;
+      }
+      .group-label {
+        font-weight: 600;
         color: var(--ft-text);
+      }
+      .group-items {
+        list-style: disc;
+        margin: 0;
+        padding-left: 1.15rem;
+        display: grid;
+        gap: 0.15rem;
+        color: var(--ft-muted);
       }
       .einordnung {
         color: var(--ft-muted);
@@ -237,21 +303,27 @@ export class LegalOrientationComponent {
       label: 'Strafrecht',
       icon: 'gavel',
       normIds: ['stgb-242', 'stgb-223', 'stgb-123'],
-      concepts: [],
+      groups: [],
     },
     {
       key: 'privatrecht',
       label: 'Privatrecht',
       icon: 'handshake',
       normIds: ['bgb-858', 'bgb-861', 'bgb-862'],
-      concepts: [],
+      groups: [],
     },
     {
       key: 'gefahr',
       label: 'Gefahr',
       icon: 'warning',
       normIds: [],
-      concepts: ['drohende Gefahr', 'gegenwärtige Gefahr'],
+      groups: [
+        { label: 'Gefahrenlage', items: ['drohende Gefahr', 'gegenwärtige Gefahr'] },
+        {
+          label: 'Gefahrenquelle',
+          items: ['Gefahr geht von einem Menschen aus', 'Gefahr geht von einer Sache aus'],
+        },
+      ],
     },
   ];
 
@@ -261,21 +333,21 @@ export class LegalOrientationComponent {
       label: 'Festnahme',
       icon: 'pan_tool',
       normIds: ['stpo-127'],
-      concepts: [],
+      groups: [],
     },
     {
       key: 'selbsthilfe',
       label: 'Selbsthilfe des Besitzers / Besitzdieners',
       icon: 'front_hand',
       normIds: ['bgb-859', 'bgb-860'],
-      concepts: [],
+      groups: [],
     },
     {
       key: 'notstand',
       label: 'Notstand / Rechtfertigung',
       icon: 'balance',
       normIds: ['bgb-228', 'bgb-904', 'stgb-34'],
-      concepts: [],
+      groups: [],
     },
   ];
 
