@@ -248,3 +248,112 @@ Marktschließung/Hausverbot) und nicht in die Knowledge Base eingebaut.
 - Fehlende oder unklare Informationen werden als fehlend/unklar markiert.
 - Der amtliche Gesetzestext wird – wenn vorhanden – wörtlich wiedergegeben.
 - Die Knowledge Base ist von den Szenarien getrennt und versionierbar.
+
+## Deployment
+
+Die App ist eine rein statische Angular-Webanwendung. Sie wird einmalig in
+GitHub Actions gebaut und als fertiges Docker-Image in der GitHub Container
+Registry (GHCR) veröffentlicht. Das Zielsystem lädt nur noch dieses Image – es
+baut nichts selbst.
+
+```
+GitHub Repository
+      ↓
+GitHub Actions (CI: Tests + Angular Production Build)
+      ↓
+Docker Image (Multi-Stage: Node-Build → nginx-Runtime)
+      ↓
+GitHub Container Registry (GHCR)
+      ↓
+Portainer lädt fertiges Image
+      ↓
+Container läuft (z. B. auf Umbrel)
+```
+
+### GitHub Actions
+
+| Workflow | Datei | Aufgabe |
+| --- | --- | --- |
+| CI | `.github/workflows/ci.yml` | `npm ci` → `npm test` → `npm run build` bei Push auf `main` und bei Pull Requests |
+| Docker Image | `.github/workflows/docker-image.yml` | erst CI (Tests + Build), danach Docker-Build und Push nach GHCR |
+
+Der Docker-Workflow läuft nur bei Push auf `main` (und manuell per
+`workflow_dispatch`) und veröffentlicht erst, wenn die Tests und der Build
+erfolgreich waren.
+
+### Docker Image und GHCR
+
+```
+ghcr.io/dejowebdesign/34a-falltrainer
+```
+
+Erzeugte Tags:
+
+| Tag | Bedeutung |
+| --- | --- |
+| `latest` | jeweils letzter erfolgreicher Build von `main` |
+| `main` | letzter erfolgreicher Build des `main`-Branches |
+| `sha-<commit>` | exakter Commit (z. B. `sha-4af2248…`), vollständiger SHA |
+
+Der Workflow wird derzeit bei Push auf `main` und manuell
+(`workflow_dispatch`) ausgelöst; die Tags `latest`, `main` und
+`sha-<commit>` werden dabei gesetzt.
+
+**Reproduzierbare Deployments:** Für einen festen, jederzeit wiederholbaren
+Stand ist ein `sha-<commit>`-Tag besser geeignet als `latest`, weil `latest`
+sich mit jedem Build ändern kann. `latest` eignet sich für einen schnellen
+Test; ein SHA-Tag garantiert, dass immer genau derselbe Stand läuft.
+
+### Dockerfile
+
+- **Stage 1 (`build`):** `node:22-alpine`, `npm ci`, `npm run build`.
+- **Stage 2 (`runtime`):** `nginx:1.27-alpine` mit ausschließlich
+  `dist/34a-falltrainer/browser` und der nginx-Konfiguration.
+
+Das Image wird als Multi-Arch-Image für `linux/amd64` und `linux/arm64`
+veröffentlicht, damit es sowohl auf Umbrel-Home/x86 als auch auf
+Raspberry-Pi-Geräten läuft.
+
+Der Runtime-Container enthält kein Node, keine npm-Abhängigkeiten und keine
+Quelldateien. Die SPA-Konfiguration (`nginx/default.conf`) liefert bei
+unbekannten Routen `index.html` als Fallback aus, damit direktes Aufrufen von
+`/scenarios/:id/stage/2` usw. funktioniert.
+
+Lokaler Test des Images:
+
+```bash
+docker build -t 34a-falltrainer:local .
+docker run --rm -p 8085:80 34a-falltrainer:local
+# danach http://localhost:8085/ aufrufen
+```
+
+### Portainer Test Deployment
+
+1. **GHCR Image verfügbar machen.** Nach einem erfolgreichen Lauf von
+   *Docker Image* unter `https://github.com/dejowebdesign/34a-falltrainer/pkgs/container/34a-falltrainer`
+   prüfen. Ist das Paket privat, im Paket unter *Package settings* die
+   Sichtbarkeit auf öffentlich stellen **oder** in Portainer eine Registry
+   `ghcr.io` mit einem GitHub-Token (Scope `read:packages`) hinterlegen.
+2. **Portainer öffnen** und links **Stacks** wählen.
+3. **Neuen Stack anlegen** (*Add stack*).
+4. **`docker-compose.portainer.yml`** aus diesem Repository in den
+   Stack-Editor einfügen (oder das Repository als Git-Stack verbinden).
+5. **Stack deployen.** Portainer zieht nur das fertige Image aus GHCR.
+6. **URL aufrufen:** `http://<umbrel-host>:8085/` (der Host-Port `8085` ist in
+   der Compose-Datei frei wählbar).
+7. **Healthcheck prüfen:** In Portainer beim Container den Status *healthy*
+   kontrollieren (HTTP-GET auf `/`).
+
+Auf dem Umbrel wird **kein npm, kein Angular-Build und kein Docker-Build**
+ausgeführt. Es wird ausschließlich das fertige GHCR-Image heruntergeladen und
+gestartet.
+
+### Sicherheit und Betrieb
+
+- Keine privilegierten Rechte, kein Docker-Socket-Mount, kein Host-Networking.
+- Keine persistenten Volumes – die App ist statisch und benötigt keine Daten.
+- `read_only` Root-Dateisystem; nur `/var/cache/nginx`, `/var/run` und `/tmp`
+  sind als flüchtige `tmpfs` eingebunden.
+- `no-new-privileges` gesetzt.
+- Begrenztes Logging (`json-file`, 10 MB × 3).
+

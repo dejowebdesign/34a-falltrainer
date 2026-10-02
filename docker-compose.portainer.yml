@@ -1,0 +1,46 @@
+# =============================================================================
+# 34a Falltrainer – Portainer-Stack für den Umbrel
+#
+# Wichtig: Dieser Stack BAUT NICHTS. Er lädt ausschließlich das fertige Image
+# aus der GitHub Container Registry (GHCR). Das Image wurde zuvor von GitHub
+# Actions gebaut (Tests -> Angular Build -> Docker Image -> GHCR).
+#
+# Auf dem Umbrel laufen daher: kein npm, kein Angular-Build, kein Docker-Build.
+# =============================================================================
+
+services:
+  falltrainer:
+    # Fertiges Image – bewusst kein "build:".
+    image: ghcr.io/dejowebdesign/34a-falltrainer:latest
+
+    # Host-Port frei wählbar; intern lauscht nginx auf Port 80.
+    ports:
+      - "8085:80"
+
+    restart: unless-stopped
+
+    # Statische Webanwendung: keine persistenten Daten, keine Volumes nötig.
+    # Der Container läuft ohne zusätzliche Rechte.
+    read_only: true
+
+    # Schreibbare, flüchtige Pfade nur dort, wo nginx sie zwingend braucht.
+    tmpfs:
+      - /var/cache/nginx
+      - /var/run
+      - /tmp
+
+    security_opt:
+      - no-new-privileges:true
+
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://127.0.0.1/"]
+      interval: 30s
+      timeout: 3s
+      start_period: 5s
+      retries: 3
+
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"

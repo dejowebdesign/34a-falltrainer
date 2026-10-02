@@ -64,3 +64,18 @@ Rules:
   classification references, misconceptions on FALSCH options, model solution).
 - `core/rules/legal-reasoning.spec.ts` guards the forbidden automatisms and the
   Anspruch/Befugnis/Rechtfertigung/Entschuldigung separation.
+
+## Deployment
+
+- `.github/workflows/ci.yml` – `npm ci` → `npm test` → `npm run build` on push
+  to `main` and on pull requests.
+- `.github/workflows/docker-image.yml` – runs the CI job first, then builds the
+  multi-stage image and pushes it to GHCR (`ghcr.io/dejowebdesign/34a-falltrainer`).
+- `Dockerfile` – stage 1 builds Angular with Node, stage 2 is a minimal nginx
+  runtime with only `dist/34a-falltrainer/browser`.
+- `nginx/default.conf` – SPA fallback to `index.html`, long cache for hashed
+  assets, no-cache for `index.html`.
+- `docker-compose.portainer.yml` – image-only stack for Portainer/Umbrel; never
+  add a `build:` section, the target host must not build anything.
+
+Do not change the app's legal/didactic logic when touching deployment files.
