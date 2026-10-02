@@ -878,4 +878,19 @@ export const LEGAL_NORMS: LegalNorm[] = [
     verificationStatus: 'VERIFIED_OFFICIAL_TEXT',
     distinctions: ['§904 ≠ §228: bei §228 geht die Gefahr von der Sache aus, bei §904 wird auf eine fremde Sache eingewirkt.'],
   },
+  {
+    id: 'bgb-823',
+    law: 'BGB',
+    paragraph: '§ 823',
+    title: 'Schadensersatzpflicht',
+    officialText: '',
+    explanation:
+      '§823 BGB ist ein Schadensersatzanspruch (Anspruch, keine Befugnis). Die Bibel nennt §823 BGB nur als Beispiel für einen Anspruch (Kapitel 2.1 / 73); ein eigener Normabschnitt mit amtlichem Wortlaut ist in der Knowledge Base nicht vorhanden.',
+    mnemonic: '§823 = Schadensersatzanspruch (Anspruch, keine Eingriffsbefugnis).',
+    area: 'Zivilrecht',
+    nature: 'ANSPRUCH',
+    source: 'https://www.gesetze-im-internet.de/bgb/__823.html',
+    verificationStatus: 'MISSING',
+    distinctions: ['Anspruch ≠ Befugnis: §823 BGB begründet kein unmittelbares Eingriffsrecht.'],
+  },
 ];

@@ -7,6 +7,8 @@
  * Normen und Befugnisse der Knowledge Base.
  */
 
+import { LegalLevel } from './legal-classification.model';
+
 /** Ein einzelner, rechtlich relevanter Sachverhaltsumstand. */
 export interface ScenarioFact {
   id: string;
@@ -35,6 +37,11 @@ export interface StageOption {
   misconception?: string;
   /** Referenzierte Normen zur Begründung. */
   normIds?: string[];
+  /**
+   * Rechtsgebiet der Einordnung (nur Stufe 2). Didaktisches Modell der
+   * Fallbeispiel-Unterlage: Strafrecht / Privatrecht / öffentliches Recht.
+   */
+  legalLevel?: LegalLevel;
 }
 
 /** Stufe 1 – „Wie verhalten Sie sich?“ (Umgang mit Menschen). */
@@ -120,8 +127,12 @@ export interface StageEvaluation {
   optionVerdicts: { optionId: string; verdict: OptionVerdict }[];
   /** Anzahl richtig gewählter Optionen. */
   correctCount: number;
+  /** Anzahl teilweise richtig gewählter Optionen. */
+  partialCount: number;
   /** Anzahl falsch gewählter Optionen. */
   wrongCount: number;
+  /** Anzahl richtiger Optionen, die nicht gewählt wurden. */
+  missedCount: number;
   /** Gesamtbegründung der Stufe. */
   explanation: string;
 }

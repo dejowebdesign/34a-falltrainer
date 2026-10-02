@@ -15,6 +15,19 @@ export type ClassificationCertainty =
   | 'RECHTSBEGRIFF';
 
 /**
+ * Rechtsgebiet der Einordnung (didaktisches Modell der Fallbeispiel-Unterlage).
+ *
+ * Die Unterlage ordnet Stufe 2 den Bereichen Strafrecht, Privatrecht und
+ * öffentliches Recht zu. Reine Rechtsbegriffe ohne eigenes Rechtsgebiet
+ * (z. B. Gefahr, Angriff) werden als RECHTSBEGRIFF geführt.
+ */
+export type LegalLevel =
+  | 'STRAFRECHT'
+  | 'PRIVATRECHT'
+  | 'OEFFENTLICHES_RECHT'
+  | 'RECHTSBEGRIFF';
+
+/**
  * Eine rechtliche Einordnung, die zu einem Sachverhalt gehören kann.
  */
 export interface LegalClassification {
@@ -22,6 +35,8 @@ export interface LegalClassification {
   id: string;
   /** Name der Einordnung, z. B. "Möglicher Diebstahl". */
   name: string;
+  /** Rechtsgebiet (Strafrecht, Privatrecht, öffentliches Recht, Rechtsbegriff). */
+  level: LegalLevel;
   /** Referenzierte Normen. */
   normIds: string[];
   /** Gewissheitsgrad der Einordnung. */

@@ -1,4 +1,4 @@
-import { LegalClassification } from '../models';
+import { LegalClassification, LegalLevel } from '../models';
 
 /**
  * Rechtliche Einordnungen (Stufe 2) aus der Knowledge Base.
@@ -6,11 +6,25 @@ import { LegalClassification } from '../models';
  * Die Bibel unterscheidet ausdrücklich zwischen Sachverhalt, Tatsachen,
  * rechtlicher Einordnung und feststehendem Ergebnis (Kapitel 3). Deshalb
  * trägt jede Einordnung einen `certainty`-Wert.
+ *
+ * Das didaktische Modell der Fallbeispiel-Unterlage ordnet Stufe 2 zusätzlich
+ * den Rechtsgebieten Strafrecht, Privatrecht und öffentliches Recht zu; jeder
+ * Eintrag trägt daher ein `level`.
  */
+
+/** Anzeigenamen der Rechtsgebiete (Stufe 2). */
+export const LEGAL_LEVEL_LABELS: Record<LegalLevel, string> = {
+  STRAFRECHT: 'Strafrecht',
+  PRIVATRECHT: 'Privatrecht',
+  OEFFENTLICHES_RECHT: 'Öffentliches Recht',
+  RECHTSBEGRIFF: 'Rechtsbegriff',
+};
+
 export const LEGAL_CLASSIFICATIONS: LegalClassification[] = [
   {
     id: 'classification-diebstahl-verdacht',
     name: 'Möglicher Diebstahl (Tatverdacht)',
+    level: 'STRAFRECHT',
     normIds: ['stgb-242'],
     certainty: 'MOEGLICH',
     prerequisites: ['fremde bewegliche Sache', 'Wegnahme (Bruch fremden und Begründung neuen Gewahrsams)', 'Vorsatz', 'Absicht rechtswidriger Zueignung'],
@@ -20,6 +34,7 @@ export const LEGAL_CLASSIFICATIONS: LegalClassification[] = [
   {
     id: 'classification-diebstahl',
     name: 'Diebstahl (Tatbestand erfüllt)',
+    level: 'STRAFRECHT',
     normIds: ['stgb-242'],
     certainty: 'FESTSTEHEND',
     prerequisites: ['fremde bewegliche Sache', 'Wegnahme', 'Vorsatz', 'Absicht rechtswidriger Zueignung'],
@@ -29,6 +44,7 @@ export const LEGAL_CLASSIFICATIONS: LegalClassification[] = [
   {
     id: 'classification-koerperverletzung',
     name: 'Körperverletzung',
+    level: 'STRAFRECHT',
     normIds: ['stgb-223'],
     certainty: 'MOEGLICH',
     prerequisites: ['andere Person', 'körperliche Misshandlung oder Gesundheitsschädigung', 'Vorsatz'],
@@ -38,6 +54,7 @@ export const LEGAL_CLASSIFICATIONS: LegalClassification[] = [
   {
     id: 'classification-hausfriedensbruch',
     name: 'Hausfriedensbruch',
+    level: 'STRAFRECHT',
     normIds: ['stgb-123'],
     certainty: 'MOEGLICH',
     prerequisites: ['geschützter Bereich', 'widerrechtliches Eindringen oder unbefugtes Verweilen trotz Aufforderung', 'Vorsatz', 'Rechtswidrigkeit'],
@@ -47,6 +64,7 @@ export const LEGAL_CLASSIFICATIONS: LegalClassification[] = [
   {
     id: 'classification-verbotene-eigenmacht',
     name: 'Verbotene Eigenmacht',
+    level: 'PRIVATRECHT',
     normIds: ['bgb-858'],
     certainty: 'FESTSTEHEND',
     prerequisites: ['Besitz', 'Entzug oder Störung', 'ohne Willen des Besitzers', 'keine gesetzliche Gestattung'],
@@ -56,6 +74,7 @@ export const LEGAL_CLASSIFICATIONS: LegalClassification[] = [
   {
     id: 'classification-besitzentziehung',
     name: 'Besitzentziehung (Anspruch)',
+    level: 'PRIVATRECHT',
     normIds: ['bgb-861'],
     certainty: 'FESTSTEHEND',
     prerequisites: ['Besitz des Anspruchstellers', 'Entziehung durch verbotene Eigenmacht'],
@@ -65,6 +84,7 @@ export const LEGAL_CLASSIFICATIONS: LegalClassification[] = [
   {
     id: 'classification-besitzstoerung',
     name: 'Besitzstörung (Anspruch)',
+    level: 'PRIVATRECHT',
     normIds: ['bgb-862'],
     certainty: 'MOEGLICH',
     prerequisites: ['Besitz', 'Störung durch verbotene Eigenmacht'],
@@ -73,6 +93,7 @@ export const LEGAL_CLASSIFICATIONS: LegalClassification[] = [
   {
     id: 'classification-herausgabeanspruch',
     name: 'Herausgabeanspruch',
+    level: 'PRIVATRECHT',
     normIds: ['bgb-985'],
     certainty: 'MOEGLICH',
     prerequisites: ['Eigentum', 'Besitz eines anderen', 'kein Recht zum Besitz nach §986'],
@@ -82,6 +103,7 @@ export const LEGAL_CLASSIFICATIONS: LegalClassification[] = [
   {
     id: 'classification-eigentumsstoerung',
     name: 'Eigentumsstörung (Anspruch)',
+    level: 'PRIVATRECHT',
     normIds: ['bgb-1004'],
     certainty: 'MOEGLICH',
     prerequisites: ['Eigentum', 'Beeinträchtigung in anderer Weise als durch Besitzentziehung'],
@@ -90,6 +112,7 @@ export const LEGAL_CLASSIFICATIONS: LegalClassification[] = [
   {
     id: 'classification-gegenwaertige-gefahr',
     name: 'Gegenwärtige Gefahr',
+    level: 'RECHTSBEGRIFF',
     normIds: ['stgb-34'],
     certainty: 'RECHTSBEGRIFF',
     prerequisites: ['Gefahr für ein geschütztes Rechtsgut', 'Gefahr besteht gegenwärtig'],
@@ -99,6 +122,7 @@ export const LEGAL_CLASSIFICATIONS: LegalClassification[] = [
   {
     id: 'classification-drohende-gefahr',
     name: 'Drohende Gefahr',
+    level: 'RECHTSBEGRIFF',
     normIds: ['stgb-34'],
     certainty: 'RECHTSBEGRIFF',
     prerequisites: ['Gefahr für ein geschütztes Rechtsgut', 'Gefahr steht unmittelbar bevor'],
@@ -107,6 +131,7 @@ export const LEGAL_CLASSIFICATIONS: LegalClassification[] = [
   {
     id: 'classification-angriff',
     name: 'Gegenwärtiger rechtswidriger Angriff',
+    level: 'RECHTSBEGRIFF',
     normIds: ['stgb-32'],
     certainty: 'RECHTSBEGRIFF',
     prerequisites: ['Angriff', 'Gegenwärtigkeit', 'Rechtswidrigkeit'],
@@ -116,6 +141,7 @@ export const LEGAL_CLASSIFICATIONS: LegalClassification[] = [
   {
     id: 'classification-beleidigung',
     name: 'Beleidigung',
+    level: 'STRAFRECHT',
     normIds: ['stgb-185'],
     certainty: 'MOEGLICH',
     prerequisites: ['konkrete Äußerung oder Handlung', 'ehrverletzender Charakter', 'Bezug zur betroffenen Person', 'Vorsatz'],
@@ -124,6 +150,7 @@ export const LEGAL_CLASSIFICATIONS: LegalClassification[] = [
   {
     id: 'classification-sachbeschaedigung',
     name: 'Sachbeschädigung',
+    level: 'STRAFRECHT',
     normIds: ['stgb-303'],
     certainty: 'MOEGLICH',
     prerequisites: ['fremde Sache', 'Beschädigung, Zerstörung oder erhebliche Veränderung', 'Rechtswidrigkeit', 'Vorsatz'],
@@ -132,6 +159,7 @@ export const LEGAL_CLASSIFICATIONS: LegalClassification[] = [
   {
     id: 'classification-noetigung',
     name: 'Nötigung',
+    level: 'STRAFRECHT',
     normIds: ['stgb-240'],
     certainty: 'MOEGLICH',
     prerequisites: ['Gewalt oder Drohung mit empfindlichem Übel', 'Handlung, Duldung oder Unterlassung', 'Verwerflichkeit nach §240 Abs. 2'],
@@ -140,6 +168,7 @@ export const LEGAL_CLASSIFICATIONS: LegalClassification[] = [
   {
     id: 'classification-raub',
     name: 'Raub',
+    level: 'STRAFRECHT',
     normIds: ['stgb-249'],
     certainty: 'MOEGLICH',
     prerequisites: ['fremde bewegliche Sache', 'Wegnahme', 'Gewalt gegen eine Person oder Drohung mit gegenwärtiger Gefahr für Leib oder Leben'],
@@ -148,6 +177,7 @@ export const LEGAL_CLASSIFICATIONS: LegalClassification[] = [
   {
     id: 'classification-straftat',
     name: 'Straftat (allgemein)',
+    level: 'STRAFRECHT',
     normIds: ['stgb-15'],
     certainty: 'MOEGLICH',
     prerequisites: ['tatbestandsmäßiges, rechtswidriges und schuldhaftes Verhalten'],
@@ -156,6 +186,7 @@ export const LEGAL_CLASSIFICATIONS: LegalClassification[] = [
   {
     id: 'classification-besitzdienerschaft',
     name: 'Besitzdienerschaft',
+    level: 'PRIVATRECHT',
     normIds: ['bgb-855'],
     certainty: 'FESTSTEHEND',
     prerequisites: ['tatsächliche Gewalt für einen anderen', 'Haushalt, Erwerbsgeschäft oder ähnliches Verhältnis', 'Weisungsgebundenheit'],
@@ -164,6 +195,7 @@ export const LEGAL_CLASSIFICATIONS: LegalClassification[] = [
   {
     id: 'classification-eigentum',
     name: 'Eigentum',
+    level: 'PRIVATRECHT',
     normIds: ['bgb-903'],
     certainty: 'RECHTSBEGRIFF',
     prerequisites: ['Eigentum an der Sache'],
