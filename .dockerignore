@@ -1,0 +1,42 @@
+# Build-Kontext klein halten: nur das Nötige wird an Docker gesendet.
+# Der Angular-Build läuft in der Build-Stage des Dockerfiles.
+
+# Abhängigkeiten und Build-Ergebnisse
+node_modules
+dist
+.angular
+
+# Versionsverwaltung und GitHub-Metadaten
+.git
+.gitignore
+.github
+
+# Lokale IDE- und Editor-Dateien
+.vscode
+.idea
+*.swp
+*.swo
+
+# Logs und temporäre Dateien
+*.log
+npm-debug.log*
+yarn-error.log*
+tmp
+out-tsc
+coverage
+
+# Test-Artefakte und lokale Umgebungen
+dist/test-out
+.env
+.env.*
+*.local
+
+# Dokumentation und fachliche Quellen (nicht für den Build nötig)
+*.pdf
+34a_bibel_v5_3_1.txt
+AGENTS.md
+
+# Docker-/Compose-Konfiguration selbst
+Dockerfile
+.dockerignore
+docker-compose.portainer.yml
