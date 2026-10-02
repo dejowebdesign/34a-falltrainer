@@ -27,7 +27,7 @@ export const HEADER_SCROLL_THRESHOLD = 16;
           <mat-icon aria-hidden="true">gavel</mat-icon>
           <span class="brand-text">
             <strong>34a Falltrainer</strong>
-            <small>Sachkundeprüfung §34a GewO</small>
+            <small>Sachkundeprüfung § 34a GewO</small>
           </span>
         </a>
         <div class="toolbar-actions">
