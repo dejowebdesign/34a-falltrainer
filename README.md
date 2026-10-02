@@ -48,6 +48,17 @@ Rechtliche Einordnung des Sachverhalts: Straftat, Diebstahl, Körperverletzung,
 Hausfriedensbruch, verbotene Eigenmacht, Anspruch, Gefahr, drohende Gefahr,
 gegenwärtige Gefahr, Angriff.
 
+Das didaktische Modell der Themenvertiefung ordnet Stufe 2 zusätzlich den
+Rechtsgebieten zu. Die App zeigt das jeweilige Gebiet als Kennzeichnung an der
+Option:
+
+| Rechtsgebiet | Beispiele |
+| --- | --- |
+| Strafrecht | Diebstahl, Körperverletzung, Hausfriedensbruch, Beleidigung |
+| Privatrecht | verbotene Eigenmacht, Besitzanspruch, Herausgabeanspruch |
+| Öffentliches Recht | hoheitliche Maßnahmen (Abgrenzung zur Sicherheitskraft) |
+| Rechtsbegriff | Gefahr, drohende/gegenwärtige Gefahr, Angriff |
+
 Wichtig: „Möglicher Diebstahl“ ist nicht automatisch „Diebstahl zweifelsfrei
 erfüllt“. Die App unterscheidet strikt zwischen Sachverhalt, Tatsachen,
 rechtlicher Einordnung und feststehendem Ergebnis.
@@ -106,6 +117,7 @@ src/
   app/
     core/
       data/        Knowledge Base (Normen, Einordnungen, Befugnisse, Automatismen)
+                   + Stufe-1-Verhaltenskatalog (didaktisch)
       models/      TypeScript-Interfaces (Scenario, LegalNorm, ...)
       rules/       Fallengine und juristische Trennprüfung
       services/    Knowledge-, Scenario- und Fallzustand-Services
@@ -188,9 +200,10 @@ Zentrale Typen (`src/app/core/models`):
 
 - `Scenario` – id, title, description, facts
 - `StageOne` / `StageTwo` / `StageThree` – options, correctOptions, explanations
+- `StageOption` – id, text, verdict, explanation, misconception, normIds, legalLevel (Stufe 2)
 - `LegalNorm` – id, law, paragraph, title, officialText, source, verificationStatus
-- `LegalClassification` – id, name, normIds, prerequisites, explanation
-- `LegalAuthority` – id, normId, holder, prerequisites, permittedAction, limits, proportionality
+- `LegalClassification` – id, name, level, normIds, certainty, prerequisites, explanation
+- `LegalAuthority` – id, normId, kind, holder, prerequisites, permittedAction, limits, proportionality
 - `Result` – behaviorResult, legalResult, authorityResult, explanation, modelSolution
 
 Szenarien sind separate Seed-Daten und nicht Teil der juristischen Knowledge
@@ -198,7 +211,7 @@ Base. Dadurch können beliebig viele Fälle ergänzt werden.
 
 ## Juristische Datenquelle
 
-Maßgebliche Quelle ist die Knowledge Base **V5.3.1**
+Maßgebliche Quelle für die juristische Logik ist die Knowledge Base **V5.3.1**
 (`34a_bibel_v5_3_1.txt`, Rechtsstand 01.10.2026).
 
 Die Bibel wird nicht verkürzt, nicht umgeschrieben und nicht durch allgemeines
@@ -209,7 +222,25 @@ stammen aus dieser Quelle.
 Amtliche Gesetzestexte stammen aus „Gesetze im Internet“ (Bundesministerium der
 Justiz / Bundesamt für Justiz). Wo ein amtlicher Gesetzestext in der Knowledge
 Base nicht vorhanden ist, wird die Angabe als fehlend markiert
-(`verificationStatus: 'MISSING'`) statt erfunden zu werden.
+(`verificationStatus: 'MISSING'`) statt erfunden zu werden. Ein Beispiel ist
+§823 BGB: Die Bibel nennt die Norm nur als Beispiel für einen Anspruch, ohne
+eigenen Normabschnitt; die App führt sie deshalb ohne amtlichen Wortlaut.
+
+### Didaktische Quelle
+
+Die drei sichtbaren Stufen, die Verhaltensbausteine der Stufe 1 und die
+Rechtsgebiete der Stufe 2 folgen der Unterlage **„Fallbeispiele –
+Themenvertiefung“ (30.09.2026, Sachkundeprüfung §34a GewO)**.
+
+- Stufe 1: Verhaltensbausteine „Umgang mit Menschen“
+  (`src/app/core/data/behavior-catalog.data.ts`).
+- Stufe 2: Rechtsgebiete Strafrecht / Privatrecht / öffentliches Recht.
+- Stufe 3: Rechtfertigungsgründe und Befugnisse aus der V5.3.1-Bibel.
+
+Die Unterlage ist die didaktische Leitlinie; die juristische Begründung bleibt
+ausschließlich die V5.3.1-Bibel. Die Fallbeispiele der Unterlage werden als
+eigene Seed-Szenarien abgebildet (u. a. Wegnahme aus dem Einkaufswagen,
+Marktschließung/Hausverbot) und nicht in die Knowledge Base eingebaut.
 
 ## Hinweis zur V5.3.1 Knowledge Base
 
