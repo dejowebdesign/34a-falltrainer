@@ -45,7 +45,9 @@ describe('AppHeaderComponent', () => {
     const host = fixture.nativeElement as HTMLElement;
     expect(host.querySelector('.theme-toggle')).toBeTruthy();
     expect(host.textContent).toContain('34a Falltrainer');
-    expect(host.querySelector('a[href="/scenarios"]')).toBeTruthy();
+    const navLink = host.querySelector('a[href="/scenarios"]');
+    expect(navLink).toBeTruthy();
+    expect(navLink?.textContent?.trim()).toBe('Fallbeispiele');
   });
 
   it('hat ein aria-label am Theme-Toggle', () => {

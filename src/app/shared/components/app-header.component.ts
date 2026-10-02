@@ -40,7 +40,7 @@ export const HEADER_SCROLL_THRESHOLD = 16;
             >
               Start
             </a>
-            <a mat-button routerLink="/scenarios" routerLinkActive="active">Fälle</a>
+            <a mat-button routerLink="/scenarios" routerLinkActive="active">Fallbeispiele</a>
           </nav>
           <button
             mat-icon-button
