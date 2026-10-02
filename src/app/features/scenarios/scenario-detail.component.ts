@@ -5,11 +5,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { Scenario } from '../../core/models';
 import { ScenarioService } from '../../core/services/scenario.service';
-import { ScenarioFactsComponent } from '../../shared/components/scenario-facts.component';
 
 @Component({
   selector: 'app-scenario-detail',
-  imports: [RouterLink, MatCardModule, MatButtonModule, MatIconModule, ScenarioFactsComponent],
+  imports: [RouterLink, MatCardModule, MatButtonModule, MatIconModule],
   template: `
     <div class="ft-container page">
       @if (scenario(); as current) {
@@ -18,11 +17,29 @@ import { ScenarioFactsComponent } from '../../shared/components/scenario-facts.c
           Alle Fälle
         </a>
 
-        <app-scenario-facts [scenario]="current" />
+        <mat-card appearance="outlined" class="case-card">
+          <mat-card-header>
+            <mat-card-title>{{ current.title }}</mat-card-title>
+            <mat-card-subtitle>Sachverhalt</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <p class="case-text">{{ current.originalCaseText }}</p>
+          </mat-card-content>
+          <mat-card-actions align="end">
+            <a
+              mat-flat-button
+              color="primary"
+              [routerLink]="['/scenarios', current.id, 'stage', 1]"
+            >
+              Fall bearbeiten
+              <mat-icon aria-hidden="true">arrow_forward</mat-icon>
+            </a>
+          </mat-card-actions>
+        </mat-card>
 
         <mat-card appearance="outlined" class="start-card">
           <mat-card-content>
-            <h2>Bearbeitung starten</h2>
+            <h2>So läuft die Bearbeitung</h2>
             <p>
               Sie bearbeiten den Fall in genau drei Stufen: Verhalten, rechtliche Einordnung und
               Rechtsgrundlage. Am Ende erhalten Sie eine Musterlösung.
@@ -33,12 +50,6 @@ import { ScenarioFactsComponent } from '../../shared/components/scenario-facts.c
               <li><strong>Stufe 3:</strong> Mit welcher Rechtsgrundlage dürfen Sie eingreifen?</li>
             </ol>
           </mat-card-content>
-          <mat-card-actions align="end">
-            <a mat-flat-button color="primary" [routerLink]="['/scenarios', current.id, 'stage', 1]">
-              Stufe 1 starten
-              <mat-icon aria-hidden="true">arrow_forward</mat-icon>
-            </a>
-          </mat-card-actions>
         </mat-card>
       } @else {
         <mat-card appearance="outlined">
@@ -63,8 +74,14 @@ import { ScenarioFactsComponent } from '../../shared/components/scenario-facts.c
       .back {
         justify-self: start;
       }
+      .case-card,
       .start-card {
         border-radius: 14px;
+      }
+      .case-text {
+        margin: 0.5rem 0 0;
+        font-size: 1.05rem;
+        line-height: 1.7;
       }
       .start-card h2 {
         margin: 0 0 0.5rem;

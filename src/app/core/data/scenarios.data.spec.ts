@@ -160,6 +160,7 @@ describe('Lernumfang – §128 StPO ist nicht prüfungsrelevant', () => {
     const parts: string[] = [
       scenario.title,
       scenario.description,
+      scenario.originalCaseText,
       ...scenario.facts.map((fact) => fact.text),
       scenario.result.behaviorResult,
       scenario.result.legalResult,
@@ -208,5 +209,78 @@ describe('Lernumfang – §128 StPO ist nicht prüfungsrelevant', () => {
         }
       }
     }
+  });
+});
+
+describe('originalCaseText – mündlicher Prüfungssachverhalt', () => {
+  it('ist bei allen 8 Fällen vorhanden', () => {
+    expect(SCENARIOS.length).toBe(8);
+    for (const scenario of SCENARIOS) {
+      expect(scenario.originalCaseText?.length)
+        .withContext(`${scenario.id}: originalCaseText fehlt`)
+        .toBeGreaterThan(0);
+    }
+  });
+
+  it('ist kurz und mündlich vortragbar (3–5 Sätze, max. 700 Zeichen)', () => {
+    for (const scenario of SCENARIOS) {
+      const text = scenario.originalCaseText.trim();
+      const sentences = text.split(/[.!?]+\s/).filter((part) => part.trim().length > 0);
+      expect(sentences.length)
+        .withContext(`${scenario.id}: ${sentences.length} Sätze`)
+        .toBeGreaterThanOrEqual(3);
+      expect(sentences.length)
+        .withContext(`${scenario.id}: ${sentences.length} Sätze`)
+        .toBeLessThanOrEqual(5);
+      expect(text.length).withContext(`${scenario.id}: ${text.length} Zeichen`).toBeLessThanOrEqual(700);
+    }
+  });
+
+  it('nimmt keine juristische Lösung vorweg', () => {
+    const forbidden = [
+      '§',
+      'StPO',
+      'BGB',
+      'StGB',
+      'Diebstahl',
+      'verbotene Eigenmacht',
+      'Notstand',
+      'Notwehr',
+      'Hausfriedensbruch',
+      'rechtfertigend',
+      'Befugnis',
+      'Anspruch',
+      'strafbar',
+      'rechtswidrig',
+    ];
+    for (const scenario of SCENARIOS) {
+      const text = scenario.originalCaseText;
+      for (const term of forbidden) {
+        expect(text.includes(term))
+          .withContext(`${scenario.id}: "${term}" im originalCaseText`)
+          .toBe(false);
+      }
+    }
+  });
+
+  it('ersetzt nicht die bestehenden Bearbeitungs-Fakten', () => {
+    for (const scenario of SCENARIOS) {
+      expect(scenario.facts.length)
+        .withContext(`${scenario.id}: facts fehlen`)
+        .toBeGreaterThan(0);
+      expect(scenario.facts.some((fact) => fact.text === scenario.originalCaseText))
+        .withContext(`${scenario.id}: originalCaseText ist in facts dupliziert`)
+        .toBe(false);
+    }
+  });
+
+  it('weicht bei Fall 7 und Fall 8 nicht auf (keine erfundenen Zusätze)', () => {
+    const fall7 = SCENARIOS.find((entry) => entry.id === 'klopapier-einkaufswagen')!;
+    expect(fall7.originalCaseText).toContain('Person A hat gerade die letzte Rolle Klopapier');
+    expect(fall7.originalCaseText).toContain('Person B nimmt die Rolle ohne Zustimmung');
+
+    const fall8 = SCENARIOS.find((entry) => entry.id === 'marktschliessung-hausverbot')!;
+    expect(fall8.originalCaseText).toContain('Der Markt soll geschlossen werden');
+    expect(fall8.originalCaseText).not.toContain('Hausverbot');
   });
 });

@@ -29,6 +29,17 @@ import { VerdictBadgeComponent } from '../../shared/components/verdict-badge.com
 
       @if (caseResult(); as result) {
         @if (scenario(); as current) {
+          @if (current.originalCaseText) {
+            <mat-card appearance="outlined" class="case-card">
+              <mat-card-content>
+                <details class="case-details">
+                  <summary>Sachverhalt anzeigen</summary>
+                  <p class="case-text">{{ current.originalCaseText }}</p>
+                </details>
+              </mat-card-content>
+            </mat-card>
+          }
+
           <mat-card appearance="outlined" class="result-head">
             <mat-card-header>
               <mat-card-title>Ergebnis: {{ current.title }}</mat-card-title>
@@ -177,8 +188,24 @@ import { VerdictBadgeComponent } from '../../shared/components/verdict-badge.com
       .result-head,
       .model-solution,
       .stage-card,
-      .norms-card {
+      .norms-card,
+      .case-card {
         border-radius: 14px;
+      }
+      .case-details {
+        border: 1px solid var(--ft-border);
+        border-radius: 10px;
+        background: var(--ft-surface-2);
+        padding: 0.6rem 0.85rem;
+      }
+      .case-details summary {
+        cursor: pointer;
+        color: var(--ft-primary);
+        font-weight: 600;
+      }
+      .case-text {
+        margin: 0.6rem 0 0;
+        line-height: 1.6;
       }
       .overall {
         display: flex;

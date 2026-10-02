@@ -14,8 +14,13 @@ import { Scenario } from '../../core/models';
         <mat-card-subtitle>Fallbeschreibung</mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>
-        <p class="description">{{ scenario().description }}</p>
-        <h3 class="facts-title">Sachverhalt</h3>
+        @if (scenario().originalCaseText) {
+          <details class="case-details">
+            <summary>Sachverhalt anzeigen</summary>
+            <p class="case-text">{{ scenario().originalCaseText }}</p>
+          </details>
+        }
+        <h3 class="facts-title">Bearbeitungssachverhalt (Kurzfassung)</h3>
         <ul class="facts">
           @for (fact of scenario().facts; track fact.id) {
             <li [class.relevant]="fact.legallyRelevant">
@@ -39,13 +44,25 @@ import { Scenario } from '../../core/models';
       .facts-card {
         border-radius: 14px;
       }
-      .description {
-        color: var(--ft-muted);
-        margin-top: 0.5rem;
+      .case-details {
+        margin: 0.25rem 0 1rem;
+        border: 1px solid var(--ft-border);
+        border-radius: 10px;
+        background: var(--ft-surface-2);
+        padding: 0.6rem 0.85rem;
+      }
+      .case-details summary {
+        cursor: pointer;
+        color: var(--ft-primary);
+        font-weight: 600;
+      }
+      .case-text {
+        margin: 0.6rem 0 0;
+        line-height: 1.6;
       }
       .facts-title {
         font-size: 1rem;
-        margin: 1rem 0 0.5rem;
+        margin: 0 0 0.5rem;
       }
       .facts {
         list-style: none;
