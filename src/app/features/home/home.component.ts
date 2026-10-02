@@ -35,7 +35,7 @@ interface Automatism {
       <div class="ft-container hero-inner">
         <div class="hero-text">
           <p class="eyebrow">Sachkundeprüfung §34a GewO</p>
-          <h1>Juristisches Denken trainieren.</h1>
+          <h1>Rechtssicher handeln. Situationen richtig einordnen.</h1>
           <p class="hero-sub">
             Vom Verhalten zur rechtlichen Einordnung zur konkreten Rechtsgrundlage.
           </p>
