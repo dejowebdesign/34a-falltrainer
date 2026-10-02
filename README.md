@@ -294,7 +294,10 @@ Erzeugte Tags:
 | `latest` | jeweils letzter erfolgreicher Build von `main` |
 | `main` | letzter erfolgreicher Build des `main`-Branches |
 | `sha-<commit>` | exakter Commit (z. B. `sha-4af2248…`), vollständiger SHA |
-| Versions-Tag | nur bei einem Git-Tag, z. B. `v1.0.0` |
+
+Der Workflow wird derzeit bei Push auf `main` und manuell
+(`workflow_dispatch`) ausgelöst; die Tags `latest`, `main` und
+`sha-<commit>` werden dabei gesetzt.
 
 **Reproduzierbare Deployments:** Für einen festen, jederzeit wiederholbaren
 Stand ist ein `sha-<commit>`-Tag besser geeignet als `latest`, weil `latest`

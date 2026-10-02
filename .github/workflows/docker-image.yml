@@ -70,7 +70,6 @@ jobs:
             type=raw,value=latest
             type=raw,value=main
             type=sha,format=long,prefix=sha-
-            type=ref,event=tag
 
       - name: Image bauen und pushen
         uses: docker/build-push-action@v6
