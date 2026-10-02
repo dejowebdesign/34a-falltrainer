@@ -59,18 +59,25 @@ interface BehaviorGroup {
         border-radius: 14px;
       }
       .groups {
-        display: grid;
-        gap: 1.25rem;
-        grid-template-columns: 1fr;
+        column-count: 1;
+        column-gap: 2rem;
       }
       @media (min-width: 768px) {
         .groups {
-          grid-template-columns: repeat(2, 1fr);
+          column-count: 2;
         }
       }
+      .group {
+        break-inside: avoid;
+        page-break-inside: avoid;
+        margin-bottom: 1.25rem;
+      }
+      .group:last-child {
+        margin-bottom: 0;
+      }
       .group h3 {
-        margin: 0 0 0.6rem;
-        font-size: 1rem;
+        margin: 0 0 0.5rem;
+        font-size: 0.95rem;
         color: var(--ft-primary);
       }
       .group ul {
@@ -78,11 +85,11 @@ interface BehaviorGroup {
         margin: 0;
         padding: 0;
         display: grid;
-        gap: 0.6rem;
+        gap: 0.5rem;
       }
       .group li {
         display: flex;
-        gap: 0.5rem;
+        gap: 0.45rem;
         align-items: flex-start;
       }
       .group mat-icon {
@@ -94,13 +101,13 @@ interface BehaviorGroup {
         margin-top: 2px;
       }
       .group strong {
-        font-size: 0.95rem;
+        font-size: 0.92rem;
       }
       .group p {
-        margin: 0.15rem 0 0;
+        margin: 0.1rem 0 0;
         color: var(--ft-muted);
-        font-size: 0.85rem;
-        line-height: 1.45;
+        font-size: 0.84rem;
+        line-height: 1.4;
       }
     `,
   ],

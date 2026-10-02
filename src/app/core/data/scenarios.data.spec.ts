@@ -152,3 +152,61 @@ describe('Verhaltenskatalog – Stufe 1 (Themenvertiefung)', () => {
     }
   });
 });
+
+describe('Lernumfang – §128 StPO ist nicht prüfungsrelevant', () => {
+  const learnerFacingText = (scenario: (typeof SCENARIOS)[number]): string => {
+    const solution = scenario.result.modelSolution;
+    const stages = [scenario.stageOne, scenario.stageTwo, scenario.stageThree];
+    const parts: string[] = [
+      scenario.title,
+      scenario.description,
+      ...scenario.facts.map((fact) => fact.text),
+      scenario.result.behaviorResult,
+      scenario.result.legalResult,
+      scenario.result.authorityResult,
+      scenario.result.explanation,
+      solution.behavior,
+      solution.legalClassification,
+      solution.legalBasis,
+      solution.reasoning,
+      solution.limits,
+    ];
+    for (const stage of stages) {
+      parts.push(stage.explanation, stage.prompt);
+      for (const option of stage.options) {
+        parts.push(option.text, option.explanation, option.misconception ?? '');
+      }
+    }
+    return parts.join(' \n ');
+  };
+
+  it('kein Szenario referenziert §128 StPO in learner-facing Texten', () => {
+    for (const scenario of SCENARIOS) {
+      const text = learnerFacingText(scenario);
+      expect(/\b128\s*StPO\b/.test(text))
+        .withContext(`${scenario.id}: §128 StPO gefunden`)
+        .toBe(false);
+    }
+  });
+
+  it('die Norm stpo-128 ist nicht mehr in der Datenbasis', () => {
+    expect(LEGAL_NORMS.some((norm) => norm.id === 'stpo-128')).toBe(false);
+  });
+
+  it('keine Autorität verweist auf stpo-128', () => {
+    expect(LEGAL_AUTHORITIES.some((authority) => authority.normId === 'stpo-128')).toBe(false);
+  });
+
+  it('keine Option verweist über normIds auf stpo-128', () => {
+    for (const scenario of SCENARIOS) {
+      const stages = [scenario.stageOne, scenario.stageTwo, scenario.stageThree];
+      for (const stage of stages) {
+        for (const option of stage.options) {
+          expect((option.normIds ?? []).includes('stpo-128'))
+            .withContext(option.id)
+            .toBe(false);
+        }
+      }
+    }
+  });
+});
