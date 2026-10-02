@@ -61,6 +61,11 @@ Rules:
   a fachliche Kurzbezeichnung as the official title (§228/§904 BGB → title
   "Notstand"; "Defensivnotstand"/"Aggressivnotstand" go into
   `fachlicheEinordnung`).
+- The Lernhilfe (`shared/components/legal-orientation.component.ts`) teaches by
+  structure, not by slogans: no Merksätze such as "Straftat ≠ automatisch
+  Eingriffsbefugnis". Cards within a row must render at equal height (grid with
+  `align-items: stretch`); the "ODER" between the Stufe-2 categories is only a
+  visual separator and must not sit inside a card.
 
 ## Testing notes
 
