@@ -884,12 +884,12 @@ export const SCENARIOS: Scenario[] = [
     id: 'beleidigung-deeskalation',
     title: 'Beleidigung an der Einlasskontrolle',
     description:
-      'Ein Besucher beschimpft die Sicherheitskraft lautstark, wird aber nicht tätlich.',
+      'Ein Besucher beleidigt die Sicherheitskraft lautstark, wird aber nicht tätlich.',
     originalCaseText:
-      'Sie sind als Sicherheitsmitarbeiter an der Einlasskontrolle einer Veranstaltung eingesetzt. Ein Besucher beschimpft Sie lautstark und ehrverletzend. Der Besucher wird dabei weder körperlich tätlich noch bedroht Sie. Mehrere andere Besucher beobachten die Situation.',
+      'Sie sind als Sicherheitsmitarbeiter an der Einlasskontrolle einer Veranstaltung eingesetzt. Ein Besucher beleidigt Sie lautstark. Der Besucher wird dabei weder körperlich tätlich noch bedroht Sie. Mehrere andere Besucher beobachten die Situation.',
     facts: [
       { id: 'f1', text: 'Sie kontrollieren den Einlass einer Veranstaltung.', legallyRelevant: false },
-      { id: 'f2', text: 'Ein Besucher beschimpft Sie lautstark und ehrverletzend.', legallyRelevant: true },
+      { id: 'f2', text: 'Ein Besucher beleidigt Sie lautstark.', legallyRelevant: true },
       { id: 'f3', text: 'Der Besucher wird nicht tätlich und bedroht Sie nicht.', legallyRelevant: true },
       { id: 'f4', text: 'Weitere Besucher beobachten die Situation.', legallyRelevant: true },
     ],
