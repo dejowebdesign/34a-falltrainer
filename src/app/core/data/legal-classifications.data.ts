@@ -129,6 +129,21 @@ export const LEGAL_CLASSIFICATIONS: LegalClassification[] = [
     explanation: 'Eine drohende Gefahr ist von der gegenwärtigen Gefahr zu unterscheiden.',
   },
   {
+    id: 'classification-defensivnotstandslage',
+    name: 'Defensivnotstandslage (§228 BGB)',
+    level: 'PRIVATRECHT',
+    normIds: ['bgb-228'],
+    certainty: 'MOEGLICH',
+    prerequisites: [
+      'Gefahr geht von der Sache selbst aus',
+      'Einwirkung richtet sich gegen genau diese Sache',
+      'Beschädigung/Zerstörung zur Gefahrenabwehr erforderlich',
+      'Schaden nicht außer Verhältnis zur Gefahr',
+    ],
+    explanation:
+      'Geht die Gefahr von der Sache selbst aus und richtet sich die Abwehr gegen genau diese Sache, ist der Defensivnotstand nach §228 BGB zu prüfen. Abzugrenzen ist der aggressive Notstand nach §904 BGB, der die Einwirkung auf eine unbeteiligte fremde Sache betrifft. Das ist eine rechtlich zu prüfende Einordnung, nicht bereits eine feststehende Subsumtion.',
+  },
+  {
     id: 'classification-angriff',
     name: 'Gegenwärtiger rechtswidriger Angriff',
     level: 'RECHTSBEGRIFF',

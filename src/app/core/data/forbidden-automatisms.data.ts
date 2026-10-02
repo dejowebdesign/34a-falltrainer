@@ -58,6 +58,14 @@ export const FORBIDDEN_AUTOMATISMS: ForbiddenAutomatism[] = [
     relatedNormIds: ['stgb-34'],
   },
   {
+    id: 'auto-fremde-sache-904',
+    trigger: 'fremde Sache in Gefahr',
+    forbiddenConclusion: 'automatisch §904 BGB (aggressiver Notstand)',
+    reason:
+      'Nicht jede Einwirkung auf eine fremde Sache ist aggressiver Notstand. Entscheidend ist die Richtung der Einwirkung: Geht die Gefahr von der Sache selbst aus, ist der Defensivnotstand nach §228 BGB zu prüfen; §904 BGB betrifft die Einwirkung auf eine unbeteiligte fremde Sache.',
+    relatedNormIds: ['bgb-228', 'bgb-904'],
+  },
+  {
     id: 'auto-angriff-notwehr',
     trigger: 'Angriff',
     forbiddenConclusion: 'automatisch Notwehr',
