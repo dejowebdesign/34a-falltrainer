@@ -91,6 +91,12 @@ export interface OralExamQuestionBlock {
  * Quelle (`source`).
  */
 export interface AuthoredFollowUp {
+  /**
+   * Überarbeitete Formulierung der Folgefrage als vollständige Prüfungsfrage.
+   * Der fachliche Aspekt bleibt unverändert; fehlt das Feld, wird die
+   * Formulierung aus `Fragen.txt` verwendet.
+   */
+  question?: string;
   answer: string;
   /** Vier plausible Distraktoren. */
   distractors: string[];
@@ -110,6 +116,20 @@ export interface AuthoredMainDistractors {
 /** Ein prüfungsreifer Fragenblock: Hauptfrage aus der Bank, Folgefragen ergänzt. */
 export interface OralExamPoolBlock {
   blockId: string;
+  /**
+   * Überarbeitete Formulierung der Hauptfrage. Der fachliche Inhalt bleibt
+   * unverändert gegenüber `Fragen.txt`; die Frage wird nur prüfungsgerechter
+   * formuliert (kein Akronym als Lösungshinweis, keine Stichwortfrage).
+   * Fehlt das Feld, wird die Formulierung aus `Fragen.txt` verwendet.
+   */
+  questionOverride?: string;
+  /**
+   * Überarbeitete richtige Antwort zur Hauptfrage. Der fachliche Sinn der
+   * Antwort aus `Fragen.txt` bleibt erhalten; die Antwort wird nur als
+   * vollständiger Satz formuliert. Fehlt das Feld, wird der Antwortschlüssel
+   * aus `Fragen.txt` verwendet.
+   */
+  answerOverride?: string;
   /** Ergänzte Distraktoren zur Hauptfrage. */
   main: AuthoredMainDistractors;
   followUp1: AuthoredFollowUp;

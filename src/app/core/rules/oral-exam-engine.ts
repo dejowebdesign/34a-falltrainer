@@ -122,6 +122,191 @@ export function validatePool(
   }
 }
 
+/** Auffälligkeit einer Antwort einer einzelnen Prüfungsfrage. */
+export interface ExamPoolQualityIssue {
+  blockId: string;
+  role: 'HAUPTFRAGE' | 'FOLGEFRAGE_1' | 'FOLGEFRAGE_2';
+  kind:
+    | 'OPTION_COUNT'
+    | 'SHORT_OPTION'
+    | 'NOT_A_SENTENCE'
+    | 'PARAGRAPH_IN_DISTRACTOR'
+    | 'ABSOLUTE_DISTRACTOR'
+    | 'LENGTH_IMBALANCE'
+    | 'LENGTH_LEAK'
+    | 'DUPLICATE_OPTION';
+  detail: string;
+}
+
+/**
+ * Absolute Formulierungen, die einen Distraktor zu leicht erkennbar machen.
+ * Es werden nur falsche Antworten geprüft; in der richtigen Antwort kann eine
+ * solche Formulierung fachlich korrekt sein.
+ */
+const ABSOLUTE_PATTERNS: readonly RegExp[] = [
+  /\bniemals\b/i,
+  /\bimmer\b/i,
+  /\bstets\b/i,
+  /\bunbegrenzt\b/i,
+  /\bkeinerlei\b/i,
+  /\bausschließlich\b/i,
+  /ohne jede/i,
+  /grundsätzlich immer/i,
+  /unter keinen umständen/i,
+  /in jedem fall/i,
+  /zu keinem zeitpunkt/i,
+];
+
+/** Mindestlänge einer Antwort in Zeichen (vollständiger Satz statt Stichwort). */
+const MIN_OPTION_CHARS = 45;
+
+/** Zulässige Streubreite zwischen kürzester und längster Option (Faktor). */
+const MAX_LENGTH_RATIO = 1.85;
+
+/** Maximale Länge der richtigen Antwort im Verhältnis zur längsten falschen. */
+const MAX_CORRECT_LENGTH_RATIO = 1.35;
+
+function optionTexts(
+  block: OralExamQuestionBlock,
+  entry: OralExamPoolBlock,
+  role: 'HAUPTFRAGE' | 'FOLGEFRAGE_1' | 'FOLGEFRAGE_2',
+): { correct: string; distractors: readonly string[] } {
+  if (role === 'HAUPTFRAGE') {
+    return {
+      correct: entry.answerOverride ?? block.correctAnswer,
+      distractors: entry.main.distractors,
+    };
+  }
+  const followUp = role === 'FOLGEFRAGE_1' ? entry.followUp1 : entry.followUp2;
+  return { correct: followUp.answer, distractors: followUp.distractors };
+}
+
+/** Liefert die tatsächliche Frageformulierung (Override oder Fragenbank). */
+export function questionText(
+  block: OralExamQuestionBlock,
+  entry: OralExamPoolBlock,
+  role: 'HAUPTFRAGE' | 'FOLGEFRAGE_1' | 'FOLGEFRAGE_2',
+): string {
+  if (role === 'HAUPTFRAGE') {
+    return entry.questionOverride ?? block.question;
+  }
+  const followUp = role === 'FOLGEFRAGE_1' ? entry.followUp1 : entry.followUp2;
+  return followUp.question ?? (role === 'FOLGEFRAGE_1' ? block.followUp1 : block.followUp2);
+}
+
+/**
+ * Prüft die fachlich-didaktische Qualität aller Antwortoptionen des Pools.
+ *
+ * Rein strukturelle und formale Kriterien: genau fünf Optionen, genau eine
+ * richtige, jede Option ein vollständiger Satz, keine Paragraphen in falschen
+ * Antworten, keine absoluten Distraktoren und ausgewogene Längen. Die Funktion
+ * prüft bewusst nicht die inhaltliche Richtigkeit – diese bleibt fachliche
+ * Verantwortung der Datenquelle.
+ */
+export function validatePoolQuality(
+  questions: readonly OralExamQuestionBlock[],
+  pool: readonly OralExamPoolBlock[],
+): ExamPoolQualityIssue[] {
+  const byId = new Map(questions.map((q) => [q.id, q]));
+  const issues: ExamPoolQualityIssue[] = [];
+  const push = (issue: ExamPoolQualityIssue) => issues.push(issue);
+
+  const roles = ['HAUPTFRAGE', 'FOLGEFRAGE_1', 'FOLGEFRAGE_2'] as const;
+
+  for (const entry of pool) {
+    const block = byId.get(entry.blockId);
+    if (!block) {
+      continue;
+    }
+    for (const role of roles) {
+      const { correct, distractors } = optionTexts(block, entry, role);
+      const all = [correct, ...distractors];
+      if (all.length !== ORAL_EXAM_OPTION_COUNT) {
+        push({
+          blockId: entry.blockId,
+          role,
+          kind: 'OPTION_COUNT',
+          detail: `${all.length} statt ${ORAL_EXAM_OPTION_COUNT} Optionen.`,
+        });
+      }
+      const unique = new Set(all.map((t) => t.trim().toLowerCase()));
+      if (unique.size !== all.length) {
+        push({
+          blockId: entry.blockId,
+          role,
+          kind: 'DUPLICATE_OPTION',
+          detail: 'Mindestens zwei Optionen sind identisch.',
+        });
+      }
+      for (const option of all) {
+        const text = option.trim();
+        if (text.length < MIN_OPTION_CHARS) {
+          push({
+            blockId: entry.blockId,
+            role,
+            kind: 'SHORT_OPTION',
+            detail: `Zu kurz (${text.length} Zeichen): "${text}"`,
+          });
+        }
+        if (!/[.!?:]$/.test(text)) {
+          push({
+            blockId: entry.blockId,
+            role,
+            kind: 'NOT_A_SENTENCE',
+            detail: `Kein vollständiger Satz: "${text}"`,
+          });
+        }
+      }
+      for (const distractor of distractors) {
+        if (/§\s*\d|Art\.\s*\d/.test(distractor)) {
+          push({
+            blockId: entry.blockId,
+            role,
+            kind: 'PARAGRAPH_IN_DISTRACTOR',
+            detail: distractor,
+          });
+        }
+        const lower = distractor.toLowerCase();
+        for (const pattern of ABSOLUTE_PATTERNS) {
+          if (pattern.test(lower)) {
+            push({
+              blockId: entry.blockId,
+              role,
+              kind: 'ABSOLUTE_DISTRACTOR',
+              detail: `"${pattern.source}" in: ${distractor}`,
+            });
+          }
+        }
+      }
+      const lengths = all.map((t) => t.trim().length);
+      const shortest = Math.min(...lengths);
+      const longest = Math.max(...lengths);
+      if (shortest > 0 && longest / shortest > MAX_LENGTH_RATIO) {
+        push({
+          blockId: entry.blockId,
+          role,
+          kind: 'LENGTH_IMBALANCE',
+          detail: `Längste (${longest}) / kürzeste (${shortest}) = ${(longest / shortest).toFixed(2)}.`,
+        });
+      }
+      // Längen-Leak: Die richtige Antwort darf nicht deutlich länger sein als
+      // die längste falsche Antwort, sonst ist sie allein am Umfang erkennbar.
+      const correctLength = correct.trim().length;
+      const longestWrong = Math.max(...distractors.map((t) => t.trim().length));
+      if (longestWrong > 0 && correctLength / longestWrong > MAX_CORRECT_LENGTH_RATIO) {
+        push({
+          blockId: entry.blockId,
+          role,
+          kind: 'LENGTH_LEAK',
+          detail: `Richtige Antwort (${correctLength}) / längste falsche (${longestWrong}) = ${(correctLength / longestWrong).toFixed(2)}.`,
+        });
+      }
+    }
+  }
+
+  return issues;
+}
+
 /**
  * Wählt je Themengebiet genau einen Fragenblock zufällig aus und baut daraus
  * einen vollständigen Durchlauf (9 Themengebiete × 3 Fragen = 27 Fragen).
@@ -150,8 +335,8 @@ export function buildExam(
           role: 'HAUPTFRAGE',
           position: ++position,
           correctIndex: (startOffset + position) % ORAL_EXAM_OPTION_COUNT,
-          question: block.question,
-          correctAnswer: block.correctAnswer,
+          question: chosen.questionOverride ?? block.question,
+          correctAnswer: chosen.answerOverride ?? block.correctAnswer,
           distractors: chosen.main.distractors,
           source: 'QUESTIONS_TXT',
           verificationStatus: 'VERIFIED_QUESTIONS_TXT',
@@ -164,7 +349,7 @@ export function buildExam(
           role: 'FOLGEFRAGE_1',
           position: ++position,
           correctIndex: (startOffset + position) % ORAL_EXAM_OPTION_COUNT,
-          question: block.followUp1,
+          question: chosen.followUp1.question ?? block.followUp1,
           correctAnswer: chosen.followUp1.answer,
           distractors: chosen.followUp1.distractors,
           source: chosen.followUp1.source,
@@ -179,7 +364,7 @@ export function buildExam(
           role: 'FOLGEFRAGE_2',
           position: ++position,
           correctIndex: (startOffset + position) % ORAL_EXAM_OPTION_COUNT,
-          question: block.followUp2,
+          question: chosen.followUp2.question ?? block.followUp2,
           correctAnswer: chosen.followUp2.answer,
           distractors: chosen.followUp2.distractors,
           source: chosen.followUp2.source,

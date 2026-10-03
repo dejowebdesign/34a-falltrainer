@@ -1,28 +1,28 @@
 import { OralExamPoolBlock } from '../models';
 
 /**
- * Ergänzte Antworten für die mündliche Prüfungssimulation.
+ * Prüfungspool der mündlichen Prüfungssimulation.
  *
- * Die Fragenbank `Fragen.txt` enthält nur zu den Hauptfragen eine richtige
- * Antwort. Die Folgefragen sind reine Stichworte ohne Antwort. Für jeden
- * Prüfungsblock sind hier daher ergänzt:
+ * Grundlage:
+ * - Hauptfrage und deren Antwortschlüssel stammen fachlich aus `Fragen.txt`.
+ *   Die Formulierung darf für die Prüfungsqualität überarbeitet werden
+ *   (`questionOverride`, `answerOverride`); der fachliche Sinn bleibt erhalten.
+ * - Folgefrage-Antworten sind ergänzt: `AUTHORED_FROM_BIBEL`, wo die 34a-Bibel
+ *   das Thema abdeckt (BGB, StGB/StPO), sonst `AUTHORED_FROM_FACHWISSEN`
+ *   (`UNVERIFIED`).
  *
- * - vier Distraktoren zur Hauptfrage (der Antwortschlüssel der Hauptfrage
- *   bleibt unverändert aus `Fragen.txt`),
- * - die richtige Antwort und vier Distraktoren zu Folgefrage 1 und 2.
+ * Prüfungsqualität (didaktische Überarbeitung):
+ * - Keine Frage ist allein über ein Akronym lösbar.
+ * - Alle fünf Antworten sind vollständige, ausformulierte Sätze.
+ * - Nur die richtige Antwort enthält – wenn für die Frage relevant – eine
+ *   Paragraphenangabe mit offiziellem Titel (Konvention: § … Gesetz – Titel).
+ * - Die Distraktoren sind fachlich plausibel und an genau einem Punkt falsch;
+ *   offensichtlich falsche Aussagen und absolute Formulierungen sind entfernt.
+ * - Alle Optionen sind sprachlich und in der Länge ausgewogen; die richtige
+ *   Antwort fällt weder durch Umfang noch durch Sprachqualität auf.
  *
- * Pro Themengebiet sind drei Fragenblöcke enthalten, damit je Durchlauf
- * tatsächlich zufällig ein Block ausgewählt wird.
- *
- * Quellenkennzeichnung:
- * - `AUTHORED_FROM_BIBEL`   – aus der 34a-Bibel (V5.3.1) abgeleitet.
- * - `AUTHORED_FROM_FACHWISSEN` / `UNVERIFIED` – ergänzt, weil die Bibel das
- *   Thema nicht abdeckt (Datenschutz, GewO/BewachV, Waffen, DGUV/UVV,
- *   Umgang mit Menschen, Technik, Rechtsordnung).
- *
- * Es werden keine Fragen oder Antworten aus `Fragen.txt` verändert.
- * Die Kennzeichnungen sind ausschließlich im Datenmodell und in der
- * Audit-Ansicht sichtbar, nicht in der Teilnehmerprüfung.
+ * Quellen-Tags sind nur im Datenmodell und in der Audit-Ansicht sichtbar,
+ * nicht in der Teilnehmerprüfung. `validatePoolQuality` prüft diese Regeln.
  */
 export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
   // ===========================================================================
@@ -30,38 +30,46 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
   // ===========================================================================
   {
     blockId: 'fragen-013',
+    questionOverride:
+      'Darf das staatliche Gewaltmonopol auf Sicherheitsmitarbeiter übertragen werden?',
+    answerOverride:
+      'Nein, Sicherheitsmitarbeiter handeln auch bei öffentlichen Auftraggebern nur auf privatrechtlicher Grundlage ohne hoheitliche Befugnisse.',
     main: {
       distractors: [
-        'Ja, mit behördlicher Genehmigung dürfen Sicherheitsmitarbeiter hoheitliche Befugnisse ausüben.',
-        'Ja, wenn der Auftraggeber eine öffentliche Stelle ist, gehen Polizeibefugnisse auf den Sicherheitsdienst über.',
-        'Ja, Sicherheitsmitarbeiter sind Hilfspolizisten und dürfen daher hoheitliche Maßnahmen treffen.',
-        'Nein, Sicherheitsmitarbeiter haben überhaupt keine Rechte und dürfen nicht tätig werden.',
+        'Ja, mit einem öffentlichen Auftrag gehen die hoheitlichen Befugnisse der Behörde auf den Sicherheitsdienst über.',
+        'Ja, hoheitliche Maßnahmen sind zulässig, solange die Behörde den Sicherheitsdienst ausdrücklich damit beauftragt.',
+        'Ja, bei öffentlichen Auftraggebern gelten Sicherheitsmitarbeiter als Beliehene mit polizeigleichen Rechten.',
+        'Nein, für öffentliche Auftraggeber dürfen Sicherheitsdienste überhaupt nicht tätig werden, weil solche Aufgaben der Polizei vorbehalten sind.',
       ],
       source: 'AUTHORED_FROM_BIBEL',
       verificationStatus: 'VERIFIED_BIBEL',
     },
     followUp1: {
+      question:
+        'Auf welcher rechtlichen Grundlage dürfen Sicherheitsmitarbeiter gegenüber Personen tätig werden?',
       answer:
-        'Sicherheitsmitarbeiter haben keine hoheitlichen Befugnisse; sie handeln ausschließlich auf privatrechtlicher Grundlage, insbesondere aus Hausrecht, Besitzschutz und den Jedermann-Rechten (z. B. Notwehr, vorläufige Festnahme nach § 127 StPO).',
+        'Auf privatrechtlicher Grundlage aus Hausrecht, Besitzschutz und den Jedermann-Rechten nach § 127 StPO – Vorläufige Festnahme.',
       distractors: [
-        'Sicherheitsmitarbeiter haben dieselben Befugnisse wie die Polizei, solange sie im Dienst sind.',
-        'Sicherheitsmitarbeiter dürfen Personen durchsuchen, festnehmen und Bußgelder verhängen.',
-        'Sicherheitsmitarbeiter haben nur das Recht, Anzeige zu erstatten, sonst keine Befugnisse.',
-        'Sicherheitsmitarbeiter dürfen hoheitliche Maßnahmen treffen, wenn der Auftraggeber eine Behörde ist.',
+        'Auf hoheitlicher Grundlage, weil Sicherheitsmitarbeiter zur Gefahrenabwehr gegenüber jedermann befugt sind.',
+        'Auf richterlicher Grundlage, weil jede Maßnahme zuvor durch Beschluss des zuständigen Gerichts angeordnet und genehmigt werden müsste.',
+        'Auf grundrechtlicher Grundlage, weil sich jede Person gegenüber Dritten auf ihre Grundrechte berufen kann.',
+        'Auf gewerberechtlicher Grundlage, weil die Bewachungserlaubnis zugleich Eingriffsbefugnisse verleiht.',
       ],
       source: 'AUTHORED_FROM_BIBEL',
       verificationStatus: 'VERIFIED_BIBEL',
       explanation:
-        'Die Bibel stellt in Kapitel 43 klar: Sicherheitsdienst ist nicht staatlicher Hoheitsträger.',
+        'Die Bibel stellt in Kapitel 43 klar: Der Sicherheitsdienst ist kein staatlicher Hoheitsträger.',
     },
     followUp2: {
+      question:
+        'Worin unterscheiden sich die Handlungsmöglichkeiten eines Sicherheitsmitarbeiters von denen eines Polizeivollzugsbeamten?',
       answer:
-        'Die Polizei handelt hoheitlich auf Grundlage der Polizeigesetze und darf Zwang ausüben. Sicherheitsmitarbeiter handeln privat, ohne hoheitliche Befugnisse, und dürfen nur im Rahmen privatrechtlicher Rechtfertigungsgründe tätig werden.',
+        'Die Polizei handelt hoheitlich nach den Polizeigesetzen, der Sicherheitsmitarbeiter nur im Rahmen privatrechtlicher Rechtfertigungsgründe.',
       distractors: [
-        'Sicherheitsmitarbeiter sind Hilfsbeamte der Staatsanwaltschaft und der Polizei unterstellt.',
-        'Die Polizei und Sicherheitsmitarbeiter haben identische Eingriffsbefugnisse, nur der Arbeitgeber unterscheidet sich.',
-        'Sicherheitsmitarbeiter dürfen wie die Polizei Platzverweise erteilen und Personen in Gewahrsam nehmen.',
-        'Polizei und Sicherheitsdienst unterscheiden sich nur durch die Dienstkleidung.',
+        'Sicherheitsmitarbeiter haben dieselben Zwangsbefugnisse wie die Polizei, sobald sie im Dienst Uniform tragen.',
+        'Sicherheitsmitarbeiter dürfen als Hilfsbeamte der Staatsanwaltschaft selbstständig Platzverweise erteilen.',
+        'Die Polizei darf nach dieser Auffassung nur präventiv tätig werden, während Sicherheitsmitarbeiter umfassend zur Strafverfolgung berechtigt sind.',
+        'Sicherheitsmitarbeiter haben weitergehende Befugnisse, weil sie unmittelbar für den Eigentümer handeln.',
       ],
       source: 'AUTHORED_FROM_BIBEL',
       verificationStatus: 'VERIFIED_BIBEL',
@@ -71,31 +79,43 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
   },
   {
     blockId: 'fragen-012',
+    questionOverride: 'Wer ist Inhaber des staatlichen Gewaltmonopols?',
+    answerOverride:
+      'Das Gewaltmonopol liegt beim Staat, der hoheitliche Gewalt ausübt und sie Privaten nicht überträgt.',
     main: {
-      distractors: ['Die Polizei.', 'Die Bundeswehr.', 'Jeder einzelne Bürger.', 'Die Sicherheitsunternehmen.'],
+      distractors: [
+        'Das Gewaltmonopol liegt beim einzelnen Bürger, der es als Notwehrrecht gegenüber Angreifern ausübt.',
+        'Das Gewaltmonopol liegt bei den Sicherheitsunternehmen, die mit Erlaubnis der Gewerbebehörde tätig werden.',
+        'Das Gewaltmonopol liegt bei den Gemeinden, die für die öffentliche Sicherheit vor Ort verantwortlich sind.',
+        'Das Gewaltmonopol liegt bei der Europäischen Union, die die Sicherheitsgewährleistung koordiniert.',
+      ],
       source: 'AUTHORED_FROM_BIBEL',
       verificationStatus: 'VERIFIED_BIBEL',
     },
     followUp1: {
+      question:
+        'Unter welchen Voraussetzungen dürfen Sicherheitsmitarbeiter körperliche Gewalt anwenden?',
       answer:
-        'Nur im Rahmen privatrechtlicher Rechtfertigungsgründe, etwa Notwehr und Nothilfe, Besitzwehr und den Jedermann-Rechten; hoheitliche Gewalt dürfen sie nicht ausüben.',
+        'Nur wenn ein Rechtfertigungsgrund wie § 32 StGB – Notwehr – oder § 34 StGB – Notstand – greift und die Gewalt nötig ist.',
       distractors: [
-        'Ja, unbeschränkt wie die Polizei.',
-        'Nein, Sicherheitsmitarbeiter dürfen niemals Gewalt anwenden.',
-        'Ja, sobald der Auftraggeber es ausdrücklich erlaubt.',
-        'Nur mit vorheriger Zustimmung der Polizei.',
+        'Sobald der Auftraggeber oder der Vorgesetzte die Anwendung körperlicher Gewalt ausdrücklich anordnet.',
+        'Nur nach vorheriger Einschaltung und Zustimmung der Polizei, weil Sicherheitsmitarbeiter keine eigenen Befugnisse besitzen.',
+        'Sobald der Sicherheitsmitarbeiter von einer Person im Dienst beleidigt oder provoziert worden ist.',
+        'Nur mit einer besonderen Erlaubnis der örtlichen Gewerbebehörde zur Ausübung körperlicher Gewalt.',
       ],
       source: 'AUTHORED_FROM_BIBEL',
       verificationStatus: 'VERIFIED_BIBEL',
     },
     followUp2: {
+      question:
+        'Warum dürfen Sicherheitsmitarbeiter keine staatliche Zwangsgewalt eigenständig ausüben?',
       answer:
-        'Weil das Gewaltmonopol beim Staat liegt und Private nur auf privatrechtlicher Grundlage handeln dürfen.',
+        'Weil das Gewaltmonopol allein dem Staat zusteht und Private nur private Rechtfertigungsgründe haben.',
       distractors: [
-        'Weil Sicherheitsmitarbeiter keine Waffen tragen dürfen.',
-        'Weil nur Beamte körperlich dazu in der Lage sind.',
-        'Weil Gewalt im Sicherheitsdienst generell verboten ist.',
-        'Weil der Auftraggeber keine Gewalt wünscht.',
+        'Weil Sicherheitsmitarbeiter nicht über die körperliche Eignung verfügen, um hoheitlichen Zwang auszuüben.',
+        'Weil Sicherheitsmitarbeiter auch in Notwehr nicht zu körperlicher Gewalt befugt sind.',
+        'Weil das Sicherheitsgewerbe nur für die Beobachtung, nicht aber für den umfassenden Schutz von Personen zuständig ist.',
+        'Weil jede Gewaltanwendung durch Private strafrechtlich verfolgt wird, unabhängig von ihrer Rechtfertigung.',
       ],
       source: 'AUTHORED_FROM_BIBEL',
       verificationStatus: 'VERIFIED_BIBEL',
@@ -103,41 +123,49 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
   },
   {
     blockId: 'fragen-015',
+    questionOverride: 'Welche Befugnis vermittelt das Hausrecht dem Berechtigten?',
+    answerOverride:
+      'Das Hausrecht berechtigt den Inhaber, über den Zutritt und den Aufenthalt in den Räumlichkeiten zu bestimmen.',
     main: {
       distractors: [
-        'Das Recht des Mieters, die Miete zu mindern.',
-        'Das Recht der Polizei, Wohnungen zu durchsuchen.',
-        'Das Recht des Besitzers, jede angetroffene Person festzunehmen.',
-        'Das Recht des Staates, private Grundstücke zu enteignen.',
+        'Das Hausrecht berechtigt den Inhaber, jede angetroffene Person ohne weiteren Grund festzuhalten.',
+        'Das Hausrecht berechtigt den Inhaber, die Sachen einer Person beim Betreten zu durchsuchen.',
+        'Das Hausrecht berechtigt den Inhaber, Personen zu erkennungsdienstlichen Maßnahmen zu zwingen.',
+        'Das Hausrecht berechtigt den Inhaber, gegen Besucher wegen Verstößen gegen die Hausordnung Bußgelder zu verhängen.',
       ],
       source: 'AUTHORED_FROM_BIBEL',
       verificationStatus: 'VERIFIED_BIBEL',
     },
     followUp1: {
+      question:
+        'Wie kann der Inhaber des Hausrechts seine Befugnisse auf einen Sicherheitsmitarbeiter übertragen?',
       answer:
-        'Durch vertragliche Beauftragung oder Weisung des Berechtigten; der Sicherheitsmitarbeiter handelt dann als Besitzdiener.',
+        'Durch vertragliche Beauftragung oder konkrete Weisung wird der Mitarbeiter Besitzdiener nach § 855 BGB – Besitzdiener.',
       distractors: [
-        'Nur durch notariell beurkundeten Vertrag.',
-        'Durch eine mündliche Erlaubnis der Polizei.',
-        'Allein durch das Tragen der Dienstkleidung.',
-        'Nur durch Eintragung des Sicherheitsunternehmens ins Grundbuch.',
+        'Durch die bloße Einstellung als Sicherheitsmitarbeiter, weil damit sämtliche Rechte des Arbeitgebers auf ihn übergehen.',
+        'Durch die Aushändigung des Dienstausweises, weil dieser die Übertragung der Hausrechtsbefugnisse belegt.',
+        'Durch eine Anzeige bei der örtlichen Gewerbebehörde, die die Befugnisse auf den Mitarbeiter überträgt.',
+        'Durch die Eintragung des Mitarbeiters in das Bewacherregister bei der zuständigen Aufsichtsbehörde.',
       ],
       source: 'AUTHORED_FROM_BIBEL',
       verificationStatus: 'VERIFIED_BIBEL',
       explanation: '§ 855 BGB: Der Besitzdiener handelt weisungsgebunden für den Besitzer.',
     },
     followUp2: {
+      question:
+        'Welche zwei Tathandlungen erfüllen den Hausfriedensbruch nach § 123 StGB – Hausfriedensbruch?',
       answer:
-        'Hausfriedensbruch ist das widerrechtliche Eindringen in Wohnung, Geschäftsräume oder befriedetes Besitztum oder das Verweilen trotz Aufforderung des Berechtigten.',
+        'Das widerrechtliche Eindringen in geschützte Räume und das Verweilen darin trotz Aufforderung des Berechtigten.',
       distractors: [
-        'Hausfriedensbruch ist die Beschädigung einer fremden Sache.',
-        'Hausfriedensbruch ist die Wegnahme einer fremden beweglichen Sache.',
-        'Hausfriedensbruch ist die bloße Störung des Besitzes ohne Entziehung.',
-        'Hausfriedensbruch ist das Betreten mit Erlaubnis des Berechtigten.',
+        'Die Beschädigung geschützter Räume und die unbefugte Nutzung des umfriedeten Grundstücks durch unbefugte Dritte.',
+        'Die Wegnahme beweglicher Sachen und die Zueignung einer gefundenen Sache in den Räumen.',
+        'Die Störung des Besitzes ohne Entziehung und die Entziehung des Besitzes durch Wegnahme.',
+        'Die Belästigung von Besuchern und die Erregung öffentlichen Ärgernisses in den Räumen.',
       ],
       source: 'AUTHORED_FROM_BIBEL',
       verificationStatus: 'VERIFIED_BIBEL',
-      explanation: '§ 123 StGB: Eindringen oder Verweilen gegen den Willen des Berechtigten.',
+      explanation:
+        '§ 123 StGB: Eindringen oder Verweilen gegen den Willen des Berechtigten.',
     },
   },
 
@@ -146,76 +174,87 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
   // ===========================================================================
   {
     blockId: 'fragen-029',
+    questionOverride:
+      'Wie wird das Hausrecht des Berechtigten auf einen Sicherheitsmitarbeiter übertragen?',
+    answerOverride:
+      'Durch vertragliche Beauftragung oder Weisung des Berechtigten; der Mitarbeiter handelt dann als Besitzdiener.',
     main: {
       distractors: [
-        'Durch eine behördliche Erlaubnis der Gewerbebehörde.',
-        'Allein durch das Tragen der Dienstkleidung des Sicherheitsunternehmens.',
-        'Nur durch einen schriftlichen Vertrag mit der Polizei.',
-        'Durch die Eintragung des Mitarbeiters ins Bewacherregister.',
+        'Durch die behördliche Bewachungserlaubnis, die dem Sicherheitsunternehmen zugleich die Hausrechtsbefugnisse des Auftraggebers vermittelt.',
+        'Durch das Tragen der Dienstkleidung, die nach außen die Berechtigung des Mitarbeiters dokumentiert.',
+        'Durch einen Auszug aus dem Bewacherregister, in dem die Befugnisse jedes Mitarbeiters verzeichnet sind.',
+        'Durch eine schriftliche Bestätigung der Polizei, dass der Mitarbeiter zum Schutz befugt ist.',
       ],
       source: 'AUTHORED_FROM_BIBEL',
       verificationStatus: 'VERIFIED_BIBEL',
     },
     followUp1: {
+      question: 'Was kennzeichnet einen Besitzdiener nach § 855 BGB – Besitzdiener?',
       answer:
-        'Besitzdiener ist, wer die tatsächliche Gewalt über eine Sache für einen anderen ausübt und dessen Weisungen unterliegt; Besitzer ist dann nur der andere (§ 855 BGB).',
+        'Der Besitzdiener übt die tatsächliche Gewalt für einen anderen aus und ist dessen Weisungen unterworfen.',
       distractors: [
-        'Besitzdiener ist, wer eine Sache als Eigentümer besitzt und selbst darüber verfügen darf.',
-        'Besitzdiener ist, wer eine Sache vorübergehend geliehen bekommt und sie selbst nutzen darf.',
-        'Besitzdiener ist, wer eine Sache im Auftrag der Polizei sichert und dabei hoheitlich handelt.',
-        'Besitzdiener ist, wer die Sache in eigenem Namen und für sich besitzt.',
+        'Der Besitzdiener übt die tatsächliche Gewalt im eigenen Namen aus und darf wie ein Eigentümer verfügen.',
+        'Der Besitzdiener erwirbt mit der Übergabe der Sache das Recht zum Besitz und wird damit selbst Besitzer.',
+        'Der Besitzdiener erlangt mit der Ausübung der Gewalt auch das Eigentum an der fremden Sache.',
+        'Der Besitzdiener haftet persönlich für die Sache und muss für deren Erhalt einstehen.',
       ],
       source: 'AUTHORED_FROM_BIBEL',
       verificationStatus: 'VERIFIED_BIBEL',
       explanation: '§ 855 BGB: tatsächliche Gewalt für einen anderen.',
     },
     followUp2: {
+      question: 'Welche Grenzen gelten für die Befugnisse eines Besitzdieners?',
       answer:
-        'Der Besitzdiener handelt weisungsgebunden und nur für den Besitzer; seine Befugnisse enden an den Grenzen des Hausrechts, der Verhältnismäßigkeit und der privatrechtlichen Rechtfertigungsgründe. § 859 BGB ist kein Freibrief für Gewalt.',
+        'Er bleibt an Weisungen gebunden und darf nur die Rechte des Besitzers ausüben, nichts darüber hinaus.',
       distractors: [
-        'Der Besitzdiener darf unbegrenzt Gewalt einsetzen, weil er die tatsächliche Gewalt innehat.',
-        'Der Besitzdiener darf die Sache wie ein Eigentümer veräußern.',
-        'Der Besitzdiener hat dieselben Zwangsbefugnisse wie die Polizei.',
-        'Für den Besitzdiener gelten keine Grenzen, solange der Besitzer es wünscht.',
+        'Er darf die Rechte des Besitzers nach eigenem Ermessen ausweiten, solange er den Erfolg sichert.',
+        'Er darf die Sache des Besitzers verwerten, wenn dieser nicht erreichbar ist und dringende Gefahr im Verzug besteht.',
+        'Er darf gegen Besucher körperlichen Zwang anwenden, weil er die tatsächliche Gewalt innehat.',
+        'Er ist an die Weisungen nur gebunden, wenn er sie vorher schriftlich bestätigt hat.',
       ],
       source: 'AUTHORED_FROM_BIBEL',
       verificationStatus: 'VERIFIED_BIBEL',
       explanation:
-        'Die Bibel ordnet § 859 BGB als unmittelbare Besitzerselbsthilfe ein und betont: kein allgemeiner Freibrief zur Gewaltanwendung.',
+        'Die Bibel ordnet § 860 BGB als Ausübung der §§ 855/859-Rechte ein und betont: keine allgemeine Festnahmebefugnis.',
     },
   },
   {
     blockId: 'fragen-021',
+    questionOverride: 'Welchen Regelungsgegenstand hat § 34a GewO?',
+    answerOverride:
+      'Er regelt die Voraussetzungen der gewerblichen Bewachung, insbesondere Zuverlässigkeit, Sachkunde und Erlaubnispflichten.',
     main: {
       distractors: [
-        '§ 34a GewO regelt ausschließlich den Datenschutz im Sicherheitsgewerbe.',
-        '§ 34a GewO regelt die Ausbildung und Ausrüstung der Polizei.',
-        '§ 34a GewO regelt den privaten Waffenerwerb von Bürgern.',
-        '§ 34a GewO regelt die Arbeitszeiten im Sicherheitsgewerbe.',
+        'Er regelt den Einsatz von Sicherheitsmitarbeitern bei der Strafverfolgung und überträgt ihnen dabei unmittelbar polizeiliche Befugnisse.',
+        'Er regelt die technische Ausrüstung von Sicherheitsunternehmen und schreibt bestimmte Sicherheitssysteme vor.',
+        'Er regelt die arbeitsrechtlichen Ansprüche von Wachpersonen und legt Mindestlöhne für das Gewerbe fest.',
+        'Er regelt die Aufbewahrung von Schusswaffen und die Erteilung von Waffenscheinen im Sicherheitsgewerbe.',
       ],
       source: 'AUTHORED_FROM_FACHWISSEN',
       verificationStatus: 'UNVERIFIED',
     },
     followUp1: {
+      question: 'Für welche Tätigkeiten ist die Sachkundeprüfung zwingend erforderlich?',
       answer:
-        'Für bestimmte Tätigkeiten mit erhöhtem Gefahrenpotenzial, z. B. Kontrollgänge im öffentlichen Verkehrsraum, Ladendetektiv, Einlassbereich von Diskotheken sowie leitende Funktion in Asylunterkünften und bei zugangsgeschützten Großveranstaltungen.',
+        'Für Tätigkeiten mit erhöhtem Gefahrenpotenzial, etwa Kontrollgänge im öffentlichen Verkehrsraum oder Bewachung im Einlassbereich von Diskotheken.',
       distractors: [
-        'Nur wer ein eigenes Sicherheitsunternehmen gründet.',
-        'Nur für die Bewachung privater Wohnungen.',
-        'Für jede Tätigkeit im Sicherheitsgewerbe, auch reine Büroarbeit.',
-        'Nur für den Einsatz mit Schusswaffen.',
+        'Für die Bewachung privater Wohnungen und die Betreuung von Wohnanlagen im Auftrag der jeweiligen Eigentümergemeinschaft und der zuständigen Hausverwaltung.',
+        'Für die reine Pfortentätigkeit in einem Verwaltungsgebäude, bei der lediglich Besucher angemeldet werden.',
+        'Für die Ausübung des Bewachungsgewerbes als Gewerbetreibender, der selbst keinen Wachdienst mehr ausübt.',
+        'Für Tätigkeiten, bei denen keine personenbezogenen Daten verarbeitet und keine Personen kontrolliert werden.',
       ],
       source: 'AUTHORED_FROM_FACHWISSEN',
       verificationStatus: 'UNVERIFIED',
     },
     followUp2: {
+      question: 'Was bedeutet Zuverlässigkeit im Bewachungsgewerbe?',
       answer:
-        'Zuverlässig ist, wer die Gewähr dafür bietet, das Gewerbe ordnungsgemäß auszuüben; dies wird durch die Behörden geprüft, z. B. über Führungszeugnis und Auskünfte.',
+        'Zuverlässig ist, wer die Gewähr für eine ordnungsgemäße Ausübung des Gewerbes bietet, was die Behörde überprüft.',
       distractors: [
-        'Zuverlässigkeit bedeutet, immer pünktlich zum Dienst zu erscheinen.',
-        'Zuverlässigkeit ist die Fähigkeit, eine Waffe sicher zu bedienen.',
-        'Zuverlässigkeit ist die Mitgliedschaft in einem Berufsverband.',
-        'Zuverlässigkeit ist eine einmalige Schulung ohne Prüfung.',
+        'Zuverlässig ist, wer eine abgeschlossene Berufsausbildung und mindestens fünf Jahre Berufserfahrung nachweist.',
+        'Zuverlässig ist, wer über eine gültige Haftpflichtversicherung verfügt und seine Beiträge fristgerecht entrichtet.',
+        'Zuverlässig ist, wer Mitglied in einem anerkannten Berufsverband ist und dessen Verhaltenskodex befolgt.',
+        'Zuverlässig ist, wer die Sachkundeprüfung bei der Industrie- und Handelskammer erfolgreich abgelegt hat.',
       ],
       source: 'AUTHORED_FROM_FACHWISSEN',
       verificationStatus: 'UNVERIFIED',
@@ -223,36 +262,42 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
   },
   {
     blockId: 'fragen-028',
+    questionOverride: 'Was ist unter dem Hausrecht zu verstehen?',
+    answerOverride:
+      'Das Hausrecht ist die Befugnis des Inhabers, über Zutritt und Aufenthalt in seinen Räumlichkeiten zu bestimmen.',
     main: {
       distractors: [
-        'Das Recht des Besitzers, jede Person ohne Grund festzunehmen.',
-        'Das Recht der Polizei, private Räume jederzeit zu betreten.',
-        'Das Recht des Sicherheitsmitarbeiters, hoheitliche Anordnungen zu treffen.',
-        'Das Recht des Staates, über private Räume zu verfügen.',
+        'Das Hausrecht ist die Befugnis des Sicherheitsunternehmens, über die Nutzung eines Objekts im eigenen Namen zu bestimmen.',
+        'Das Hausrecht ist das Recht der Behörden, private Räume zum Zweck der Gefahrenabwehr jederzeit zu betreten.',
+        'Das Hausrecht ist das Recht des Staates, private Grundstücke für öffentliche Zwecke in Anspruch zu nehmen.',
+        'Das Hausrecht ist das Recht des Besitzers, jede angetroffene Person ohne weiteren Grund festzuhalten.',
       ],
       source: 'AUTHORED_FROM_FACHWISSEN',
       verificationStatus: 'UNVERIFIED',
     },
     followUp1: {
+      question: 'Wie wird das Hausrecht auf einen Sicherheitsmitarbeiter übertragen?',
       answer:
-        'Durch vertragliche Beauftragung oder Weisung des Berechtigten; der Sicherheitsmitarbeiter wird dadurch zum Besitzdiener und handelt weisungsgebunden.',
+        'Durch Beauftragung oder Weisung des Berechtigten; der Mitarbeiter wird dadurch zum Besitzdiener und handelt weisungsgebunden.',
       distractors: [
-        'Nur durch eine behördliche Genehmigung.',
-        'Allein durch das Tragen der Dienstkleidung.',
-        'Nur durch einen Gerichtsbeschluss.',
-        'Durch die Eintragung ins Handelsregister.',
+        'Durch eine behördliche Genehmigung, welche die Hausrechtsbefugnisse auf das Sicherheitsunternehmen überträgt und ihn berechtigt.',
+        'Durch die bloße Anwesenheit im Objekt, weil sich die Befugnisse aus der tatsächlichen Sachherrschaft ergeben.',
+        'Durch einen Gerichtsbeschluss, der die Übertragung der Hausrechtsbefugnisse auf private Dritte regelt.',
+        'Durch die Eintragung des Mitarbeiters in das Bewacherregister bei der zuständigen Aufsichtsbehörde.',
       ],
       source: 'AUTHORED_FROM_FACHWISSEN',
       verificationStatus: 'UNVERIFIED',
     },
     followUp2: {
+      question:
+        'Wann kommt eine Strafbarkeit wegen Hausfriedensbruchs nach § 123 StGB – Hausfriedensbruch – in Betracht?',
       answer:
-        'Hausfriedensbruch ist das widerrechtliche Eindringen in Wohnung, Geschäftsräume oder befriedetes Besitztum oder das Verweilen trotz Aufforderung des Berechtigten.',
+        'Wenn jemand widerrechtlich eindringt oder trotz Aufforderung des Berechtigten in den geschützten Räumen verweilt.',
       distractors: [
-        'Hausfriedensbruch ist die Beschädigung einer fremden Sache.',
-        'Hausfriedensbruch ist die Wegnahme einer fremden beweglichen Sache.',
-        'Hausfriedensbruch ist die Störung des Besitzes ohne Entziehung.',
-        'Hausfriedensbruch ist das Betreten mit Erlaubnis des Berechtigten.',
+        'Wenn jemand eine fremde bewegliche Sache beschädigt oder zerstört, die sich in den geschützten Räumen des Berechtigten befindet.',
+        'Wenn jemand eine fremde bewegliche Sache wegnimmt, um sie sich oder einem Dritten zuzueignen.',
+        'Wenn jemand einen anderen durch Gewalt oder Drohung zu einer Handlung oder Duldung nötigt.',
+        'Wenn jemand den Besitz eines anderen ohne dessen Willen stört, ohne ihn vollständig zu entziehen.',
       ],
       source: 'AUTHORED_FROM_FACHWISSEN',
       verificationStatus: 'UNVERIFIED',
@@ -264,36 +309,41 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
   // ===========================================================================
   {
     blockId: 'fragen-047',
+    questionOverride: 'Was schützt das Recht auf informationelle Selbstbestimmung?',
+    answerOverride:
+      'Es schützt die Befugnis jeder Person, selbst über Preisgabe und Verwendung ihrer personenbezogenen Daten zu bestimmen.',
     main: {
       distractors: [
-        'Das Recht, die Herausgabe aller über einen gespeicherten Daten ohne Angabe von Gründen zu verlangen.',
-        'Das Verbot, personenbezogene Daten überhaupt zu speichern.',
-        'Das Recht des Unternehmens, Daten für jeden beliebigen Zweck zu nutzen.',
-        'Die Pflicht, alle Daten dauerhaft und unbegrenzt aufzubewahren.',
+        'Es schützt die Befugnis des Verantwortlichen, Daten für eigene Zwecke zu erheben, ohne die Betroffenen zu informieren.',
+        'Es schützt das Eigentum an Datenträgern und sichert dem Inhaber die Verfügungsgewalt über gespeicherte Dateien.',
+        'Es schützt die Vertraulichkeit von Betriebs- und Geschäftsgeheimnissen gegenüber Wettbewerbern und der Öffentlichkeit.',
+        'Es schützt die Ehre und den Ruf einer Person vor wahrheitswidrigen Tatsachenbehauptungen Dritter.',
       ],
       source: 'AUTHORED_FROM_FACHWISSEN',
       verificationStatus: 'UNVERIFIED',
     },
     followUp1: {
+      question: 'Welche Informationen gelten als personenbezogene Daten?',
       answer:
-        'Alle Informationen, die sich auf eine identifizierte oder identifizierbare natürliche Person beziehen, z. B. Name, Adresse, Kennzeichen oder Bild- und Videodaten.',
+        'Alle Informationen, die sich auf eine identifizierte oder identifizierbare Person beziehen, etwa Name oder Bildaufnahmen.',
       distractors: [
-        'Nur Daten, die unmittelbar den Namen einer Person enthalten.',
-        'Alle Daten, die in einem Unternehmen gespeichert sind, auch reine Sachdaten.',
-        'Nur besonders sensible Daten wie Gesundheitsdaten.',
-        'Daten, die sich auf juristische Personen beziehen, z. B. Firmendaten.',
+        'Nur Informationen, die den vollständigen Namen enthalten und vom Verantwortlichen dauerhaft gespeichert und genutzt werden.',
+        'Alle in einem Unternehmen vorhandenen Informationen, unabhängig davon, ob ein Personenbezug besteht.',
+        'Nur Informationen, die zu einer besonders sensiblen Kategorie wie Gesundheits- oder Religionsdaten gehören.',
+        'Informationen über juristische Personen wie Firmenname, Sitz und Handelsregistereintrag.',
       ],
       source: 'AUTHORED_FROM_FACHWISSEN',
       verificationStatus: 'UNVERIFIED',
     },
     followUp2: {
+      question: 'Was bedeutet der Grundsatz der Zweckbindung?',
       answer:
-        'Personenbezogene Daten dürfen nur für den festgelegten, eindeutigen und legitimen Zweck verarbeitet und nicht zweckfremd weiterverwendet werden.',
+        'Daten dürfen nur für den festgelegten, eindeutigen und legitimen Zweck verarbeitet und nicht zweckfremd genutzt werden.',
       distractors: [
-        'Daten dürfen beliebig oft für neue Zwecke weiterverwendet werden, solange sie gespeichert sind.',
-        'Die Zweckbindung betrifft nur Videoaufnahmen.',
-        'Daten dürfen ohne Einschränkung an Dritte weitergegeben werden.',
-        'Die Zweckbindung endet, sobald der Betroffene die Räume verlassen hat.',
+        'Daten dürfen so lange aufbewahrt werden, wie es für die Geschäftstätigkeit des Verantwortlichen nützlich und vorteilhaft ist.',
+        'Daten dürfen an Dritte übermittelt werden, sobald diese ein eigenes berechtigtes Interesse geltend machen.',
+        'Daten dürfen für neue Zwecke verwendet werden, wenn der Betroffene die ursprüngliche Erhebung geduldet hat.',
+        'Daten dürfen ohne zeitliche Begrenzung gespeichert werden, solange sie technisch verfügbar sind.',
       ],
       source: 'AUTHORED_FROM_FACHWISSEN',
       verificationStatus: 'UNVERIFIED',
@@ -301,36 +351,41 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
   },
   {
     blockId: 'fragen-048',
+    questionOverride: 'Was bezweckt der Datenschutz?',
+    answerOverride:
+      'Er schützt natürliche Personen bei der Verarbeitung ihrer Daten und regelt, wann diese erhoben, gespeichert und gelöscht werden dürfen.',
     main: {
       distractors: [
-        'Datenschutz schützt Unternehmen vor unerlaubtem Wettbewerb.',
-        'Datenschutz verbietet grundsätzlich jede Datenverarbeitung.',
-        'Datenschutz regelt ausschließlich den Schutz von Sachen und Eigentum.',
-        'Datenschutz betrifft nur staatliche Stellen, nicht private Unternehmen.',
+        'Er schützt Unternehmen vor der unerlaubten Ausspähung ihrer Betriebs- und Geschäftsgeheimnisse durch Wettbewerber.',
+        'Er schützt den Staat vor der unerlaubten Verbreitung amtlicher Informationen und Dokumente durch private Stellen und gewerbliche Unternehmen.',
+        'Er schützt gespeicherte Datenbestände als solche vor Verlust, Beschädigung und technischem Ausfall der Systeme.',
+        'Er schützt das Urheberrecht an digitalen Inhalten und regelt deren zulässige Nutzung durch Dritte.',
       ],
       source: 'AUTHORED_FROM_FACHWISSEN',
       verificationStatus: 'UNVERIFIED',
     },
     followUp1: {
+      question: 'Für wen gilt die Datenschutz-Grundverordnung?',
       answer:
-        'Für die Verarbeitung personenbezogener Daten natürlicher Personen; auch private Unternehmen wie Sicherheitsdienste sind betroffen, sofern sie nicht rein privat handeln.',
+        'Sie gilt für die Verarbeitung personenbezogener Daten natürlicher Personen, auch durch private Sicherheitsdienste.',
       distractors: [
-        'Nur für staatliche Behörden und Gerichte.',
-        'Nur für Unternehmen mit mehr als 250 Mitarbeitern.',
-        'Nur für Online-Shops und soziale Netzwerke.',
-        'Für Sicherheitsdienste gilt der Datenschutz nicht.',
+        'Sie gilt nur für staatliche Behörden und Gerichte, die personenbezogene Daten zu hoheitlichen Zwecken verarbeiten.',
+        'Sie gilt nur für Unternehmen mit mehr als zweihundertfünfzig Beschäftigten oder mit Sitz außerhalb der Union.',
+        'Sie gilt nur für Anbieter von Telemedien und sozialen Netzwerken, die Daten im Internet verarbeiten.',
+        'Sie gilt für Sicherheitsdienste nicht, weil diese die Daten nur im Auftrag des Eigentümers verarbeiten.',
       ],
       source: 'AUTHORED_FROM_FACHWISSEN',
       verificationStatus: 'UNVERIFIED',
     },
     followUp2: {
+      question: 'Welche Grundsätze prägen die Verarbeitung personenbezogener Daten?',
       answer:
-        'Es gelten u. a. Rechtmäßigkeit, Zweckbindung, Datenminimierung, Richtigkeit, Speicherbegrenzung, Integrität und Vertraulichkeit sowie Rechenschaftspflicht.',
+        'Rechtmäßigkeit, Zweckbindung, Datenminimierung, Richtigkeit, Speicherbegrenzung sowie Integrität und Vertraulichkeit.',
       distractors: [
-        'Es gilt nur der Grundsatz, möglichst viele Daten zu sammeln.',
-        'Es gilt nur die Pflicht, Daten dauerhaft zu speichern.',
-        'Es gibt keine allgemeinen Grundsätze; alles ist freiwillig.',
-        'Es gilt nur der Grundsatz der Geheimhaltung gegenüber der Aufsichtsbehörde.',
+        'Vollständigkeit, Dauerhaftigkeit, freie Verfügbarkeit, wirtschaftliche Verwertbarkeit und Geheimhaltung.',
+        'Freiwilligkeit, Anonymität, Unentgeltlichkeit, Schriftform und Zustimmung der Aufsichtsbehörde im Einzelfall.',
+        'Transparenz, Gewinnorientierung, zentrale Speicherung, uneingeschränkte Weitergabe und technische Machbarkeit.',
+        'Sparsamkeit, Vertraulichkeit, Richtigkeit, schnelle Löschung und die unbedingte Gleichbehandlung aller betroffenen Personen.',
       ],
       source: 'AUTHORED_FROM_FACHWISSEN',
       verificationStatus: 'UNVERIFIED',
@@ -338,36 +393,42 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
   },
   {
     blockId: 'fragen-052',
+    questionOverride: 'Was sind personenbezogene Daten?',
+    answerOverride:
+      'Alle Informationen, die sich auf eine identifizierte oder identifizierbare natürliche Person beziehen.',
     main: {
       distractors: [
-        'Nur der vollständige Name einer Person.',
-        'Angaben über Gegenstände und Sachen.',
-        'Nur Daten, die verschlüsselt gespeichert sind.',
-        'Nur Daten von Mitarbeitern eines Unternehmens.',
+        'Nur der vollständige Name und die Anschrift einer natürlichen Person, andere Angaben fallen nicht darunter.',
+        'Angaben über Sachen wie Fahrzeugdaten, solange kein Bezug zu einer konkreten Person herstellbar ist.',
+        'Alle Daten, die verschlüsselt auf einem Server gespeichert sind und besonders geschützt werden müssen.',
+        'Nur Daten, die von staatlichen Stellen zu hoheitlichen Zwecken erhoben und verarbeitet werden.',
       ],
       source: 'AUTHORED_FROM_FACHWISSEN',
       verificationStatus: 'UNVERIFIED',
     },
     followUp1: {
+      question:
+        'Welche Daten gehören zu den besonders geschützten Kategorien personenbezogener Daten?',
       answer:
-        'Besondere Kategorien sind z. B. Gesundheitsdaten, biometrische und genetische Daten, politische Meinungen, Religion, Gewerkschaftszugehörigkeit sowie Daten zum Sexualleben; sie sind besonders geschützt.',
+        'Daten über Gesundheit, biometrische Merkmale, politische Meinungen, Religion sowie Sexualleben oder Orientierung.',
       distractors: [
-        'Besondere Kategorien sind Name und Adresse.',
-        'Besondere Kategorien sind alle Daten, die auf Papier vorliegen.',
-        'Besondere Kategorien sind Kennzeichen und Kontonummern.',
-        'Besondere Kategorien sind nur Daten von Kindern.',
+        'Daten über Name, Anschrift, Geburtsdatum und Kfz-Kennzeichen einer Person, die im Alltag besonders häufig erhoben werden.',
+        'Daten über das Einkommen, die Kreditwürdigkeit und bestehende Verbindlichkeiten einer Person.',
+        'Daten über die berufliche Tätigkeit, den Arbeitgeber und die Dienstanschrift eines Beschäftigten.',
+        'Daten über die Mitgliedschaft in einem Sportverein, einer Partei oder einem Arbeitgeberverband.',
       ],
       source: 'AUTHORED_FROM_FACHWISSEN',
       verificationStatus: 'UNVERIFIED',
     },
     followUp2: {
+      question: 'Welche Angaben sind typische Beispiele für personenbezogene Daten?',
       answer:
-        'Beispiele sind Name, Geburtsdatum, Anschrift, Kfz-Kennzeichen, Personalausweisnummer, Foto- und Videoaufnahmen einer erkennbaren Person.',
+        'Name, Geburtsdatum, Anschrift, Kfz-Kennzeichen, Ausweisnummer sowie Foto- und Videoaufnahmen einer Person.',
       distractors: [
-        'Beispiele sind die Anzahl der Parkplätze und die Öffnungszeiten.',
-        'Beispiele sind Wetterdaten und Uhrzeiten.',
-        'Beispiele sind ausschließlich Gesundheitsdaten.',
-        'Beispiele sind nur Daten, die im Internet veröffentlicht sind.',
+        'Die Öffnungszeiten eines Betriebs, die Anzahl der Parkplätze und die Anschrift des Unternehmens.',
+        'Wetterdaten, Uhrzeiten und technische Messwerte ganz ohne Bezug zu einer natürlichen Person.',
+        'Kennzahlen zur Betriebsleistung und Angaben zur Auslastung einer öffentlichen Einrichtung.',
+        'Daten, die der Betroffene selbst im Internet veröffentlicht hat, weil diese für jedermann öffentlich zugänglich sind.',
       ],
       source: 'AUTHORED_FROM_FACHWISSEN',
       verificationStatus: 'UNVERIFIED',
@@ -379,36 +440,42 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
   // ===========================================================================
   {
     blockId: 'fragen-084',
+    questionOverride: 'Worin unterscheiden sich Besitz und Eigentum?',
+    answerOverride:
+      'Besitz ist die tatsächliche Sachherrschaft, Eigentum das umfassende rechtliche Herrschaftsrecht; beides kann auseinanderfallen.',
     main: {
       distractors: [
-        'Besitz und Eigentum sind dasselbe; wer besitzt, ist auch Eigentümer.',
-        'Eigentum ist die tatsächliche Herrschaft, Besitz die rechtliche Herrschaft.',
-        'Besitz ist ein dingliches Recht, Eigentum nur eine tatsächliche Position.',
-        'Besitz kann nur der Eigentümer haben.',
+        'Besitz ist das rechtliche Herrschaftsrecht, Eigentum die tatsächliche Sachherrschaft über eine Sache.',
+        'Besitz und Eigentum fallen zusammen, weil der Besitzer einer Sache zugleich ihr Eigentümer ist.',
+        'Besitz ist ein dingliches Recht an einer fremden Sache, Eigentum lediglich die bloße Möglichkeit der tatsächlichen Einwirkung auf die Sache.',
+        'Besitz kann nur der Eigentümer haben, während dingliche Rechte Dritter am Besitz nichts ändern.',
       ],
       source: 'AUTHORED_FROM_BIBEL',
       verificationStatus: 'VERIFIED_BIBEL',
     },
     followUp1: {
+      question:
+        'In welcher Konstellation fallen Besitz und Eigentum an einer Sache auseinander?',
       answer:
-        'Der Mieter ist Besitzer der Wohnung, aber nicht Eigentümer; der Vermieter ist Eigentümer, ohne unmittelbarer Besitzer zu sein.',
+        'Beim Mietverhältnis: Der Mieter ist Besitzer, der Vermieter bleibt Eigentümer der Wohnung.',
       distractors: [
-        'Der Dieb wird durch die Wegnahme Eigentümer der Sache.',
-        'Der Käufer ist nach Abschluss des Kaufvertrags sofort Eigentümer der Sache.',
-        'Der Besitzdiener ist immer auch Eigentümer der Sache.',
-        'Wer eine Sache findet, wird automatisch Eigentümer.',
+        'Beim Erwerb einer Sache: Der Käufer wird mit Abschluss des Vertrags zugleich Besitzer und Eigentümer.',
+        'Bei der Erbschaft: Der Erbe wird mit dem Erbfall Besitzer, ohne jemals Eigentümer zu werden.',
+        'Bei der Fundunterschlagung: Der Finder wird mit dem Besitz auch Eigentümer der gefundenen Sache.',
+        'Bei der Verwahrung: Der Verwahrer wird Besitzer und zugleich Eigentümer der anvertrauten Sache.',
       ],
       source: 'AUTHORED_FROM_BIBEL',
       verificationStatus: 'VERIFIED_BIBEL',
     },
     followUp2: {
+      question: 'Was ist ein Besitzdiener nach § 855 BGB – Besitzdiener?',
       answer:
-        'Wer die tatsächliche Gewalt über eine Sache für einen anderen ausübt und dessen Weisungen unterliegt; Besitzer ist nur der andere (§ 855 BGB).',
+        'Ein Besitzdiener übt die tatsächliche Gewalt für einen anderen aus und unterliegt dessen Weisungen.',
       distractors: [
-        'Wer die Sache im eigenen Namen für sich besitzt.',
-        'Wer eine Sache vom Eigentümer geliehen hat und sie selbst nutzen darf.',
-        'Wer eine Sache als Pfand verwahrt und darüber verfügen darf.',
-        'Wer eine Sache vorübergehend findet und behalten will.',
+        'Ein Besitzdiener übt die tatsächliche Gewalt über eine Sache im eigenen Namen für sich selbst aus.',
+        'Ein Besitzdiener ist der Eigentümer einer Sache, der sie einem Dritten zum Gebrauch überlassen hat.',
+        'Ein Besitzdiener ist der Gläubiger eines Anspruchs, der sich zur Sicherung eine Sache verschafft.',
+        'Ein Besitzdiener ist der Finder einer Sache, der sie zum Zweck der Rückgabe an sich nimmt.',
       ],
       source: 'AUTHORED_FROM_BIBEL',
       verificationStatus: 'VERIFIED_BIBEL',
@@ -417,36 +484,41 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
   },
   {
     blockId: 'fragen-081',
+    questionOverride: 'Wodurch unterscheiden sich öffentliches Recht und privates Recht?',
+    answerOverride:
+      'Öffentliches Recht regelt das Verhältnis zwischen Staat und Bürger, privates Recht das Verhältnis gleichgeordneter Rechtssubjekte.',
     main: {
       distractors: [
-        'Öffentliches Recht regelt Bürger–Bürger-Verhältnisse, privates Recht Staat–Bürger-Verhältnisse.',
-        'Öffentliches Recht und privates Recht sind identisch.',
-        'Öffentliches Recht gilt nur für Strafverfahren.',
-        'Privates Recht gilt nur für Verträge zwischen Behörden.',
+        'Öffentliches Recht regelt das Verhältnis zwischen gleichgeordneten Bürgern, privates Recht das Verhältnis zwischen Staat und seinen Bürgern.',
+        'Öffentliches Recht ist das Strafrecht, privates Recht ist das Zivilrecht einschließlich des Verwaltungsrechts.',
+        'Öffentliches Recht gilt nur gegenüber Behörden, privates Recht nur gegenüber juristischen Personen.',
+        'Öffentliches Recht ist ungeschriebenes Richterrecht, privates Recht ist gesetztes Recht des Bundes.',
       ],
       source: 'AUTHORED_FROM_BIBEL',
       verificationStatus: 'VERIFIED_BIBEL',
     },
     followUp1: {
+      question: 'Welcher Bereich ist dem öffentlichen Recht zuzuordnen?',
       answer:
-        'Ein Beispiel ist das Polizei- und Ordnungsrecht: Der Staat tritt dem Bürger hoheitlich im Über-/Unterordnungsverhältnis gegenüber.',
+        'Das Polizei- und Ordnungsrecht, weil der Staat dem Bürger dabei hoheitlich gegenübertritt.',
       distractors: [
-        'Ein Beispiel ist der Kaufvertrag zwischen zwei Privatpersonen.',
-        'Ein Beispiel ist die Miete zwischen Mieter und Vermieter.',
-        'Ein Beispiel ist der Arbeitsvertrag zwischen zwei Privaten.',
-        'Ein Beispiel ist der Tausch zwischen zwei Nachbarn.',
+        'Der Kaufvertrag, weil er die Rechte und Pflichten zweier gleichgeordneter Privatpersonen regelt.',
+        'Das Mietverhältnis, weil es auf der freien Einigung zweier gleichgeordneter Parteien beruht.',
+        'Der Arbeitsvertrag, weil er zwischen Arbeitgeber und Arbeitnehmer abgeschlossen wird.',
+        'Die unerlaubte Handlung, weil sie einen Schadensersatzanspruch zwischen Privaten begründet.',
       ],
       source: 'AUTHORED_FROM_BIBEL',
       verificationStatus: 'VERIFIED_BIBEL',
     },
     followUp2: {
+      question: 'Wie ist die Tätigkeit eines Sicherheitsmitarbeiters rechtlich einzuordnen?',
       answer:
-        'Sicherheitsmitarbeiter sind dem privaten Recht zuzuordnen: Sie handeln auf privatrechtlicher Grundlage, insbesondere aus Hausrecht und Besitzschutz.',
+        'Sie ist dem privaten Recht zuzuordnen, weil er auf privatrechtlicher Grundlage handelt.',
       distractors: [
-        'Sicherheitsmitarbeiter sind dem öffentlichen Recht zuzuordnen, weil sie hoheitlich handeln.',
-        'Sicherheitsmitarbeiter sind dem Strafrecht zuzuordnen, weil sie Straftaten verfolgen.',
-        'Sicherheitsmitarbeiter sind weder dem öffentlichen noch dem privaten Recht zuzuordnen.',
-        'Sicherheitsmitarbeiter sind dem Völkerrecht zuzuordnen.',
+        'Sie ist dem öffentlichen Recht zuzuordnen, weil der Sicherheitsmitarbeiter wie eine Behörde tätig wird.',
+        'Sie ist dem Strafrecht zuzuordnen, weil der Sicherheitsmitarbeiter vorrangig Straftaten verfolgt.',
+        'Sie ist dem Völkerrecht zuzuordnen, weil grenzüberschreitende Sicherheitsaufgaben betroffen sind.',
+        'Sie ist dem öffentlichen Recht zuzuordnen, weil sie gewerberechtlich überlagert wird.',
       ],
       source: 'AUTHORED_FROM_BIBEL',
       verificationStatus: 'VERIFIED_BIBEL',
@@ -454,37 +526,43 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
   },
   {
     blockId: 'fragen-092',
+    questionOverride:
+      'Wozu berechtigt die Besitzerselbsthilfe nach § 859 BGB – Selbsthilfe des Besitzers?',
+    answerOverride:
+      'Der Besitzer darf sich verbotener Eigenmacht mit Gewalt erwehren und sich sofort wieder in den Besitz setzen.',
     main: {
       distractors: [
-        'Der Besitzer darf die Sache nur nach vorheriger polizeilicher Genehmigung verteidigen.',
-        'Der Besitzer darf verbotene Eigenmacht nur mit einem Gerichtsbeschluss abwehren.',
-        'Der Besitzer darf sich gegen verbotene Eigenmacht nur durch eine Anzeige wehren.',
-        'Der Besitzer darf sich nur mit Zustimmung des Störers wehren.',
+        'Der Besitzer darf den Störer festnehmen und bis zum Eintreffen der Polizei in einem Raum einschließen.',
+        'Der Besitzer darf die Sache des Störers als Sicherheit behalten und sie nach Ablauf einer angemessenen Frist verwerten.',
+        'Der Besitzer darf jede Person, die sich im Umkreis der Störung aufhält, des Objekts verweisen.',
+        'Der Besitzer darf zur Abwehr der Störung eine Waffe einsetzen, wenn er sich bedroht fühlt.',
       ],
       source: 'AUTHORED_FROM_BIBEL',
       verificationStatus: 'VERIFIED_BIBEL',
     },
     followUp1: {
+      question: 'Was bedeutet das Merkmal „sofort“ bei der Besitzerselbsthilfe?',
       answer:
-        '„Sofort“ bedeutet unmittelbar im Anschluss an die Besitzstörung, ohne schuldhaftes Zögern.',
+        '„Sofort“ bedeutet unmittelbar im Anschluss an die Störung und ohne schuldhaftes Zögern zu handeln.',
       distractors: [
-        '„Sofort“ bedeutet innerhalb einer Woche nach der Störung.',
-        '„Sofort“ bedeutet jederzeit, auch Monate später.',
-        '„Sofort“ bedeutet erst nach Einschaltung der Polizei.',
-        '„Sofort“ bedeutet nach Ablauf einer Bedenkzeit.',
+        '„Sofort“ bedeutet, innerhalb einer angemessenen Frist von wenigen Tagen nach der Störung zu handeln.',
+        '„Sofort“ bedeutet, jederzeit auch noch Wochen später gegen die Störung vorzugehen.',
+        '„Sofort“ bedeutet, erst nach Einschaltung der Polizei und deren Zustimmung zur Selbsthilfe zu handeln.',
+        '„Sofort“ bedeutet, nach Ablauf einer Überlegungsfrist zu handeln, sofern der Störer noch anwesend ist.',
       ],
       source: 'AUTHORED_FROM_BIBEL',
       verificationStatus: 'VERIFIED_BIBEL',
       explanation: '§ 859 BGB: unmittelbare Besitzerselbsthilfe ohne schuldhaftes Zögern.',
     },
     followUp2: {
+      question: 'Was bedeutet das Merkmal der Angemessenheit bei der Besitzwehr?',
       answer:
-        'Angemessen ist ein Mittel, das zur Abwehr erforderlich ist und nicht außer Verhältnis zur Störung steht; es darf nicht mehr Gewalt als nötig eingesetzt werden.',
+        'Die Verteidigung muss erforderlich sein und darf nicht außer Verhältnis zur Störung stehen.',
       distractors: [
-        'Angemessen ist jedes Mittel, das den Störer möglichst stark trifft.',
-        'Angemessen ist immer der Einsatz körperlicher Gewalt.',
-        'Angemessen ist nur der Einsatz von Waffen.',
-        'Angemessen ist jedes Mittel, solange der Besitzer es wünscht.',
+        'Die Verteidigung muss den Störer möglichst nachhaltig abschrecken, damit er von weiteren Störungen absieht.',
+        'Die Verteidigung muss vor der Ausübung gegenüber dem Störer angekündigt und begründet werden.',
+        'Die Verteidigung muss von einem Zeugen beobachtet werden, um später beweisbar zu sein.',
+        'Die Verteidigung muss durch den Besitzer selbst erfolgen und darf nicht delegiert werden.',
       ],
       source: 'AUTHORED_FROM_BIBEL',
       verificationStatus: 'VERIFIED_BIBEL',
@@ -497,37 +575,43 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
   // ===========================================================================
   {
     blockId: 'fragen-124',
+    questionOverride:
+      'Unter welchen Voraussetzungen ist die vorläufige Festnahme nach § 127 Abs. 1 StPO – Vorläufige Festnahme – zulässig?',
+    answerOverride:
+      'Wenn die Person auf frischer Tat betroffen oder verfolgt wird und zusätzlich Fluchtverdacht besteht oder die Identität unklar ist.',
     main: {
       distractors: [
-        '1) Dringender Tatverdacht. 2) Ein Haftbefehl liegt vor.',
-        '1) Auf frischer Tat betroffen. 2) Der Beschuldigte ist geständig.',
-        '1) Anzeige erstattet. 2) Der Täter ist namentlich bekannt.',
-        '1) Verdacht einer Straftat. 2) Der Auftraggeber stimmt der Festnahme zu.',
+        'Wenn gegen die Person ein dringender Tatverdacht wegen einer schweren Straftat und ein richterlicher Haftbefehl zur Untersuchungshaft vorliegen.',
+        'Wenn die Person die Tat gegenüber dem Sicherheitsmitarbeiter gestanden und die Beute vollständig übergeben hat.',
+        'Wenn die Person einer Straftat verdächtigt wird und der Auftraggeber der Festhaltung ausdrücklich zustimmt.',
+        'Wenn die Person sich ohne Ausweis im Objekt aufhält und keine Angaben zu ihrer Identität machen kann.',
       ],
       source: 'AUTHORED_FROM_BIBEL',
       verificationStatus: 'VERIFIED_BIBEL',
     },
     followUp1: {
+      question: 'Wann ist eine Person auf frischer Tat betroffen?',
       answer:
-        'Auf frischer Tat betroffen ist, wer bei oder unmittelbar nach der Tat oder bei der Verfolgung durch Tatopfer oder Zeugen angetroffen wird.',
+        'Wer bei der Tat, unmittelbar danach oder in Verfolgung durch Tatopfer oder Zeugen angetroffen wird.',
       distractors: [
-        'Die Tat darf höchstens eine Woche zurückliegen.',
-        'Es genügt der Verdacht, dass die Person irgendwann eine Straftat begangen hat.',
-        'Frische Tat bedeutet, dass die Tat bereits rechtskräftig festgestellt ist.',
-        'Frische Tat liegt nur vor, wenn die Person die Tat gesteht.',
+        'Wer innerhalb einer Woche nach der Tat aufgrund von Ermittlungen der Polizei angetroffen wird.',
+        'Wer die Tat später gesteht, auch wenn er erst nach mehreren Wochen von der Polizei angetroffen wird.',
+        'Wer von Zeugen namentlich benannt wird, ohne bei der Tat selbst anwesend gewesen zu sein.',
+        'Wer sich am Tatort aufhält, ohne dass eine Straftat überhaupt feststellbar ist.',
       ],
       source: 'AUTHORED_FROM_BIBEL',
       verificationStatus: 'VERIFIED_BIBEL',
       explanation: '§ 127 StPO verlangt das Betreffen oder Verfolgen auf frischer Tat.',
     },
     followUp2: {
+      question: 'Was ist unter Fluchtverdacht im Sinne der Festnahmebefugnis zu verstehen?',
       answer:
-        'Fluchtgefahr besteht, wenn aufgrund konkreter Umstände zu befürchten ist, dass sich die Person der Strafverfolgung entziehen wird, z. B. Fluchtversuch oder fehlende Bindung zum Ort.',
+        'Die aufgrund konkreter Umstände begründete Befürchtung, dass sich die Person der Strafverfolgung entziehen wird.',
       distractors: [
-        'Fluchtgefahr besteht immer bei jedem Tatverdacht.',
-        'Fluchtgefahr liegt vor, wenn die Person eine Auslandsreise plant.',
-        'Fluchtgefahr besteht, wenn die Person die Aussage verweigert.',
-        'Fluchtgefahr liegt vor, wenn die Person keinen festen Arbeitsplatz hat.',
+        'Die bloße Möglichkeit, dass gegen die Person irgendein Verdacht einer Straftat im Raum steht oder künftig stehen könnte.',
+        'Die Absicht der Person, eine Auslandsreise zu unternehmen und einen Flug gebucht zu haben.',
+        'Die Weigerung der Person, sich zu äußern und eine Aussage gegenüber der Polizei zu machen.',
+        'Der Umstand, dass die Person über keinen festen Arbeitsplatz verfügt oder arbeitslos ist.',
       ],
       source: 'AUTHORED_FROM_BIBEL',
       verificationStatus: 'VERIFIED_BIBEL',
@@ -536,36 +620,41 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
   },
   {
     blockId: 'fragen-127',
+    questionOverride:
+      'Welche Handlungen erfüllen den Hausfriedensbruch nach § 123 StGB – Hausfriedensbruch?',
+    answerOverride:
+      'Das widerrechtliche Eindringen in geschützte Räume oder das Verweilen trotz Aufforderung.',
     main: {
       distractors: [
-        'Hausfriedensbruch ist die Beschädigung einer fremden beweglichen Sache.',
-        'Hausfriedensbruch ist die Wegnahme einer fremden beweglichen Sache in Zueignungsabsicht.',
-        'Hausfriedensbruch ist die Körperverletzung einer anderen Person.',
-        'Hausfriedensbruch ist die Nötigung einer Person zu einer Handlung.',
+        'Das Beschädigen einer fremden beweglichen Sache, die sich in den geschützten Räumen befindet.',
+        'Das Wegnehmen einer fremden beweglichen Sache, um sie sich oder einem Dritten zuzueignen.',
+        'Das körperliche Misshandeln oder Gesundheitsschädigen einer anderen Person.',
+        'Das Nötigen einer anderen Person mit Gewalt oder Drohung zu einer Handlung.',
       ],
       source: 'AUTHORED_FROM_BIBEL',
       verificationStatus: 'VERIFIED_BIBEL',
     },
     followUp1: {
-      answer:
-        'Es gibt zwei Varianten: das Eindringen in geschützte Räume und das Verweilen trotz Aufforderung des Berechtigten, sich zu entfernen.',
+      question: 'Welche beiden Handlungsvarianten kennt § 123 StGB – Hausfriedensbruch?',
+      answer: 'Das Eindringen in geschützte Räume und das Verweilen trotz Aufforderung, sich zu entfernen.',
       distractors: [
-        'Es gibt nur die Variante des Eindringens.',
-        'Es gibt nur die Variante der Beschädigung.',
-        'Es gibt die Varianten Diebstahl und Raub.',
-        'Es gibt die Varianten Bedrohung und Beleidigung.',
+        'Das Beschädigen der Räume und das unbefugte Nutzen der darin befindlichen Einrichtungen.',
+        'Das Entziehen des Besitzes und die Störung des Besitzes ohne Entziehung der Sache.',
+        'Das offene und das heimliche Vorgehen gegen den Willen des Berechtigten.',
+        'Das Betreten in Begleitung mehrerer Personen und das Betreten unter Mitführung eines Werkzeugs.',
       ],
       source: 'AUTHORED_FROM_BIBEL',
       verificationStatus: 'VERIFIED_BIBEL',
     },
     followUp2: {
+      question: 'Wie ist Hausfriedensbruch verfolgungsrechtlich einzuordnen?',
       answer:
-        'Ja, Hausfriedensbruch ist regelmäßig ein Antragsdelikt; die Strafverfolgung setzt grundsätzlich einen Strafantrag des Berechtigten voraus.',
+        'Hausfriedensbruch ist ein Antragsdelikt; die Strafverfolgung setzt grundsätzlich einen Strafantrag des Berechtigten voraus.',
       distractors: [
-        'Nein, Hausfriedensbruch ist immer ein Offizialdelikt.',
-        'Nein, Hausfriedensbruch wird nur zivilrechtlich verfolgt.',
-        'Ja, aber der Strafantrag kann nur von der Polizei gestellt werden.',
-        'Nein, Hausfriedensbruch ist kein Straftatbestand.',
+        'Hausfriedensbruch ist ein Offizialdelikt und wird von der Staatsanwaltschaft ohne Weiteres verfolgt.',
+        'Hausfriedensbruch ist ein reines Privatklagedelikt, das nur zivilrechtlich und nicht strafrechtlich verfolgt werden kann und darf.',
+        'Hausfriedensbruch ist ein Verbrechen und wird mit einer Freiheitsstrafe von mindestens einem Jahr geahndet.',
+        'Hausfriedensbruch wird nur auf Anordnung der Polizei verfolgt, wenn Gefahr im Verzug besteht.',
       ],
       source: 'AUTHORED_FROM_BIBEL',
       verificationStatus: 'VERIFIED_BIBEL',
@@ -574,36 +663,41 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
   },
   {
     blockId: 'fragen-114',
+    questionOverride: 'Wann ist eine Verteidigungshandlung im Sinne der Notwehr erforderlich?',
+    answerOverride:
+      'Erforderlich ist die Verteidigung, die den gegenwärtigen rechtswidrigen Angriff sicher und sofort beendet und das mildeste wirksame Mittel darstellt.',
     main: {
       distractors: [
-        'Erforderlich ist jedes Mittel, das dem Angreifer den größtmöglichen Schaden zufügt.',
-        'Erforderlich ist immer der Einsatz einer Waffe.',
-        'Erforderlich ist die Verteidigung, die dem Angegriffenen am einfachsten erscheint.',
-        'Erforderlich ist jede Handlung, die der Angegriffene für richtig hält.',
+        'Erforderlich ist die Verteidigung, die dem Angreifer den nachhaltigsten Schaden zufügt und ihn abschreckt.',
+        'Erforderlich ist die Verteidigung, die der Angegriffene selbst für angemessen und richtig hält, auch wenn ein milderes Mittel zur Verfügung stehen würde.',
+        'Erforderlich ist die Verteidigung, die zuvor angekündigt und dem Angreifer zur Kenntnis gebracht worden ist.',
+        'Erforderlich ist die Verteidigung, die von mehreren Personen gemeinsam und arbeitsteilig ausgeübt wird.',
       ],
       source: 'AUTHORED_FROM_BIBEL',
       verificationStatus: 'VERIFIED_BIBEL',
     },
     followUp1: {
+      question: 'Was ist unter dem mildesten Mittel im Rahmen der Notwehr zu verstehen?',
       answer:
-        'Mildestes Mittel ist dasjenige Verteidigungsmittel, das den Angriff sicher und sofort beendet und dabei die geringste Beeinträchtigung für den Angreifer verursacht.',
+        'Das Mittel, das den Angriff sicher beendet und den Angreifer dabei am geringsten beeinträchtigt.',
       distractors: [
-        'Mildestes Mittel ist das schwächste Mittel, auch wenn es den Angriff nicht beendet.',
-        'Mildestes Mittel ist immer der Rückzug.',
-        'Mildestes Mittel ist immer das Gespräch.',
-        'Mildestes Mittel ist das Mittel, das der Angreifer am wenigsten bemerkt.',
+        'Das schwächste verfügbare Mittel, auch wenn es den gegenwärtigen Angriff nicht sicher zu beenden vermag.',
+        'Der Rückzug aus der Gefahrenzone, und zwar unabhängig von den Umständen des Einzelfalls.',
+        'Das Gespräch, das jeder körperlichen Einwirkung auf den Angreifer zwingend vorausgehen muss.',
+        'Das Mittel, das der Angreifer am wenigsten bemerkt und am wenigsten erwartet.',
       ],
       source: 'AUTHORED_FROM_BIBEL',
       verificationStatus: 'VERIFIED_BIBEL',
     },
     followUp2: {
+      question: 'Wann ist ein Verteidigungsmittel zur Abwehr eines Angriffs geeignet?',
       answer:
         'Geeignet ist ein Mittel, das den gegenwärtigen rechtswidrigen Angriff tatsächlich und sofort beenden kann.',
       distractors: [
-        'Geeignet ist jedes Mittel, das dem Angegriffenen gefällt.',
-        'Geeignet ist jedes Mittel, das keine Verletzung verursacht.',
-        'Geeignet ist nur ein Mittel, das die Polizei genehmigt hat.',
-        'Geeignet ist jedes Mittel, das der Angreifer zuerst eingesetzt hat.',
+        'Geeignet ist ein Mittel, das dem Angegriffenen gut vertraut ist und das er sicher und routiniert beherrscht.',
+        'Geeignet ist ein Mittel, das keine sichtbaren Verletzungen beim Angreifer hinterlässt.',
+        'Geeignet ist ein Mittel, das zuvor mit dem Angreifer abgestimmt und akzeptiert wurde.',
+        'Geeignet ist ein Mittel, das der Angreifer seinerseits zuerst eingesetzt hat.',
       ],
       source: 'AUTHORED_FROM_BIBEL',
       verificationStatus: 'VERIFIED_BIBEL',
@@ -616,36 +710,41 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
   // ===========================================================================
   {
     blockId: 'fragen-151',
+    questionOverride: 'Was ist eine Waffe im Sinne des Waffengesetzes?',
+    answerOverride:
+      'Ein Gegenstand, der seiner Natur nach dazu bestimmt ist, Angriffe abzuwehren oder zuzufügen.',
     main: {
       distractors: [
-        'Jeder Gegenstand, der geeignet ist, Verletzungen zuzufügen.',
-        'Nur Schusswaffen und Munition.',
-        'Nur verbotene Gegenstände wie Schlagring oder Butterflymesser.',
-        'Jeder Gegenstand, den ein Sicherheitsmitarbeiter im Dienst führt.',
+        'Eine Schusswaffe, mit der Geschosse durch einen Lauf verschossen werden können, und gar nichts anderes.',
+        'Jeder beliebige Gegenstand, der im Einzelfall dazu geeignet ist, eine Person zu verletzen.',
+        'Nur ein Gegenstand, dessen Erwerb und Besitz nach dem Waffengesetz ausdrücklich verboten sind.',
+        'Nur ein Gegenstand, den Sicherheitskräfte im Dienst zu führen berechtigt sind.',
       ],
       source: 'AUTHORED_FROM_FACHWISSEN',
       verificationStatus: 'UNVERIFIED',
     },
     followUp1: {
+      question: 'Was sind verbotene Waffen?',
       answer:
-        'Verbotene Waffen sind Gegenstände, deren Besitz, Führen und Erwerb nach dem WaffG generell verboten sind, z. B. Schlagringe, Butterflymesser, Wurfsterne und Totschläger.',
+        'Gegenstände, deren Erwerb, Besitz und Führen allgemein untersagt sind, etwa Schlagringe oder Butterflymesser.',
       distractors: [
-        'Verbotene Waffen sind alle Schusswaffen ohne Waffenbesitzkarte.',
-        'Verbotene Waffen sind nur Gegenstände, die unter das Kriegswaffenkontrollgesetz fallen.',
-        'Verbotene Waffen sind alle Gegenstände, die im Sicherheitsdienst verwendet werden.',
-        'Verbotene Waffen sind ausschließlich Feuerwaffen.',
+        'Alle Schusswaffen, für die bislang keine gültige Waffenbesitzkarte und keine waffenrechtliche Erlaubnis erteilt worden ist.',
+        'Nur Gegenstände, die ausdrücklich unter das Kriegswaffenkontrollgesetz fallen und verboten sind.',
+        'Alle Gegenstände, die im Einzelfall geeignet sind, einer Person erhebliche Verletzungen zuzufügen.',
+        'Feuerwaffen, deren Kaliber einen bestimmten gesetzlichen Grenzwert deutlich überschreitet.',
       ],
       source: 'AUTHORED_FROM_FACHWISSEN',
       verificationStatus: 'UNVERIFIED',
     },
     followUp2: {
+      question: 'Was bedeutet das Führen einer Waffe?',
       answer:
-        'Führen ist die Ausübung der tatsächlichen Gewalt über eine Waffe außerhalb der eigenen Wohnung, Geschäftsräume oder des befriedeten Besitztums.',
+        'Die Ausübung der tatsächlichen Gewalt über eine Waffe außerhalb der eigenen Wohnung oder Geschäftsräume.',
       distractors: [
-        'Führen ist der Erwerb und Besitz einer Waffe.',
-        'Führen ist jede Aufbewahrung einer Waffe zu Hause.',
-        'Führen ist das Transportieren einer Waffe in einem verschlossenen Behältnis.',
-        'Führen ist nur das Schießen mit einer Waffe.',
+        'Die Aufbewahrung einer Waffe im eigenen Zuhause in einem dafür zugelassenen und geprüften Sicherheitsbehältnis.',
+        'Der Transport einer ungeladenen Waffe im verschlossenen Behältnis zu einem anderen Ort.',
+        'Der rechtmäßige Erwerb einer Waffe und die Begründung von Eigentum an ihr.',
+        'Das gezielte Schießen mit einer Waffe auf einem dafür zugelassenen Schießstand.',
       ],
       source: 'AUTHORED_FROM_FACHWISSEN',
       verificationStatus: 'UNVERIFIED',
@@ -653,36 +752,42 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
   },
   {
     blockId: 'fragen-164',
+    questionOverride:
+      'Unter welchen Voraussetzungen darf ein Sicherheitsmitarbeiter im Dienst eine Waffe führen?',
+    answerOverride:
+      'Nur wenn eine waffenrechtliche Erlaubnis vorliegt und der Arbeitgeber den Waffeneinsatz für die konkrete Tätigkeit zulässt.',
     main: {
       distractors: [
-        'Ja, jeder Sicherheitsmitarbeiter darf im Dienst eine Schusswaffe tragen.',
-        'Ja, wenn der Auftraggeber die Waffe bezahlt.',
-        'Nein, Sicherheitsmitarbeiter dürfen niemals eine Waffe tragen.',
-        'Ja, nach einer einmaligen Sicherheitsschulung.',
+        'Sobald der Auftraggeber den Waffeneinsatz ausdrücklich wünscht und die Kosten für Ausrüstung und Ausbildung vollständig übernimmt.',
+        'Sobald der Mitarbeiter die Sachkundeprüfung für das Bewachungsgewerbe erfolgreich abgelegt hat.',
+        'Sobald der Mitarbeiter die Waffe von einem berechtigten Kollegen übernimmt und dessen Erlaubnis vorlegt.',
+        'Sobald der Einsatz im Nachtdienst erfolgt und dadurch ein erhöhtes Gefährdungspotenzial besteht.',
       ],
       source: 'AUTHORED_FROM_FACHWISSEN',
       verificationStatus: 'UNVERIFIED',
     },
     followUp1: {
+      question: 'Welche Stelle erteilt die waffenrechtliche Erlaubnis zum Führen einer Waffe?',
       answer:
-        'Die zuständige Waffenbehörde erteilt die waffenrechtliche Erlaubnis; zusätzlich muss der Arbeitgeber die Bewaffnung ausdrücklich zulassen.',
+        'Die zuständige Waffenbehörde; zusätzlich muss der Arbeitgeber den Waffeneinsatz für die Tätigkeit freigeben.',
       distractors: [
-        'Die Polizei genehmigt die Bewaffnung von Sicherheitsmitarbeitern.',
-        'Der Auftraggeber genehmigt die Bewaffnung allein.',
-        'Die Industrie- und Handelskammer genehmigt die Bewaffnung.',
-        'Die Berufsgenossenschaft genehmigt die Bewaffnung.',
+        'Die örtliche Gewerbebehörde erteilt die Erlaubnis zusammen mit der Bewachungserlaubnis.',
+        'Die Polizei erteilt die Erlaubnis für den Bewachungsdienst im jeweiligen Einzelfall.',
+        'Die Industrie- und Handelskammer erteilt die Erlaubnis zusammen mit dem Sachkundenachweis für das Bewachungsgewerbe.',
+        'Der Auftraggeber erteilt die Erlaubnis, weil er die Bewachungsleistung bestellt hat.',
       ],
       source: 'AUTHORED_FROM_FACHWISSEN',
       verificationStatus: 'UNVERIFIED',
     },
     followUp2: {
+      question: 'Für welche Tätigkeiten kommt eine Bewaffnung von Sicherheitsmitarbeitern in Betracht?',
       answer:
-        'Nur bei Tätigkeiten mit besonders hohem Gefährdungspotenzial, etwa Geld- und Werttransporte, und nur mit besonderer waffenrechtlicher Genehmigung.',
+        'Nur für Tätigkeiten mit besonders hohem Gefährdungspotenzial, etwa Geld- und Werttransporte.',
       distractors: [
-        'Bei jeder Tätigkeit im Einlassbereich einer Diskothek.',
-        'Bei jedem Kontrollgang im öffentlichen Verkehrsraum.',
-        'Bei jeder Bewachung eines Bürogebäudes.',
-        'Bei jeder Veranstaltung mit mehr als 100 Besuchern.',
+        'Für jede Tätigkeit im Einlassbereich einer Diskothek, weil dort gewalttätige Auseinandersetzungen drohen.',
+        'Für alle Kontrollgänge im öffentlichen Verkehrsraum, weil dort kein Hausrecht des Auftraggebers besteht.',
+        'Für die Bewachung von Bürogebäuden, weil dort besonders hochwertige Sachen gelagert werden.',
+        'Für jede Großveranstaltung mit mehr als hundert Besuchern, unabhängig von der Art der Veranstaltung.',
       ],
       source: 'AUTHORED_FROM_FACHWISSEN',
       verificationStatus: 'UNVERIFIED',
@@ -690,36 +795,43 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
   },
   {
     blockId: 'fragen-156',
+    questionOverride:
+      'Welche Erlaubnis benötigt man, um eine erlaubnispflichtige Schusswaffe zu führen?',
+    answerOverride:
+      'Einen Waffenschein, der die Ausübung der tatsächlichen Gewalt über die Waffe außerhalb der eigenen Räume erlaubt.',
     main: {
       distractors: [
-        'Eine Waffenbesitzkarte.',
-        'Einen Jagdschein.',
-        'Eine Gewerbeerlaubnis nach § 34a GewO.',
-        'Ein Führungszeugnis ohne Eintrag.',
+        'Eine Waffenbesitzkarte, die den Erwerb und den Besitz der Waffe erlaubt, aber nicht das Führen.',
+        'Eine Gewerbeerlaubnis für das Bewachungsgewerbe in Verbindung mit der Sachkundeprüfung.',
+        'Einen Jagdschein, sofern die Waffe zum Zweck des Jagdschutzes erworben und geführt wird.',
+        'Ein polizeiliches Führungszeugnis ohne Eintragung in Verbindung mit einem anerkannten und nachgewiesenen Bedürfnis.',
       ],
       source: 'AUTHORED_FROM_FACHWISSEN',
       verificationStatus: 'UNVERIFIED',
     },
     followUp1: {
+      question: 'Wer erhält einen Waffenschein?',
       answer:
-        'Den Waffenschein erhält, wer zuverlässig und persönlich geeignet ist, ein anerkanntes Bedürfnis nachweist und die erforderliche Sachkunde besitzt.',
+        'Wer zuverlässig und persönlich geeignet ist, ein anerkanntes Bedürfnis nachweist, sachkundig und alt genug ist.',
       distractors: [
-        'Jeder volljährige Bürger ohne weitere Voraussetzungen.',
-        'Nur Polizeibeamte und Soldaten.',
-        'Jeder, der Mitglied in einem Schützenverein ist.',
-        'Jeder, der eine Waffe geerbt hat.',
+        'Wer volljährig ist und einen Auszug aus dem Führungszeugnis ohne Eintragung vorlegt.',
+        'Wer Mitglied in einem anerkannten Schützenverein ist und dort regelmäßig trainiert.',
+        'Wer eine Waffe geerbt hat und deren Besitz binnen eines Monats bei der Behörde anmeldet.',
+        'Wer im Sicherheitsgewerbe bereits mindestens fünf Jahre ununterbrochen und ohne Beanstandung beschäftigt gewesen ist.',
       ],
       source: 'AUTHORED_FROM_FACHWISSEN',
       verificationStatus: 'UNVERIFIED',
     },
     followUp2: {
+      question:
+        'Welche Voraussetzungen werden für die Erteilung einer waffenrechtlichen Erlaubnis geprüft?',
       answer:
-        'Voraussetzungen sind Zuverlässigkeit, persönliche Eignung, ein anerkanntes Bedürfnis, Sachkunde und das erforderliche Mindestalter.',
+        'Zuverlässigkeit, persönliche Eignung, ein anerkanntes Bedürfnis, die Sachkunde und das vorgeschriebene Mindestalter.',
       distractors: [
-        'Voraussetzungen sind nur das Mindestalter und ein Führungszeugnis.',
-        'Voraussetzungen sind nur die Zahlung der Gebühr.',
-        'Voraussetzungen sind nur ein ärztliches Attest.',
-        'Voraussetzungen sind nur die Mitgliedschaft in einem Verein.',
+        'Das Mindestalter, die vollständige Entrichtung der amtlichen Gebühr und die Vorlage eines gültigen Lichtbildausweises.',
+        'Die berufliche Erfahrung, ein ärztliches Attest und die Mitgliedschaft in einem Verband.',
+        'Die Wohnverhältnisse, die Höhe des Einkommens und die Anzahl bereits vorhandener Schusswaffen.',
+        'Ein polizeiliches Führungszeugnis, ein Waffenschrank und eine Haftpflichtversicherung.',
       ],
       source: 'AUTHORED_FROM_FACHWISSEN',
       verificationStatus: 'UNVERIFIED',
@@ -731,36 +843,42 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
   // ===========================================================================
   {
     blockId: 'fragen-166',
+    questionOverride:
+      'Welche berufsgenossenschaftlichen Vorschriften sind für Wach- und Sicherungsdienste besonders bedeutsam?',
+    answerOverride:
+      'Die DGUV Vorschrift 1 „Grundsätze der Prävention“ und die DGUV Vorschrift 23 „Wach- und Sicherungsdienste“.',
     main: {
       distractors: [
-        'DGUV Vorschrift 2 und DGUV Vorschrift 25.',
-        'Die Straßenverkehrsordnung und die GewO.',
-        'Die DGUV Vorschrift 3 und die Unfallverhütungsvorschrift Bau.',
-        'Nur die DGUV Vorschrift 1; eine spezielle Vorschrift für Wachdienste gibt es nicht.',
+        'Die DGUV Vorschrift 2 über Betriebsärzte und die DGUV Vorschrift 25 über die Sicherheits- und Gesundheitsschutzkennzeichnung.',
+        'Die Straßenverkehrs-Ordnung und die Gewerbeordnung mit ihren Vorschriften zum Bewachungsgewerbe.',
+        'Die DGUV Vorschrift 3 über Arbeitsstätten und die Unfallverhütungsvorschrift für Bauarbeiten.',
+        'Allein die DGUV Vorschrift 1, weil für Wachdienste keine besondere Vorschrift besteht.',
       ],
       source: 'AUTHORED_FROM_FACHWISSEN',
       verificationStatus: 'UNVERIFIED',
     },
     followUp1: {
+      question: 'Was regelt die DGUV Vorschrift 1 „Grundsätze der Prävention“?',
       answer:
-        'DGUV Vorschrift 1 „Grundsätze der Prävention“ regelt die allgemeinen Pflichten von Unternehmern und Versicherten zu Arbeitsschutz, Unterweisung, Erster Hilfe und Prävention.',
+        'Die allgemeinen Pflichten von Unternehmern und Versicherten zu Arbeitsschutz, Unterweisung und Erster Hilfe.',
       distractors: [
-        'Sie regelt speziell die Bewaffnung von Sicherheitsmitarbeitern.',
-        'Sie regelt ausschließlich den Brandschutz in Industriebetrieben.',
-        'Sie regelt die Zulassung von Sicherheitsunternehmen.',
-        'Sie regelt nur die Dienstkleidung von Wachdiensten.',
+        'Die Zulassung von Sicherheitsunternehmen und die Eintragung der einzelnen Wachpersonen in das Bewacherregister.',
+        'Den Brandschutz in Industriebetrieben und die Aufstellung und Kennzeichnung von Feuerlöschern.',
+        'Die Bewaffnung von Wachpersonen und die Aufbewahrung der Dienstwaffen im bewachten Objekt.',
+        'Die Dienstkleidung von Wachdiensten und die Kennzeichnung der Mitarbeiter nach außen.',
       ],
       source: 'AUTHORED_FROM_FACHWISSEN',
       verificationStatus: 'UNVERIFIED',
     },
     followUp2: {
+      question: 'Was regelt die DGUV Vorschrift 23 „Wach- und Sicherungsdienste“?',
       answer:
-        'DGUV Vorschrift 23 „Wach- und Sicherungsdienste“ regelt spezielle Sicherheitsanforderungen für Wach- und Sicherungsdienste, z. B. Ausrüstung, Verhalten, Waffen, Alkoholverbot und Eigensicherung.',
+        'Besondere Sicherheitsanforderungen für Wachdienste, etwa zu Ausrüstung, Verhalten, Waffen und Eigensicherung.',
       distractors: [
-        'Sie regelt die Sachkundeprüfung nach § 34a GewO.',
-        'Sie regelt den Datenschutz bei Videoüberwachung.',
-        'Sie regelt die Erste-Hilfe-Ausbildung in allen Betrieben.',
-        'Sie regelt die Aufbewahrung von Schusswaffen.',
+        'Die Sachkundeprüfung für das Bewachungsgewerbe und die vorgeschriebene Unterrichtung der Wachpersonen durch die Kammer.',
+        'Den Datenschutz bei der Videoüberwachung und die zulässige Speicherdauer von Bildaufnahmen.',
+        'Die Erste-Hilfe-Ausbildung in allen Betrieben und die Anzahl der betrieblichen Ersthelfer.',
+        'Die Aufbewahrung von Schusswaffen in Privathaushalten und die Anforderungen an Waffenschränke.',
       ],
       source: 'AUTHORED_FROM_FACHWISSEN',
       verificationStatus: 'UNVERIFIED',
@@ -768,73 +886,88 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
   },
   {
     blockId: 'fragen-169',
+    questionOverride: 'Was ist unter Eigensicherung zu verstehen?',
+    answerOverride:
+      'Der Sicherheitsmitarbeiter beachtet seine eigene Sicherheit und setzt sich keinen unnötigen Gefahren aus.',
     main: {
       distractors: [
-        'Eigensicherung bedeutet, den Auftraggeber vor Schäden zu bewahren.',
-        'Eigensicherung bedeutet, die Dienstkleidung sauber zu halten.',
-        'Eigensicherung bedeutet, möglichst schnell einzugreifen.',
-        'Eigensicherung bedeutet, den Einsatzort videozuüberwachen.',
+        'Der Sicherheitsmitarbeiter bewahrt vorrangig den Auftraggeber und dessen Eigentum vor Schäden.',
+        'Der Sicherheitsmitarbeiter macht sich durch eine besonders auffällige Dienstkleidung erkennbar.',
+        'Der Sicherheitsmitarbeiter schreitet möglichst schnell und energisch ein, um die Situation sofort zu beenden.',
+        'Der Sicherheitsmitarbeiter lässt den Einsatzort durch Kameras lückenlos und dauerhaft überwachen.',
       ],
       source: 'AUTHORED_FROM_FACHWISSEN',
       verificationStatus: 'UNVERIFIED',
     },
     followUp1: {
+      question:
+        'Wie kann ein Sicherheitsmitarbeiter Eigensicherung im Einsatz praktisch umsetzen?',
       answer:
-        'Ein Beispiel ist, vor dem Eingreifen Abstand zu halten, Verstärkung zu rufen und Fluchtwege sowie den Rücken zu sichern.',
+        'Er hält Abstand, beobachtet den Rückzugsweg, sichert seine Position und zieht bei Gefahr Verstärkung hinzu.',
       distractors: [
-        'Ein Beispiel ist, sofort und allein in eine Gruppe einzuschreiten.',
-        'Ein Beispiel ist, auf die Warnweste zu verzichten.',
-        'Ein Beispiel ist, die Dienstwaffe offen zu tragen.',
-        'Ein Beispiel ist, den Einsatzort ohne Meldung zu verlassen.',
+        'Er schreitet sofort in eine Personengruppe ein und beendet die Störung durch energisches Auftreten.',
+        'Er stellt sich frontal und in unmittelbarer Nähe vor den Störer, um Entschlossenheit zu zeigen.',
+        'Er verzichtet auf Warnsignale und Beobachtung, um den Störer nicht zusätzlich zu reizen.',
+        'Er entfernt sich ohne Meldung an den Vorgesetzten vom Einsatzort, sobald eine Auseinandersetzung wahrscheinlich erscheint.',
       ],
       source: 'AUTHORED_FROM_FACHWISSEN',
       verificationStatus: 'UNVERIFIED',
     },
     followUp2: {
+      question: 'Warum kommt der Eigensicherung im Sicherheitsdienst besondere Bedeutung zu?',
       answer:
-        'Eigensicherung ist wichtig, weil die eigene Gesundheit Vorrang hat und ein handlungsunfähiger Mitarbeiter weder sich noch andere schützen kann.',
+        'Weil die eigene Gesundheit Vorrang hat und ein verletzter Mitarbeiter weder sich noch andere wirksam schützen kann.',
       distractors: [
-        'Eigensicherung ist nur wichtig, wenn der Auftraggeber es verlangt.',
-        'Eigensicherung dient nur dem Schutz des Eigentums.',
-        'Eigensicherung ist nur bei Nachtdiensten wichtig.',
-        'Eigensicherung ist rechtlich nicht vorgesehen.',
+        'Weil die Eigensicherung in erster Linie dazu dient, mögliche Haftungsansprüche des Auftraggebers sicher abzuwenden.',
+        'Weil der Arbeitgeber eine Verletzung im Dienst nur bei nachgewiesener Eigensicherung versichert.',
+        'Weil die Eigensicherung die Dokumentationspflichten des Mitarbeiters bei Vorfällen ersetzt.',
+        'Weil im Tagesdienst keine vergleichbaren Gefahren bestehen und Eigensicherung dort entbehrlich ist.',
       ],
       source: 'AUTHORED_FROM_FACHWISSEN',
       verificationStatus: 'UNVERIFIED',
+      explanation:
+        'DGUV Vorschrift 23 stellt die Eigensicherung des Wachpersonals in den Vordergrund.',
     },
   },
   {
     blockId: 'fragen-186',
+    questionOverride:
+      'Welche zwei Verbote aus dem Regelwerk für Wach- und Sicherungsdienste sind im Dienst besonders bedeutsam?',
+    answerOverride:
+      'Das Verbot berauschender Mittel und das Verbot, nicht zugelassene Waffen im Dienst mitzuführen.',
     main: {
       distractors: [
-        'Verbot von Dienstkleidung und Verbot von Kontrollgängen.',
-        'Verbot von Pausen und Verbot von Schichtarbeit.',
-        'Verbot von Mobiltelefonen und Verbot von Erste Hilfe.',
-        'Verbot von Alleineinsatz und Verbot von Dokumentation.',
+        'Das Verbot, die Dienstkleidung eigenmächtig abzulegen, und das Verbot, ohne Begleitung Kontrollgänge zu machen.',
+        'Das Verbot, Überstunden zu leisten, und das Verbot, ohne Pause durchgehend im Dienst zu sein.',
+        'Das Verbot, Mobiltelefone im Dienst zu benutzen, und das Verbot, Erste Hilfe zu leisten.',
+        'Das Verbot, allein Dienst zu versehen, und das Verbot, Vorfälle schriftlich zu dokumentieren.',
       ],
       source: 'AUTHORED_FROM_FACHWISSEN',
       verificationStatus: 'UNVERIFIED',
     },
     followUp1: {
+      question:
+        'Warum sind das Verbot berauschender Mittel und das Waffenverbot im Dienst so wichtig?',
       answer:
-        'Beide Verbote sind wichtig, weil berauschende Mittel und nicht zugelassene Waffen die Einsatzfähigkeit und die Sicherheit gefährden.',
+        'Weil berauschende Mittel und nicht zugelassene Waffen die Reaktions- und Urteilsfähigkeit beeinträchtigen und Dritte gefährden.',
       distractors: [
-        'Sie sind nur wichtig, damit der Auftraggeber zufrieden ist.',
-        'Sie sind nur wichtig für die Dokumentation.',
-        'Sie sind nur wichtig bei Großveranstaltungen.',
-        'Sie sind rechtlich ohne Bedeutung.',
+        'Weil Verstöße gegen diese Verbote nur das Ansehen des Auftraggebers in der Öffentlichkeit beeinträchtigen.',
+        'Weil der Auftraggeber bei einem festgestellten Verstoß die vertraglich geschuldete Bewachungsleistung insgesamt nicht bezahlen muss.',
+        'Weil diese Verbote nur bei Großveranstaltungen und in der Nachtzeit praktisch bedeutsam werden.',
+        'Weil die Beachtung dieser Verbote die Voraussetzung für die Erteilung des Dienstausweises ist.',
       ],
       source: 'AUTHORED_FROM_FACHWISSEN',
       verificationStatus: 'UNVERIFIED',
     },
     followUp2: {
+      question: 'Welche Folgen können Verstöße gegen diese Verbote haben?',
       answer:
-        'Verstöße können arbeitsrechtliche Konsequenzen bis zur Kündigung, versicherungsrechtliche Folgen und bei Straftaten auch strafrechtliche Konsequenzen haben.',
+        'Sie können arbeits-, versicherungs- und strafrechtliche Folgen nach sich ziehen.',
       distractors: [
-        'Verstöße haben keine Konsequenzen.',
-        'Verstöße führen nur zu einer mündlichen Ermahnung.',
-        'Verstöße führen nur zu einer Geldstrafe für den Auftraggeber.',
-        'Verstöße sind nur bei Wiederholung relevant.',
+        'Sie haben regelmäßig keine Folgen, solange im Dienst kein konkreter Schaden entsteht.',
+        'Sie führen in der Regel lediglich zu einer mündlichen Ermahnung durch den zuständigen Vorgesetzten im Betrieb.',
+        'Sie führen zu einer Vertragsstrafe, die der Auftraggeber an den Kunden zu zahlen hat.',
+        'Sie sind nur dann von Bedeutung, wenn sie sich innerhalb eines Jahres wiederholen.',
       ],
       source: 'AUTHORED_FROM_FACHWISSEN',
       verificationStatus: 'UNVERIFIED',
@@ -846,36 +979,43 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
   // ===========================================================================
   {
     blockId: 'fragen-195',
+    questionOverride: 'Welche Verhaltensweisen tragen in angespannten Situationen zur Deeskalation bei?',
+    answerOverride:
+      'Eine ruhige Ansprache, das Wahren von Distanz, Ich-Botschaften, aktives Zuhören und das Setzen klarer Grenzen.',
     main: {
       distractors: [
-        'Laute Ansprache, körperliche Nähe, Du-Botschaften, Vorwürfe und unklare Grenzen.',
-        'Sofortige körperliche Gewalt, um die Situation zu beenden.',
-        'Ignorieren der Person, bis sie sich beruhigt.',
-        'Mit Verstärkung drohen und die Person unter Druck setzen.',
+        'Eine laute und sehr bestimmte Ansprache, körperliche Nähe und deutliche Vorwürfe an die aufgebrachte Person im Objekt.',
+        'Das sofortige körperliche Festhalten der aufgebrachten Person, bis diese sich wieder beruhigt hat.',
+        'Das konsequente Ignorieren der Person, bis sie sich von selbst beruhigt und das Objekt verlässt.',
+        'Die Androhung rechtlicher Konsequenzen und das sofortige Hinzuziehen weiterer Sicherheitskräfte.',
       ],
       source: 'AUTHORED_FROM_FACHWISSEN',
       verificationStatus: 'UNVERIFIED',
     },
     followUp1: {
+      question:
+        'Was kennzeichnet eine Ich-Botschaft in der Kommunikation mit einer aufgebrachten Person?',
       answer:
-        'Bei einer Ich-Botschaft beschreibt der Sprecher die eigene Wahrnehmung und Wirkung, statt den anderen anzugreifen, z. B. „Ich möchte, dass wir ruhig bleiben“ statt „Sie sind unverschämt“.',
+        'Der Sprecher beschreibt seine eigene Wahrnehmung und Wirkung, statt die andere Person anzugreifen.',
       distractors: [
-        'Eine Ich-Botschaft ist eine Anweisung, die mit „Sie müssen“ beginnt.',
-        'Eine Ich-Botschaft ist ein Vorwurf, der die andere Person beschuldigt.',
-        'Eine Ich-Botschaft ist eine Drohung mit rechtlichen Konsequenzen.',
-        'Eine Ich-Botschaft ist eine Aussage über die andere Person.',
+        'Der Sprecher fordert die andere Person mit klaren Anweisungen zum Handeln auf.',
+        'Der Sprecher benennt die Fehler und das Fehlverhalten der anderen Person deutlich.',
+        'Der Sprecher droht der anderen Person mit rechtlichen Konsequenzen für ihr bisheriges Verhalten im Objekt.',
+        'Der Sprecher äußert eine allgemeine Vermutung über die Absichten der anderen Person.',
       ],
       source: 'AUTHORED_FROM_FACHWISSEN',
       verificationStatus: 'UNVERIFIED',
+      explanation: 'Die Bibel ordnet Ich-Botschaft und aktives Zuhören als Deeskalationsbausteine ein.',
     },
     followUp2: {
+      question: 'Was bedeutet aktives Zuhören?',
       answer:
-        'Aktives Zuhören bedeutet, dem Gegenüber Aufmerksamkeit zu zeigen, nachzufragen und das Gesagte mit eigenen Worten zusammenzufassen, um Verständnis zu signalisieren.',
+        'Dem Gegenüber Aufmerksamkeit zeigen, nachfragen und das Gesagte mit eigenen Worten zusammenfassen.',
       distractors: [
-        'Aktives Zuhören bedeutet, dem Gegenüber ständig zu widersprechen.',
-        'Aktives Zuhören bedeutet, das Gespräch schnell zu beenden.',
-        'Aktives Zuhören bedeutet, nur auf die eigenen Argumente zu achten.',
-        'Aktives Zuhören bedeutet, den anderen reden zu lassen, ohne zu reagieren.',
+        'Dem Gegenüber sachlich widersprechen und die eigene Position unmissverständlich klarmachen.',
+        'Das Gespräch möglichst zügig zum Abschluss bringen und eine Entscheidung für alle Beteiligten treffen.',
+        'Schweigend warten, bis die andere Person von selbst aufhört zu sprechen und sich beruhigt.',
+        'Die Aussagen der anderen Person als Beweismittel schriftlich festhalten und dokumentieren.',
       ],
       source: 'AUTHORED_FROM_FACHWISSEN',
       verificationStatus: 'UNVERIFIED',
@@ -883,36 +1023,42 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
   },
   {
     blockId: 'fragen-194',
+    questionOverride: 'Was ist unter Deeskalation zu verstehen?',
+    answerOverride:
+      'Alle gezielten Maßnahmen, die eine angespannte Situation beruhigen und eine drohende Gewaltanwendung verhindern.',
     main: {
       distractors: [
-        'Deeskalation ist das gezielte Verstärken eines Konflikts.',
-        'Deeskalation ist das Ignorieren eines Konflikts.',
-        'Deeskalation ist die sofortige Anwendung körperlicher Gewalt.',
-        'Deeskalation ist die Androhung rechtlicher Schritte.',
+        'Alle Maßnahmen, die einen bestehenden Konflikt gezielt verschärfen, um eine schnelle Entscheidung zu erzwingen und die Lage zu klären.',
+        'Das bewusste Ignorieren eines Konflikts, bis sich die Beteiligten von selbst beruhigt haben.',
+        'Die sofortige Anwendung körperlicher Gewalt, um eine Auseinandersetzung frühzeitig zu beenden.',
+        'Die Androhung rechtlicher Schritte, um die andere Person unter Druck zu setzen und einzuschüchtern.',
       ],
       source: 'AUTHORED_FROM_FACHWISSEN',
       verificationStatus: 'UNVERIFIED',
     },
     followUp1: {
+      question: 'Welche Techniken werden zur Deeskalation eingesetzt?',
       answer:
-        'Zu den Techniken gehören ruhige Ansprache, Wahrung von Distanz, Ich-Botschaften, aktives Zuhören und das Setzen klarer Grenzen.',
+        'Ruhige Ansprache, Distanzwahrung, Ich-Botschaften, aktives Zuhören und das Setzen klarer Grenzen.',
       distractors: [
-        'Zu den Techniken gehören lautes Rufen und Drohungen.',
-        'Zu den Techniken gehören körperliche Überlegenheit und Festhalten.',
-        'Zu den Techniken gehören das Ignorieren und Weggehen.',
-        'Zu den Techniken gehören der Einsatz von Pfefferspray und Waffen.',
+        'Lautes Rufen, Drohungen und das demonstrative Zeigen körperlicher Überlegenheit.',
+        'Das sofortige Festhalten der Person und das Verbringen in einen abgelegenen und gesicherten Nebenraum.',
+        'Das Verlassen des Ortes und der vollständige Verzicht auf jede weitere Kommunikation.',
+        'Der Einsatz von Reizstoffen und die Ankündigung weiterer Zwangsmittel.',
       ],
       source: 'AUTHORED_FROM_FACHWISSEN',
       verificationStatus: 'UNVERIFIED',
     },
     followUp2: {
+      question:
+        'Wie kann ein Sicherheitsmitarbeiter in einer konkreten angespannten Situation deeskalierend wirken?',
       answer:
-        'Ein Beispiel ist, einer aufgebrachten Person ruhig zuzuhören, Verständnis zu zeigen und sachlich eine Lösung anzubieten.',
+        'Er hört ruhig zu, zeigt Verständnis für das Anliegen, bleibt sachlich und bietet eine nachvollziehbare Lösung an.',
       distractors: [
-        'Ein Beispiel ist, die Person anzuschreien, damit sie still ist.',
-        'Ein Beispiel ist, die Person sofort festzuhalten.',
-        'Ein Beispiel ist, die Person aus dem Objekt zu werfen.',
-        'Ein Beispiel ist, die Polizei ohne Anlass zu rufen.',
+        'Er fordert die Person auf, sich unverzüglich zu entfernen, ohne auf ihr Anliegen einzugehen.',
+        'Er hält die Person vorsorglich fest, bis die Polizei eintrifft und die Entscheidung übernimmt.',
+        'Er verweist die Person des Objekts, ohne ihr Anliegen zu prüfen oder überhaupt anzuhören.',
+        'Er ruft die Polizei, ohne zuvor selbst ein klärendes Gespräch mit der betroffenen Person geführt und eine Lösung angeboten zu haben.',
       ],
       source: 'AUTHORED_FROM_FACHWISSEN',
       verificationStatus: 'UNVERIFIED',
@@ -920,36 +1066,41 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
   },
   {
     blockId: 'fragen-215',
+    questionOverride: 'Wie sollte man einer erkennbar betrunkenen Person gegenübertreten?',
+    answerOverride:
+      'Ruhig und respektvoll, mit klaren Anweisungen, ausreichend Abstand und dem Vermeiden jeder Eskalation.',
     main: {
       distractors: [
-        'Laut und bestimmend auftreten, um Respekt zu erzwingen.',
-        'Die Person ignorieren, bis sie von selbst geht.',
-        'Sofort körperliche Gewalt anwenden.',
-        'Die Person ohne Erklärung festhalten.',
+        'Laut und bestimmt, um sich gegenüber der betrunkenen Person energisch durchzusetzen.',
+        'Abwartend und passiv, bis die Person das Objekt aus eigenem Antrieb verlässt.',
+        'Bestimmend und körperlich, indem die Person bis zum Eintreffen der Polizei festgehalten wird.',
+        'Direkt und körperlich, indem der Person zur Steigerung der Aufmerksamkeit ins Gesicht gesprochen wird.',
       ],
       source: 'AUTHORED_FROM_FACHWISSEN',
       verificationStatus: 'UNVERIFIED',
     },
     followUp1: {
+      question: 'Worauf ist im Umgang mit betrunkenen Personen besonders zu achten?',
       answer:
-        'Zu achten ist auf eine ruhige, respektvolle Ansprache, klare und einfache Anweisungen, ausreichenden Abstand und das Vermeiden von Provokationen.',
+        'Auf eine ruhige und respektvolle Ansprache, klare Anweisungen, ausreichenden Abstand und das Vermeiden von Provokationen.',
       distractors: [
-        'Zu achten ist auf möglichst großen körperlichen Kontakt.',
-        'Zu achten ist auf schnelle, laute Kommandos.',
-        'Zu achten ist auf Ironie und Spott, um Distanz zu schaffen.',
-        'Zu achten ist darauf, die Person zu provozieren.',
+        'Auf möglichst engen körperlichen Kontakt, um die Person dauerhaft unter Kontrolle zu halten.',
+        'Auf schnelle, laute und kurze Kommandos, damit die Person sofort gehorcht und sich fügt.',
+        'Auf Ironie und Spott, um die aufgebrachte Person durch Beschämung möglichst schnell wieder zur Vernunft zu bringen und zu beruhigen.',
+        'Auf eine deutliche Provokation, um die Person zu einer vorhersehbaren Reaktion zu bewegen.',
       ],
       source: 'AUTHORED_FROM_FACHWISSEN',
       verificationStatus: 'UNVERIFIED',
     },
     followUp2: {
+      question: 'Welche Gefahren gehen vom Umgang mit betrunkenen Personen aus?',
       answer:
-        'Gefahren sind eine erhöhte Aggressions- und Gewaltbereitschaft, eingeschränkte Urteilsfähigkeit und eine gesteigerte Sturz- und Verletzungsgefahr.',
+        'Eine erhöhte Aggressions- und Gewaltbereitschaft, eine eingeschränkte Urteilsfähigkeit und eine gesteigerte Sturzgefahr.',
       distractors: [
-        'Gefahren bestehen nicht, weil Betrunkene harmlos sind.',
-        'Gefahren bestehen nur für den Betrunkenen selbst.',
-        'Gefahren bestehen nur bei Jugendlichen.',
-        'Gefahren bestehen nur bei bewaffneten Personen.',
+        'Eine besonders ausgeprägte Kooperationsbereitschaft und leichte Führbarkeit der Person.',
+        'Eine Gefährdung, die sich auf die betrunkene Person selbst und nicht auf Umstehende beschränkt.',
+        'Eine Gefährdung, die erst dann auftritt, wenn die betrunkene Person zusätzlich mit einer gefährlichen Waffe bewaffnet ist.',
+        'Ein auffälliges Verhalten, das erst nach dem vollständigen Abbau des Alkohols auftritt.',
       ],
       source: 'AUTHORED_FROM_FACHWISSEN',
       verificationStatus: 'UNVERIFIED',
@@ -961,36 +1112,40 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
   // ===========================================================================
   {
     blockId: 'fragen-220',
+    questionOverride: 'Was umfasst die elektronische Sicherheit in einem Sicherheitskonzept?',
+    answerOverride:
+      'Die technische Überwachung durch Alarmanlagen, Kameras und Zutrittskontrollen.',
     main: {
       distractors: [
-        'Physische Sicherung durch Türen, Schlösser und Zäune.',
-        'Regelungen und Abläufe wie Dienstanweisungen und Kontrollgänge.',
-        'Die Ausbildung und Qualifikation des Sicherheitspersonals.',
-        'Die Versicherung von Sach- und Personenschäden.',
+        'Die bauliche Sicherung durch Türen, Schlösser, Zäune und besonders widerstandsfähiges Sicherheitsglas.',
+        'Regelungen und Abläufe wie Dienstanweisungen, Kontrollgänge und das Schlüsselmanagement.',
+        'Die Ausbildung und Qualifikation des eingesetzten Sicherheitspersonals im bewachten Objekt.',
+        'Die Versicherung von Sach- und Personenschäden im bewachten Objekt gegen die Folgen von Einbrüchen.',
       ],
       source: 'AUTHORED_FROM_FACHWISSEN',
       verificationStatus: 'UNVERIFIED',
     },
     followUp1: {
-      answer:
-        'Eine Einbruchmeldeanlage (EMA) ist eine Anlage zur Erkennung und Meldung unbefugten Eindringens.',
+      question: 'Welche Aufgabe erfüllt eine Einbruchmeldeanlage?',
+      answer: 'Sie erkennt unbefugtes Eindringen frühzeitig und meldet es als Alarm.',
       distractors: [
-        'Eine Einbruchmeldeanlage ist eine Anlage zur Brandfrüherkennung.',
-        'Eine Einbruchmeldeanlage ist ein Zutrittskontrollsystem für Mitarbeiter.',
-        'Eine Einbruchmeldeanlage ist eine Videoanlage zur Live-Beobachtung.',
-        'Eine Einbruchmeldeanlage ist eine mechanische Sicherung aus Stahl.',
+        'Sie erkennt Brände frühzeitig und meldet diese an die zuständige Leitstelle.',
+        'Sie steuert den Zutritt von Mitarbeitern zu bestimmten Bereichen eines Gebäudes.',
+        'Sie beobachtet Räume fortlaufend per Video und zeichnet die Bilder auf.',
+        'Sie ersetzt mechanische Sicherungen wie Schlösser durch elektronische Komponenten.',
       ],
       source: 'AUTHORED_FROM_FACHWISSEN',
       verificationStatus: 'UNVERIFIED',
     },
     followUp2: {
+      question: 'Was ist unter einer Gefahrenmeldeanlage zu verstehen?',
       answer:
-        'Eine Gefahrenmeldeanlage (GMA) ist der Oberbegriff für technische Anlagen zur Meldung von Gefahren wie Einbruch, Brand oder Überfall.',
+        'Der Oberbegriff für Anlagen, die Gefahren wie Einbruch, Brand oder Überfall erkennen und melden.',
       distractors: [
-        'Eine Gefahrenmeldeanlage ist ausschließlich eine Brandmeldeanlage.',
-        'Eine Gefahrenmeldeanlage ist ein mechanisches Schloss.',
-        'Eine Gefahrenmeldeanlage ist ein System zur Steuerung von Schließanlagen.',
-        'Eine Gefahrenmeldeanlage ist eine Dienstkleidung mit Warnfunktion.',
+        'Eine Anlage, die speziell Brände erkennt, meldet und die zuständige Feuerwehr automatisch alarmiert.',
+        'Eine mechanische Sicherung, die einem Angriff möglichst lange widersteht.',
+        'Ein System zur Verwaltung und Ausgabe von Schlüsseln und Zutrittsrechten.',
+        'Eine Einrichtung zur Kennzeichnung von Flucht- und Rettungswegen im Gebäude.',
       ],
       source: 'AUTHORED_FROM_FACHWISSEN',
       verificationStatus: 'UNVERIFIED',
@@ -998,36 +1153,41 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
   },
   {
     blockId: 'fragen-218',
+    questionOverride: 'Aus welchen drei Säulen setzt sich ein umfassendes Sicherheitskonzept zusammen?',
+    answerOverride:
+      'Aus der mechanischen, der elektronischen und der organisatorischen Sicherheit.',
     main: {
       distractors: [
-        'Bauliche, personelle und finanzielle Sicherheit.',
-        'Innere, äußere und rechtliche Sicherheit.',
-        'Manuelle, automatische und digitale Sicherheit.',
-        'Präventive, repressive und dokumentarische Sicherheit.',
+        'Aus der baulichen, der personellen und der finanziellen Sicherheit eines Objekts.',
+        'Aus der inneren, der äußeren und der rechtlichen Sicherheit eines Objekts.',
+        'Aus der manuellen, der automatischen und der digitalen Sicherheit eines Objekts.',
+        'Aus der präventiven, der repressiven und der dokumentarischen Sicherheit.',
       ],
       source: 'AUTHORED_FROM_FACHWISSEN',
       verificationStatus: 'UNVERIFIED',
     },
     followUp1: {
+      question: 'Was kennzeichnet die drei Säulen der Sicherheit?',
       answer:
-        'Mechanische Sicherheit sichert baulich (Türen, Schlösser, Zäune), elektronische Sicherheit überwacht technisch (Alarmanlagen, Video, Zutrittskontrolle), organisatorische Sicherheit regelt Abläufe (Dienstanweisungen, Kontrollgänge).',
+        'Mechanische Sicherheit sichert baulich, elektronische überwacht technisch und organisatorische regelt Abläufe und Verhalten.',
       distractors: [
-        'Alle drei Säulen bedeuten dasselbe.',
-        'Mechanische Sicherheit ist die Ausbildung des Personals.',
-        'Elektronische Sicherheit ist der Bau von Zäunen.',
-        'Organisatorische Sicherheit ist der Einsatz von Videokameras.',
+        'Alle drei Säulen bezeichnen dieselbe Sicherungsart und unterscheiden sich nur in der Bezeichnung.',
+        'Die mechanische Sicherheit bezeichnet die Ausbildung, die elektronische den Bau von Zäunen.',
+        'Die elektronische Sicherheit bezeichnet die Dienstanweisungen, die organisatorische dagegen den regelmäßigen Einsatz von Kameras.',
+        'Die organisatorische Sicherheit bezeichnet die Versicherung, die mechanische die Alarmierung.',
       ],
       source: 'AUTHORED_FROM_FACHWISSEN',
       verificationStatus: 'UNVERIFIED',
     },
     followUp2: {
+      question: 'Wie wirken die drei Säulen der Sicherheit im Sicherheitskonzept zusammen?',
       answer:
-        'Ja, die Säulen wirken zusammen: Mechanik verzögert, Elektronik meldet und Organisation steuert die Reaktion; erst das Zusammenspiel ergibt ein wirksames Sicherheitskonzept.',
+        'Mechanik verzögert den Angriff, Elektronik erkennt und meldet ihn, die Organisation steuert die Reaktion darauf.',
       distractors: [
-        'Nein, es genügt, nur eine Säule einzusetzen.',
-        'Nein, die Säulen schließen sich gegenseitig aus.',
-        'Ja, aber nur bei Großobjekten.',
-        'Nein, Elektronik ersetzt Mechanik und Organisation vollständig.',
+        'Es genügt, eine einzelne Säule konsequent einzusetzen, weil die übrigen keine Wirkung entfalten.',
+        'Die drei Säulen schließen einander aus und dürfen deshalb nicht gleichzeitig in ein und demselben Objekt eingesetzt werden.',
+        'Die elektronische Sicherheit ersetzt die mechanische und die organisatorische Sicherheit vollständig.',
+        'Die organisatorische Sicherheit ist nur bei Großobjekten erforderlich, nicht bei kleinen Objekten.',
       ],
       source: 'AUTHORED_FROM_FACHWISSEN',
       verificationStatus: 'UNVERIFIED',
@@ -1035,36 +1195,41 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
   },
   {
     blockId: 'fragen-224',
+    questionOverride: 'Wozu dient eine Brandmeldeanlage?',
+    answerOverride:
+      'Sie erkennt Brände frühzeitig und löst eine Meldung aus, damit Gegenmaßnahmen rechtzeitig möglich sind.',
     main: {
       distractors: [
-        'Eine Anlage zur Erkennung und Meldung unbefugten Eindringens.',
-        'Eine Anlage zur Steuerung des Zutritts zu Bereichen.',
-        'Eine Anlage zur Videoüberwachung von Räumen.',
-        'Eine mechanische Sicherung aus Stahl.',
+        'Sie erkennt unbefugtes Eindringen und meldet dieses als Einbruchalarm an die Leitstelle.',
+        'Sie steuert den Zutritt zu bestimmten Bereichen und protokolliert die Bewegungen aller anwesenden Personen.',
+        'Sie überwacht die Räume fortlaufend per Video und zeichnet die Bilder zur späteren Auswertung auf.',
+        'Sie löst mechanische Sicherungen aus, wenn ein Angriff auf das Objekt unmittelbar bevorsteht.',
       ],
       source: 'AUTHORED_FROM_FACHWISSEN',
       verificationStatus: 'UNVERIFIED',
     },
     followUp1: {
+      question: 'Welche Arten von Brandmeldern werden eingesetzt?',
       answer:
-        'Brandmelder sind z. B. Rauchmelder, Wärmemelder, Flammenmelder und Multifunktionsmelder (Kombination mehrerer Brandkenngrößen).',
+        'Unter anderem Rauch-, Wärme-, Flammen- und Multifunktionsmelder.',
       distractors: [
-        'Brandmelder sind ausschließlich Videokameras.',
-        'Brandmelder sind Türen und Schlösser.',
-        'Brandmelder sind Zutrittskontrollsysteme.',
-        'Brandmelder sind ausschließlich Handfeuerlöscher.',
+        'Videokameras, die eine beginnende Rauchentwicklung anhand des Bildes erkennen und melden.',
+        'Türen und Schlösser, die sich im Brandfall automatisch verriegeln und die Fluchtwege freigeben.',
+        'Zutrittskontrollsysteme, die die Anwesenheit von Personen im Gebäude erfassen.',
+        'Handfeuerlöscher, die an strategischen Punkten im Gebäude für den Ernstfall bereitstehen.',
       ],
       source: 'AUTHORED_FROM_FACHWISSEN',
       verificationStatus: 'UNVERIFIED',
     },
     followUp2: {
+      question: 'Welche Brandklassen werden im Brandschutz unterschieden?',
       answer:
-        'Brandklassen sind A (feste Stoffe), B (flüssige Stoffe), C (Gase), D (Metalle) und F (Fette und Öle).',
+        'A für feste Stoffe, B für flüssige, C für Gase, D für Metalle und F für Fette und Öle.',
       distractors: [
-        'Brandklassen sind 1, 2 und 3.',
-        'Brandklassen sind rot, gelb und blau.',
-        'Brandklassen sind klein, mittel und groß.',
-        'Brandklassen sind nur A und B.',
+        'Die Brandklassen 1, 2 und 3 für kleine, mittlere und große Brände im Gebäude.',
+        'Die Brandklassen Rot, Gelb und Blau, die nach der Temperatur des Feuers unterschieden werden.',
+        'Die Brandklassen Innenbrand, Außenbrand und Vollbrand nach dem Ort des Feuers.',
+        'Die Brandklassen A und B, weil weitere Klassen im praktischen Brandschutz nicht vorkommen.',
       ],
       source: 'AUTHORED_FROM_FACHWISSEN',
       verificationStatus: 'UNVERIFIED',
