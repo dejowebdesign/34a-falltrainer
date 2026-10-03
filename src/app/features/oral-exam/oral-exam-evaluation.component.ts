@@ -97,7 +97,10 @@ const ROLE_LABELS: Record<ExamQuestionRole, string> = {
                   @for (item of topic.questions; track item.question.id) {
                     <li class="question-item" [class.correct]="item.correct">
                       <div class="q-head">
-                        <span class="q-role">{{ roleLabel(item.question.role) }}</span>
+                        <span class="q-meta">
+                          <span class="q-topic">{{ item.question.categoryLabel }}</span>
+                          <span class="q-difficulty">Schwierigkeit {{ item.question.difficulty }}</span>
+                        </span>
                         <span class="q-flag" [class.ok]="item.correct" [class.bad]="!item.correct">
                           <mat-icon aria-hidden="true">{{
                             item.correct ? 'check' : 'close'
@@ -105,6 +108,7 @@ const ROLE_LABELS: Record<ExamQuestionRole, string> = {
                           {{ item.correct ? 'richtig' : 'falsch' }}
                         </span>
                       </div>
+                      <p class="q-role-line">{{ roleLabel(item.question.role) }}</p>
                       <p class="q-text">{{ item.question.question }}</p>
                       <p class="q-line">
                         <span class="label">Ihre Antwort:</span>
@@ -114,6 +118,12 @@ const ROLE_LABELS: Record<ExamQuestionRole, string> = {
                         <p class="q-line">
                           <span class="label">Richtige Antwort:</span>
                           <span class="right">{{ item.question.correctAnswer }}</span>
+                        </p>
+                      }
+                      @if (item.question.legalBasis) {
+                        <p class="q-legal">
+                          <span class="label">Rechtsgrundlage:</span>
+                          <span class="norm">{{ item.question.legalBasis }}</span>
                         </p>
                       }
                       @if (item.question.explanation) {
@@ -263,7 +273,31 @@ const ROLE_LABELS: Record<ExamQuestionRole, string> = {
         gap: 0.5rem;
         margin-bottom: 0.35rem;
       }
-      .q-role {
+      .q-meta {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.35rem 0.5rem;
+      }
+      .q-topic,
+      .q-difficulty {
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        border-radius: 999px;
+        padding: 0.15rem 0.5rem;
+        line-height: 1.4;
+      }
+      .q-topic {
+        background: var(--ft-primary-soft);
+      }
+      .q-difficulty {
+        background: var(--ft-surface-2);
+        border: 1px solid var(--ft-border);
+      }
+      .q-role-line {
+        margin: 0 0 0.3rem;
         font-size: 0.72rem;
         font-weight: 700;
         letter-spacing: 0.06em;
@@ -299,6 +333,17 @@ const ROLE_LABELS: Record<ExamQuestionRole, string> = {
         color: var(--ft-danger);
       }
       .q-line .right {
+        color: var(--ft-ok-text);
+      }
+      .q-legal {
+        margin: 0.3rem 0;
+        line-height: 1.5;
+      }
+      .q-legal .label {
+        color: var(--ft-muted);
+      }
+      .q-legal .norm {
+        font-weight: 600;
         color: var(--ft-ok-text);
       }
       .q-explanation {

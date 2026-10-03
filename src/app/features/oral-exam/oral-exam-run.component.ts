@@ -47,8 +47,12 @@ const ROLE_LABELS: Record<ExamQuestionRole, string> = {
         </header>
 
         <mat-card appearance="outlined" class="question-card">
-          <mat-card-header>
-            <span class="role">{{ roleLabel() }}</span>
+          <mat-card-header class="question-head">
+            <div class="question-meta">
+              <span class="meta-topic">{{ question.categoryLabel }}</span>
+              <span class="meta-difficulty">Schwierigkeit {{ question.difficulty }}</span>
+              <span class="meta-role">{{ roleLabel() }}</span>
+            </div>
             <mat-card-title class="question-title">{{ question.question }}</mat-card-title>
           </mat-card-header>
           <mat-card-content>
@@ -139,14 +143,38 @@ const ROLE_LABELS: Record<ExamQuestionRole, string> = {
       .question-card {
         border-radius: 14px;
       }
-      .role {
-        display: inline-block;
+      .question-head {
+        display: block;
+      }
+      .question-meta {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.5rem 0.75rem;
+        margin-bottom: 0.6rem;
+      }
+      .meta-topic,
+      .meta-difficulty,
+      .meta-role {
         font-size: 0.75rem;
         font-weight: 700;
         letter-spacing: 0.06em;
         text-transform: uppercase;
+        border-radius: 999px;
+        padding: 0.2rem 0.6rem;
+        line-height: 1.4;
+      }
+      .meta-topic {
+        background: var(--ft-primary-soft);
+        color: var(--ft-text);
+      }
+      .meta-difficulty {
+        background: var(--ft-surface-2);
+        border: 1px solid var(--ft-border);
+        color: var(--ft-text);
+      }
+      .meta-role {
         color: var(--ft-accent);
-        margin-bottom: 0.35rem;
       }
       .question-title {
         font-size: 1.3rem;

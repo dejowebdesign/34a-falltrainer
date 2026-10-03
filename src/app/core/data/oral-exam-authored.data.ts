@@ -48,7 +48,8 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
       question:
         'Auf welcher rechtlichen Grundlage dürfen Sicherheitsmitarbeiter gegenüber Personen tätig werden?',
       answer:
-        'Auf privatrechtlicher Grundlage aus Hausrecht, Besitzschutz und den Jedermann-Rechten nach § 127 StPO – Vorläufige Festnahme.',
+        'Auf privatrechtlicher Grundlage aus Hausrecht, Besitzschutz und den Jedermann-Rechten, die jedermann zustehen.',
+      legalBasis: '§ 127 Abs. 1 StPO – Vorläufige Festnahme',
       distractors: [
         'Auf hoheitlicher Grundlage, weil Sicherheitsmitarbeiter zur Gefahrenabwehr gegenüber jedermann befugt sind.',
         'Auf richterlicher Grundlage, weil jede Maßnahme zuvor durch Beschluss des zuständigen Gerichts angeordnet und genehmigt werden müsste.',
@@ -96,7 +97,8 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
       question:
         'Unter welchen Voraussetzungen dürfen Sicherheitsmitarbeiter körperliche Gewalt anwenden?',
       answer:
-        'Nur wenn ein Rechtfertigungsgrund wie § 32 StGB – Notwehr – oder § 34 StGB – Notstand – greift und die Gewalt nötig ist.',
+        'Nur wenn ein Rechtfertigungsgrund wie Notwehr oder rechtfertigender Notstand greift und die Gewalt nötig ist.',
+      legalBasis: '§ 32 StGB – Notwehr; § 34 StGB – Rechtfertigender Notstand',
       distractors: [
         'Sobald der Auftraggeber oder der Vorgesetzte die Anwendung körperlicher Gewalt ausdrücklich anordnet.',
         'Nur nach vorheriger Einschaltung und Zustimmung der Polizei, weil Sicherheitsmitarbeiter keine eigenen Befugnisse besitzen.',
@@ -140,7 +142,8 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
       question:
         'Wie kann der Inhaber des Hausrechts seine Befugnisse auf einen Sicherheitsmitarbeiter übertragen?',
       answer:
-        'Durch vertragliche Beauftragung oder konkrete Weisung wird der Mitarbeiter Besitzdiener nach § 855 BGB – Besitzdiener.',
+        'Durch vertragliche Beauftragung oder konkrete Weisung wird der Mitarbeiter Besitzdiener und handelt weisungsgebunden.',
+      legalBasis: '§ 855 BGB – Besitzdiener',
       distractors: [
         'Durch die bloße Einstellung als Sicherheitsmitarbeiter, weil damit sämtliche Rechte des Arbeitgebers auf ihn übergehen.',
         'Durch die Aushändigung des Dienstausweises, weil dieser die Übertragung der Hausrechtsbefugnisse belegt.',
@@ -153,9 +156,10 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
     },
     followUp2: {
       question:
-        'Welche zwei Tathandlungen erfüllen den Hausfriedensbruch nach § 123 StGB – Hausfriedensbruch?',
+        'Welche zwei Tathandlungen erfüllen den Hausfriedensbruch?',
       answer:
         'Das widerrechtliche Eindringen in geschützte Räume und das Verweilen darin trotz Aufforderung des Berechtigten.',
+      legalBasis: '§ 123 StGB – Hausfriedensbruch',
       distractors: [
         'Die Beschädigung geschützter Räume und die unbefugte Nutzung des umfriedeten Grundstücks durch unbefugte Dritte.',
         'Die Wegnahme beweglicher Sachen und die Zueignung einer gefundenen Sache in den Räumen.',
@@ -174,24 +178,27 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
   // ===========================================================================
   {
     blockId: 'fragen-029',
+    mainDifficulty: 4,
     questionOverride:
       'Wie wird das Hausrecht des Berechtigten auf einen Sicherheitsmitarbeiter übertragen?',
     answerOverride:
       'Durch vertragliche Beauftragung oder Weisung des Berechtigten; der Mitarbeiter handelt dann als Besitzdiener.',
+      mainLegalBasis: '§ 855 BGB – Besitzdiener',
     main: {
       distractors: [
-        'Durch die behördliche Bewachungserlaubnis, die dem Sicherheitsunternehmen zugleich die Hausrechtsbefugnisse des Auftraggebers vermittelt.',
+        'Durch die behördliche Bewachungserlaubnis, die dem Sicherheitsunternehmen auch die Hausrechtsbefugnisse vermittelt.',
         'Durch das Tragen der Dienstkleidung, die nach außen die Berechtigung des Mitarbeiters dokumentiert.',
         'Durch einen Auszug aus dem Bewacherregister, in dem die Befugnisse jedes Mitarbeiters verzeichnet sind.',
-        'Durch eine schriftliche Bestätigung der Polizei, dass der Mitarbeiter zum Schutz befugt ist.',
+        'Durch eine schriftliche Bestätigung der Polizei, dass der Mitarbeiter zum Schutz des Objekts befugt ist.',
       ],
       source: 'AUTHORED_FROM_BIBEL',
       verificationStatus: 'VERIFIED_BIBEL',
     },
     followUp1: {
-      question: 'Was kennzeichnet einen Besitzdiener nach § 855 BGB – Besitzdiener?',
+      question: 'Was kennzeichnet einen Besitzdiener?',
       answer:
         'Der Besitzdiener übt die tatsächliche Gewalt für einen anderen aus und ist dessen Weisungen unterworfen.',
+      legalBasis: '§ 855 BGB – Besitzdiener',
       distractors: [
         'Der Besitzdiener übt die tatsächliche Gewalt im eigenen Namen aus und darf wie ein Eigentümer verfügen.',
         'Der Besitzdiener erwirbt mit der Übergabe der Sache das Recht zum Besitz und wird damit selbst Besitzer.',
@@ -206,11 +213,12 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
       question: 'Welche Grenzen gelten für die Befugnisse eines Besitzdieners?',
       answer:
         'Er bleibt an Weisungen gebunden und darf nur die Rechte des Besitzers ausüben, nichts darüber hinaus.',
+      legalBasis: '§ 860 BGB – Selbsthilfe des Besitzdieners',
       distractors: [
         'Er darf die Rechte des Besitzers nach eigenem Ermessen ausweiten, solange er den Erfolg sichert.',
         'Er darf die Sache des Besitzers verwerten, wenn dieser nicht erreichbar ist und dringende Gefahr im Verzug besteht.',
         'Er darf gegen Besucher körperlichen Zwang anwenden, weil er die tatsächliche Gewalt innehat.',
-        'Er ist an die Weisungen nur gebunden, wenn er sie vorher schriftlich bestätigt hat.',
+        'Er ist an Weisungen nur gebunden, soweit sie mit den Interessen des Besitzers übereinstimmen.',
       ],
       source: 'AUTHORED_FROM_BIBEL',
       verificationStatus: 'VERIFIED_BIBEL',
@@ -220,9 +228,10 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
   },
   {
     blockId: 'fragen-021',
-    questionOverride: 'Welchen Regelungsgegenstand hat § 34a GewO?',
+    questionOverride: 'Welchen Regelungsgegenstand hat die Vorschrift zum Bewachungsgewerbe?',
     answerOverride:
       'Er regelt die Voraussetzungen der gewerblichen Bewachung, insbesondere Zuverlässigkeit, Sachkunde und Erlaubnispflichten.',
+      mainLegalBasis: '§ 34a GewO – Bewachungsgewerbe',
     main: {
       distractors: [
         'Er regelt den Einsatz von Sicherheitsmitarbeitern bei der Strafverfolgung und überträgt ihnen dabei unmittelbar polizeiliche Befugnisse.',
@@ -290,9 +299,10 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
     },
     followUp2: {
       question:
-        'Wann kommt eine Strafbarkeit wegen Hausfriedensbruchs nach § 123 StGB – Hausfriedensbruch – in Betracht?',
+        'Wann kommt eine Strafbarkeit wegen Hausfriedensbruchs in Betracht?',
       answer:
         'Wenn jemand widerrechtlich eindringt oder trotz Aufforderung des Berechtigten in den geschützten Räumen verweilt.',
+      legalBasis: '§ 123 StGB – Hausfriedensbruch',
       distractors: [
         'Wenn jemand eine fremde bewegliche Sache beschädigt oder zerstört, die sich in den geschützten Räumen des Berechtigten befindet.',
         'Wenn jemand eine fremde bewegliche Sache wegnimmt, um sie sich oder einem Dritten zuzueignen.',
@@ -423,7 +433,7 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
     followUp2: {
       question: 'Welche Angaben sind typische Beispiele für personenbezogene Daten?',
       answer:
-        'Name, Geburtsdatum, Anschrift, Kfz-Kennzeichen, Ausweisnummer sowie Foto- und Videoaufnahmen einer Person.',
+        'Name, Geburtsdatum, Anschrift, Fahrzeugkennzeichen, Ausweisnummer sowie Foto- und Videoaufnahmen einer Person.',
       distractors: [
         'Die Öffnungszeiten eines Betriebs, die Anzahl der Parkplätze und die Anschrift des Unternehmens.',
         'Wetterdaten, Uhrzeiten und technische Messwerte ganz ohne Bezug zu einer natürlichen Person.',
@@ -443,6 +453,7 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
     questionOverride: 'Worin unterscheiden sich Besitz und Eigentum?',
     answerOverride:
       'Besitz ist die tatsächliche Sachherrschaft, Eigentum das umfassende rechtliche Herrschaftsrecht; beides kann auseinanderfallen.',
+      mainLegalBasis: '§§ 854, 903 BGB – Besitz und Eigentum',
     main: {
       distractors: [
         'Besitz ist das rechtliche Herrschaftsrecht, Eigentum die tatsächliche Sachherrschaft über eine Sache.',
@@ -457,9 +468,10 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
       question:
         'In welcher Konstellation fallen Besitz und Eigentum an einer Sache auseinander?',
       answer:
-        'Beim Mietverhältnis: Der Mieter ist Besitzer, der Vermieter bleibt Eigentümer der Wohnung.',
+        'Beim Mietverhältnis: Der Mieter ist Besitzer der Wohnung, während der Vermieter deren Eigentümer bleibt.',
+      legalBasis: '§§ 854, 903 BGB – Besitz und Eigentum',
       distractors: [
-        'Beim Erwerb einer Sache: Der Käufer wird mit Abschluss des Vertrags zugleich Besitzer und Eigentümer.',
+        'Beim Erwerb einer Sache: Der Käufer wird mit dem Abschluss des Kaufvertrags zugleich Besitzer und Eigentümer der Sache.',
         'Bei der Erbschaft: Der Erbe wird mit dem Erbfall Besitzer, ohne jemals Eigentümer zu werden.',
         'Bei der Fundunterschlagung: Der Finder wird mit dem Besitz auch Eigentümer der gefundenen Sache.',
         'Bei der Verwahrung: Der Verwahrer wird Besitzer und zugleich Eigentümer der anvertrauten Sache.',
@@ -468,9 +480,10 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
       verificationStatus: 'VERIFIED_BIBEL',
     },
     followUp2: {
-      question: 'Was ist ein Besitzdiener nach § 855 BGB – Besitzdiener?',
+      question: 'Was ist ein Besitzdiener?',
       answer:
         'Ein Besitzdiener übt die tatsächliche Gewalt für einen anderen aus und unterliegt dessen Weisungen.',
+      legalBasis: '§ 855 BGB – Besitzdiener',
       distractors: [
         'Ein Besitzdiener übt die tatsächliche Gewalt über eine Sache im eigenen Namen für sich selbst aus.',
         'Ein Besitzdiener ist der Eigentümer einer Sache, der sie einem Dritten zum Gebrauch überlassen hat.',
@@ -527,9 +540,10 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
   {
     blockId: 'fragen-092',
     questionOverride:
-      'Wozu berechtigt die Besitzerselbsthilfe nach § 859 BGB – Selbsthilfe des Besitzers?',
+      'Wozu berechtigt die Selbsthilfe des Besitzers?',
     answerOverride:
       'Der Besitzer darf sich verbotener Eigenmacht mit Gewalt erwehren und sich sofort wieder in den Besitz setzen.',
+      mainLegalBasis: '§ 859 BGB – Selbsthilfe des Besitzers',
     main: {
       distractors: [
         'Der Besitzer darf den Störer festnehmen und bis zum Eintreffen der Polizei in einem Raum einschließen.',
@@ -544,6 +558,7 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
       question: 'Was bedeutet das Merkmal „sofort“ bei der Besitzerselbsthilfe?',
       answer:
         '„Sofort“ bedeutet unmittelbar im Anschluss an die Störung und ohne schuldhaftes Zögern zu handeln.',
+      legalBasis: '§ 859 BGB – Selbsthilfe des Besitzers',
       distractors: [
         '„Sofort“ bedeutet, innerhalb einer angemessenen Frist von wenigen Tagen nach der Störung zu handeln.',
         '„Sofort“ bedeutet, jederzeit auch noch Wochen später gegen die Störung vorzugehen.',
@@ -558,6 +573,7 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
       question: 'Was bedeutet das Merkmal der Angemessenheit bei der Besitzwehr?',
       answer:
         'Die Verteidigung muss erforderlich sein und darf nicht außer Verhältnis zur Störung stehen.',
+      legalBasis: '§ 859 BGB – Selbsthilfe des Besitzers',
       distractors: [
         'Die Verteidigung muss den Störer möglichst nachhaltig abschrecken, damit er von weiteren Störungen absieht.',
         'Die Verteidigung muss vor der Ausübung gegenüber dem Störer angekündigt und begründet werden.',
@@ -576,9 +592,10 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
   {
     blockId: 'fragen-124',
     questionOverride:
-      'Unter welchen Voraussetzungen ist die vorläufige Festnahme nach § 127 Abs. 1 StPO – Vorläufige Festnahme – zulässig?',
+      'Unter welchen Voraussetzungen ist die vorläufige Festnahme zulässig?',
     answerOverride:
       'Wenn die Person auf frischer Tat betroffen oder verfolgt wird und zusätzlich Fluchtverdacht besteht oder die Identität unklar ist.',
+      mainLegalBasis: '§ 127 Abs. 1 StPO – Vorläufige Festnahme',
     main: {
       distractors: [
         'Wenn gegen die Person ein dringender Tatverdacht wegen einer schweren Straftat und ein richterlicher Haftbefehl zur Untersuchungshaft vorliegen.',
@@ -593,11 +610,12 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
       question: 'Wann ist eine Person auf frischer Tat betroffen?',
       answer:
         'Wer bei der Tat, unmittelbar danach oder in Verfolgung durch Tatopfer oder Zeugen angetroffen wird.',
+      legalBasis: '§ 127 Abs. 1 StPO – Vorläufige Festnahme',
       distractors: [
         'Wer innerhalb einer Woche nach der Tat aufgrund von Ermittlungen der Polizei angetroffen wird.',
         'Wer die Tat später gesteht, auch wenn er erst nach mehreren Wochen von der Polizei angetroffen wird.',
         'Wer von Zeugen namentlich benannt wird, ohne bei der Tat selbst anwesend gewesen zu sein.',
-        'Wer sich am Tatort aufhält, ohne dass eine Straftat überhaupt feststellbar ist.',
+        'Wer sich am Tatort aufhält und erst durch die späteren Ermittlungen mit der Tat in Verbindung gebracht wird.',
       ],
       source: 'AUTHORED_FROM_BIBEL',
       verificationStatus: 'VERIFIED_BIBEL',
@@ -607,6 +625,7 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
       question: 'Was ist unter Fluchtverdacht im Sinne der Festnahmebefugnis zu verstehen?',
       answer:
         'Die aufgrund konkreter Umstände begründete Befürchtung, dass sich die Person der Strafverfolgung entziehen wird.',
+      legalBasis: '§ 127 Abs. 1 StPO – Vorläufige Festnahme',
       distractors: [
         'Die bloße Möglichkeit, dass gegen die Person irgendein Verdacht einer Straftat im Raum steht oder künftig stehen könnte.',
         'Die Absicht der Person, eine Auslandsreise zu unternehmen und einen Flug gebucht zu haben.',
@@ -621,9 +640,10 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
   {
     blockId: 'fragen-127',
     questionOverride:
-      'Welche Handlungen erfüllen den Hausfriedensbruch nach § 123 StGB – Hausfriedensbruch?',
+      'Welche Handlungen erfüllen den Hausfriedensbruch?',
     answerOverride:
       'Das widerrechtliche Eindringen in geschützte Räume oder das Verweilen trotz Aufforderung.',
+      mainLegalBasis: '§ 123 StGB – Hausfriedensbruch',
     main: {
       distractors: [
         'Das Beschädigen einer fremden beweglichen Sache, die sich in den geschützten Räumen befindet.',
@@ -635,8 +655,9 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
       verificationStatus: 'VERIFIED_BIBEL',
     },
     followUp1: {
-      question: 'Welche beiden Handlungsvarianten kennt § 123 StGB – Hausfriedensbruch?',
+      question: 'Welche beiden Handlungsvarianten kennt der Hausfriedensbruch?',
       answer: 'Das Eindringen in geschützte Räume und das Verweilen trotz Aufforderung, sich zu entfernen.',
+      legalBasis: '§ 123 StGB – Hausfriedensbruch',
       distractors: [
         'Das Beschädigen der Räume und das unbefugte Nutzen der darin befindlichen Einrichtungen.',
         'Das Entziehen des Besitzes und die Störung des Besitzes ohne Entziehung der Sache.',
@@ -663,9 +684,11 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
   },
   {
     blockId: 'fragen-114',
+    mainDifficulty: 4,
     questionOverride: 'Wann ist eine Verteidigungshandlung im Sinne der Notwehr erforderlich?',
     answerOverride:
       'Erforderlich ist die Verteidigung, die den gegenwärtigen rechtswidrigen Angriff sicher und sofort beendet und das mildeste wirksame Mittel darstellt.',
+      mainLegalBasis: '§ 32 StGB – Notwehr',
     main: {
       distractors: [
         'Erforderlich ist die Verteidigung, die dem Angreifer den nachhaltigsten Schaden zufügt und ihn abschreckt.',
@@ -680,6 +703,7 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
       question: 'Was ist unter dem mildesten Mittel im Rahmen der Notwehr zu verstehen?',
       answer:
         'Das Mittel, das den Angriff sicher beendet und den Angreifer dabei am geringsten beeinträchtigt.',
+      legalBasis: '§ 32 StGB – Notwehr',
       distractors: [
         'Das schwächste verfügbare Mittel, auch wenn es den gegenwärtigen Angriff nicht sicher zu beenden vermag.',
         'Der Rückzug aus der Gefahrenzone, und zwar unabhängig von den Umständen des Einzelfalls.',
@@ -693,6 +717,7 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
       question: 'Wann ist ein Verteidigungsmittel zur Abwehr eines Angriffs geeignet?',
       answer:
         'Geeignet ist ein Mittel, das den gegenwärtigen rechtswidrigen Angriff tatsächlich und sofort beenden kann.',
+      legalBasis: '§ 32 StGB – Notwehr',
       distractors: [
         'Geeignet ist ein Mittel, das dem Angegriffenen gut vertraut ist und das er sicher und routiniert beherrscht.',
         'Geeignet ist ein Mittel, das keine sichtbaren Verletzungen beim Angreifer hinterlässt.',
@@ -728,7 +753,7 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
       answer:
         'Gegenstände, deren Erwerb, Besitz und Führen allgemein untersagt sind, etwa Schlagringe oder Butterflymesser.',
       distractors: [
-        'Alle Schusswaffen, für die bislang keine gültige Waffenbesitzkarte und keine waffenrechtliche Erlaubnis erteilt worden ist.',
+        'Alle Schusswaffen, für die bislang noch keine gültige Waffenbesitzkarte oder waffenrechtliche Erlaubnis erteilt worden ist.',
         'Nur Gegenstände, die ausdrücklich unter das Kriegswaffenkontrollgesetz fallen und verboten sind.',
         'Alle Gegenstände, die im Einzelfall geeignet sind, einer Person erhebliche Verletzungen zuzufügen.',
         'Feuerwaffen, deren Kaliber einen bestimmten gesetzlichen Grenzwert deutlich überschreitet.',
@@ -931,6 +956,7 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
   },
   {
     blockId: 'fragen-186',
+    mainDifficulty: 2,
     questionOverride:
       'Welche zwei Verbote aus dem Regelwerk für Wach- und Sicherungsdienste sind im Dienst besonders bedeutsam?',
     answerOverride:
@@ -962,11 +988,11 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
     followUp2: {
       question: 'Welche Folgen können Verstöße gegen diese Verbote haben?',
       answer:
-        'Sie können arbeits-, versicherungs- und strafrechtliche Folgen nach sich ziehen.',
+        'Sie können arbeitsrechtliche, versicherungsrechtliche und strafrechtliche Folgen für den Mitarbeiter haben.',
       distractors: [
-        'Sie haben regelmäßig keine Folgen, solange im Dienst kein konkreter Schaden entsteht.',
+        'Sie haben regelmäßig keine weiteren Folgen, solange im Dienst kein konkreter Schaden entsteht.',
         'Sie führen in der Regel lediglich zu einer mündlichen Ermahnung durch den zuständigen Vorgesetzten im Betrieb.',
-        'Sie führen zu einer Vertragsstrafe, die der Auftraggeber an den Kunden zu zahlen hat.',
+        'Sie führen zu einer Vertragsstrafe, welche der Auftraggeber an seinen Kunden zu zahlen hat.',
         'Sie sind nur dann von Bedeutung, wenn sie sich innerhalb eines Jahres wiederholen.',
       ],
       source: 'AUTHORED_FROM_FACHWISSEN',
@@ -998,7 +1024,7 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
       answer:
         'Der Sprecher beschreibt seine eigene Wahrnehmung und Wirkung, statt die andere Person anzugreifen.',
       distractors: [
-        'Der Sprecher fordert die andere Person mit klaren Anweisungen zum Handeln auf.',
+        'Der Sprecher beschreibt das Verhalten der anderen Person und benennt die daraus entstandenen Probleme.',
         'Der Sprecher benennt die Fehler und das Fehlverhalten der anderen Person deutlich.',
         'Der Sprecher droht der anderen Person mit rechtlichen Konsequenzen für ihr bisheriges Verhalten im Objekt.',
         'Der Sprecher äußert eine allgemeine Vermutung über die Absichten der anderen Person.',
@@ -1028,7 +1054,7 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
       'Alle gezielten Maßnahmen, die eine angespannte Situation beruhigen und eine drohende Gewaltanwendung verhindern.',
     main: {
       distractors: [
-        'Alle Maßnahmen, die einen bestehenden Konflikt gezielt verschärfen, um eine schnelle Entscheidung zu erzwingen und die Lage zu klären.',
+        'Alle Maßnahmen, die eine angespannte Situation durch klare Machtworte, körperliche Präsenz und Rückendeckung beenden.',
         'Das bewusste Ignorieren eines Konflikts, bis sich die Beteiligten von selbst beruhigt haben.',
         'Die sofortige Anwendung körperlicher Gewalt, um eine Auseinandersetzung frühzeitig zu beenden.',
         'Die Androhung rechtlicher Schritte, um die andere Person unter Druck zu setzen und einzuschüchtern.',
@@ -1041,7 +1067,7 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
       answer:
         'Ruhige Ansprache, Distanzwahrung, Ich-Botschaften, aktives Zuhören und das Setzen klarer Grenzen.',
       distractors: [
-        'Lautes Rufen, Drohungen und das demonstrative Zeigen körperlicher Überlegenheit.',
+        'Eine sachliche Ansprache, die vor allem die rechtlichen Folgen des Verhaltens in den Mittelpunkt stellt.',
         'Das sofortige Festhalten der Person und das Verbringen in einen abgelegenen und gesicherten Nebenraum.',
         'Das Verlassen des Ortes und der vollständige Verzicht auf jede weitere Kommunikation.',
         'Der Einsatz von Reizstoffen und die Ankündigung weiterer Zwangsmittel.',
@@ -1066,6 +1092,7 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
   },
   {
     blockId: 'fragen-215',
+    mainDifficulty: 3,
     questionOverride: 'Wie sollte man einer erkennbar betrunkenen Person gegenübertreten?',
     answerOverride:
       'Ruhig und respektvoll, mit klaren Anweisungen, ausreichend Abstand und dem Vermeiden jeder Eskalation.',
@@ -1073,8 +1100,8 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
       distractors: [
         'Laut und bestimmt, um sich gegenüber der betrunkenen Person energisch durchzusetzen.',
         'Abwartend und passiv, bis die Person das Objekt aus eigenem Antrieb verlässt.',
-        'Bestimmend und körperlich, indem die Person bis zum Eintreffen der Polizei festgehalten wird.',
-        'Direkt und körperlich, indem der Person zur Steigerung der Aufmerksamkeit ins Gesicht gesprochen wird.',
+        'Freundlich und nachgiebig, indem auf klare Anweisungen verzichtet und die Person gewähren gelassen wird.',
+        'Sachlich und distanziert, indem jede Kommunikation vermieden und nur die Polizei verständigt wird.',
       ],
       source: 'AUTHORED_FROM_FACHWISSEN',
       verificationStatus: 'UNVERIFIED',
@@ -1084,10 +1111,10 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
       answer:
         'Auf eine ruhige und respektvolle Ansprache, klare Anweisungen, ausreichenden Abstand und das Vermeiden von Provokationen.',
       distractors: [
-        'Auf möglichst engen körperlichen Kontakt, um die Person dauerhaft unter Kontrolle zu halten.',
-        'Auf schnelle, laute und kurze Kommandos, damit die Person sofort gehorcht und sich fügt.',
-        'Auf Ironie und Spott, um die aufgebrachte Person durch Beschämung möglichst schnell wieder zur Vernunft zu bringen und zu beruhigen.',
-        'Auf eine deutliche Provokation, um die Person zu einer vorhersehbaren Reaktion zu bewegen.',
+        'Auf möglichst engen körperlichen Kontakt, um die betrunkene Person dauerhaft unter Kontrolle zu halten.',
+        'Auf schnelle, laute und kurze Kommandos, damit die betrunkene Person sofort gehorcht und sich fügt.',
+        'Auf eine laute und sehr kurze Ansprache, weil betrunkene Personen nur auf deutliche Autorität und klare Ansagen reagieren.',
+        'Auf eine deutliche Provokation, um die betrunkene Person zu einer vorhersehbaren Reaktion zu bewegen.',
       ],
       source: 'AUTHORED_FROM_FACHWISSEN',
       verificationStatus: 'UNVERIFIED',
@@ -1114,25 +1141,25 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
     blockId: 'fragen-220',
     questionOverride: 'Was umfasst die elektronische Sicherheit in einem Sicherheitskonzept?',
     answerOverride:
-      'Die technische Überwachung durch Alarmanlagen, Kameras und Zutrittskontrollen.',
+      'Die technische Überwachung des Objekts durch Alarmanlagen, Videoanlagen und elektronische Zutrittskontrollen.',
     main: {
       distractors: [
-        'Die bauliche Sicherung durch Türen, Schlösser, Zäune und besonders widerstandsfähiges Sicherheitsglas.',
-        'Regelungen und Abläufe wie Dienstanweisungen, Kontrollgänge und das Schlüsselmanagement.',
-        'Die Ausbildung und Qualifikation des eingesetzten Sicherheitspersonals im bewachten Objekt.',
-        'Die Versicherung von Sach- und Personenschäden im bewachten Objekt gegen die Folgen von Einbrüchen.',
+        'Die bauliche Sicherung des Objekts durch Türen, Schlösser, Zäune und besonders widerstandsfähiges Sicherheitsglas.',
+        'Die organisatorischen Maßnahmen wie Dienstanweisungen, Kontrollgänge und das Schlüsselmanagement.',
+        'Die Auswahl, Ausbildung und regelmäßige Unterweisung des eingesetzten Sicherheitspersonals.',
+        'Die Absicherung von Sach- und Personenschäden durch Versicherungen gegen die Folgen von Einbrüchen.',
       ],
       source: 'AUTHORED_FROM_FACHWISSEN',
       verificationStatus: 'UNVERIFIED',
     },
     followUp1: {
       question: 'Welche Aufgabe erfüllt eine Einbruchmeldeanlage?',
-      answer: 'Sie erkennt unbefugtes Eindringen frühzeitig und meldet es als Alarm.',
+      answer: 'Sie erkennt unbefugtes Eindringen frühzeitig und meldet dieses als Alarm an die zuständige Stelle.',
       distractors: [
-        'Sie erkennt Brände frühzeitig und meldet diese an die zuständige Leitstelle.',
+        'Sie erkennt Brände frühzeitig und meldet diese an die zuständige Leitstelle oder die Feuerwehr.',
         'Sie steuert den Zutritt von Mitarbeitern zu bestimmten Bereichen eines Gebäudes.',
-        'Sie beobachtet Räume fortlaufend per Video und zeichnet die Bilder auf.',
-        'Sie ersetzt mechanische Sicherungen wie Schlösser durch elektronische Komponenten.',
+        'Sie beobachtet die Räume fortlaufend per Video und zeichnet die Bilder zur späteren Auswertung auf.',
+        'Sie ersetzt mechanische Sicherungen wie Schlösser und Zäune durch elektronische Komponenten.',
       ],
       source: 'AUTHORED_FROM_FACHWISSEN',
       verificationStatus: 'UNVERIFIED',
@@ -1155,13 +1182,13 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
     blockId: 'fragen-218',
     questionOverride: 'Aus welchen drei Säulen setzt sich ein umfassendes Sicherheitskonzept zusammen?',
     answerOverride:
-      'Aus der mechanischen, der elektronischen und der organisatorischen Sicherheit.',
+      'Aus der mechanischen Sicherheit, der elektronischen Sicherheit und der organisatorischen Sicherheit.',
     main: {
       distractors: [
-        'Aus der baulichen, der personellen und der finanziellen Sicherheit eines Objekts.',
-        'Aus der inneren, der äußeren und der rechtlichen Sicherheit eines Objekts.',
-        'Aus der manuellen, der automatischen und der digitalen Sicherheit eines Objekts.',
-        'Aus der präventiven, der repressiven und der dokumentarischen Sicherheit.',
+        'Aus der baulichen Sicherheit, der personellen Sicherheit und der finanziellen Sicherheit eines Objekts.',
+        'Aus der inneren Sicherheit, der äußeren Sicherheit und der rechtlichen Sicherheit eines Objekts.',
+        'Aus der manuellen Sicherheit, der automatischen Sicherheit und der digitalen Sicherheit eines Objekts.',
+        'Aus der präventiven Sicherheit, der repressiven Sicherheit und der dokumentarischen Sicherheit.',
       ],
       source: 'AUTHORED_FROM_FACHWISSEN',
       verificationStatus: 'UNVERIFIED',
@@ -1211,12 +1238,12 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
     followUp1: {
       question: 'Welche Arten von Brandmeldern werden eingesetzt?',
       answer:
-        'Unter anderem Rauch-, Wärme-, Flammen- und Multifunktionsmelder.',
+        'Unter anderem Rauchmelder, Wärmemelder, Flammenmelder und Multifunktionsmelder.',
       distractors: [
         'Videokameras, die eine beginnende Rauchentwicklung anhand des Bildes erkennen und melden.',
         'Türen und Schlösser, die sich im Brandfall automatisch verriegeln und die Fluchtwege freigeben.',
         'Zutrittskontrollsysteme, die die Anwesenheit von Personen im Gebäude erfassen.',
-        'Handfeuerlöscher, die an strategischen Punkten im Gebäude für den Ernstfall bereitstehen.',
+        'Sprinkleranlagen, die bei Hitzeeinwirkung automatisch Wasser freigeben und den Brand löschen.',
       ],
       source: 'AUTHORED_FROM_FACHWISSEN',
       verificationStatus: 'UNVERIFIED',
@@ -1229,7 +1256,7 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
         'Die Brandklassen 1, 2 und 3 für kleine, mittlere und große Brände im Gebäude.',
         'Die Brandklassen Rot, Gelb und Blau, die nach der Temperatur des Feuers unterschieden werden.',
         'Die Brandklassen Innenbrand, Außenbrand und Vollbrand nach dem Ort des Feuers.',
-        'Die Brandklassen A und B, weil weitere Klassen im praktischen Brandschutz nicht vorkommen.',
+        'Die Brandklassen A, B, C und D für feste, flüssige, gasförmige und metallische Stoffe.',
       ],
       source: 'AUTHORED_FROM_FACHWISSEN',
       verificationStatus: 'UNVERIFIED',

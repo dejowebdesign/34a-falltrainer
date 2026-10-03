@@ -104,6 +104,10 @@ export interface AuthoredFollowUp {
   verificationStatus: Exclude<OralExamVerification, 'VERIFIED_QUESTIONS_TXT'>;
   /** Kurze, quellenbasierte Erklärung, sofern vorhanden. */
   explanation?: string;
+  /** Abweichende Schwierigkeit (1–5) gegenüber der Blockstufe, sofern nötig. */
+  difficulty?: number;
+  /** Einschlägige Rechtsgrundlage, erst nach der Auflösung sichtbar. */
+  legalBasis?: string;
 }
 
 /** Ergänzte Distraktoren zur Hauptfrage (Antwortschlüssel bleibt aus Fragen.txt). */
@@ -134,6 +138,10 @@ export interface OralExamPoolBlock {
   main: AuthoredMainDistractors;
   followUp1: AuthoredFollowUp;
   followUp2: AuthoredFollowUp;
+  /** Abweichende Schwierigkeit (1–5) der Hauptfrage gegenüber der Blockstufe. */
+  mainDifficulty?: number;
+  /** Einschlägige Rechtsgrundlage der Hauptfrage, erst nach der Auflösung sichtbar. */
+  mainLegalBasis?: string;
 }
 
 /** Rolle einer Frage im Fragenblock. */
@@ -155,8 +163,15 @@ export interface ExamQuestion {
   role: ExamQuestionRole;
   /** Position im Gesamtdurchlauf (1-basiert). */
   position: number;
+  /** Schwierigkeit der konkreten Frage (1–5). */
+  difficulty: number;
   question: string;
   correctAnswer: string;
+  /**
+   * Einschlägige Rechtsgrundlage. Wird bewusst nicht unter den fünf
+   * Antwortmöglichkeiten geführt, sondern erst nach der Auflösung angezeigt.
+   */
+  legalBasis?: string;
   /** Genau fünf Antwortmöglichkeiten (1 richtig, 4 Distraktoren), gemischt. */
   options: ExamAnswerOption[];
   source: OralExamSource;

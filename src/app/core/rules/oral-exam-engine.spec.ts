@@ -3,6 +3,7 @@ import {
   ORAL_EXAM_PASS_PERCENT,
   buildExam,
   evaluateExam,
+  questionDifficulty,
   questionText,
   validatePool,
   validatePoolQuality,
@@ -10,6 +11,13 @@ import {
 import { ORAL_EXAM_POOL } from '../data/oral-exam-authored.data';
 import { ORAL_EXAM_QUESTIONS } from '../data/oral-exam-questions.data';
 import { ExamResponse, OralExam, OralExamPoolBlock } from '../models';
+
+const NORM_PATTERN = /§\s*\d|Art\.\s*\d/;
+
+function brokenCorrectAnswer(entry: OralExamPoolBlock): string {
+  const block = ORAL_EXAM_QUESTIONS.find((q) => q.id === entry.blockId)!;
+  return entry.answerOverride ?? block.correctAnswer;
+}
 
 /** Deterministische Zufallsfunktion (immer 0 → immer das erste Element). */
 const first = () => 0;
@@ -291,6 +299,133 @@ describe('oral-exam-engine', () => {
       expect(questionText(block, entry, 'FOLGEFRAGE_1')).toBe(
         entry.followUp1.question ?? block.followUp1,
       );
+    });
+
+    it('bemängelt eine Paragraphenangabe in der richtigen Antwort', () => {
+      const idx = ORAL_EXAM_POOL.findIndex((entry) => entry.blockId === 'fragen-218');
+      const broken = [...ORAL_EXAM_POOL];
+      broken[idx] = {
+        ...broken[idx],
+        followUp1: {
+          ...broken[idx].followUp1,
+          answer: 'Nach § 859 BGB darf sich der Besitzer gegen verbotene Eigenmacht wehren.',
+        },
+      };
+      const issues = validatePoolQuality(ORAL_EXAM_QUESTIONS, broken);
+      expect(issues.some((issue) => issue.kind === 'PARAGRAPH_IN_CORRECT_ANSWER')).toBe(true);
+    });
+
+    it('bemängelt einen extremen Distraktor', () => {
+      const idx = ORAL_EXAM_POOL.findIndex((entry) => entry.blockId === 'fragen-218');
+      const broken = [...ORAL_EXAM_POOL];
+      broken[idx] = {
+        ...broken[idx],
+        main: {
+          ...broken[idx].main,
+          distractors: [
+            'Der Besitzdiener ist für die Ausübung der tatsächlichen Gewalt gar nicht verantwortlich.',
+            ...broken[idx].main.distractors.slice(0, 3),
+          ],
+        },
+      };
+      const issues = validatePoolQuality(ORAL_EXAM_QUESTIONS, broken);
+      expect(issues.some((issue) => issue.kind === 'EXTREME_DISTRACTOR')).toBe(true);
+    });
+
+    it('bemängelt einen Distraktor, der die richtige Antwort nur umkehrt', () => {
+      const idx = ORAL_EXAM_POOL.findIndex((entry) => entry.blockId === 'fragen-218');
+      const correct = brokenCorrectAnswer(ORAL_EXAM_POOL[idx]);
+      const broken = [...ORAL_EXAM_POOL];
+      broken[idx] = {
+        ...broken[idx],
+        main: {
+          ...broken[idx].main,
+          distractors: [
+            `Es gilt gerade nicht: ${correct}`,
+            ...broken[idx].main.distractors.slice(0, 3),
+          ],
+        },
+      };
+      const issues = validatePoolQuality(ORAL_EXAM_QUESTIONS, broken);
+      expect(issues.some((issue) => issue.kind === 'MIRROR_DISTRACTOR')).toBe(true);
+    });
+
+    it('bemängelt zwei nahezu identische Antwortoptionen', () => {
+      const idx = ORAL_EXAM_POOL.findIndex((entry) => entry.blockId === 'fragen-218');
+      const correct = brokenCorrectAnswer(ORAL_EXAM_POOL[idx]);
+      const broken = [...ORAL_EXAM_POOL];
+      broken[idx] = {
+        ...broken[idx],
+        main: {
+          ...broken[idx].main,
+          distractors: [
+            correct,
+            ...broken[idx].main.distractors.slice(0, 3),
+          ],
+        },
+      };
+      const issues = validatePoolQuality(ORAL_EXAM_QUESTIONS, broken);
+      expect(
+        issues.some(
+          (issue) => issue.kind === 'AMBIGUOUS_OPTIONS' || issue.kind === 'DUPLICATE_OPTION',
+        ),
+      ).toBe(true);
+    });
+
+    it('bemängelt ein fehlendes Themengebiet', () => {
+      const idx = ORAL_EXAM_QUESTIONS.findIndex((q) => q.id === 'fragen-218');
+      const broken = ORAL_EXAM_QUESTIONS.map((q, i) =>
+        i === idx ? { ...q, categoryLabel: '' } : q,
+      );
+      const issues = validatePoolQuality(broken, ORAL_EXAM_POOL);
+      expect(issues.some((issue) => issue.kind === 'MISSING_CATEGORY')).toBe(true);
+    });
+
+    it('bemängelt einen ungültigen Schwierigkeitsgrad', () => {
+      const idx = ORAL_EXAM_POOL.findIndex((entry) => entry.blockId === 'fragen-218');
+      const broken = [...ORAL_EXAM_POOL];
+      broken[idx] = { ...broken[idx], mainDifficulty: 9 };
+      const issues = validatePoolQuality(ORAL_EXAM_QUESTIONS, broken);
+      expect(issues.some((issue) => issue.kind === 'INVALID_DIFFICULTY')).toBe(true);
+    });
+
+    it('bemängelt ein Akronym, das nur in der richtigen Antwort steht', () => {
+      const idx = ORAL_EXAM_POOL.findIndex((entry) => entry.blockId === 'fragen-218');
+      const broken = [...ORAL_EXAM_POOL];
+      broken[idx] = {
+        ...broken[idx],
+        followUp1: {
+          ...broken[idx].followUp1,
+          answer: 'Der Besitzdiener ist nach der DGUV für die tatsächliche Gewalt verantwortlich.',
+        },
+      };
+      const issues = validatePoolQuality(ORAL_EXAM_QUESTIONS, broken);
+      expect(issues.some((issue) => issue.kind === 'ACRONYM_LEAK')).toBe(true);
+    });
+
+    it('vergibt jeder Frage eine gültige Schwierigkeit zwischen 1 und 5', () => {
+      const exam = buildExam(ORAL_EXAM_QUESTIONS, ORAL_EXAM_POOL, first, 'test');
+      for (const question of exam.questions) {
+        expect(Number.isInteger(question.difficulty)).toBe(true);
+        expect(question.difficulty).toBeGreaterThanOrEqual(1);
+        expect(question.difficulty).toBeLessThanOrEqual(5);
+      }
+    });
+
+    it('liefert die Schwierigkeit über questionDifficulty, mit Override', () => {
+      const entry = ORAL_EXAM_POOL.find((e) => e.blockId === 'fragen-029')!;
+      const block = ORAL_EXAM_QUESTIONS.find((q) => q.id === 'fragen-029')!;
+      expect(questionDifficulty(block, entry, 'HAUPTFRAGE')).toBe(4);
+      expect(questionDifficulty(block, entry, 'FOLGEFRAGE_1')).toBe(block.difficulty);
+    });
+
+    it('führt die Rechtsgrundlage getrennt von den Antwortoptionen', () => {
+      const exam = buildExam(ORAL_EXAM_QUESTIONS, ORAL_EXAM_POOL, first, 'test');
+      for (const question of exam.questions) {
+        for (const option of question.options) {
+          expect(NORM_PATTERN.test(option.text)).toBe(false);
+        }
+      }
     });
   });
 });
