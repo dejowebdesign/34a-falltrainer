@@ -34,18 +34,20 @@ export const BACK_TO_TOP_THRESHOLD = 400;
         right: 24px;
         bottom: 24px;
         z-index: 60;
-        width: 48px;
-        height: 48px;
-        color: var(--ft-primary);
-        background: var(--ft-glass-surface);
+        width: 50px;
+        height: 50px;
+        color: var(--ft-accent-strong);
+        background: var(--ft-glass-strong);
         backdrop-filter: blur(14px) saturate(140%);
         -webkit-backdrop-filter: blur(14px) saturate(140%);
         border: 1px solid var(--ft-glass-border);
         box-shadow: var(--ft-shadow);
+        border-radius: 50%;
+        animation: btt-in 200ms var(--ft-ease);
         transition:
-          transform 200ms ease,
-          background-color 200ms ease,
-          border-color 200ms ease;
+          transform var(--ft-transition),
+          background-color var(--ft-transition),
+          border-color var(--ft-transition);
       }
       .back-to-top:hover {
         transform: translateY(-3px);
@@ -54,6 +56,16 @@ export const BACK_TO_TOP_THRESHOLD = 400;
       .back-to-top:focus-visible {
         outline: 3px solid var(--ft-accent);
         outline-offset: 2px;
+      }
+      @keyframes btt-in {
+        from {
+          opacity: 0;
+          transform: translateY(8px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
       }
       @media (max-width: 600px) {
         .back-to-top {
@@ -64,6 +76,7 @@ export const BACK_TO_TOP_THRESHOLD = 400;
       @media (prefers-reduced-motion: reduce) {
         .back-to-top {
           transition: none;
+          animation: none;
         }
         .back-to-top:hover {
           transform: none;

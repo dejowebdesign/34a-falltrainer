@@ -1,16 +1,22 @@
 import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { ScenarioService } from '../../core/services/scenario.service';
 
+/**
+ * Übersicht aller Fälle als moderne, nummerierte Cards.
+ *
+ * Auf der Übersicht werden bewusst nur Nummer, Titel und Kurzeinordnung
+ * gezeigt – die vollständigen Fälle erst auf der Detailseite.
+ */
 @Component({
   selector: 'app-scenario-list',
-  imports: [RouterLink, MatCardModule, MatButtonModule, MatIconModule],
+  imports: [RouterLink, MatButtonModule, MatIconModule],
   template: `
-    <div class="ft-container page">
-      <header class="page-head">
+    <div class="ft-container ft-page">
+      <header class="ft-page-head">
+        <span class="ft-eyebrow">Fallbeispiele</span>
         <h1>Fälle</h1>
         <p>
           Wählen Sie einen Fall. Sie durchlaufen ihn in drei Stufen und erhalten am Ende eine
@@ -19,65 +25,123 @@ import { ScenarioService } from '../../core/services/scenario.service';
       </header>
 
       <div class="grid">
-        @for (scenario of scenarios; track scenario.id) {
-          <mat-card appearance="outlined" class="scenario-card">
-            <mat-card-header>
-              <mat-card-title>{{ scenario.title }}</mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-              <p>{{ scenario.description }}</p>
-            </mat-card-content>
-            <mat-card-actions align="end">
-              <a mat-flat-button color="primary" [routerLink]="['/scenarios', scenario.id]">
-                Fall öffnen
-                <mat-icon aria-hidden="true">arrow_forward</mat-icon>
-              </a>
-            </mat-card-actions>
-          </mat-card>
+        @for (scenario of scenarios; track scenario.id; let i = $index) {
+          <a class="case-card" [routerLink]="['/scenarios', scenario.id]">
+            <span class="case-number">Fall {{ pad(i + 1) }}</span>
+            <h2 class="case-title">{{ scenario.title }}</h2>
+            <p class="case-desc">{{ scenario.description }}</p>
+            <span class="case-tags">
+              <span class="ft-chip">3 Stufen</span>
+              <span class="ft-chip">Musterlösung</span>
+            </span>
+            <span class="case-cta">
+              Öffnen
+              <mat-icon aria-hidden="true">arrow_forward</mat-icon>
+            </span>
+          </a>
         }
       </div>
     </div>
   `,
   styles: [
     `
-      .page {
-        padding-block: 2rem 3.5rem;
-        display: grid;
-        gap: 1.5rem;
-      }
-      .page-head h1 {
-        margin: 0 0 0.5rem;
-        font-size: 1.9rem;
-      }
-      .page-head p {
-        margin: 0;
-        color: var(--ft-muted);
-        max-width: 720px;
-        line-height: 1.55;
-      }
       .grid {
         display: grid;
-        gap: 1rem;
+        gap: 1.1rem;
         grid-template-columns: 1fr;
       }
-      @media (min-width: 768px) {
+      @media (min-width: 700px) {
         .grid {
-          grid-template-columns: repeat(2, 1fr);
+          grid-template-columns: repeat(2, minmax(0, 1fr));
         }
       }
-      .scenario-card {
-        border-radius: 14px;
-        height: 100%;
+      @media (min-width: 1040px) {
+        .grid {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+      }
+      .case-card {
+        position: relative;
         display: flex;
         flex-direction: column;
+        gap: 0.6rem;
+        padding: 1.5rem;
+        border: 1px solid var(--ft-border);
+        border-radius: var(--ft-radius-lg);
+        background: var(--ft-surface);
+        box-shadow: var(--ft-shadow-sm);
+        text-decoration: none;
+        color: var(--ft-text);
+        overflow: hidden;
+        transition:
+          transform var(--ft-transition),
+          border-color var(--ft-transition),
+          box-shadow var(--ft-transition);
       }
-      .scenario-card mat-card-content {
-        flex: 1 1 auto;
+      .case-card::before {
+        content: '';
+        position: absolute;
+        inset: 0 auto 0 0;
+        width: 4px;
+        background: linear-gradient(180deg, var(--ft-accent), var(--ft-secondary));
+        opacity: 0;
+        transition: opacity var(--ft-transition);
       }
-      .scenario-card p {
+      .case-card:hover {
+        transform: translateY(-4px);
+        border-color: var(--ft-accent);
+        box-shadow: var(--ft-shadow);
+      }
+      .case-card:hover::before {
+        opacity: 1;
+      }
+      .case-number {
+        font-size: 0.78rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--ft-accent);
+      }
+      .case-title {
+        margin: 0;
+        font-size: 1.22rem;
+        line-height: 1.25;
+      }
+      .case-desc {
+        margin: 0;
         color: var(--ft-muted);
         line-height: 1.55;
-        margin: 0.25rem 0 0;
+        flex: 1 1 auto;
+      }
+      .case-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+      }
+      .case-cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        margin-top: 0.35rem;
+        font-weight: 600;
+        color: var(--ft-accent-strong);
+      }
+      .case-cta mat-icon {
+        font-size: 18px;
+        width: 18px;
+        height: 18px;
+        transition: transform var(--ft-transition);
+      }
+      .case-card:hover .case-cta mat-icon {
+        transform: translateX(3px);
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .case-card:hover {
+          transform: none;
+        }
+        .case-card:hover .case-cta mat-icon {
+          transform: none;
+        }
       }
     `,
   ],
@@ -85,4 +149,8 @@ import { ScenarioService } from '../../core/services/scenario.service';
 export class ScenarioListComponent {
   private readonly scenarioService = inject(ScenarioService);
   readonly scenarios = this.scenarioService.getScenarios();
+
+  pad(value: number): string {
+    return value.toString().padStart(2, '0');
+  }
 }

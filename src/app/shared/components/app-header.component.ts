@@ -24,7 +24,9 @@ export const HEADER_SCROLL_THRESHOLD = 16;
     <mat-toolbar class="app-toolbar" role="banner" [class.glass]="isScrolled()">
       <div class="ft-container toolbar-inner">
         <a routerLink="/" class="brand" aria-label="34a Falltrainer Startseite">
-          <mat-icon aria-hidden="true">gavel</mat-icon>
+          <span class="brand-mark" aria-hidden="true">
+            <mat-icon>gavel</mat-icon>
+          </span>
           <span class="brand-text">
             <strong>34a Falltrainer</strong>
             <small>Sachkundeprüfung § 34a GewO</small>
@@ -74,7 +76,7 @@ export const HEADER_SCROLL_THRESHOLD = 16;
         left: -9999px;
         top: 0;
         background: var(--ft-accent);
-        color: var(--ft-on-primary);
+        color: var(--ft-on-accent);
         padding: 0.75rem 1rem;
         z-index: 1000;
       }
@@ -82,26 +84,26 @@ export const HEADER_SCROLL_THRESHOLD = 16;
         left: 0;
       }
       .app-toolbar {
-        background: var(--ft-header);
-        color: #fff;
+        background: transparent;
+        color: var(--ft-header-text);
         height: auto;
-        min-height: 68px;
-        padding-block: 0.5rem;
-        box-shadow: var(--ft-shadow);
+        min-height: var(--ft-header-height);
+        padding-block: 0.4rem;
         border-bottom: 1px solid transparent;
         transition:
-          background-color 200ms ease,
-          backdrop-filter 200ms ease,
-          -webkit-backdrop-filter 200ms ease,
-          box-shadow 200ms ease,
-          border-color 200ms ease;
+          background-color var(--ft-transition),
+          backdrop-filter var(--ft-transition),
+          -webkit-backdrop-filter var(--ft-transition),
+          border-color var(--ft-transition),
+          box-shadow var(--ft-transition);
       }
+      /* Beim Scrollen: semi-transparente Surface + Backdrop-Blur. */
       .app-toolbar.glass {
         background: var(--ft-header-glass);
-        backdrop-filter: blur(16px) saturate(140%);
-        -webkit-backdrop-filter: blur(16px) saturate(140%);
-        border-bottom-color: var(--ft-header-glass-border);
-        box-shadow: 0 4px 18px rgba(15, 23, 42, 0.18);
+        backdrop-filter: blur(18px) saturate(150%);
+        -webkit-backdrop-filter: blur(18px) saturate(150%);
+        border-bottom-color: var(--ft-header-border);
+        box-shadow: 0 10px 30px -22px rgba(15, 23, 42, 0.5);
       }
       .toolbar-inner {
         display: flex;
@@ -113,9 +115,26 @@ export const HEADER_SCROLL_THRESHOLD = 16;
       .brand {
         display: flex;
         align-items: center;
-        gap: 0.6rem;
-        color: #fff;
+        gap: 0.7rem;
+        color: var(--ft-header-text);
         text-decoration: none;
+      }
+      .brand-mark {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+        background: linear-gradient(140deg, var(--ft-accent) 0%, var(--ft-secondary) 100%);
+        color: var(--ft-on-accent);
+        box-shadow: var(--ft-shadow-sm);
+        flex: 0 0 auto;
+      }
+      .brand-mark mat-icon {
+        font-size: 22px;
+        width: 22px;
+        height: 22px;
       }
       .brand-text {
         display: flex;
@@ -123,12 +142,13 @@ export const HEADER_SCROLL_THRESHOLD = 16;
         line-height: 1.15;
       }
       .brand-text strong {
-        font-size: 1.1rem;
-        font-weight: 600;
+        font-size: 1.08rem;
+        font-weight: 700;
+        letter-spacing: -0.01em;
       }
       .brand-text small {
         font-size: 0.72rem;
-        opacity: 0.85;
+        color: var(--ft-muted);
       }
       .toolbar-actions {
         display: flex;
@@ -137,25 +157,33 @@ export const HEADER_SCROLL_THRESHOLD = 16;
       }
       .nav {
         display: flex;
-        gap: 0.25rem;
+        gap: 0.15rem;
       }
       .nav a {
-        color: #fff;
+        color: var(--ft-header-text);
+        font-weight: 500;
+        border-radius: var(--ft-radius-sm);
       }
       .nav a.active {
-        background: rgba(255, 255, 255, 0.16);
+        background: var(--ft-accent-soft);
+        color: var(--ft-accent-strong);
       }
       .theme-toggle {
-        color: #fff;
+        color: var(--ft-header-text);
       }
-      @media (prefers-reduced-motion: reduce) {
-        .app-toolbar {
-          transition: none;
-        }
-      }
-      @media (max-width: 480px) {
+      @media (max-width: 640px) {
         .brand-text small {
           display: none;
+        }
+        .nav a {
+          padding-inline: 0.6rem;
+          font-size: 0.88rem;
+        }
+      }
+      @media (max-width: 420px) {
+        .nav a {
+          padding-inline: 0.45rem;
+          font-size: 0.82rem;
         }
       }
     `,

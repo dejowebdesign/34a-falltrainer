@@ -16,9 +16,9 @@ import { ORAL_EXAM_CATEGORIES, ORAL_EXAM_CATEGORY_LABELS } from '../../core/mode
   selector: 'app-oral-exam-intro',
   imports: [MatButtonModule, MatIconModule, MatCardModule],
   template: `
-    <div class="ft-container page">
-      <header class="page-head">
-        <span class="eyebrow">Mündliche Prüfungssimulation</span>
+    <div class="ft-container ft-page">
+      <header class="ft-page-head">
+        <span class="ft-eyebrow">Mündliche Prüfungssimulation</span>
         <h1>Prüfungssimulation § 34a GewO</h1>
         <p>
           Simulieren Sie die mündliche Sachkundeprüfung: In jedem der neun Themengebiete wird
@@ -104,72 +104,62 @@ import { ORAL_EXAM_CATEGORIES, ORAL_EXAM_CATEGORY_LABELS } from '../../core/mode
   `,
   styles: [
     `
-      .page {
-        padding-block: 2rem 3.5rem;
-        display: grid;
-        gap: 1.5rem;
-        max-width: 900px;
-      }
-      .eyebrow {
-        display: inline-block;
-        font-size: 0.8rem;
-        font-weight: 600;
-        letter-spacing: 0.06em;
-        text-transform: uppercase;
-        color: var(--ft-accent);
-      }
-      .page-head h1 {
-        margin: 0.35rem 0 0.6rem;
-        font-size: 2rem;
-      }
-      .page-head p {
-        margin: 0;
-        color: var(--ft-muted);
-        line-height: 1.6;
-        max-width: 720px;
-      }
       .facts {
         display: grid;
         gap: 1rem;
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
       @media (min-width: 640px) {
         .facts {
-          grid-template-columns: repeat(4, 1fr);
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+      }
+      @media (min-width: 980px) {
+        .facts {
+          grid-template-columns: repeat(5, minmax(0, 1fr));
         }
       }
       .fact {
         background: var(--ft-surface);
         border: 1px solid var(--ft-border);
-        border-radius: 14px;
-        padding: 1rem;
+        border-radius: var(--ft-radius);
+        padding: 1.1rem;
         display: grid;
-        gap: 0.2rem;
+        gap: 0.25rem;
         justify-items: start;
+        box-shadow: var(--ft-shadow-sm);
+        transition:
+          transform var(--ft-transition),
+          border-color var(--ft-transition);
+      }
+      .fact:hover {
+        transform: translateY(-2px);
+        border-color: var(--ft-accent);
       }
       .fact mat-icon {
         color: var(--ft-accent);
       }
       .fact strong {
-        font-size: 1.5rem;
+        font-size: 1.6rem;
+        line-height: 1.1;
       }
       .fact span {
         color: var(--ft-muted);
         font-size: 0.9rem;
       }
       .panel {
-        border-radius: 14px;
+        border-radius: var(--ft-radius-lg);
       }
       .steps {
         margin: 0.5rem 0 0;
         padding-left: 1.25rem;
         display: grid;
-        gap: 0.6rem;
-        line-height: 1.55;
+        gap: 0.65rem;
+        line-height: 1.6;
       }
       .topics-block h2 {
-        font-size: 1.2rem;
-        margin: 0 0 0.75rem;
+        font-size: 1.25rem;
+        margin: 0 0 0.85rem;
       }
       .topics {
         list-style: none;
@@ -183,7 +173,7 @@ import { ORAL_EXAM_CATEGORIES, ORAL_EXAM_CATEGORY_LABELS } from '../../core/mode
         background: var(--ft-primary-soft);
         color: var(--ft-text);
         border-radius: 999px;
-        padding: 0.35rem 0.85rem;
+        padding: 0.4rem 0.9rem;
         font-size: 0.9rem;
       }
       .actions {
@@ -191,7 +181,12 @@ import { ORAL_EXAM_CATEGORIES, ORAL_EXAM_CATEGORY_LABELS } from '../../core/mode
         justify-content: flex-start;
       }
       .start {
-        padding-inline: 1.5rem;
+        padding-inline: 1.6rem;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .fact:hover {
+          transform: none;
+        }
       }
     `,
   ],

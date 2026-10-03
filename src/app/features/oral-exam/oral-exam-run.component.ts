@@ -19,6 +19,9 @@ const ROLE_LABELS: Record<ExamQuestionRole, string> = {
   FOLGEFRAGE_2: 'Folgefrage 2',
 };
 
+/** Antwortbuchstaben für die Optionen (rein visuell). */
+const OPTION_LETTERS = ['A', 'B', 'C', 'D', 'E'];
+
 /**
  * Durchführung der mündlichen Prüfungssimulation.
  *
@@ -81,8 +84,13 @@ const ROLE_LABELS: Record<ExamQuestionRole, string> = {
               [disabled]="isLocked()"
               [attr.aria-label]="question.question"
             >
-              @for (option of question.options; track option.id) {
-                <mat-radio-button class="option" [value]="option.id">
+              @for (option of question.options; track option.id; let i = $index) {
+                <mat-radio-button
+                  class="option"
+                  [class.selected]="selectedOptionId() === option.id"
+                  [value]="option.id"
+                >
+                  <span class="option-letter" aria-hidden="true">{{ letter(i) }}</span>
                   <span class="option-text">{{ option.text }}</span>
                 </mat-radio-button>
               }
@@ -139,12 +147,18 @@ const ROLE_LABELS: Record<ExamQuestionRole, string> = {
       .page {
         padding-block: 1.5rem 3rem;
         display: grid;
-        gap: 1.25rem;
-        max-width: 820px;
+        gap: 1.35rem;
+        max-width: 860px;
       }
       .run-head {
         display: grid;
-        gap: 0.5rem;
+        gap: 0.65rem;
+        padding: 0.9rem 1.1rem;
+        border: 1px solid var(--ft-border);
+        border-radius: var(--ft-radius);
+        background: var(--ft-glass-surface);
+        backdrop-filter: blur(12px) saturate(140%);
+        -webkit-backdrop-filter: blur(12px) saturate(140%);
       }
       .run-meta {
         display: flex;
@@ -160,38 +174,42 @@ const ROLE_LABELS: Record<ExamQuestionRole, string> = {
       }
       .topic-position {
         font-weight: 700;
-        font-size: 0.95rem;
+        font-size: 0.98rem;
       }
       .position {
         color: var(--ft-muted);
         font-size: 0.9rem;
         margin: 0;
       }
+      /* Timer: kleine Glass-Capsule oben rechts. */
       .exam-timer {
         display: inline-flex;
         align-items: center;
-        gap: 0.35rem;
-        padding: 0.2rem 0.6rem;
+        gap: 0.4rem;
+        padding: 0.28rem 0.75rem;
         border-radius: 999px;
-        border: 1px solid var(--ft-border);
-        background: var(--ft-surface-2);
+        border: 1px solid var(--ft-glass-border);
+        background: var(--ft-glass-strong);
+        backdrop-filter: blur(10px) saturate(140%);
+        -webkit-backdrop-filter: blur(10px) saturate(140%);
         font-variant-numeric: tabular-nums;
-        font-size: 0.95rem;
+        font-size: 1rem;
         font-weight: 700;
         line-height: 1.4;
+        box-shadow: var(--ft-shadow-sm);
       }
       .exam-timer mat-icon {
-        font-size: 1.05rem;
-        width: 1.05rem;
-        height: 1.05rem;
+        font-size: 1.1rem;
+        width: 1.1rem;
+        height: 1.1rem;
         color: var(--ft-muted);
       }
       .exam-timer.warning {
         border-color: var(--ft-accent);
-        color: var(--ft-accent);
+        color: var(--ft-accent-strong);
       }
       .exam-timer.warning mat-icon {
-        color: var(--ft-accent);
+        color: var(--ft-accent-strong);
       }
       .exam-timer.critical {
         border-color: var(--ft-danger-border);
@@ -224,7 +242,7 @@ const ROLE_LABELS: Record<ExamQuestionRole, string> = {
           opacity: 1;
         }
         50% {
-          opacity: 0.65;
+          opacity: 0.68;
         }
       }
       @media (prefers-reduced-motion: reduce) {
@@ -237,14 +255,14 @@ const ROLE_LABELS: Record<ExamQuestionRole, string> = {
         align-items: center;
         gap: 0.4rem;
         margin: 0;
-        padding: 0.6rem 0.85rem;
-        border-radius: 10px;
+        padding: 0.7rem 0.9rem;
+        border-radius: var(--ft-radius-sm);
         background: var(--ft-danger-surface);
         color: var(--ft-danger-text);
         font-weight: 600;
       }
       .question-card {
-        border-radius: 14px;
+        border-radius: var(--ft-radius-lg);
       }
       .question-head {
         display: block;
@@ -254,7 +272,7 @@ const ROLE_LABELS: Record<ExamQuestionRole, string> = {
         flex-wrap: wrap;
         align-items: center;
         gap: 0.5rem 0.75rem;
-        margin-bottom: 0.6rem;
+        margin-bottom: 0.7rem;
       }
       .meta-topic,
       .meta-difficulty,
@@ -264,7 +282,7 @@ const ROLE_LABELS: Record<ExamQuestionRole, string> = {
         letter-spacing: 0.06em;
         text-transform: uppercase;
         border-radius: 999px;
-        padding: 0.2rem 0.6rem;
+        padding: 0.22rem 0.65rem;
         line-height: 1.4;
       }
       .meta-topic {
@@ -277,36 +295,110 @@ const ROLE_LABELS: Record<ExamQuestionRole, string> = {
         color: var(--ft-text);
       }
       .meta-role {
-        color: var(--ft-accent);
+        color: var(--ft-accent-strong);
       }
       .question-title {
-        font-size: 1.3rem;
-        line-height: 1.4;
+        font-size: clamp(1.2rem, 2.4vw, 1.45rem);
+        line-height: 1.45;
         white-space: normal;
       }
       .options {
         display: grid;
-        gap: 0.5rem;
-        margin-top: 1rem;
+        gap: 0.6rem;
+        margin-top: 1.15rem;
       }
+      /* Jede Antwort als große, klickbare Fläche. */
       .option {
-        display: block;
+        display: flex;
+        align-items: flex-start;
+        width: 100%;
         border: 1px solid var(--ft-border);
-        border-radius: 12px;
-        padding: 0.75rem 0.9rem;
+        border-radius: var(--ft-radius);
+        padding: 0.95rem 1.1rem;
+        background: var(--ft-surface);
+        transition:
+          border-color var(--ft-transition),
+          background-color var(--ft-transition),
+          box-shadow var(--ft-transition);
+      }
+      .option:hover {
+        border-color: var(--ft-border-strong);
         background: var(--ft-surface-2);
+      }
+      .option.selected {
+        border-color: var(--ft-accent);
+        background: var(--ft-accent-soft);
+        box-shadow: 0 0 0 1px var(--ft-accent) inset;
+      }
+      .option-letter {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 30px;
+        height: 30px;
+        flex: 0 0 auto;
+        margin-right: 0.85rem;
+        border-radius: 50%;
+        background: var(--ft-surface-2);
+        border: 1px solid var(--ft-border);
+        font-weight: 700;
+        font-size: 0.85rem;
+        color: var(--ft-muted);
+      }
+      .option.selected .option-letter {
+        background: var(--ft-accent);
+        border-color: var(--ft-accent);
+        color: var(--ft-on-accent);
       }
       .option-text {
         white-space: normal;
-        line-height: 1.5;
+        line-height: 1.55;
+        padding-top: 0.15rem;
       }
       .run-actions {
         display: flex;
         justify-content: space-between;
         gap: 1rem;
       }
+      /* Radio-Kreis visuell ausblenden, aber fokussierbar halten (A11y). */
       :host ::ng-deep .option .mdc-form-field {
         width: 100%;
+        align-items: flex-start;
+      }
+      :host ::ng-deep .option .mdc-radio {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
+        border: 0;
+        opacity: 0;
+      }
+      :host ::ng-deep .option .mdc-label {
+        padding-left: 0;
+        width: 100%;
+      }
+      .option {
+        position: relative;
+      }
+      .option:focus-within {
+        outline: 3px solid var(--ft-accent);
+        outline-offset: 2px;
+      }
+      @media (max-width: 560px) {
+        .run-meta {
+          gap: 0.5rem;
+        }
+        .run-meta-right {
+          width: 100%;
+          justify-content: space-between;
+        }
+        .option {
+          padding: 0.85rem 0.9rem;
+        }
       }
     `,
   ],
@@ -382,6 +474,10 @@ export class OralExamRunComponent {
   roleLabel(): string {
     const question = this.currentQuestion();
     return question ? ROLE_LABELS[question.role] : '';
+  }
+
+  letter(index: number): string {
+    return OPTION_LETTERS[index] ?? '';
   }
 
   select(optionId: string): void {

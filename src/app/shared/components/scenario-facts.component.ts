@@ -42,27 +42,33 @@ import { Scenario } from '../../core/models';
   styles: [
     `
       .facts-card {
-        border-radius: 14px;
+        border-radius: var(--ft-radius-lg);
       }
       .case-details {
-        margin: 0.25rem 0 1rem;
+        margin: 0.25rem 0 1.15rem;
         border: 1px solid var(--ft-border);
-        border-radius: 10px;
+        border-left: 3px solid var(--ft-accent);
+        border-radius: var(--ft-radius-sm);
         background: var(--ft-surface-2);
-        padding: 0.6rem 0.85rem;
+        padding: 0.75rem 1rem;
       }
       .case-details summary {
         cursor: pointer;
-        color: var(--ft-primary);
+        color: var(--ft-accent-strong);
         font-weight: 600;
       }
       .case-text {
-        margin: 0.6rem 0 0;
-        line-height: 1.6;
+        margin: 0.7rem 0 0;
+        line-height: 1.7;
+        font-size: 1.02rem;
       }
       .facts-title {
-        font-size: 1rem;
-        margin: 0 0 0.5rem;
+        margin: 0 0 0.6rem;
+        color: var(--ft-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        font-size: 0.78rem;
+        font-weight: 700;
       }
       .facts {
         list-style: none;
@@ -73,16 +79,17 @@ import { Scenario } from '../../core/models';
       }
       .facts li {
         display: flex;
-        gap: 0.5rem;
+        gap: 0.6rem;
         align-items: flex-start;
-        padding: 0.6rem 0.75rem;
-        border-radius: 10px;
+        padding: 0.7rem 0.85rem;
+        border-radius: var(--ft-radius-sm);
         background: var(--ft-surface-2);
         border: 1px solid var(--ft-border);
+        line-height: 1.5;
       }
       .facts li.relevant {
-        background: var(--ft-primary-soft);
-        border-color: var(--ft-primary);
+        background: var(--ft-accent-soft);
+        border-color: var(--ft-accent);
       }
       .fact-icon {
         font-size: 18px;
