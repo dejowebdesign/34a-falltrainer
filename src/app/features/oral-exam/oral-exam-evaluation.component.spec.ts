@@ -109,4 +109,32 @@ describe('OralExamEvaluationComponent', () => {
     expect(questionsWithExplanation).toBeGreaterThan(0);
     expect(element.querySelectorAll('.q-explanation').length).toBeGreaterThan(0);
   });
+
+  it('zeigt zu jeder Frage eine gültige Schwierigkeit an', async () => {
+    await create();
+    answerAll(true);
+    fixture.detectChanges();
+    const difficultyLabels = [...element.querySelectorAll('.q-difficulty')];
+    expect(difficultyLabels.length).toBe(27);
+    for (const label of difficultyLabels) {
+      const match = /Schwierigkeit (\d)/.exec(label.textContent ?? '');
+      expect(match).not.toBeNull();
+      const level = Number(match![1]);
+      expect(level).toBeGreaterThanOrEqual(1);
+      expect(level).toBeLessThanOrEqual(5);
+    }
+  });
+
+  it('führt die Rechtsgrundlage getrennt von den Antwortoptionen', async () => {
+    await create();
+    answerAll(true);
+    fixture.detectChanges();
+    const norm = /§\s*\d|Art\.\s*\d/;
+    for (const question of service.exam()!.questions) {
+      for (const option of question.options) {
+        expect(norm.test(option.text)).toBe(false);
+      }
+    }
+    expect(element.textContent).toContain('Rechtsgrundlage:');
+  });
 });

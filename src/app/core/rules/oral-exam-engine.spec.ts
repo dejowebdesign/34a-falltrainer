@@ -403,6 +403,67 @@ describe('oral-exam-engine', () => {
       expect(issues.some((issue) => issue.kind === 'ACRONYM_LEAK')).toBe(true);
     });
 
+    it('bemängelt einen Fachbegriff, der nur in der richtigen Antwort steht', () => {
+      const idx = ORAL_EXAM_POOL.findIndex((entry) => entry.blockId === 'fragen-218');
+      const broken = [...ORAL_EXAM_POOL];
+      broken[idx] = {
+        ...broken[idx],
+        questionOverride: 'Welche Aussage zur Besitzdienerstellung trifft zu?',
+        answerOverride:
+          'Der Besitzdienerstellung liegt die tatsächliche Gewalt für einen anderen zugrunde.',
+        main: {
+          ...broken[idx].main,
+          distractors: [
+            'Die tatsächliche Gewalt wird dabei im eigenen Namen und für sich selbst ausgeübt.',
+            'Die tatsächliche Gewalt wird dabei aufgrund eines dinglichen Rechts ausgeübt.',
+            'Die tatsächliche Gewalt wird dabei nur vorübergehend und ohne Weisung ausgeübt.',
+            'Die tatsächliche Gewalt wird dabei ausschließlich durch den Eigentümer selbst ausgeübt.',
+          ],
+        },
+      };
+      const issues = validatePoolQuality(ORAL_EXAM_QUESTIONS, broken);
+      expect(issues.some((issue) => issue.kind === 'KEYWORD_LEAK')).toBe(true);
+    });
+
+    it('bemängelt eine Normangabe in der Antwort ohne Norm in der Frage', () => {
+      const idx = ORAL_EXAM_POOL.findIndex((entry) => entry.blockId === 'fragen-218');
+      const broken = [...ORAL_EXAM_POOL];
+      broken[idx] = {
+        ...broken[idx],
+        mainDifficulty: undefined,
+        followUp1: {
+          ...broken[idx].followUp1,
+          question: 'Welche Aussage trifft auf die Selbsthilfe des Besitzers zu?',
+          answer:
+            'Nach § 859 BGB darf sich der Besitzer verbotener Eigenmacht mit Gewalt erwehren.',
+        },
+      };
+      const issues = validatePoolQuality(ORAL_EXAM_QUESTIONS, broken);
+      expect(issues.some((issue) => issue.kind === 'NORM_MISSING_IN_QUESTION')).toBe(true);
+    });
+
+    it('bemängelt die veraltete sichtbare Bezeichnung „Technik“', () => {
+      const idx = ORAL_EXAM_QUESTIONS.findIndex((q) => q.id === 'fragen-218');
+      const broken = ORAL_EXAM_QUESTIONS.map((q, i) =>
+        i === idx ? { ...q, categoryLabel: 'Technik' } : q,
+      );
+      const issues = validatePoolQuality(broken, ORAL_EXAM_POOL);
+      expect(issues.some((issue) => issue.kind === 'LEGACY_CATEGORY_LABEL')).toBe(true);
+    });
+
+    it('bemängelt einen Block, dessen drei Fragen dieselbe Schwierigkeit tragen', () => {
+      const idx = ORAL_EXAM_POOL.findIndex((entry) => entry.blockId === 'fragen-218');
+      const broken = [...ORAL_EXAM_POOL];
+      broken[idx] = {
+        ...broken[idx],
+        mainDifficulty: 3,
+        followUp1: { ...broken[idx].followUp1, difficulty: 3 },
+        followUp2: { ...broken[idx].followUp2, difficulty: 3 },
+      };
+      const issues = validatePoolQuality(ORAL_EXAM_QUESTIONS, broken);
+      expect(issues.some((issue) => issue.kind === 'DIFFICULTY_VARIETY')).toBe(true);
+    });
+
     it('vergibt jeder Frage eine gültige Schwierigkeit zwischen 1 und 5', () => {
       const exam = buildExam(ORAL_EXAM_QUESTIONS, ORAL_EXAM_POOL, first, 'test');
       for (const question of exam.questions) {
@@ -415,8 +476,8 @@ describe('oral-exam-engine', () => {
     it('liefert die Schwierigkeit über questionDifficulty, mit Override', () => {
       const entry = ORAL_EXAM_POOL.find((e) => e.blockId === 'fragen-029')!;
       const block = ORAL_EXAM_QUESTIONS.find((q) => q.id === 'fragen-029')!;
-      expect(questionDifficulty(block, entry, 'HAUPTFRAGE')).toBe(4);
-      expect(questionDifficulty(block, entry, 'FOLGEFRAGE_1')).toBe(block.difficulty);
+      expect(questionDifficulty(block, entry, 'HAUPTFRAGE')).toBe(3);
+      expect(questionDifficulty(block, entry, 'FOLGEFRAGE_1')).toBe(3);
     });
 
     it('führt die Rechtsgrundlage getrennt von den Antwortoptionen', () => {
@@ -427,5 +488,62 @@ describe('oral-exam-engine', () => {
         }
       }
     });
+  });
+
+  describe('Randomisierung', () => {
+    const seeded = (seed: number): (() => number) => {
+      let state = seed >>> 0;
+      return () => {
+        state = (state * 1664525 + 1013904223) >>> 0;
+        return (state >>> 8) / 0x1000000;
+      };
+    };
+
+    function run(seed: number): OralExam {
+      return buildExam(ORAL_EXAM_QUESTIONS, ORAL_EXAM_POOL, seeded(seed), `run-${seed}`);
+    }
+
+    it('erzeugt über zehn Durchläufe unterschiedliche Schwierigkeitsfolgen', () => {
+      const sequences = new Set<string>();
+      const blockSequences = new Set<string>();
+      for (let seed = 1; seed <= 10; seed++) {
+        const exam = run(seed);
+        sequences.add(exam.questions.map((q) => q.difficulty).join(''));
+        blockSequences.add(exam.topics.map((t) => t.blockId).join(','));
+      }
+      expect(sequences.size).toBeGreaterThan(1);
+      expect(blockSequences.size).toBeGreaterThan(1);
+    });
+
+    it('mischt die Schwierigkeit innerhalb der Themengebiete', () => {
+      let mixed = 0;
+      let total = 0;
+      for (let seed = 1; seed <= 10; seed++) {
+        for (const topic of run(seed).topics) {
+          total++;
+          if (new Set(topic.questions.map((q) => q.difficulty)).size > 1) {
+            mixed++;
+          }
+        }
+      }
+      // Deutliche Mehrheit der 90 Themengebiete soll gemischte Stufen zeigen.
+      expect(mixed).toBeGreaterThan(total / 2);
+    });
+
+    it('beschriftet jede Frage mit ihrer tatsächlichen Schwierigkeit', () => {
+      const blocks = new Map(ORAL_EXAM_QUESTIONS.map((q) => [q.id, q]));
+      const entries = new Map(ORAL_EXAM_POOL.map((e) => [e.blockId, e]));
+      for (let seed = 1; seed <= 10; seed++) {
+        const exam = run(seed);
+        for (const question of exam.questions) {
+          const block = blocks.get(question.blockId)!;
+          const entry = entries.get(question.blockId)!;
+          expect(question.difficulty).toBe(questionDifficulty(block, entry, question.role));
+          expect(question.difficulty).toBeGreaterThanOrEqual(1);
+          expect(question.difficulty).toBeLessThanOrEqual(5);
+        }
+      }
+    });
+
   });
 });

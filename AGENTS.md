@@ -96,11 +96,17 @@ Rules:
 - Per category the pool must contain several candidate blocks
   (`oral-exam-authored.data.ts`) so the choice is genuinely random;
   `validatePool` enforces full category coverage and 4 distractors per question.
-- `validatePoolQuality` enforces the formal answer-quality rules (no paragraph
-  or acronym leaks in any option, no absolute/extreme/mirror/redundant/ambiguous
-  distractors, balanced option lengths, valid difficulty 1–5). It must stay
-  green against the shipped pool. Question-level difficulty and legal basis are
-  data-model fields shown in the run/evaluation UI after answering.
+- `validatePoolQuality` enforces the formal answer-quality rules (no paragraph,
+  acronym or keyword leaks in any option, no norm named only in an answer, no
+  absolute/extreme/mirror/redundant/ambiguous distractors, balanced option
+  lengths, valid difficulty 1–5, mixed difficulty within a block, no legacy
+  visible category label). It must stay green against the shipped pool.
+  Question-level difficulty and legal basis are data-model fields shown in the
+  run/evaluation UI after answering.
+- The visible label of the `Technik` category is `Sicherheitstechnik`; the
+  legacy label `Technik` is rejected by `LEGACY_CATEGORY_LABEL`.
+- `buildExam` prefers per category a difficulty level not yet used in the run,
+  so the nine topics produce a mixed difficulty sequence.
 - Source/verification flags (`QUESTIONS_TXT`, `AUTHORED_FROM_BIBEL`,
   `AUTHORED_FROM_FACHWISSEN`/`UNVERIFIED`) are data-model and audit-view only.
   They must never appear in the participant-facing exam UI.

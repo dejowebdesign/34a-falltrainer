@@ -37,7 +37,7 @@ describe('OralExamIntroComponent', () => {
       'Waffen',
       'DGUV / UVV',
       'Umgang mit Menschen',
-      'Technik',
+      'Sicherheitstechnik',
     ]) {
       expect(text).toContain(label);
     }

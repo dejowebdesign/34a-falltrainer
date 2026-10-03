@@ -2839,7 +2839,7 @@ export const ORAL_EXAM_QUESTIONS: OralExamQuestionBlock[] = [
   {
     id: "fragen-218",
     category: "Technik",
-    categoryLabel: "Technik",
+    categoryLabel: "Sicherheitstechnik",
     difficulty: 2,
     cluster: "Säulen",
     question: "Welche drei Säulen der Sicherheit gibt es?",
@@ -2852,7 +2852,7 @@ export const ORAL_EXAM_QUESTIONS: OralExamQuestionBlock[] = [
   {
     id: "fragen-219",
     category: "Technik",
-    categoryLabel: "Technik",
+    categoryLabel: "Sicherheitstechnik",
     difficulty: 2,
     cluster: "MEO",
     question: "Was bedeutet mechanische Sicherheit?",
@@ -2865,7 +2865,7 @@ export const ORAL_EXAM_QUESTIONS: OralExamQuestionBlock[] = [
   {
     id: "fragen-220",
     category: "Technik",
-    categoryLabel: "Technik",
+    categoryLabel: "Sicherheitstechnik",
     difficulty: 2,
     cluster: "MEO",
     question: "Was bedeutet elektronische Sicherheit?",
@@ -2878,7 +2878,7 @@ export const ORAL_EXAM_QUESTIONS: OralExamQuestionBlock[] = [
   {
     id: "fragen-221",
     category: "Technik",
-    categoryLabel: "Technik",
+    categoryLabel: "Sicherheitstechnik",
     difficulty: 2,
     cluster: "MEO",
     question: "Was bedeutet organisatorische Sicherheit?",
@@ -2891,7 +2891,7 @@ export const ORAL_EXAM_QUESTIONS: OralExamQuestionBlock[] = [
   {
     id: "fragen-222",
     category: "Technik",
-    categoryLabel: "Technik",
+    categoryLabel: "Sicherheitstechnik",
     difficulty: 3,
     cluster: "GMA",
     question: "Was ist eine Gefahrenmeldeanlage (GMA)?",
@@ -2904,7 +2904,7 @@ export const ORAL_EXAM_QUESTIONS: OralExamQuestionBlock[] = [
   {
     id: "fragen-223",
     category: "Technik",
-    categoryLabel: "Technik",
+    categoryLabel: "Sicherheitstechnik",
     difficulty: 3,
     cluster: "EMA",
     question: "Was ist eine Einbruchmeldeanlage (EMA)?",
@@ -2917,7 +2917,7 @@ export const ORAL_EXAM_QUESTIONS: OralExamQuestionBlock[] = [
   {
     id: "fragen-224",
     category: "Technik",
-    categoryLabel: "Technik",
+    categoryLabel: "Sicherheitstechnik",
     difficulty: 3,
     cluster: "BMA",
     question: "Was ist eine Brandmeldeanlage (BMA)?",
@@ -2930,7 +2930,7 @@ export const ORAL_EXAM_QUESTIONS: OralExamQuestionBlock[] = [
   {
     id: "fragen-225",
     category: "Technik",
-    categoryLabel: "Technik",
+    categoryLabel: "Sicherheitstechnik",
     difficulty: 4,
     cluster: "EMA",
     question: "Welche Bestandteile hat eine EMA?",
@@ -2943,7 +2943,7 @@ export const ORAL_EXAM_QUESTIONS: OralExamQuestionBlock[] = [
   {
     id: "fragen-226",
     category: "Technik",
-    categoryLabel: "Technik",
+    categoryLabel: "Sicherheitstechnik",
     difficulty: 3,
     cluster: "Alarm",
     question: "Was ist ein stiller Alarm?",
@@ -2956,7 +2956,7 @@ export const ORAL_EXAM_QUESTIONS: OralExamQuestionBlock[] = [
   {
     id: "fragen-227",
     category: "Technik",
-    categoryLabel: "Technik",
+    categoryLabel: "Sicherheitstechnik",
     difficulty: 3,
     cluster: "ZKS",
     question: "Was ist ein Zutrittskontrollsystem (ZKS)?",
@@ -2969,7 +2969,7 @@ export const ORAL_EXAM_QUESTIONS: OralExamQuestionBlock[] = [
   {
     id: "fragen-228",
     category: "Technik",
-    categoryLabel: "Technik",
+    categoryLabel: "Sicherheitstechnik",
     difficulty: 4,
     cluster: "Zeit",
     question: "Was ist Widerstandszeit?",
@@ -2982,7 +2982,7 @@ export const ORAL_EXAM_QUESTIONS: OralExamQuestionBlock[] = [
   {
     id: "fragen-229",
     category: "Technik",
-    categoryLabel: "Technik",
+    categoryLabel: "Sicherheitstechnik",
     difficulty: 4,
     cluster: "Zeit",
     question: "Was ist Interventionszeit?",
@@ -2995,7 +2995,7 @@ export const ORAL_EXAM_QUESTIONS: OralExamQuestionBlock[] = [
   {
     id: "fragen-230",
     category: "Technik",
-    categoryLabel: "Technik",
+    categoryLabel: "Sicherheitstechnik",
     difficulty: 3,
     cluster: "Verglasung",
     question: "Was ist Sicherheitsverglasung?",
@@ -3008,7 +3008,7 @@ export const ORAL_EXAM_QUESTIONS: OralExamQuestionBlock[] = [
   {
     id: "fragen-231",
     category: "Technik",
-    categoryLabel: "Technik",
+    categoryLabel: "Sicherheitstechnik",
     difficulty: 3,
     cluster: "Brandklassen",
     question: "Welche Brandklassen gibt es?",
@@ -3021,7 +3021,7 @@ export const ORAL_EXAM_QUESTIONS: OralExamQuestionBlock[] = [
   {
     id: "fragen-232",
     category: "Technik",
-    categoryLabel: "Technik",
+    categoryLabel: "Sicherheitstechnik",
     difficulty: 3,
     cluster: "Löschmittel",
     question: "Welche Löschmittel gibt es?",
@@ -3034,7 +3034,7 @@ export const ORAL_EXAM_QUESTIONS: OralExamQuestionBlock[] = [
   {
     id: "fragen-233",
     category: "Technik",
-    categoryLabel: "Technik",
+    categoryLabel: "Sicherheitstechnik",
     difficulty: 3,
     cluster: "Fettbrand",
     question: "Wie löscht man einen Fettbrand?",
@@ -3047,7 +3047,7 @@ export const ORAL_EXAM_QUESTIONS: OralExamQuestionBlock[] = [
   {
     id: "fragen-234",
     category: "Technik",
-    categoryLabel: "Technik",
+    categoryLabel: "Sicherheitstechnik",
     difficulty: 4,
     cluster: "Löscheffekt",
     question: "Was sind Löscheffekte?",
@@ -3060,7 +3060,7 @@ export const ORAL_EXAM_QUESTIONS: OralExamQuestionBlock[] = [
   {
     id: "fragen-235",
     category: "Technik",
-    categoryLabel: "Technik",
+    categoryLabel: "Sicherheitstechnik",
     difficulty: 3,
     cluster: "Vorbeugend",
     question: "Was ist vorbeugender Brandschutz?",
@@ -3073,7 +3073,7 @@ export const ORAL_EXAM_QUESTIONS: OralExamQuestionBlock[] = [
   {
     id: "fragen-236",
     category: "Technik",
-    categoryLabel: "Technik",
+    categoryLabel: "Sicherheitstechnik",
     difficulty: 3,
     cluster: "Abwehrend",
     question: "Was ist abwehrender Brandschutz?",
@@ -3086,7 +3086,7 @@ export const ORAL_EXAM_QUESTIONS: OralExamQuestionBlock[] = [
   {
     id: "fragen-237",
     category: "Technik",
-    categoryLabel: "Technik",
+    categoryLabel: "Sicherheitstechnik",
     difficulty: 4,
     cluster: "Melder",
     question: "Was ist ein Multifunktionsmelder?",
@@ -3099,7 +3099,7 @@ export const ORAL_EXAM_QUESTIONS: OralExamQuestionBlock[] = [
   {
     id: "fragen-238",
     category: "Technik",
-    categoryLabel: "Technik",
+    categoryLabel: "Sicherheitstechnik",
     difficulty: 3,
     cluster: "Schließanlage",
     question: "Was sind Schließanlagen?",
@@ -3112,7 +3112,7 @@ export const ORAL_EXAM_QUESTIONS: OralExamQuestionBlock[] = [
   {
     id: "fragen-239",
     category: "Technik",
-    categoryLabel: "Technik",
+    categoryLabel: "Sicherheitstechnik",
     difficulty: 3,
     cluster: "Schließanlage",
     question: "Was ist eine Hauptschlüsselanlage?",
@@ -3125,7 +3125,7 @@ export const ORAL_EXAM_QUESTIONS: OralExamQuestionBlock[] = [
   {
     id: "fragen-240",
     category: "Technik",
-    categoryLabel: "Technik",
+    categoryLabel: "Sicherheitstechnik",
     difficulty: 3,
     cluster: "Schließanlage",
     question: "Was ist ein Generalhauptschlüssel?",
@@ -3138,7 +3138,7 @@ export const ORAL_EXAM_QUESTIONS: OralExamQuestionBlock[] = [
   {
     id: "fragen-241",
     category: "Technik",
-    categoryLabel: "Technik",
+    categoryLabel: "Sicherheitstechnik",
     difficulty: 2,
     cluster: "Zaun",
     question: "Was ist ein Sicherheitszaun?",
@@ -3151,7 +3151,7 @@ export const ORAL_EXAM_QUESTIONS: OralExamQuestionBlock[] = [
   {
     id: "fragen-242",
     category: "Technik",
-    categoryLabel: "Technik",
+    categoryLabel: "Sicherheitstechnik",
     difficulty: 4,
     cluster: "Zaun",
     question: "Welche Anforderungen muss ein Sicherheitszaun erfüllen?",
@@ -3164,7 +3164,7 @@ export const ORAL_EXAM_QUESTIONS: OralExamQuestionBlock[] = [
   {
     id: "fragen-243",
     category: "Technik",
-    categoryLabel: "Technik",
+    categoryLabel: "Sicherheitstechnik",
     difficulty: 2,
     cluster: "Video",
     question: "Was ist eine Kameraüberwachung technisch?",
@@ -3177,7 +3177,7 @@ export const ORAL_EXAM_QUESTIONS: OralExamQuestionBlock[] = [
   {
     id: "fragen-244",
     category: "Technik",
-    categoryLabel: "Technik",
+    categoryLabel: "Sicherheitstechnik",
     difficulty: 3,
     cluster: "Video",
     question: "Welche Komponenten hat eine Videoanlage?",
