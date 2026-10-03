@@ -41,5 +41,35 @@ export const routes: Routes = [
     loadComponent: () => import('./features/result/result.component').then((m) => m.ResultComponent),
     title: '34a Falltrainer – Ergebnis',
   },
+  {
+    path: 'pruefungssimulation',
+    loadComponent: () =>
+      import('./features/oral-exam/oral-exam-intro.component').then(
+        (m) => m.OralExamIntroComponent,
+      ),
+    title: '34a Falltrainer – Prüfungssimulation',
+  },
+  {
+    path: 'pruefungssimulation/durchfuehrung',
+    loadComponent: () =>
+      import('./features/oral-exam/oral-exam-run.component').then((m) => m.OralExamRunComponent),
+    title: '34a Falltrainer – Prüfungssimulation (Durchführung)',
+  },
+  {
+    path: 'pruefungssimulation/auswertung',
+    loadComponent: () =>
+      import('./features/oral-exam/oral-exam-evaluation.component').then(
+        (m) => m.OralExamEvaluationComponent,
+      ),
+    title: '34a Falltrainer – Prüfungssimulation (Auswertung)',
+  },
+  {
+    path: 'pruefungssimulation/audit',
+    loadComponent: () =>
+      import('./features/oral-exam/oral-exam-audit.component').then(
+        (m) => m.OralExamAuditComponent,
+      ),
+    title: '34a Falltrainer – Prüfungssimulation (Audit)',
+  },
   { path: '**', redirectTo: '' },
 ];

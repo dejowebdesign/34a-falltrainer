@@ -13,6 +13,13 @@ describe('App-Routen', () => {
     expect(paths).toContain('scenarios/:id/result');
   });
 
+  it('enthält die Prüfungssimulations-Routen', () => {
+    expect(paths).toContain('pruefungssimulation');
+    expect(paths).toContain('pruefungssimulation/durchfuehrung');
+    expect(paths).toContain('pruefungssimulation/auswertung');
+    expect(paths).toContain('pruefungssimulation/audit');
+  });
+
   it('hat für jede Route einen Lazy-Loader', () => {
     for (const route of routes.filter((entry) => entry.path !== '**')) {
       expect(route.loadComponent).withContext(route.path ?? '').toBeDefined();
