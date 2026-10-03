@@ -1,29 +1,16 @@
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
-import { MatExpansionModule } from '@angular/material/expansion';
-import { ScenarioService } from '../../core/services/scenario.service';
 import { BehaviorReferenceComponent } from '../../shared/components/behavior-reference.component';
 import { LegalOrientationComponent } from '../../shared/components/legal-orientation.component';
-
-interface HomeStep {
-  number: string;
-  badge: string;
-  title: string;
-  icon: string;
-  text: string;
-}
 
 @Component({
   selector: 'app-home',
   imports: [
     RouterLink,
     MatButtonModule,
-    MatCardModule,
     MatIconModule,
-    MatExpansionModule,
     BehaviorReferenceComponent,
     LegalOrientationComponent,
   ],
@@ -43,9 +30,8 @@ interface HomeStep {
           <div class="hero-actions">
             <a mat-flat-button class="cta" routerLink="/scenarios">
               <mat-icon aria-hidden="true">play_arrow</mat-icon>
-              Fälle starten
+              Fallbeispiele starten
             </a>
-            <span class="count">{{ scenarioCount }} Fälle verfügbar</span>
           </div>
         </div>
         <div class="hero-art" aria-hidden="true">
@@ -54,59 +40,19 @@ interface HomeStep {
       </div>
     </section>
 
-    <section class="ft-container content">
-      <header class="section-head">
-        <h2>Das 3-Stufen-System</h2>
-        <p class="section-sub">
-          Jede Stufe beantwortet genau eine Frage – erst danach folgt die nächste.
-        </p>
-      </header>
-
-      <div class="steps">
-        @for (step of steps; track step.number) {
-          <mat-card appearance="outlined" class="step-card">
-            <mat-card-content>
-              <div class="step-top">
-                <span class="step-icon"><mat-icon aria-hidden="true">{{ step.icon }}</mat-icon></span>
-                <span class="step-index">{{ step.number }}</span>
-              </div>
-              <span class="step-badge">{{ step.badge }}</span>
-              <h3>{{ step.title }}</h3>
-              <p>{{ step.text }}</p>
-            </mat-card-content>
-          </mat-card>
-        }
-      </div>
-
-      <section class="lernhilfe">
-        <h2>Lernhilfe: Umgang mit Menschen</h2>
-        <p class="section-sub">
-          Verhaltensgrundsätze für Stufe 1 – als Nachschlagewerk, nicht als Rechtsgrundlage.
-        </p>
-        <mat-accordion>
-          <mat-expansion-panel class="lernhilfe-panel">
-            <mat-expansion-panel-header>
-              <mat-panel-title>Verhaltensgrundsätze anzeigen</mat-panel-title>
-            </mat-expansion-panel-header>
-            <app-behavior-reference />
-          </mat-expansion-panel>
-        </mat-accordion>
+    <div class="ft-container content">
+      <section class="learning-block" aria-labelledby="umgang-title">
+        <header class="block-head">
+          <div>
+            <h2 id="umgang-title">Umgang mit Menschen</h2>
+            <p class="block-question">„Wie verhalten Sie sich?“</p>
+          </div>
+        </header>
+        <app-behavior-reference />
       </section>
 
-      <section class="lernhilfe">
-        <h2>Lernhilfe: Rechtliche Orientierung</h2>
-        <p class="section-sub">
-          Von der rechtlichen Einordnung zur möglichen Rechtsgrundlage. Alle Paragraphen mit
-          offiziellem Gesetzestitel.
-        </p>
-        <mat-accordion>
-          <mat-expansion-panel class="lernhilfe-panel">
-            <mat-expansion-panel-header>
-              <mat-panel-title>Orientierungsdiagramme anzeigen</mat-panel-title>
-            </mat-expansion-panel-header>
-            <app-legal-orientation />
-          </mat-expansion-panel>
-        </mat-accordion>
+      <section class="learning-block" aria-label="Rechtliche Einordnung und Rechtsgrundlage">
+        <app-legal-orientation />
       </section>
 
       <p class="source-note">
@@ -116,7 +62,11 @@ interface HomeStep {
           Gesetzestexte aus „Gesetze im Internet“ (BMJ / Bundesamt für Justiz).
         </span>
       </p>
-    </section>
+    </div>
+
+    <footer class="site-footer">
+      <p>© 2026 Dejan Popovic. Alle Rechte vorbehalten.</p>
+    </footer>
   `,
   styles: [
     `
@@ -173,10 +123,6 @@ interface HomeStep {
         background: #fff;
         color: #1e3a8a;
       }
-      .count {
-        font-size: 0.92rem;
-        opacity: 0.9;
-      }
       .hero-art {
         flex: 0 0 auto;
         display: none;
@@ -193,92 +139,27 @@ interface HomeStep {
         }
       }
       .content {
-        padding-block: 2.5rem 3rem;
+        padding-block: 2rem 2.5rem;
         display: grid;
         gap: 1.75rem;
       }
-      .section-head h2,
-      .lernhilfe h2 {
-        margin: 0 0 0.35rem;
+      .learning-block {
+        display: grid;
+        gap: 0.9rem;
+      }
+      .block-head {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.75rem;
+      }
+      .block-head h2 {
+        margin: 0 0 0.2rem;
         font-size: 1.5rem;
       }
-      .section-sub {
+      .block-question {
         margin: 0;
         color: var(--ft-muted);
         line-height: 1.5;
-      }
-      .steps {
-        display: grid;
-        gap: 1rem;
-        grid-template-columns: 1fr;
-      }
-      @media (min-width: 640px) {
-        .steps {
-          grid-template-columns: repeat(2, 1fr);
-        }
-      }
-      @media (min-width: 900px) {
-        .steps {
-          grid-template-columns: repeat(3, 1fr);
-        }
-      }
-      .step-card {
-        border-radius: 16px;
-        height: 100%;
-        transition:
-          transform 0.15s ease,
-          box-shadow 0.15s ease,
-          border-color 0.15s ease;
-      }
-      .step-card:hover {
-        transform: translateY(-3px);
-        box-shadow: var(--ft-shadow);
-        border-color: var(--ft-primary);
-      }
-      .step-top {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 0.75rem;
-      }
-      .step-icon {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 42px;
-        height: 42px;
-        border-radius: 12px;
-        background: var(--ft-primary-soft);
-        color: var(--ft-primary);
-      }
-      .step-index {
-        font-size: 1.6rem;
-        font-weight: 700;
-        color: var(--ft-border);
-        letter-spacing: 0.02em;
-      }
-      .step-badge {
-        display: inline-block;
-        font-size: 0.72rem;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 0.06em;
-        color: var(--ft-primary);
-        background: var(--ft-primary-soft);
-        padding: 0.22rem 0.55rem;
-        border-radius: 999px;
-      }
-      .step-card h3 {
-        margin: 0.6rem 0 0.45rem;
-        font-size: 1.08rem;
-      }
-      .step-card p {
-        margin: 0;
-        color: var(--ft-muted);
-        line-height: 1.55;
-      }
-      .lernhilfe-panel {
-        border-radius: 14px;
       }
       .source-note {
         display: flex;
@@ -297,34 +178,19 @@ interface HomeStep {
         margin-top: 2px;
         color: var(--ft-accent);
       }
+      .site-footer {
+        border-top: 1px solid var(--ft-border);
+        background: var(--ft-surface);
+        padding-block: 1.5rem;
+        margin-top: 0.5rem;
+      }
+      .site-footer p {
+        margin: 0;
+        text-align: center;
+        color: var(--ft-muted);
+        font-size: 0.85rem;
+      }
     `,
   ],
 })
-export class HomeComponent {
-  private readonly scenarios = inject(ScenarioService);
-  readonly scenarioCount = this.scenarios.getScenarios().length;
-
-  readonly steps: HomeStep[] = [
-    {
-      number: '01',
-      badge: 'Stufe 1',
-      title: 'Wie verhalten Sie sich?',
-      icon: 'support_agent',
-      text: 'Umgang mit Menschen: Ruhe bewahren, deeskalieren, Eigensicherung, Polizei oder Rettungsdienst verständigen.',
-    },
-    {
-      number: '02',
-      badge: 'Stufe 2',
-      title: 'Was liegt rechtlich vor?',
-      icon: 'balance',
-      text: 'Rechtliche Einordnung: möglicher Diebstahl, Körperverletzung, Hausfriedensbruch, Gefahr oder Angriff.',
-    },
-    {
-      number: '03',
-      badge: 'Stufe 3',
-      title: 'Mit welcher Rechtsgrundlage?',
-      icon: 'verified',
-      text: 'Erst hier wird die konkrete Befugnis oder Rechtfertigung bestimmt – etwa § 127 Abs. 1 StPO – Vorläufige Festnahme, § 859 BGB – Selbsthilfe des Besitzers, § 32 StGB – Notwehr oder § 34 StGB – Rechtfertigender Notstand.',
-    },
-  ];
-}
+export class HomeComponent {}

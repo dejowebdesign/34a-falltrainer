@@ -66,6 +66,12 @@ Rules:
   Eingriffsbefugnis". Cards within a row must render at equal height (grid with
   `align-items: stretch`); the "ODER" between the Stufe-2 categories is only a
   visual separator and must not sit inside a card.
+- The start page is the central learning page and mirrors the three exam
+  questions in order (Umgang mit Menschen → rechtliche Einordnung →
+  Rechtsgrundlage), directly visible, never inside an accordion. There is exactly
+  one central arrow between the two diagram levels; the second level's heading
+  sits below its cards. The page ends with the copyright footer; case examples
+  are started only via the header "Fallbeispiele" link.
 
 ## Testing notes
 

@@ -27,118 +27,104 @@ interface OrientationArea {
  * führt von "Was liegt rechtlich vor?" zu "Mit welcher Rechtsgrundlage darf ich
  * eingreifen?". Alle Paragraphen werden über die zentrale Normdatenquelle mit
  * offiziellem Gesetzestitel dargestellt.
+ *
+ * Layout: Die drei Karten jeder Reihe liegen in einem echten 3-Spalten-Grid.
+ * Das "ODER" ist absolut im Spaltenzwischenraum positioniert und zählt daher
+ * nicht als eigene Spalte – die Karten bleiben dadurch gleich breit. Zwischen
+ * den Ebenen führt genau ein zentraler Pfeil nach unten; die Überschrift der
+ * zweiten Ebene steht unterhalb der unteren Karten.
  */
 @Component({
   selector: 'app-legal-orientation',
   imports: [MatCardModule, MatIconModule],
   template: `
     <section class="orientation" aria-label="Lernhilfe zur rechtlichen Orientierung">
-      <div class="diagram">
-        <h3 class="diagram-title">
-          <span class="diagram-index">1</span>
-          Was liegt rechtlich vor?
-        </h3>
-        <div class="areas-row">
-          @for (area of classificationAreas; track area.key; let last = $last) {
-            <div class="area-col">
-              <div class="area">
-                <div class="area-head">
-                  <mat-icon aria-hidden="true">{{ area.icon }}</mat-icon>
-                  <span>{{ area.label }}</span>
-                </div>
-                <ul class="entries">
-                  @for (norm of normsFor(area); track norm.id) {
-                    <li class="entry">
-                      <span class="norm">{{ formatNorm(norm) }}</span>
-                      @if (formatFachlicheEinordnung(norm); as einordnung) {
-                        <span class="einordnung">{{ einordnung }}</span>
-                      }
-                    </li>
-                  }
-                  @for (group of area.groups; track group.label) {
-                    <li class="group">
-                      <span class="group-label">{{ group.label }}</span>
-                      <ul class="group-items">
-                        @for (item of group.items; track item) {
-                          <li>{{ item }}</li>
-                        }
-                      </ul>
-                    </li>
-                  }
-                </ul>
-              </div>
-              <div class="area-arrow" aria-hidden="true">
-                <mat-icon>south</mat-icon>
-              </div>
+      <h3 class="diagram-title">
+        <span class="diagram-index">1</span>
+        Was liegt rechtlich vor?
+      </h3>
+
+      <div class="areas-row">
+        @for (area of classificationAreas; track area.key; let i = $index) {
+          <div class="area">
+            <div class="area-head">
+              <mat-icon aria-hidden="true">{{ area.icon }}</mat-icon>
+              <span>{{ area.label }}</span>
             </div>
-            @if (!last) {
-              <div class="oder" aria-hidden="true">ODER</div>
-            }
+            <ul class="entries">
+              @for (norm of normsFor(area); track norm.id) {
+                <li class="entry">
+                  <span class="norm">{{ formatNorm(norm) }}</span>
+                  @if (formatFachlicheEinordnung(norm); as einordnung) {
+                    <span class="einordnung">{{ einordnung }}</span>
+                  }
+                </li>
+              }
+              @for (group of area.groups; track group.label) {
+                <li class="group">
+                  <span class="group-label">{{ group.label }}</span>
+                  <ul class="group-items">
+                    @for (item of group.items; track item) {
+                      <li>{{ item }}</li>
+                    }
+                  </ul>
+                </li>
+              }
+            </ul>
+          </div>
+          @if (i < 2) {
+            <div class="oder" aria-hidden="true">ODER</div>
           }
-        </div>
+        }
       </div>
 
       <div class="level-link" aria-hidden="true">
-        <span class="level-link-label">rechtlich einordnen</span>
         <mat-icon>south</mat-icon>
+        <span class="level-link-label">rechtlich einordnen</span>
       </div>
 
-      <div class="diagram">
-        <h3 class="diagram-title">
-          <span class="diagram-index">2</span>
-          Mit welcher Rechtsgrundlage dürfen Sie eingreifen?
-        </h3>
-        <div class="areas">
-          @for (area of authorityAreas; track area.key) {
-            <div class="area">
-              <div class="area-head">
-                <mat-icon aria-hidden="true">{{ area.icon }}</mat-icon>
-                <span>{{ area.label }}</span>
-              </div>
-              <ul class="entries">
-                @for (norm of normsFor(area); track norm.id) {
-                  <li class="entry">
-                    <span class="norm">{{ formatNorm(norm) }}</span>
-                    @if (formatFachlicheEinordnung(norm); as einordnung) {
-                      <span class="einordnung">Fachliche Einordnung: {{ einordnung }}</span>
-                    }
-                  </li>
-                }
-                @for (group of area.groups; track group.label) {
-                  <li class="group">
-                    <span class="group-label">{{ group.label }}</span>
-                    <ul class="group-items">
-                      @for (item of group.items; track item) {
-                        <li>{{ item }}</li>
-                      }
-                    </ul>
-                  </li>
-                }
-              </ul>
+      <div class="areas areas-bottom">
+        @for (area of authorityAreas; track area.key) {
+          <div class="area">
+            <div class="area-head">
+              <mat-icon aria-hidden="true">{{ area.icon }}</mat-icon>
+              <span>{{ area.label }}</span>
             </div>
-          }
-        </div>
+            <ul class="entries">
+              @for (norm of normsFor(area); track norm.id) {
+                <li class="entry">
+                  <span class="norm">{{ formatNorm(norm) }}</span>
+                  @if (formatFachlicheEinordnung(norm); as einordnung) {
+                    <span class="einordnung">Fachliche Einordnung: {{ einordnung }}</span>
+                  }
+                </li>
+              }
+            </ul>
+          </div>
+        }
       </div>
+
+      <h3 class="diagram-title diagram-title-bottom">
+        <span class="diagram-index">2</span>
+        Mit welcher Rechtsgrundlage dürfen Sie eingreifen?
+      </h3>
     </section>
   `,
   styles: [
     `
       .orientation {
         display: grid;
-        gap: 0.5rem;
-      }
-      .diagram {
-        border: 1px solid var(--ft-border);
-        border-radius: 14px;
-        padding: 1rem;
-        background: var(--ft-surface);
+        gap: 0.9rem;
       }
       .diagram-title {
         display: flex;
         align-items: center;
         gap: 0.6rem;
-        margin: 0 0 0.9rem;
+        margin: 0;
         font-size: 1.05rem;
+      }
+      .diagram-title-bottom {
+        margin-top: 0.15rem;
       }
       .diagram-index {
         display: inline-flex;
@@ -153,70 +139,45 @@ interface OrientationArea {
         font-weight: 700;
         flex: 0 0 auto;
       }
-      .areas {
-        display: grid;
-        gap: 0.85rem;
-        grid-template-columns: 1fr;
-        align-items: stretch;
-      }
-      @media (min-width: 768px) {
-        .areas {
-          grid-template-columns: repeat(3, 1fr);
-        }
-      }
-      /* Erste Reihe: drei gleich breite Karten, dazwischen das mittige "ODER".
-         Die Karten strecken sich auf gleiche Höhe (align-items: stretch). */
+      /* Echtes 3-Spalten-Grid: die drei Karten sind exakt gleich breit. */
+      .areas,
       .areas-row {
         display: grid;
-        gap: 0.6rem;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1.5rem;
         align-items: stretch;
-        grid-template-columns: 1fr;
       }
-      @media (min-width: 768px) {
-        .areas-row {
-          grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr);
-          gap: 0.85rem;
-        }
-      }
-      .area-col {
-        display: flex;
-        flex-direction: column;
-        gap: 0.35rem;
-        min-width: 0;
-      }
-      .area-col .area {
-        flex: 1;
+      /* Das "ODER" liegt absolut im Zwischenraum und ist keine eigene Spalte. */
+      .areas-row {
+        position: relative;
       }
       .oder {
-        align-self: center;
-        justify-self: center;
-        font-size: 0.75rem;
+        position: absolute;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 0.72rem;
         font-weight: 700;
         letter-spacing: 0.12em;
         text-transform: uppercase;
         color: var(--ft-muted);
-        padding: 0.15rem 0.3rem;
+        padding: 0.12rem 0.3rem;
         border-radius: 999px;
         background: var(--ft-surface);
+        z-index: 1;
       }
-      .area-arrow {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: var(--ft-primary);
+      .areas-row > .oder:nth-child(2) {
+        left: calc(33.333% - 0.25rem);
       }
-      .area-arrow mat-icon {
-        font-size: 24px;
-        width: 24px;
-        height: 24px;
+      .areas-row > .oder:nth-child(4) {
+        left: calc(66.666% + 0.25rem);
       }
       .level-link {
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 0.1rem;
+        gap: 0.15rem;
         color: var(--ft-primary);
-        padding-block: 0.15rem;
+        margin-block: 0.15rem;
       }
       .level-link-label {
         font-size: 0.72rem;
@@ -235,6 +196,8 @@ interface OrientationArea {
         padding: 0.75rem 0.85rem;
         display: flex;
         flex-direction: column;
+        min-height: 8.5rem;
+        min-width: 0;
       }
       .area-head {
         display: flex;
@@ -290,6 +253,19 @@ interface OrientationArea {
         color: var(--ft-muted);
         font-size: 0.8rem;
         font-style: italic;
+      }
+      /* Mobile: Karten stapeln sich; das "ODER" wird zur eigenen Zeile. */
+      @media (max-width: 767px) {
+        .areas,
+        .areas-row {
+          grid-template-columns: 1fr;
+          gap: 0.85rem;
+        }
+        .areas-row > .oder {
+          position: static;
+          transform: none;
+          justify-self: center;
+        }
       }
     `,
   ],
