@@ -25,6 +25,15 @@ more, but the UI stays at three stages plus a result page.
   stages, the Stufe-1 behavior catalog and the Stufe-2 legal areas (Strafrecht /
   Privatrecht / öffentliches Recht). It is a didactic guide only; the legal
   reasoning always comes from the V5.3.1 Bible.
+- `scripts/Fragen.txt` – question bank for the mündliche Prüfungssimulation
+  (244 blocks, 9 categories, difficulties 1–5). Main question + correct answer
+  are taken 1:1 (`source: 'QUESTIONS_TXT'`). The bank has **no** follow-up
+  answers; those are authored in
+  `src/app/core/data/oral-exam-authored.data.ts` and flagged
+  `AUTHORED_FROM_BIBEL` (BGB / StGB-StPO only) or
+  `AUTHORED_FROM_FACHWISSEN` / `UNVERIFIED` (categories the Bible does not
+  cover). Never silently change questions or answers from `Fragen.txt`; report
+  problems instead.
 
 ## Commands
 
@@ -44,7 +53,7 @@ npm run test:ci        # ChromeHeadlessNoSandbox for containers
 - `src/app/core/rules` – case engine and the legal separation check
   (Anspruch ≠ Befugnis ≠ Rechtfertigung ≠ Entschuldigung).
 - `src/app/core/services` – knowledge, scenario and case-state services.
-- `src/app/features` – home, scenarios, stage-one/two/three, result.
+- `src/app/features` – home, scenarios, stage-one/two/three, result, oral-exam.
 - `src/app/shared/components` – reusable UI.
 
 Rules:
@@ -73,6 +82,24 @@ Rules:
   sits below its cards. The page ends with the copyright footer; case examples
   are started only via the header "Fallbeispiele" link.
 
+## Mündliche Prüfungssimulation
+
+- Standalone feature (`src/app/features/oral-exam`, routes
+  `/pruefungssimulation[/durchfuehrung|/auswertung|/audit]`), independent of the
+  three-stage case flow. Do not turn it into a fourth case stage.
+- 9 categories × 1 randomly chosen block × (1 main + 2 follow-up) = 27 scored
+  questions, 1 point each, pass ≥ 50 % (14/27). Threshold, selection and scoring
+  live in `core/rules/oral-exam-engine.ts` (`buildExam` / `evaluateExam` /
+  `validatePool`), the run state in `core/services/oral-exam.service.ts`.
+- Every question has exactly five options with exactly one correct answer. The
+  correct option position is rotated across the exam.
+- Per category the pool must contain several candidate blocks
+  (`oral-exam-authored.data.ts`) so the choice is genuinely random;
+  `validatePool` enforces full category coverage and 4 distractors per question.
+- Source/verification flags (`QUESTIONS_TXT`, `AUTHORED_FROM_BIBEL`,
+  `AUTHORED_FROM_FACHWISSEN`/`UNVERIFIED`) are data-model and audit-view only.
+  They must never appear in the participant-facing exam UI.
+
 ## Testing notes
 
 - Test files are colocated as `*.spec.ts`.
@@ -81,6 +108,10 @@ Rules:
   classification references, misconceptions on FALSCH options, model solution).
 - `core/rules/legal-reasoning.spec.ts` guards the forbidden automatisms and the
   Anspruch/Befugnis/Rechtfertigung/Entschuldigung separation.
+- `core/rules/oral-exam-engine.spec.ts` and
+  `core/services/oral-exam.service.spec.ts` guard exam selection, scoring and
+  the 14/27 pass threshold; the four `oral-exam-*.component.spec.ts` cover the
+  intro, run, evaluation and audit views.
 
 ## Deployment
 
