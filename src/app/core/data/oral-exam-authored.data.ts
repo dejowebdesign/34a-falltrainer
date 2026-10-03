@@ -30,6 +30,7 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
   // ===========================================================================
   {
     blockId: 'fragen-013',
+    mainDifficulty: 3,
     questionOverride:
       'Darf das staatliche Gewaltmonopol auf Sicherheitsmitarbeiter übertragen werden?',
     answerOverride:
@@ -45,8 +46,9 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
       verificationStatus: 'VERIFIED_BIBEL',
     },
     followUp1: {
+      difficulty: 3,
       question:
-        'Auf welcher rechtlichen Grundlage dürfen Sicherheitsmitarbeiter gegenüber Personen tätig werden?',
+        'Auf welcher rechtlichen Grundlage dürfen Sicherheitsmitarbeiter tätig werden, wenn sie sich auf § 127 Abs. 1 StPO – Vorläufige Festnahme – und die übrigen Jedermann-Rechte berufen?',
       answer:
         'Auf privatrechtlicher Grundlage aus Hausrecht, Besitzschutz und den Jedermann-Rechten, die jedermann zustehen.',
       legalBasis: '§ 127 Abs. 1 StPO – Vorläufige Festnahme',
@@ -62,6 +64,7 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
         'Die Bibel stellt in Kapitel 43 klar: Der Sicherheitsdienst ist kein staatlicher Hoheitsträger.',
     },
     followUp2: {
+      difficulty: 4,
       question:
         'Worin unterscheiden sich die Handlungsmöglichkeiten eines Sicherheitsmitarbeiters von denen eines Polizeivollzugsbeamten?',
       answer:
@@ -80,6 +83,7 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
   },
   {
     blockId: 'fragen-012',
+    mainDifficulty: 2,
     questionOverride: 'Wer ist Inhaber des staatlichen Gewaltmonopols?',
     answerOverride:
       'Das Gewaltmonopol liegt beim Staat, der hoheitliche Gewalt ausübt und sie Privaten nicht überträgt.',
@@ -94,10 +98,11 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
       verificationStatus: 'VERIFIED_BIBEL',
     },
     followUp1: {
+      difficulty: 3,
       question:
-        'Unter welchen Voraussetzungen dürfen Sicherheitsmitarbeiter körperliche Gewalt anwenden?',
+        'Unter welchen Voraussetzungen dürfen Sicherheitsmitarbeiter nach § 32 StGB – Notwehr – und § 34 StGB – Rechtfertigender Notstand – körperliche Gewalt anwenden?',
       answer:
-        'Nur wenn ein Rechtfertigungsgrund wie Notwehr oder rechtfertigender Notstand greift und die Gewalt nötig ist.',
+        'Nur wenn ein gesetzlicher Rechtfertigungsgrund eingreift und die Gewalt zur Abwehr erforderlich ist.',
       legalBasis: '§ 32 StGB – Notwehr; § 34 StGB – Rechtfertigender Notstand',
       distractors: [
         'Sobald der Auftraggeber oder der Vorgesetzte die Anwendung körperlicher Gewalt ausdrücklich anordnet.',
@@ -109,6 +114,7 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
       verificationStatus: 'VERIFIED_BIBEL',
     },
     followUp2: {
+      difficulty: 3,
       question:
         'Warum dürfen Sicherheitsmitarbeiter keine staatliche Zwangsgewalt eigenständig ausüben?',
       answer:
@@ -125,6 +131,7 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
   },
   {
     blockId: 'fragen-015',
+    mainDifficulty: 2,
     questionOverride: 'Welche Befugnis vermittelt das Hausrecht dem Berechtigten?',
     answerOverride:
       'Das Hausrecht berechtigt den Inhaber, über den Zutritt und den Aufenthalt in den Räumlichkeiten zu bestimmen.',
@@ -139,10 +146,11 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
       verificationStatus: 'VERIFIED_BIBEL',
     },
     followUp1: {
+      difficulty: 3,
       question:
-        'Wie kann der Inhaber des Hausrechts seine Befugnisse auf einen Sicherheitsmitarbeiter übertragen?',
+        'Wie kann der Inhaber des Hausrechts seine Befugnisse nach § 855 BGB – Besitzdiener – auf einen Sicherheitsmitarbeiter übertragen?',
       answer:
-        'Durch vertragliche Beauftragung oder konkrete Weisung wird der Mitarbeiter Besitzdiener und handelt weisungsgebunden.',
+        'Durch vertragliche Beauftragung oder konkrete Weisung des Berechtigten, wodurch der Mitarbeiter weisungsgebunden für diesen handelt.',
       legalBasis: '§ 855 BGB – Besitzdiener',
       distractors: [
         'Durch die bloße Einstellung als Sicherheitsmitarbeiter, weil damit sämtliche Rechte des Arbeitgebers auf ihn übergehen.',
@@ -155,8 +163,9 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
       explanation: '§ 855 BGB: Der Besitzdiener handelt weisungsgebunden für den Besitzer.',
     },
     followUp2: {
+      difficulty: 3,
       question:
-        'Welche zwei Tathandlungen erfüllen den Hausfriedensbruch?',
+        'Welche zwei Tathandlungen erfüllen den Tatbestand des § 123 StGB – Hausfriedensbruch?',
       answer:
         'Das widerrechtliche Eindringen in geschützte Räume und das Verweilen darin trotz Aufforderung des Berechtigten.',
       legalBasis: '§ 123 StGB – Hausfriedensbruch',
@@ -178,11 +187,11 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
   // ===========================================================================
   {
     blockId: 'fragen-029',
-    mainDifficulty: 4,
+    mainDifficulty: 3,
     questionOverride:
-      'Wie wird das Hausrecht des Berechtigten auf einen Sicherheitsmitarbeiter übertragen?',
+      'Wie wird das Hausrecht des Berechtigten nach § 855 BGB – Besitzdiener – auf einen Sicherheitsmitarbeiter übertragen?',
     answerOverride:
-      'Durch vertragliche Beauftragung oder Weisung des Berechtigten; der Mitarbeiter handelt dann als Besitzdiener.',
+      'Durch vertragliche Beauftragung oder Weisung des Inhabers; der Mitarbeiter handelt dann weisungsgebunden für diesen.',
       mainLegalBasis: '§ 855 BGB – Besitzdiener',
     main: {
       distractors: [
@@ -195,7 +204,8 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
       verificationStatus: 'VERIFIED_BIBEL',
     },
     followUp1: {
-      question: 'Was kennzeichnet einen Besitzdiener?',
+      difficulty: 3,
+      question: 'Welche Aussage zur Stellung des Besitzdieners nach § 855 BGB – Besitzdiener – trifft zu?',
       answer:
         'Der Besitzdiener übt die tatsächliche Gewalt für einen anderen aus und ist dessen Weisungen unterworfen.',
       legalBasis: '§ 855 BGB – Besitzdiener',
@@ -210,7 +220,8 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
       explanation: '§ 855 BGB: tatsächliche Gewalt für einen anderen.',
     },
     followUp2: {
-      question: 'Welche Grenzen gelten für die Befugnisse eines Besitzdieners?',
+      difficulty: 4,
+      question: 'Welche Grenzen gelten nach § 860 BGB – Selbsthilfe des Besitzdieners – für die Befugnisse eines Besitzdieners?',
       answer:
         'Er bleibt an Weisungen gebunden und darf nur die Rechte des Besitzers ausüben, nichts darüber hinaus.',
       legalBasis: '§ 860 BGB – Selbsthilfe des Besitzdieners',
@@ -228,7 +239,8 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
   },
   {
     blockId: 'fragen-021',
-    questionOverride: 'Welchen Regelungsgegenstand hat die Vorschrift zum Bewachungsgewerbe?',
+    mainDifficulty: 2,
+    questionOverride: 'Welchen Regelungsgegenstand hat § 34a GewO – Bewachungsgewerbe?',
     answerOverride:
       'Er regelt die Voraussetzungen der gewerblichen Bewachung, insbesondere Zuverlässigkeit, Sachkunde und Erlaubnispflichten.',
       mainLegalBasis: '§ 34a GewO – Bewachungsgewerbe',
@@ -243,6 +255,7 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
       verificationStatus: 'UNVERIFIED',
     },
     followUp1: {
+      difficulty: 3,
       question: 'Für welche Tätigkeiten ist die Sachkundeprüfung zwingend erforderlich?',
       answer:
         'Für Tätigkeiten mit erhöhtem Gefahrenpotenzial, etwa Kontrollgänge im öffentlichen Verkehrsraum oder Bewachung im Einlassbereich von Diskotheken.',
@@ -256,6 +269,7 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
       verificationStatus: 'UNVERIFIED',
     },
     followUp2: {
+      difficulty: 3,
       question: 'Was bedeutet Zuverlässigkeit im Bewachungsgewerbe?',
       answer:
         'Zuverlässig ist, wer die Gewähr für eine ordnungsgemäße Ausübung des Gewerbes bietet, was die Behörde überprüft.',
@@ -271,6 +285,7 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
   },
   {
     blockId: 'fragen-028',
+    mainDifficulty: 2,
     questionOverride: 'Was ist unter dem Hausrecht zu verstehen?',
     answerOverride:
       'Das Hausrecht ist die Befugnis des Inhabers, über Zutritt und Aufenthalt in seinen Räumlichkeiten zu bestimmen.',
@@ -285,6 +300,7 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
       verificationStatus: 'UNVERIFIED',
     },
     followUp1: {
+      difficulty: 2,
       question: 'Wie wird das Hausrecht auf einen Sicherheitsmitarbeiter übertragen?',
       answer:
         'Durch Beauftragung oder Weisung des Berechtigten; der Mitarbeiter wird dadurch zum Besitzdiener und handelt weisungsgebunden.',
@@ -298,8 +314,9 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
       verificationStatus: 'UNVERIFIED',
     },
     followUp2: {
+      difficulty: 3,
       question:
-        'Wann kommt eine Strafbarkeit wegen Hausfriedensbruchs in Betracht?',
+        'Wann kommt eine Strafbarkeit nach § 123 StGB – Hausfriedensbruch – in Betracht?',
       answer:
         'Wenn jemand widerrechtlich eindringt oder trotz Aufforderung des Berechtigten in den geschützten Räumen verweilt.',
       legalBasis: '§ 123 StGB – Hausfriedensbruch',
@@ -319,6 +336,7 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
   // ===========================================================================
   {
     blockId: 'fragen-047',
+    mainDifficulty: 3,
     questionOverride: 'Was schützt das Recht auf informationelle Selbstbestimmung?',
     answerOverride:
       'Es schützt die Befugnis jeder Person, selbst über Preisgabe und Verwendung ihrer personenbezogenen Daten zu bestimmen.',
@@ -333,6 +351,7 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
       verificationStatus: 'UNVERIFIED',
     },
     followUp1: {
+      difficulty: 2,
       question: 'Welche Informationen gelten als personenbezogene Daten?',
       answer:
         'Alle Informationen, die sich auf eine identifizierte oder identifizierbare Person beziehen, etwa Name oder Bildaufnahmen.',
@@ -346,6 +365,7 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
       verificationStatus: 'UNVERIFIED',
     },
     followUp2: {
+      difficulty: 3,
       question: 'Was bedeutet der Grundsatz der Zweckbindung?',
       answer:
         'Daten dürfen nur für den festgelegten, eindeutigen und legitimen Zweck verarbeitet und nicht zweckfremd genutzt werden.',
@@ -361,6 +381,7 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
   },
   {
     blockId: 'fragen-048',
+    mainDifficulty: 2,
     questionOverride: 'Was bezweckt der Datenschutz?',
     answerOverride:
       'Er schützt natürliche Personen bei der Verarbeitung ihrer Daten und regelt, wann diese erhoben, gespeichert und gelöscht werden dürfen.',
@@ -375,6 +396,7 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
       verificationStatus: 'UNVERIFIED',
     },
     followUp1: {
+      difficulty: 2,
       question: 'Für wen gilt die Datenschutz-Grundverordnung?',
       answer:
         'Sie gilt für die Verarbeitung personenbezogener Daten natürlicher Personen, auch durch private Sicherheitsdienste.',
@@ -388,6 +410,7 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
       verificationStatus: 'UNVERIFIED',
     },
     followUp2: {
+      difficulty: 3,
       question: 'Welche Grundsätze prägen die Verarbeitung personenbezogener Daten?',
       answer:
         'Rechtmäßigkeit, Zweckbindung, Datenminimierung, Richtigkeit, Speicherbegrenzung sowie Integrität und Vertraulichkeit.',
@@ -403,6 +426,7 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
   },
   {
     blockId: 'fragen-052',
+    mainDifficulty: 2,
     questionOverride: 'Was sind personenbezogene Daten?',
     answerOverride:
       'Alle Informationen, die sich auf eine identifizierte oder identifizierbare natürliche Person beziehen.',
@@ -417,6 +441,7 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
       verificationStatus: 'UNVERIFIED',
     },
     followUp1: {
+      difficulty: 3,
       question:
         'Welche Daten gehören zu den besonders geschützten Kategorien personenbezogener Daten?',
       answer:
@@ -431,6 +456,7 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
       verificationStatus: 'UNVERIFIED',
     },
     followUp2: {
+      difficulty: 2,
       question: 'Welche Angaben sind typische Beispiele für personenbezogene Daten?',
       answer:
         'Name, Geburtsdatum, Anschrift, Fahrzeugkennzeichen, Ausweisnummer sowie Foto- und Videoaufnahmen einer Person.',
@@ -450,7 +476,8 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
   // ===========================================================================
   {
     blockId: 'fragen-084',
-    questionOverride: 'Worin unterscheiden sich Besitz und Eigentum?',
+    mainDifficulty: 3,
+    questionOverride: 'Welche Aussage zu Besitz und Eigentum nach §§ 854, 903 BGB – Besitz und Eigentum – trifft zu?',
     answerOverride:
       'Besitz ist die tatsächliche Sachherrschaft, Eigentum das umfassende rechtliche Herrschaftsrecht; beides kann auseinanderfallen.',
       mainLegalBasis: '§§ 854, 903 BGB – Besitz und Eigentum',
@@ -465,8 +492,9 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
       verificationStatus: 'VERIFIED_BIBEL',
     },
     followUp1: {
+      difficulty: 4,
       question:
-        'In welcher Konstellation fallen Besitz und Eigentum an einer Sache auseinander?',
+        'In welcher Konstellation fallen Besitz und Eigentum nach §§ 854, 903 BGB – Besitz und Eigentum – an einer Sache auseinander?',
       answer:
         'Beim Mietverhältnis: Der Mieter ist Besitzer der Wohnung, während der Vermieter deren Eigentümer bleibt.',
       legalBasis: '§§ 854, 903 BGB – Besitz und Eigentum',
@@ -480,15 +508,17 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
       verificationStatus: 'VERIFIED_BIBEL',
     },
     followUp2: {
-      question: 'Was ist ein Besitzdiener?',
+      difficulty: 4,
+      question:
+        'Ein Arbeitnehmer übt im Rahmen seiner Tätigkeit die tatsächliche Gewalt über Gegenstände seines Arbeitgebers aus und unterliegt dessen Weisungen. Welche Aussage beschreibt seine rechtliche Stellung zutreffend?',
       answer:
-        'Ein Besitzdiener übt die tatsächliche Gewalt für einen anderen aus und unterliegt dessen Weisungen.',
+        'Er ist Besitzdiener und übt für den Inhaber dessen Besitzrechte weisungsgebunden aus.',
       legalBasis: '§ 855 BGB – Besitzdiener',
       distractors: [
-        'Ein Besitzdiener übt die tatsächliche Gewalt über eine Sache im eigenen Namen für sich selbst aus.',
-        'Ein Besitzdiener ist der Eigentümer einer Sache, der sie einem Dritten zum Gebrauch überlassen hat.',
-        'Ein Besitzdiener ist der Gläubiger eines Anspruchs, der sich zur Sicherung eine Sache verschafft.',
-        'Ein Besitzdiener ist der Finder einer Sache, der sie zum Zweck der Rückgabe an sich nimmt.',
+        'Er ist selbst Besitzer der Gegenstände und kann über sie im eigenen Namen verfügen.',
+        'Er ist Eigentümer der Gegenstände, weil er sie im Rahmen seiner Tätigkeit innehat.',
+        'Er ist unmittelbarer Besitzer und zugleich dinglich Berechtigter an den Gegenständen.',
+        'Er ist mittelbarer Besitzer, weil der Inhaber die tatsächliche Gewalt über die Gegenstände ausübt.',
       ],
       source: 'AUTHORED_FROM_BIBEL',
       verificationStatus: 'VERIFIED_BIBEL',
@@ -497,6 +527,7 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
   },
   {
     blockId: 'fragen-081',
+    mainDifficulty: 3,
     questionOverride: 'Wodurch unterscheiden sich öffentliches Recht und privates Recht?',
     answerOverride:
       'Öffentliches Recht regelt das Verhältnis zwischen Staat und Bürger, privates Recht das Verhältnis gleichgeordneter Rechtssubjekte.',
@@ -511,6 +542,7 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
       verificationStatus: 'VERIFIED_BIBEL',
     },
     followUp1: {
+      difficulty: 3,
       question: 'Welcher Bereich ist dem öffentlichen Recht zuzuordnen?',
       answer:
         'Das Polizei- und Ordnungsrecht, weil der Staat dem Bürger dabei hoheitlich gegenübertritt.',
@@ -524,6 +556,7 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
       verificationStatus: 'VERIFIED_BIBEL',
     },
     followUp2: {
+      difficulty: 2,
       question: 'Wie ist die Tätigkeit eines Sicherheitsmitarbeiters rechtlich einzuordnen?',
       answer:
         'Sie ist dem privaten Recht zuzuordnen, weil er auf privatrechtlicher Grundlage handelt.',
@@ -539,8 +572,9 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
   },
   {
     blockId: 'fragen-092',
+    mainDifficulty: 4,
     questionOverride:
-      'Wozu berechtigt die Selbsthilfe des Besitzers?',
+      'Welche Befugnis vermittelt § 859 BGB – Selbsthilfe des Besitzers – dem Besitzer?',
     answerOverride:
       'Der Besitzer darf sich verbotener Eigenmacht mit Gewalt erwehren und sich sofort wieder in den Besitz setzen.',
       mainLegalBasis: '§ 859 BGB – Selbsthilfe des Besitzers',
@@ -555,7 +589,8 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
       verificationStatus: 'VERIFIED_BIBEL',
     },
     followUp1: {
-      question: 'Was bedeutet das Merkmal „sofort“ bei der Besitzerselbsthilfe?',
+      difficulty: 3,
+      question: 'Was bedeutet das Merkmal „sofort“ bei der Besitzerselbsthilfe nach § 859 BGB – Selbsthilfe des Besitzers –?',
       answer:
         '„Sofort“ bedeutet unmittelbar im Anschluss an die Störung und ohne schuldhaftes Zögern zu handeln.',
       legalBasis: '§ 859 BGB – Selbsthilfe des Besitzers',
@@ -570,7 +605,8 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
       explanation: '§ 859 BGB: unmittelbare Besitzerselbsthilfe ohne schuldhaftes Zögern.',
     },
     followUp2: {
-      question: 'Was bedeutet das Merkmal der Angemessenheit bei der Besitzwehr?',
+      difficulty: 4,
+      question: 'Was bedeutet das Merkmal der Angemessenheit bei der Besitzwehr nach § 859 BGB – Selbsthilfe des Besitzers –?',
       answer:
         'Die Verteidigung muss erforderlich sein und darf nicht außer Verhältnis zur Störung stehen.',
       legalBasis: '§ 859 BGB – Selbsthilfe des Besitzers',
@@ -591,8 +627,9 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
   // ===========================================================================
   {
     blockId: 'fragen-124',
+    mainDifficulty: 4,
     questionOverride:
-      'Unter welchen Voraussetzungen ist die vorläufige Festnahme zulässig?',
+      'Welche Voraussetzungen verlangt § 127 Abs. 1 StPO – Vorläufige Festnahme – für die vorläufige Festnahme?',
     answerOverride:
       'Wenn die Person auf frischer Tat betroffen oder verfolgt wird und zusätzlich Fluchtverdacht besteht oder die Identität unklar ist.',
       mainLegalBasis: '§ 127 Abs. 1 StPO – Vorläufige Festnahme',
@@ -607,7 +644,8 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
       verificationStatus: 'VERIFIED_BIBEL',
     },
     followUp1: {
-      question: 'Wann ist eine Person auf frischer Tat betroffen?',
+      difficulty: 3,
+      question: 'Wann ist eine Person nach § 127 Abs. 1 StPO – Vorläufige Festnahme – auf frischer Tat betroffen?',
       answer:
         'Wer bei der Tat, unmittelbar danach oder in Verfolgung durch Tatopfer oder Zeugen angetroffen wird.',
       legalBasis: '§ 127 Abs. 1 StPO – Vorläufige Festnahme',
@@ -622,7 +660,8 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
       explanation: '§ 127 StPO verlangt das Betreffen oder Verfolgen auf frischer Tat.',
     },
     followUp2: {
-      question: 'Was ist unter Fluchtverdacht im Sinne der Festnahmebefugnis zu verstehen?',
+      difficulty: 4,
+      question: 'Was ist nach § 127 Abs. 1 StPO – Vorläufige Festnahme – unter Fluchtverdacht zu verstehen?',
       answer:
         'Die aufgrund konkreter Umstände begründete Befürchtung, dass sich die Person der Strafverfolgung entziehen wird.',
       legalBasis: '§ 127 Abs. 1 StPO – Vorläufige Festnahme',
@@ -639,8 +678,9 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
   },
   {
     blockId: 'fragen-127',
+    mainDifficulty: 2,
     questionOverride:
-      'Welche Handlungen erfüllen den Hausfriedensbruch?',
+      'Welche Handlungen erfüllen den Tatbestand des § 123 StGB – Hausfriedensbruch?',
     answerOverride:
       'Das widerrechtliche Eindringen in geschützte Räume oder das Verweilen trotz Aufforderung.',
       mainLegalBasis: '§ 123 StGB – Hausfriedensbruch',
@@ -655,7 +695,8 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
       verificationStatus: 'VERIFIED_BIBEL',
     },
     followUp1: {
-      question: 'Welche beiden Handlungsvarianten kennt der Hausfriedensbruch?',
+      difficulty: 2,
+      question: 'Welche beiden Handlungsvarianten kennt § 123 StGB – Hausfriedensbruch?',
       answer: 'Das Eindringen in geschützte Räume und das Verweilen trotz Aufforderung, sich zu entfernen.',
       legalBasis: '§ 123 StGB – Hausfriedensbruch',
       distractors: [
@@ -668,6 +709,7 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
       verificationStatus: 'VERIFIED_BIBEL',
     },
     followUp2: {
+      difficulty: 3,
       question: 'Wie ist Hausfriedensbruch verfolgungsrechtlich einzuordnen?',
       answer:
         'Hausfriedensbruch ist ein Antragsdelikt; die Strafverfolgung setzt grundsätzlich einen Strafantrag des Berechtigten voraus.',
@@ -685,7 +727,7 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
   {
     blockId: 'fragen-114',
     mainDifficulty: 4,
-    questionOverride: 'Wann ist eine Verteidigungshandlung im Sinne der Notwehr erforderlich?',
+    questionOverride: 'Wann ist eine Verteidigungshandlung nach § 32 StGB – Notwehr – erforderlich?',
     answerOverride:
       'Erforderlich ist die Verteidigung, die den gegenwärtigen rechtswidrigen Angriff sicher und sofort beendet und das mildeste wirksame Mittel darstellt.',
       mainLegalBasis: '§ 32 StGB – Notwehr',
@@ -700,7 +742,8 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
       verificationStatus: 'VERIFIED_BIBEL',
     },
     followUp1: {
-      question: 'Was ist unter dem mildesten Mittel im Rahmen der Notwehr zu verstehen?',
+      difficulty: 3,
+      question: 'Was ist nach § 32 StGB – Notwehr – unter dem mildesten Mittel zu verstehen?',
       answer:
         'Das Mittel, das den Angriff sicher beendet und den Angreifer dabei am geringsten beeinträchtigt.',
       legalBasis: '§ 32 StGB – Notwehr',
@@ -714,7 +757,8 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
       verificationStatus: 'VERIFIED_BIBEL',
     },
     followUp2: {
-      question: 'Wann ist ein Verteidigungsmittel zur Abwehr eines Angriffs geeignet?',
+      difficulty: 4,
+      question: 'Wann ist ein Verteidigungsmittel nach § 32 StGB – Notwehr – zur Abwehr eines Angriffs geeignet?',
       answer:
         'Geeignet ist ein Mittel, das den gegenwärtigen rechtswidrigen Angriff tatsächlich und sofort beenden kann.',
       legalBasis: '§ 32 StGB – Notwehr',
@@ -735,6 +779,7 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
   // ===========================================================================
   {
     blockId: 'fragen-151',
+    mainDifficulty: 3,
     questionOverride: 'Was ist eine Waffe im Sinne des Waffengesetzes?',
     answerOverride:
       'Ein Gegenstand, der seiner Natur nach dazu bestimmt ist, Angriffe abzuwehren oder zuzufügen.',
@@ -749,6 +794,7 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
       verificationStatus: 'UNVERIFIED',
     },
     followUp1: {
+      difficulty: 4,
       question: 'Was sind verbotene Waffen?',
       answer:
         'Gegenstände, deren Erwerb, Besitz und Führen allgemein untersagt sind, etwa Schlagringe oder Butterflymesser.',
@@ -762,6 +808,7 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
       verificationStatus: 'UNVERIFIED',
     },
     followUp2: {
+      difficulty: 3,
       question: 'Was bedeutet das Führen einer Waffe?',
       answer:
         'Die Ausübung der tatsächlichen Gewalt über eine Waffe außerhalb der eigenen Wohnung oder Geschäftsräume.',
@@ -777,6 +824,7 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
   },
   {
     blockId: 'fragen-164',
+    mainDifficulty: 5,
     questionOverride:
       'Unter welchen Voraussetzungen darf ein Sicherheitsmitarbeiter im Dienst eine Waffe führen?',
     answerOverride:
@@ -792,6 +840,7 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
       verificationStatus: 'UNVERIFIED',
     },
     followUp1: {
+      difficulty: 4,
       question: 'Welche Stelle erteilt die waffenrechtliche Erlaubnis zum Führen einer Waffe?',
       answer:
         'Die zuständige Waffenbehörde; zusätzlich muss der Arbeitgeber den Waffeneinsatz für die Tätigkeit freigeben.',
@@ -805,11 +854,12 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
       verificationStatus: 'UNVERIFIED',
     },
     followUp2: {
+      difficulty: 4,
       question: 'Für welche Tätigkeiten kommt eine Bewaffnung von Sicherheitsmitarbeitern in Betracht?',
       answer:
-        'Nur für Tätigkeiten mit besonders hohem Gefährdungspotenzial, etwa Geld- und Werttransporte.',
+        'Nur bei besonders hohem Gefährdungspotenzial, etwa bei Geld- und Werttransporten.',
       distractors: [
-        'Für jede Tätigkeit im Einlassbereich einer Diskothek, weil dort gewalttätige Auseinandersetzungen drohen.',
+        'Bei Einsätzen im Einlassbereich einer Diskothek, weil dort gewalttätige Auseinandersetzungen drohen.',
         'Für alle Kontrollgänge im öffentlichen Verkehrsraum, weil dort kein Hausrecht des Auftraggebers besteht.',
         'Für die Bewachung von Bürogebäuden, weil dort besonders hochwertige Sachen gelagert werden.',
         'Für jede Großveranstaltung mit mehr als hundert Besuchern, unabhängig von der Art der Veranstaltung.',
@@ -820,6 +870,7 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
   },
   {
     blockId: 'fragen-156',
+    mainDifficulty: 3,
     questionOverride:
       'Welche Erlaubnis benötigt man, um eine erlaubnispflichtige Schusswaffe zu führen?',
     answerOverride:
@@ -835,6 +886,7 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
       verificationStatus: 'UNVERIFIED',
     },
     followUp1: {
+      difficulty: 2,
       question: 'Wer erhält einen Waffenschein?',
       answer:
         'Wer zuverlässig und persönlich geeignet ist, ein anerkanntes Bedürfnis nachweist, sachkundig und alt genug ist.',
@@ -848,6 +900,7 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
       verificationStatus: 'UNVERIFIED',
     },
     followUp2: {
+      difficulty: 3,
       question:
         'Welche Voraussetzungen werden für die Erteilung einer waffenrechtlichen Erlaubnis geprüft?',
       answer:
@@ -868,10 +921,11 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
   // ===========================================================================
   {
     blockId: 'fragen-166',
+    mainDifficulty: 2,
     questionOverride:
       'Welche berufsgenossenschaftlichen Vorschriften sind für Wach- und Sicherungsdienste besonders bedeutsam?',
     answerOverride:
-      'Die DGUV Vorschrift 1 „Grundsätze der Prävention“ und die DGUV Vorschrift 23 „Wach- und Sicherungsdienste“.',
+      'Die DGUV Vorschrift 1 „Grundsätze der Prävention“ und die DGUV Vorschrift 23 für Wachdienste.',
     main: {
       distractors: [
         'Die DGUV Vorschrift 2 über Betriebsärzte und die DGUV Vorschrift 25 über die Sicherheits- und Gesundheitsschutzkennzeichnung.',
@@ -883,6 +937,7 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
       verificationStatus: 'UNVERIFIED',
     },
     followUp1: {
+      difficulty: 2,
       question: 'Was regelt die DGUV Vorschrift 1 „Grundsätze der Prävention“?',
       answer:
         'Die allgemeinen Pflichten von Unternehmern und Versicherten zu Arbeitsschutz, Unterweisung und Erster Hilfe.',
@@ -896,6 +951,7 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
       verificationStatus: 'UNVERIFIED',
     },
     followUp2: {
+      difficulty: 3,
       question: 'Was regelt die DGUV Vorschrift 23 „Wach- und Sicherungsdienste“?',
       answer:
         'Besondere Sicherheitsanforderungen für Wachdienste, etwa zu Ausrüstung, Verhalten, Waffen und Eigensicherung.',
@@ -911,6 +967,7 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
   },
   {
     blockId: 'fragen-169',
+    mainDifficulty: 2,
     questionOverride: 'Was ist unter Eigensicherung zu verstehen?',
     answerOverride:
       'Der Sicherheitsmitarbeiter beachtet seine eigene Sicherheit und setzt sich keinen unnötigen Gefahren aus.',
@@ -925,6 +982,7 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
       verificationStatus: 'UNVERIFIED',
     },
     followUp1: {
+      difficulty: 3,
       question:
         'Wie kann ein Sicherheitsmitarbeiter Eigensicherung im Einsatz praktisch umsetzen?',
       answer:
@@ -939,6 +997,7 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
       verificationStatus: 'UNVERIFIED',
     },
     followUp2: {
+      difficulty: 3,
       question: 'Warum kommt der Eigensicherung im Sicherheitsdienst besondere Bedeutung zu?',
       answer:
         'Weil die eigene Gesundheit Vorrang hat und ein verletzter Mitarbeiter weder sich noch andere wirksam schützen kann.',
@@ -972,6 +1031,7 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
       verificationStatus: 'UNVERIFIED',
     },
     followUp1: {
+      difficulty: 3,
       question:
         'Warum sind das Verbot berauschender Mittel und das Waffenverbot im Dienst so wichtig?',
       answer:
@@ -986,6 +1046,7 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
       verificationStatus: 'UNVERIFIED',
     },
     followUp2: {
+      difficulty: 3,
       question: 'Welche Folgen können Verstöße gegen diese Verbote haben?',
       answer:
         'Sie können arbeitsrechtliche, versicherungsrechtliche und strafrechtliche Folgen für den Mitarbeiter haben.',
@@ -1005,6 +1066,7 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
   // ===========================================================================
   {
     blockId: 'fragen-195',
+    mainDifficulty: 3,
     questionOverride: 'Welche Verhaltensweisen tragen in angespannten Situationen zur Deeskalation bei?',
     answerOverride:
       'Eine ruhige Ansprache, das Wahren von Distanz, Ich-Botschaften, aktives Zuhören und das Setzen klarer Grenzen.',
@@ -1019,6 +1081,7 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
       verificationStatus: 'UNVERIFIED',
     },
     followUp1: {
+      difficulty: 4,
       question:
         'Was kennzeichnet eine Ich-Botschaft in der Kommunikation mit einer aufgebrachten Person?',
       answer:
@@ -1034,6 +1097,7 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
       explanation: 'Die Bibel ordnet Ich-Botschaft und aktives Zuhören als Deeskalationsbausteine ein.',
     },
     followUp2: {
+      difficulty: 3,
       question: 'Was bedeutet aktives Zuhören?',
       answer:
         'Dem Gegenüber Aufmerksamkeit zeigen, nachfragen und das Gesagte mit eigenen Worten zusammenfassen.',
@@ -1049,6 +1113,7 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
   },
   {
     blockId: 'fragen-194',
+    mainDifficulty: 2,
     questionOverride: 'Was ist unter Deeskalation zu verstehen?',
     answerOverride:
       'Alle gezielten Maßnahmen, die eine angespannte Situation beruhigen und eine drohende Gewaltanwendung verhindern.',
@@ -1063,6 +1128,7 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
       verificationStatus: 'UNVERIFIED',
     },
     followUp1: {
+      difficulty: 3,
       question: 'Welche Techniken werden zur Deeskalation eingesetzt?',
       answer:
         'Ruhige Ansprache, Distanzwahrung, Ich-Botschaften, aktives Zuhören und das Setzen klarer Grenzen.',
@@ -1076,6 +1142,7 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
       verificationStatus: 'UNVERIFIED',
     },
     followUp2: {
+      difficulty: 3,
       question:
         'Wie kann ein Sicherheitsmitarbeiter in einer konkreten angespannten Situation deeskalierend wirken?',
       answer:
@@ -1107,6 +1174,7 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
       verificationStatus: 'UNVERIFIED',
     },
     followUp1: {
+      difficulty: 4,
       question: 'Worauf ist im Umgang mit betrunkenen Personen besonders zu achten?',
       answer:
         'Auf eine ruhige und respektvolle Ansprache, klare Anweisungen, ausreichenden Abstand und das Vermeiden von Provokationen.',
@@ -1120,6 +1188,7 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
       verificationStatus: 'UNVERIFIED',
     },
     followUp2: {
+      difficulty: 3,
       question: 'Welche Gefahren gehen vom Umgang mit betrunkenen Personen aus?',
       answer:
         'Eine erhöhte Aggressions- und Gewaltbereitschaft, eine eingeschränkte Urteilsfähigkeit und eine gesteigerte Sturzgefahr.',
@@ -1135,86 +1204,93 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
   },
 
   // ===========================================================================
-  // 9. Technik
+  // 9. Sicherheitstechnik
   // ===========================================================================
   {
-    blockId: 'fragen-220',
-    questionOverride: 'Was umfasst die elektronische Sicherheit in einem Sicherheitskonzept?',
+    blockId: 'fragen-218',
+    mainDifficulty: 2,
+    questionOverride: 'Aus welchen drei Säulen setzt sich ein Sicherheitskonzept zusammen?',
     answerOverride:
-      'Die technische Überwachung des Objekts durch Alarmanlagen, Videoanlagen und elektronische Zutrittskontrollen.',
+      'Aus der mechanischen, der elektronischen und der organisatorischen Sicherheit.',
     main: {
       distractors: [
-        'Die bauliche Sicherung des Objekts durch Türen, Schlösser, Zäune und besonders widerstandsfähiges Sicherheitsglas.',
-        'Die organisatorischen Maßnahmen wie Dienstanweisungen, Kontrollgänge und das Schlüsselmanagement.',
-        'Die Auswahl, Ausbildung und regelmäßige Unterweisung des eingesetzten Sicherheitspersonals.',
-        'Die Absicherung von Sach- und Personenschäden durch Versicherungen gegen die Folgen von Einbrüchen.',
+        'Aus der baulichen, der personellen und der finanziellen Sicherheit eines Objekts.',
+        'Aus der inneren, der äußeren und der rechtlichen Sicherheit eines Objekts.',
+        'Aus der manuellen, der automatischen und der digitalen Sicherheit eines Objekts.',
+        'Aus der präventiven, der repressiven und der dokumentarischen Sicherheit eines Objekts.',
       ],
       source: 'AUTHORED_FROM_FACHWISSEN',
       verificationStatus: 'UNVERIFIED',
     },
     followUp1: {
-      question: 'Welche Aufgabe erfüllt eine Einbruchmeldeanlage?',
-      answer: 'Sie erkennt unbefugtes Eindringen frühzeitig und meldet dieses als Alarm an die zuständige Stelle.',
+      difficulty: 3,
+      question: 'Wie wirken die drei Säulen der Sicherheit im Sicherheitskonzept zusammen?',
+      answer:
+        'Die Mechanik verzögert den Angriff, die Elektronik erkennt und meldet ihn, die Organisation steuert die Reaktion darauf.',
       distractors: [
-        'Sie erkennt Brände frühzeitig und meldet diese an die zuständige Leitstelle oder die Feuerwehr.',
-        'Sie steuert den Zutritt von Mitarbeitern zu bestimmten Bereichen eines Gebäudes.',
-        'Sie beobachtet die Räume fortlaufend per Video und zeichnet die Bilder zur späteren Auswertung auf.',
-        'Sie ersetzt mechanische Sicherungen wie Schlösser und Zäune durch elektronische Komponenten.',
+        'Die mechanische Sicherung erkennt den Angriff, die elektronische hält ihn auf und die organisatorische ersetzt beide.',
+        'Die drei Säulen wirken unabhängig voneinander und dürfen nicht im selben Objekt kombiniert werden.',
+        'Die elektronische Sicherheit ersetzt die mechanische und die organisatorische Sicherheit vollständig.',
+        'Die organisatorische Sicherheit ist nur bei Großobjekten erforderlich, nicht bei kleinen Objekten.',
       ],
       source: 'AUTHORED_FROM_FACHWISSEN',
       verificationStatus: 'UNVERIFIED',
     },
     followUp2: {
-      question: 'Was ist unter einer Gefahrenmeldeanlage zu verstehen?',
+      difficulty: 2,
+      question: 'Was kennzeichnet die mechanische Sicherheit eines Objekts?',
       answer:
-        'Der Oberbegriff für Anlagen, die Gefahren wie Einbruch, Brand oder Überfall erkennen und melden.',
+        'Sie sichert das Objekt baulich durch Türen, Schlösser, Zäune und widerstandsfähige Bauteile.',
       distractors: [
-        'Eine Anlage, die speziell Brände erkennt, meldet und die zuständige Feuerwehr automatisch alarmiert.',
-        'Eine mechanische Sicherung, die einem Angriff möglichst lange widersteht.',
-        'Ein System zur Verwaltung und Ausgabe von Schlüsseln und Zutrittsrechten.',
-        'Eine Einrichtung zur Kennzeichnung von Flucht- und Rettungswegen im Gebäude.',
+        'Sie überwacht das Objekt durch Alarmanlagen und elektronische Zutrittskontrollen.',
+        'Sie regelt Abläufe und Verhalten durch Dienstanweisungen und Kontrollgänge.',
+        'Sie erfasst Brände frühzeitig und leitet automatisch eine Meldung an die Feuerwehr.',
+        'Sie schützt das Objekt durch Versicherungen gegen die Folgen von Einbrüchen.',
       ],
       source: 'AUTHORED_FROM_FACHWISSEN',
       verificationStatus: 'UNVERIFIED',
     },
   },
   {
-    blockId: 'fragen-218',
-    questionOverride: 'Aus welchen drei Säulen setzt sich ein umfassendes Sicherheitskonzept zusammen?',
+    blockId: 'fragen-220',
+    mainDifficulty: 3,
+    questionOverride: 'Welche Aufgabe erfüllt eine EMA innerhalb eines Sicherheitskonzepts?',
     answerOverride:
-      'Aus der mechanischen Sicherheit, der elektronischen Sicherheit und der organisatorischen Sicherheit.',
+      'Sie erkennt unbefugtes Eindringen frühzeitig und meldet dieses als Alarm an die zuständige Stelle.',
     main: {
       distractors: [
-        'Aus der baulichen Sicherheit, der personellen Sicherheit und der finanziellen Sicherheit eines Objekts.',
-        'Aus der inneren Sicherheit, der äußeren Sicherheit und der rechtlichen Sicherheit eines Objekts.',
-        'Aus der manuellen Sicherheit, der automatischen Sicherheit und der digitalen Sicherheit eines Objekts.',
-        'Aus der präventiven Sicherheit, der repressiven Sicherheit und der dokumentarischen Sicherheit.',
+        'Sie erkennt Brände frühzeitig und meldet diese an die zuständige Leitstelle.',
+        'Sie steuert den Zutritt von Mitarbeitern zu bestimmten Bereichen des Gebäudes.',
+        'Sie überwacht Räume fortlaufend per Video und zeichnet die Bilder zur Auswertung auf.',
+        'Sie löst mechanische Sicherungen aus, wenn ein Angriff auf das Objekt unmittelbar bevorsteht.',
       ],
       source: 'AUTHORED_FROM_FACHWISSEN',
       verificationStatus: 'UNVERIFIED',
     },
     followUp1: {
-      question: 'Was kennzeichnet die drei Säulen der Sicherheit?',
+      difficulty: 4,
+      question: 'Wie ist eine EMA in das System der Gefahrenmeldeanlagen (GMA) einzuordnen?',
       answer:
-        'Mechanische Sicherheit sichert baulich, elektronische überwacht technisch und organisatorische regelt Abläufe und Verhalten.',
+        'Sie ist eine Unterart der GMA und meldet als Gefahr den Einbruch.',
       distractors: [
-        'Alle drei Säulen bezeichnen dieselbe Sicherungsart und unterscheiden sich nur in der Bezeichnung.',
-        'Die mechanische Sicherheit bezeichnet die Ausbildung, die elektronische den Bau von Zäunen.',
-        'Die elektronische Sicherheit bezeichnet die Dienstanweisungen, die organisatorische dagegen den regelmäßigen Einsatz von Kameras.',
-        'Die organisatorische Sicherheit bezeichnet die Versicherung, die mechanische die Alarmierung.',
+        'Sie ist eine Unterart der GMA und meldet als Gefahr den Brand.',
+        'Sie ist der Oberbegriff für alle Anlagen, die Einbruch, Brand und Überfall erkennen und melden.',
+        'Sie ist eine mechanische Sicherung, die einem Einbruchversuch möglichst lange widersteht.',
+        'Sie ist ein System zur Verwaltung und Ausgabe von Schlüsseln und Zutrittsrechten.',
       ],
       source: 'AUTHORED_FROM_FACHWISSEN',
       verificationStatus: 'UNVERIFIED',
     },
     followUp2: {
-      question: 'Wie wirken die drei Säulen der Sicherheit im Sicherheitskonzept zusammen?',
+      difficulty: 3,
+      question: 'Welche Aufgabe übernimmt eine UMA?',
       answer:
-        'Mechanik verzögert den Angriff, Elektronik erkennt und meldet ihn, die Organisation steuert die Reaktion darauf.',
+        'Sie erkennt einen Überfall und löst eine stille oder laute Alarmierung an die zuständige Stelle aus.',
       distractors: [
-        'Es genügt, eine einzelne Säule konsequent einzusetzen, weil die übrigen keine Wirkung entfalten.',
-        'Die drei Säulen schließen einander aus und dürfen deshalb nicht gleichzeitig in ein und demselben Objekt eingesetzt werden.',
-        'Die elektronische Sicherheit ersetzt die mechanische und die organisatorische Sicherheit vollständig.',
-        'Die organisatorische Sicherheit ist nur bei Großobjekten erforderlich, nicht bei kleinen Objekten.',
+        'Sie erkennt Brände und steuert die Freigabe von Flucht- und Rettungswegen.',
+        'Sie erkennt unbefugtes Eindringen und meldet dieses an die zuständige Leitstelle.',
+        'Sie verwaltet Zutrittsrechte und protokolliert die Bewegungen der Beschäftigten.',
+        'Sie überwacht die Technik des Gebäudes und meldet Störungen an die Haustechnik.',
       ],
       source: 'AUTHORED_FROM_FACHWISSEN',
       verificationStatus: 'UNVERIFIED',
@@ -1222,23 +1298,25 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
   },
   {
     blockId: 'fragen-224',
-    questionOverride: 'Wozu dient eine Brandmeldeanlage?',
+    mainDifficulty: 4,
+    questionOverride:
+      'In einem überwachten Objekt löst ein automatischer Melder eine Brandmeldung aus. Welche Funktion der BMA wird dadurch beschrieben?',
     answerOverride:
-      'Sie erkennt Brände frühzeitig und löst eine Meldung aus, damit Gegenmaßnahmen rechtzeitig möglich sind.',
+      'Sie erkennt den Brand frühzeitig und meldet ihn, damit Gegenmaßnahmen rechtzeitig eingeleitet werden können.',
     main: {
       distractors: [
-        'Sie erkennt unbefugtes Eindringen und meldet dieses als Einbruchalarm an die Leitstelle.',
-        'Sie steuert den Zutritt zu bestimmten Bereichen und protokolliert die Bewegungen aller anwesenden Personen.',
-        'Sie überwacht die Räume fortlaufend per Video und zeichnet die Bilder zur späteren Auswertung auf.',
+        'Sie erkennt ein unbefugtes Eindringen und meldet dieses als Einbruchalarm an die Leitstelle.',
+        'Sie steuert den Zutritt zu bestimmten Bereichen und protokolliert die Bewegungen der Personen.',
+        'Sie überwacht die Räume fortlaufend per Video und zeichnet die Bilder zur Auswertung auf.',
         'Sie löst mechanische Sicherungen aus, wenn ein Angriff auf das Objekt unmittelbar bevorsteht.',
       ],
       source: 'AUTHORED_FROM_FACHWISSEN',
       verificationStatus: 'UNVERIFIED',
     },
     followUp1: {
-      question: 'Welche Arten von Brandmeldern werden eingesetzt?',
-      answer:
-        'Unter anderem Rauchmelder, Wärmemelder, Flammenmelder und Multifunktionsmelder.',
+      difficulty: 4,
+      question: 'Welche Melderarten werden in einer BMA eingesetzt?',
+      answer: 'Unter anderem Rauchmelder, Wärmemelder, Flammenmelder und Multifunktionsmelder.',
       distractors: [
         'Videokameras, die eine beginnende Rauchentwicklung anhand des Bildes erkennen und melden.',
         'Türen und Schlösser, die sich im Brandfall automatisch verriegeln und die Fluchtwege freigeben.',
@@ -1249,14 +1327,15 @@ export const ORAL_EXAM_POOL: OralExamPoolBlock[] = [
       verificationStatus: 'UNVERIFIED',
     },
     followUp2: {
+      difficulty: 3,
       question: 'Welche Brandklassen werden im Brandschutz unterschieden?',
       answer:
-        'A für feste Stoffe, B für flüssige, C für Gase, D für Metalle und F für Fette und Öle.',
+        'A für feste, B für flüssige, C für gasförmige, D für metallische Stoffe sowie F für Fette und Öle.',
       distractors: [
         'Die Brandklassen 1, 2 und 3 für kleine, mittlere und große Brände im Gebäude.',
         'Die Brandklassen Rot, Gelb und Blau, die nach der Temperatur des Feuers unterschieden werden.',
         'Die Brandklassen Innenbrand, Außenbrand und Vollbrand nach dem Ort des Feuers.',
-        'Die Brandklassen A, B, C und D für feste, flüssige, gasförmige und metallische Stoffe.',
+        'Die Brandklassen A, B und C für feste, flüssige und gasförmige Stoffe ohne die Klasse D.',
       ],
       source: 'AUTHORED_FROM_FACHWISSEN',
       verificationStatus: 'UNVERIFIED',

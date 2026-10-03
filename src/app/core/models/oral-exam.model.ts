@@ -40,7 +40,7 @@ export const ORAL_EXAM_CATEGORY_LABELS: Record<OralExamCategory, string> = {
   Waffen: 'Waffen',
   'DGUV/UVV': 'DGUV / UVV',
   UmM: 'Umgang mit Menschen',
-  Technik: 'Technik',
+  Technik: 'Sicherheitstechnik',
 };
 
 /** Feste Reihenfolge der 9 Themengebiete. */

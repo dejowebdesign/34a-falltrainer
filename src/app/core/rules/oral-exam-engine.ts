@@ -142,10 +142,14 @@ export interface ExamPoolQualityIssue {
     | 'REDUNDANT_OPTIONS'
     | 'AMBIGUOUS_OPTIONS'
     | 'ACRONYM_LEAK'
+    | 'KEYWORD_LEAK'
+    | 'NORM_MISSING_IN_QUESTION'
     | 'MISSING_QUESTION'
     | 'MISSING_CATEGORY'
+    | 'LEGACY_CATEGORY_LABEL'
     | 'MISSING_DIFFICULTY'
     | 'INVALID_DIFFICULTY'
+    | 'DIFFICULTY_VARIETY'
     | 'LENGTH_IMBALANCE'
     | 'LENGTH_LEAK'
     | 'DUPLICATE_OPTION';
@@ -195,6 +199,25 @@ const NEGATION_PATTERNS: readonly RegExp[] = [
 ];
 
 const NORM_PATTERN = /§\s*\d|Art\.\s*\d/;
+
+/**
+ * Veraltete sichtbare Bezeichnung des Themengebiets „Sicherheitstechnik“.
+ * Der sichtbare Teilnehmertext muss „Sicherheitstechnik“ lauten; „Technik“
+ * ist nur noch als interne ID zulässig.
+ */
+const LEGACY_CATEGORY_LABEL = 'Technik';
+
+/**
+ * Häufige Funktionswörter, die beim Schlüsselwort-Leak nicht berücksichtigt
+ * werden (sie stehen in Fragen fast jeder Art und verraten nichts).
+ */
+const KEYWORD_STOPWORDS = new Set([
+  'welche', 'welcher', 'welches', 'welchen', 'zutreffend', 'trifft', 'aussage',
+  'beschreibt', 'erfüllt', 'wann', 'wozu', 'wofür', 'unter', 'durch', 'ohne',
+  'gegen', 'zwischen', 'aufgrund', 'voraussetzungen', 'voraussetzung',
+  'sicherheitsmitarbeiter', 'sicherheitsmitarbeitern', 'rechtlichen',
+  'rechtliche', 'müssen', 'werden', 'würde', 'worden',
+]);
 
 /**
  * Akronyme, die in einer Antwort stehen dürfen. Sie sind Teil des
@@ -284,6 +307,39 @@ function hasNegation(text: string): boolean {
   return NEGATION_PATTERNS.some((pattern) => pattern.test(text));
 }
 
+/**
+ * Fachbegriffe (Wörter ab 7 Zeichen), die in der Frage, in der richtigen
+ * Antwort und in keiner falschen Antwort vorkommen. Solche Wörter verraten die
+ * Lösung durch bloßes Wortmatching.
+ */
+function keywordLeak(question: string, correct: string, distractors: readonly string[]): string[] {
+  const questionTokens = tokens(question);
+  const correctTokens = tokens(correct);
+  const distractorTokens = new Set(distractors.flatMap((text) => [...tokens(text)]));
+  const leaked: string[] = [];
+  for (const token of correctTokens) {
+    if (
+      token.length >= 7 &&
+      questionTokens.has(token) &&
+      !distractorTokens.has(token) &&
+      !KEYWORD_STOPWORDS.has(token)
+    ) {
+      leaked.push(token);
+    }
+  }
+  return leaked;
+}
+
+/** Nennt die Frage eine konkrete Rechtsnorm (Paragraph/Artikel)? */
+function questionNamesNorm(question: string): boolean {
+  return NORM_PATTERN.test(question);
+}
+
+/** Enthält die Antwort eine konkrete Normangabe? */
+function answerNamesNorm(answer: string): boolean {
+  return NORM_PATTERN.test(answer);
+}
+
 function optionTexts(
   block: OralExamQuestionBlock,
   entry: OralExamPoolBlock,
@@ -368,6 +424,13 @@ export function validatePoolQuality(
         role: 'HAUPTFRAGE',
         kind: 'MISSING_CATEGORY',
         detail: 'Themengebiet fehlt oder ist leer.',
+      });
+    } else if (block.categoryLabel === LEGACY_CATEGORY_LABEL) {
+      push({
+        blockId: entry.blockId,
+        role: 'HAUPTFRAGE',
+        kind: 'LEGACY_CATEGORY_LABEL',
+        detail: `Sichtbare Bezeichnung "${LEGACY_CATEGORY_LABEL}" statt "Sicherheitstechnik".`,
       });
     }
     for (const role of roles) {
@@ -472,6 +535,27 @@ export function validatePoolQuality(
           detail: correct,
         });
       }
+      // Normbezug: Steht eine Normangabe in einer Antwort, muss sie in der
+      // Frage genannt sein. Dort gehört der einschlägige Paragraph hin.
+      if (answerNamesNorm(correct) && !questionNamesNorm(effectiveQuestion)) {
+        push({
+          blockId: entry.blockId,
+          role,
+          kind: 'NORM_MISSING_IN_QUESTION',
+          detail: `Antwort nennt eine Norm, die Frage nicht: ${effectiveQuestion}`,
+        });
+      }
+      // Schlüsselwort-Leak: Ein Fachbegriff aus der Frage, der nur in der
+      // richtigen Antwort steht, verrät die Lösung durch Wortmatching.
+      const leakedKeywords = keywordLeak(effectiveQuestion, correct, distractors);
+      if (leakedKeywords.length > 0) {
+        push({
+          blockId: entry.blockId,
+          role,
+          kind: 'KEYWORD_LEAK',
+          detail: `Nur in richtiger Antwort: ${leakedKeywords.join(', ')}`,
+        });
+      }
       // Spiegelbildliche Umkehrung der richtigen Antwort erkennen.
       const correctTokens = tokens(correct);
       const correctNegated = hasNegation(correct);
@@ -544,9 +628,48 @@ export function validatePoolQuality(
         });
       }
     }
+
+    // Innerhalb eines Blocks sollen die drei Fragen nicht durchgehend dieselbe
+    // Schwierigkeit tragen (bevorzugt gemischte Stufen).
+    const blockDifficulties = roles.map((role) => questionDifficulty(block, entry, role));
+    if (new Set(blockDifficulties).size === 1) {
+      push({
+        blockId: entry.blockId,
+        role: 'HAUPTFRAGE',
+        kind: 'DIFFICULTY_VARIETY',
+        detail: `Alle drei Fragen haben Schwierigkeit ${blockDifficulties[0]}.`,
+      });
+    }
   }
 
   return issues;
+}
+
+/**
+ * Wählt für ein Themengebiet einen Fragenblock aus.
+ *
+ * Bevorzugt wird ein Block mit einer Schwierigkeit, die im Durchlauf noch
+ * nicht vorkam; so entsteht über die neun Themengebiete eine gemischte
+ * Schwierigkeitsfolge. Gibt es keine unbenutzte Stufe mehr, wird zufällig aus
+ * allen Kandidaten gewählt.
+ */
+function pickBlockForTopic(
+  candidates: readonly OralExamPoolBlock[],
+  byId: Map<string, OralExamQuestionBlock>,
+  usedDifficulties: ReadonlySet<number>,
+  random: RandomFn,
+): OralExamPoolBlock {
+  const difficultyOf = (entry: OralExamPoolBlock) =>
+    entry.mainDifficulty ?? byId.get(entry.blockId)!.difficulty;
+  const distinct = [...new Set(candidates.map(difficultyOf))].filter(
+    (level) => !usedDifficulties.has(level),
+  );
+  if (distinct.length > 0) {
+    const level = distinct[Math.floor(random() * distinct.length)];
+    const preferred = candidates.filter((entry) => difficultyOf(entry) === level);
+    return preferred[Math.floor(random() * preferred.length)];
+  }
+  return candidates[Math.floor(random() * candidates.length)];
 }
 
 /**
@@ -564,11 +687,13 @@ export function buildExam(
   const topics: ExamTopic[] = [];
   let position = 0;
   const startOffset = Math.floor(random() * ORAL_EXAM_OPTION_COUNT);
+  const usedBlockDifficulties = new Set<number>();
 
   for (const category of ORAL_EXAM_CATEGORIES) {
     const candidates = pool.filter((p) => byId.get(p.blockId)?.category === category);
-    const chosen = candidates[Math.floor(random() * candidates.length)];
+    const chosen = pickBlockForTopic(candidates, byId, usedBlockDifficulties, random);
     const block = byId.get(chosen.blockId)!;
+    usedBlockDifficulties.add(chosen.mainDifficulty ?? block.difficulty);
 
     const topicQuestions: ExamQuestion[] = [
       makeQuestion(
@@ -628,7 +753,7 @@ export function buildExam(
       categoryLabel: block.categoryLabel,
       blockId: block.id,
       cluster: block.cluster,
-      difficulty: block.difficulty,
+      difficulty: chosen.mainDifficulty ?? block.difficulty,
       questions: topicQuestions,
     });
   }

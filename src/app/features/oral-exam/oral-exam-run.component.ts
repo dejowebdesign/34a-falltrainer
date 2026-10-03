@@ -35,7 +35,7 @@ const ROLE_LABELS: Record<ExamQuestionRole, string> = {
       <div class="ft-container page">
         <header class="run-head">
           <div class="run-meta">
-            <span class="topic-chip">{{ question.categoryLabel }}</span>
+            <span class="topic-position">Themengebiet {{ topicPosition() }} von {{ topicCount() }}</span>
             <span class="position">Frage {{ index() + 1 }} von {{ total() }}</span>
           </div>
           <mat-progress-bar
@@ -127,12 +127,9 @@ const ROLE_LABELS: Record<ExamQuestionRole, string> = {
         gap: 1rem;
         flex-wrap: wrap;
       }
-      .topic-chip {
-        background: var(--ft-primary-soft);
-        border-radius: 999px;
-        padding: 0.3rem 0.85rem;
-        font-weight: 600;
-        font-size: 0.9rem;
+      .topic-position {
+        font-weight: 700;
+        font-size: 0.95rem;
       }
       .position,
       .answered {
@@ -234,6 +231,17 @@ export class OralExamRunComponent {
   readonly progress = computed(() =>
     this.total() === 0 ? 0 : Math.round((this.answered() / this.total()) * 100),
   );
+
+  readonly topicCount = computed(() => this.examService.exam()?.topics.length ?? 0);
+
+  readonly topicPosition = computed(() => {
+    const question = this.currentQuestion();
+    if (!question) {
+      return 0;
+    }
+    const topics = this.examService.exam()?.topics ?? [];
+    return topics.findIndex((topic) => topic.category === question.category) + 1;
+  });
 
   isFirst(): boolean {
     return this.index() === 0;
