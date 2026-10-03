@@ -48,6 +48,9 @@ describe('AppHeaderComponent', () => {
     const navLink = host.querySelector('a[href="/scenarios"]');
     expect(navLink).toBeTruthy();
     expect(navLink?.textContent?.trim()).toBe('Fallbeispiele');
+    const examLink = host.querySelector('a[href="/pruefungssimulation"]');
+    expect(examLink).toBeTruthy();
+    expect(examLink?.textContent?.trim()).toBe('Prüfungssimulation');
   });
 
   it('hat ein aria-label am Theme-Toggle', () => {

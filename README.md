@@ -146,12 +146,56 @@ src/
       stage-two/   Stufe 2 – rechtliche Einordnung
       stage-three/ Stufe 3 – Rechtsgrundlage
       result/      Ergebnis und Musterlösung
+      oral-exam/   Mündliche Prüfungssimulation
     shared/
       components/  Wiederverwendbare UI-Bausteine
 ```
 
 Daten, juristische Logik und UI sind strikt getrennt. In Templates steht keine
 juristische Logik.
+
+## Mündliche Prüfungssimulation
+
+Die Prüfungssimulation (`/pruefungssimulation`) bereitet auf mündliche
+Prüfungsfragen der Sachkundeprüfung § 34a GewO vor.
+
+Ablauf:
+
+- neun Themengebiete, in jedem wird **ein Fragenblock zufällig** ausgewählt
+- je Block eine Hauptfrage und zwei Folgefragen
+- **27 bewertete Fragen**, je richtige Antwort 1 Punkt
+- **Bestehensgrenze 50 % = 14 von 27 Punkten**
+- Ergebnis mit Gesamtpunkten, Prozentwert, BESTANDEN/NICHT BESTANDEN,
+  Bewertung je Themengebiet, anklickbaren Themengebieten und Detailansicht
+  (gestellte Frage, gegebene Antwort, richtige Antwort, richtig/falsch,
+  Erklärung, sofern vorhanden) sowie Gesamtbewertung.
+
+Die Bewertung erfolgt in der Engine `buildExam`/`evaluateExam`
+(`src/app/core/rules/oral-exam-engine.ts`). Die richtige Antwort wird über den
+Durchlauf rotiert und steht nicht immer an derselben Position.
+
+### Quellenregel der Prüfungssimulation
+
+| Bestandteil | Quelle | Kennzeichnung |
+| --- | --- | --- |
+| Hauptfrage + richtige Antwort | `Fragen.txt`, 1:1 | `QUESTIONS_TXT` |
+| Folgefrage-Antwort, in der Bibel gedeckt | 34a-Bibel V5.3.1 | `AUTHORED_FROM_BIBEL` / `VERIFIED_BIBEL` |
+| Folgefrage-Antwort, Bibel deckt Thema nicht ab | Fachwissen | `AUTHORED_FROM_FACHWISSEN` / `UNVERIFIED` |
+
+Die Fragenbank enthält nur zu den Hauptfragen eine richtige Antwort; die
+Folgefragen sind reine Stichworte. Antworten zu den Folgefragen wurden deshalb
+ergänzt und im Datenmodell eindeutig gekennzeichnet. Es werden **keine**
+Fragen oder Antworten aus `Fragen.txt` stillschweigend verändert.
+
+Die technischen Kennzeichnungen werden nur im Datenmodell und in der internen
+Audit-Ansicht (`/pruefungssimulation/audit`) gezeigt, nie in der
+Teilnehmerprüfung. Die Audit-Ansicht listet zudem die Auffälligkeiten der
+Fragenbank (doppelte Fragen mit abweichenden Antworten, fehlende Rechtslehre).
+
+Die Bibel deckt fachlich nur BGB und StGB/StPO ab; Datenschutz, GewO/BewachV,
+Waffen, DGUV/UVV, Umgang mit Menschen, Technik und Rechtsordnung/Staatskunde
+sind nicht Teil der Bibel. Für diese Gebiete stammen die Folgefrage-Antworten
+daher aus Fachwissen (`UNVERIFIED`) und sind im Abschlussbericht gelistet.
 
 ## Routing
 
@@ -164,6 +208,10 @@ juristische Logik.
 | `/scenarios/:id/stage/2` | Stufe 2 |
 | `/scenarios/:id/stage/3` | Stufe 3 |
 | `/scenarios/:id/result` | Ergebnis und Musterlösung |
+| `/pruefungssimulation` | Einführung in die Prüfungssimulation |
+| `/pruefungssimulation/durchfuehrung` | Durchführung (27 Fragen) |
+| `/pruefungssimulation/auswertung` | Auswertung und Detailansicht |
+| `/pruefungssimulation/audit` | Interne Quellenkennzeichnung (Audit) |
 
 ## Technik
 
@@ -212,6 +260,13 @@ Getestet werden u. a. Fallnavigation, Stufenwechsel, Antwortauswertung,
 richtige/falsche Antworten, juristische Regelverknüpfungen, fehlende Daten und
 die Ergebnisberechnung der Rule Engine.
 
+Für die Prüfungssimulation (`oral-exam-engine.spec.ts`,
+`oral-exam.service.spec.ts`, Komponenten-Specs) zusätzlich: Blockauswahl je
+Themengebiet, Anordnung der drei Fragen, genau fünf Antwortmöglichkeiten mit
+einer richtigen, Rotation der richtigen Antwort, Bestehensgrenze (14/27 und
+13/27), Auswertung je Themengebiet, Ausblenden der Quellkennzeichnungen in der
+Teilnehmeransicht und die Quelldarstellung in der Audit-Ansicht.
+
 ## Datenmodell
 
 Zentrale Typen (`src/app/core/models`):
@@ -226,6 +281,24 @@ Zentrale Typen (`src/app/core/models`):
 
 Szenarien sind separate Seed-Daten und nicht Teil der juristischen Knowledge
 Base. Dadurch können beliebig viele Fälle ergänzt werden.
+
+### Datenmodell der Prüfungssimulation
+
+Zusätzlich (`src/app/core/models/oral-exam.model.ts`):
+
+- `OralExamQuestionBlock` – id, category, categoryLabel, difficulty, cluster,
+  question, correctAnswer, legalReference, followUp1, followUp2, source,
+  notes (alle 244 Blöcke aus `Fragen.txt`)
+- `OralExamPoolBlock` – prüfungsreifer Block: Distraktoren zur Hauptfrage sowie
+  ergänzte Folgefrage-Antworten (`source`, `verificationStatus`)
+- `AuthoredFollowUp` – answer, distractors, source, verificationStatus, explanation
+- `ExamQuestion` – id, role (HAUPTFRAGE/FOLGEFRAGE_1/FOLGEFRAGE_2), question,
+  correctAnswer, fünf `options`, source, verificationStatus, explanation
+- `OralExam` / `ExamTopic` – Durchlauf mit 9 Themengebieten × 3 Fragen
+- `ExamEvaluation` / `ExamTopicEvaluation` / `ExamQuestionEvaluation` – Auswertung
+
+Die Quellenkennzeichnung (`source`, `verificationStatus`) ist im Datenmodell
+durchgängig nachvollziehbar und wird nur in der Audit-Ansicht angezeigt.
 
 ### Normdarstellung (offizieller Gesetzestitel)
 
@@ -275,6 +348,14 @@ Die Unterlage ist die didaktische Leitlinie; die juristische Begründung bleibt
 ausschließlich die V5.3.1-Bibel. Die Fallbeispiele der Unterlage werden als
 eigene Seed-Szenarien abgebildet (u. a. Wegnahme aus dem Einkaufswagen,
 Marktschließung/Hausverbot) und nicht in die Knowledge Base eingebaut.
+
+### Fragenbank der Prüfungssimulation
+
+Die mündliche Prüfungssimulation nutzt zusätzlich die Fragenbank **`Fragen.txt`**
+(244 Fragenblöcke, 9 Themengebiete, Schwierigkeiten 1–5). Der faithful import
+erfolgt über `scripts/extract-fragen.py`; Fragen und Antworten werden 1:1
+übernommen. Die Folgefrage-Antworten fehlen in der Bank und sind in
+`src/app/core/data/oral-exam-authored.data.ts` ergänzt und gekennzeichnet.
 
 ## Hinweis zur V5.3.1 Knowledge Base
 
