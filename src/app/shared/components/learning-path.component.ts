@@ -72,23 +72,43 @@ interface LearningStep {
       }
       .step {
         position: relative;
-        background: var(--ft-surface);
+        overflow: hidden;
+        background: linear-gradient(180deg, var(--ft-surface) 0%, var(--ft-surface-2) 100%);
         border: 1px solid var(--ft-border);
         border-radius: var(--ft-radius-lg);
         padding: 1.4rem 1.4rem 1.5rem;
-        box-shadow: var(--ft-shadow-sm);
+        box-shadow: var(--ft-elevation-1);
         transition:
-          transform var(--ft-transition),
-          border-color var(--ft-transition),
-          box-shadow var(--ft-transition);
+          transform var(--ft-motion),
+          border-color var(--ft-motion),
+          box-shadow var(--ft-motion);
+      }
+      /* Dezente Glass-Kante oben – Material bleibt die Basis. */
+      .step::before {
+        content: '';
+        position: absolute;
+        inset: 0 0 auto 0;
+        height: 3px;
+        background: linear-gradient(90deg, var(--ft-accent), var(--ft-secondary));
+        opacity: 0.85;
+      }
+      .step::after {
+        content: '';
+        position: absolute;
+        inset: 0 0 auto 0;
+        height: 40%;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), transparent);
+        pointer-events: none;
       }
       .step:hover {
         transform: translateY(-3px);
         border-color: var(--ft-accent);
-        box-shadow: var(--ft-shadow);
+        box-shadow: var(--ft-elevation-2);
       }
       .step-number {
         display: block;
+        position: relative;
+        z-index: 1;
         font-size: 2.4rem;
         font-weight: 700;
         line-height: 1;
@@ -102,6 +122,7 @@ interface LearningStep {
         position: absolute;
         top: 1.35rem;
         right: 1.35rem;
+        z-index: 1;
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -112,10 +133,14 @@ interface LearningStep {
         color: var(--ft-primary);
       }
       .step h3 {
+        position: relative;
+        z-index: 1;
         margin: 0 0 0.5rem;
         font-size: 1.12rem;
       }
       .step p {
+        position: relative;
+        z-index: 1;
         margin: 0;
         color: var(--ft-muted);
         line-height: 1.55;

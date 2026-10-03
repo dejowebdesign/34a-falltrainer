@@ -95,7 +95,7 @@ import { ScenarioService } from '../../core/services/scenario.service';
         border-radius: var(--ft-radius-lg);
         background:
           linear-gradient(180deg, var(--ft-surface-2), var(--ft-surface));
-        box-shadow: var(--ft-shadow);
+        box-shadow: var(--ft-elevation-2);
         padding: 1.75rem;
         overflow: hidden;
       }

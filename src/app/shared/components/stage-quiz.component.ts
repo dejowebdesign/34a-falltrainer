@@ -166,12 +166,17 @@ import { VerdictBadgeComponent } from './verdict-badge.component';
         border-radius: var(--ft-radius);
         background: var(--ft-surface);
         transition:
-          border-color var(--ft-transition),
-          background-color var(--ft-transition),
-          box-shadow var(--ft-transition);
+          border-color var(--ft-motion),
+          background-color var(--ft-motion),
+          box-shadow var(--ft-motion);
       }
       .option:hover {
         border-color: var(--ft-border-strong);
+        background: var(--ft-surface-2);
+      }
+      .option:focus-within {
+        outline: 3px solid var(--ft-accent);
+        outline-offset: 2px;
       }
       .option.selected {
         border-color: var(--ft-accent);

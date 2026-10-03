@@ -66,6 +66,8 @@ export const HEADER_SCROLL_THRESHOLD = 16;
   styles: [
     `
       :host {
+        /* Sticky über die komplette Scrollstrecke: Der Containing Block ist
+           der Body, der dank min-height mit dem Inhalt mitwächst. */
         position: sticky;
         top: 0;
         z-index: 40;
@@ -90,20 +92,22 @@ export const HEADER_SCROLL_THRESHOLD = 16;
         min-height: var(--ft-header-height);
         padding-block: 0.4rem;
         border-bottom: 1px solid transparent;
+        box-shadow: none;
         transition:
-          background-color var(--ft-transition),
-          backdrop-filter var(--ft-transition),
-          -webkit-backdrop-filter var(--ft-transition),
-          border-color var(--ft-transition),
-          box-shadow var(--ft-transition);
+          background-color var(--ft-motion),
+          backdrop-filter var(--ft-motion),
+          -webkit-backdrop-filter var(--ft-motion),
+          border-color var(--ft-motion),
+          box-shadow var(--ft-motion);
       }
-      /* Beim Scrollen: semi-transparente Surface + Backdrop-Blur. */
+      /* Beim Scrollen: semi-transparente Surface + Backdrop-Blur.
+         Bleibt bewusst dezent – keine undurchsichtige Leiste. */
       .app-toolbar.glass {
         background: var(--ft-header-glass);
-        backdrop-filter: blur(18px) saturate(150%);
-        -webkit-backdrop-filter: blur(18px) saturate(150%);
+        backdrop-filter: blur(var(--ft-blur-header)) saturate(150%);
+        -webkit-backdrop-filter: blur(var(--ft-blur-header)) saturate(150%);
         border-bottom-color: var(--ft-header-border);
-        box-shadow: 0 10px 30px -22px rgba(15, 23, 42, 0.5);
+        box-shadow: var(--ft-elevation-1);
       }
       .toolbar-inner {
         display: flex;
@@ -128,7 +132,7 @@ export const HEADER_SCROLL_THRESHOLD = 16;
         border-radius: 12px;
         background: linear-gradient(140deg, var(--ft-accent) 0%, var(--ft-secondary) 100%);
         color: var(--ft-on-accent);
-        box-shadow: var(--ft-shadow-sm);
+        box-shadow: var(--ft-elevation-1);
         flex: 0 0 auto;
       }
       .brand-mark mat-icon {
@@ -180,10 +184,32 @@ export const HEADER_SCROLL_THRESHOLD = 16;
           font-size: 0.88rem;
         }
       }
+      /* Auf schmalen Screens darf die Navigation in eine zweite Zeile
+         umbrechen – so entsteht kein horizontaler Überlauf. */
+      @media (max-width: 560px) {
+        .toolbar-inner {
+          flex-wrap: wrap;
+          row-gap: 0.3rem;
+        }
+        .brand {
+          flex: 1 1 auto;
+        }
+        .toolbar-actions {
+          flex: 1 1 100%;
+          justify-content: space-between;
+        }
+        .nav a {
+          padding-inline: 0.5rem;
+          font-size: 0.85rem;
+        }
+      }
       @media (max-width: 420px) {
         .nav a {
-          padding-inline: 0.45rem;
-          font-size: 0.82rem;
+          padding-inline: 0.4rem;
+          font-size: 0.8rem;
+        }
+        .brand-text strong {
+          font-size: 1rem;
         }
       }
     `,
