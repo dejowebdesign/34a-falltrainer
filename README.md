@@ -170,9 +170,32 @@ Ablauf:
   (gestellte Frage, gegebene Antwort, richtige Antwort, richtig/falsch,
   Erklärung, sofern vorhanden) sowie Gesamtbewertung.
 
+Jede Frage trägt zwei fachliche Metadaten, die nur begleitend angezeigt werden
+und nie die Antwort verraten:
+
+- **Schwierigkeit** (1–5) je Frage, in der Durchführung und in der Auswertung
+  sichtbar.
+- **Rechtsgrundlage** (z. B. `§ 127 Abs. 1 StPO – Vorläufige Festnahme`),
+  bewusst **nicht** unter den fünf Antwortoptionen, sondern erst nach der
+  Auflösung.
+
 Die Bewertung erfolgt in der Engine `buildExam`/`evaluateExam`
 (`src/app/core/rules/oral-exam-engine.ts`). Die richtige Antwort wird über den
 Durchlauf rotiert und steht nicht immer an derselben Position.
+
+### Qualitätssicherung der Antwortoptionen
+
+`validatePoolQuality` prüft rein formal, dass keine Frage allein über
+Äußerlichkeiten lösbar ist, und meldet u. a.:
+
+- Paragraphen in falschen **und** richtigen Antworten,
+- absolute bzw. extreme Distraktoren,
+- spiegelbildliche Umkehrungen der richtigen Antwort,
+- redundante oder nahezu identische Optionen,
+- Akronyme, die nur in der richtigen Antwort stehen,
+- fehlende oder ungültige Schwierigkeit bzw. fehlendes Themengebiet,
+- Längen-Ungleichgewicht und Längen-Leaks (richtige Antwort deutlich länger
+  oder kürzer als die falschen).
 
 ### Quellenregel der Prüfungssimulation
 

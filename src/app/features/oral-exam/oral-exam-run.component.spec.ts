@@ -27,7 +27,9 @@ describe('OralExamRunComponent', () => {
   it('zeigt die erste Frage mit genau fünf Antwortmöglichkeiten', () => {
     expect(element.querySelectorAll('mat-radio-button').length).toBe(5);
     expect(element.textContent).toContain('Frage 1 von 27');
-    expect(element.querySelector('.role')?.textContent).toContain('Hauptfrage');
+    expect(element.querySelector('.meta-role')?.textContent).toContain('Hauptfrage');
+    expect(element.querySelector('.meta-difficulty')?.textContent).toContain('Schwierigkeit');
+    expect(element.querySelector('.meta-topic')?.textContent?.trim().length).toBeGreaterThan(0);
   });
 
   it('blockiert „Weiter“ bis die Frage beantwortet ist', () => {

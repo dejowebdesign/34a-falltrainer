@@ -10,6 +10,7 @@ import {
   OralExamSource,
   OralExamVerification,
 } from '../../core/models';
+import { validatePoolQuality } from '../../core/rules/oral-exam-engine';
 
 const SOURCE_LABELS: Record<OralExamSource, string> = {
   QUESTIONS_TXT: 'Fragen.txt',
@@ -32,6 +33,10 @@ interface AuditFollowUp {
 
 interface AuditBlock {
   block: OralExamQuestionBlock;
+  /** Prüfungsgerechte Formulierung der Hauptfrage (Override oder Bank). */
+  mainQuestion: string;
+  /** Prüfungsgerechte richtige Antwort zur Hauptfrage (Override oder Bank). */
+  mainAnswer: string;
   followUps: AuditFollowUp[];
 }
 
@@ -79,7 +84,35 @@ interface AuditBlock {
           <strong>{{ fromFachwissen }}</strong>
           <span>Folgefragen aus Fachwissen</span>
         </div>
+        <div class="count">
+          <strong>{{ overriddenBlocks }}</strong>
+          <span>Redaktionell überarbeitete Hauptfragen</span>
+        </div>
       </section>
+
+      <mat-card appearance="outlined" class="flags">
+        <mat-card-header>
+          <mat-card-title>Formale Qualitätsprüfung des Pools</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          @if (qualityIssues.length === 0) {
+            <p>
+              Keine formalen Auffälligkeiten. Geprüft werden: genau fünf Optionen, vollständige
+              Sätze, ausgewogene Längen, keine Paragraphen und keine absoluten Formulierungen in
+              falschen Antworten.
+            </p>
+          } @else {
+            <ul>
+              @for (issue of qualityIssues; track issue.blockId + issue.role + issue.kind + issue.detail) {
+                <li>
+                  <strong>{{ issue.blockId }}</strong> ({{ issue.role }}, {{ issue.kind }}) –
+                  {{ issue.detail }}
+                </li>
+              }
+            </ul>
+          }
+        </mat-card-content>
+      </mat-card>
 
       <mat-card appearance="outlined" class="flags">
         <mat-card-header>
@@ -122,15 +155,22 @@ interface AuditBlock {
               <mat-expansion-panel-header>
                 <mat-panel-title class="title">
                   <span class="chip">{{ entry.block.categoryLabel }}</span>
-                  {{ entry.block.question }}
+                  {{ entry.mainQuestion }}
                 </mat-panel-title>
               </mat-expansion-panel-header>
 
               <div class="block-body">
                 <div class="row">
                   <span class="row-label">Hauptfrage</span>
-                  <p class="row-q">{{ entry.block.question }}</p>
-                  <p class="row-a">{{ entry.block.correctAnswer }}</p>
+                  <p class="row-q">{{ entry.mainQuestion }}</p>
+                  <p class="row-a">{{ entry.mainAnswer }}</p>
+                  @if (entry.mainQuestion !== entry.block.question ||
+                    entry.mainAnswer !== entry.block.correctAnswer) {
+                    <p class="orig">
+                      Ursprünglich in Fragen.txt: „{{ entry.block.question }}“ –
+                      {{ entry.block.correctAnswer }}
+                    </p>
+                  }
                   <div class="tags">
                     <span class="tag src">{{ sourceLabel('QUESTIONS_TXT') }}</span>
                     <span class="tag ver">{{ verificationLabel('VERIFIED_QUESTIONS_TXT') }}</span>
@@ -271,6 +311,13 @@ interface AuditBlock {
         line-height: 1.5;
         color: var(--ft-text);
       }
+      .orig {
+        margin: 0 0 0.5rem;
+        font-size: 0.85rem;
+        color: var(--ft-muted);
+        line-height: 1.45;
+        font-style: italic;
+      }
       .tags {
         display: flex;
         gap: 0.4rem;
@@ -306,15 +353,17 @@ export class OralExamAuditComponent {
     const block = ORAL_EXAM_QUESTIONS.find((q) => q.id === entry.blockId)!;
     return {
       block,
+      mainQuestion: entry.questionOverride ?? block.question,
+      mainAnswer: entry.answerOverride ?? block.correctAnswer,
       followUps: [
         {
-          question: block.followUp1,
+          question: entry.followUp1.question ?? block.followUp1,
           answer: entry.followUp1.answer,
           source: entry.followUp1.source,
           verification: entry.followUp1.verificationStatus,
         },
         {
-          question: block.followUp2,
+          question: entry.followUp2.question ?? block.followUp2,
           answer: entry.followUp2.answer,
           source: entry.followUp2.source,
           verification: entry.followUp2.verificationStatus,
@@ -330,6 +379,14 @@ export class OralExamAuditComponent {
   readonly fromFachwissen = this.auditBlocks
     .flatMap((entry) => entry.followUps)
     .filter((followUp) => followUp.source === 'AUTHORED_FROM_FACHWISSEN').length;
+
+  /** Formale Qualitätsprüfung des Pools (Länge, Sätze, Paragraphen, Extreme). */
+  readonly qualityIssues = validatePoolQuality(ORAL_EXAM_QUESTIONS, ORAL_EXAM_POOL);
+
+  /** Anzahl der Blöcke, deren Hauptfrage oder -antwort redaktionell überarbeitet wurde. */
+  readonly overriddenBlocks = ORAL_EXAM_POOL.filter(
+    (entry) => entry.questionOverride !== undefined || entry.answerOverride !== undefined,
+  ).length;
 
   readonly flagged = ORAL_EXAM_QUESTIONS.filter((q) => (q.notes?.length ?? 0) > 0);
 

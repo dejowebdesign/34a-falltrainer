@@ -91,6 +91,12 @@ export interface OralExamQuestionBlock {
  * Quelle (`source`).
  */
 export interface AuthoredFollowUp {
+  /**
+   * Überarbeitete Formulierung der Folgefrage als vollständige Prüfungsfrage.
+   * Der fachliche Aspekt bleibt unverändert; fehlt das Feld, wird die
+   * Formulierung aus `Fragen.txt` verwendet.
+   */
+  question?: string;
   answer: string;
   /** Vier plausible Distraktoren. */
   distractors: string[];
@@ -98,6 +104,10 @@ export interface AuthoredFollowUp {
   verificationStatus: Exclude<OralExamVerification, 'VERIFIED_QUESTIONS_TXT'>;
   /** Kurze, quellenbasierte Erklärung, sofern vorhanden. */
   explanation?: string;
+  /** Abweichende Schwierigkeit (1–5) gegenüber der Blockstufe, sofern nötig. */
+  difficulty?: number;
+  /** Einschlägige Rechtsgrundlage, erst nach der Auflösung sichtbar. */
+  legalBasis?: string;
 }
 
 /** Ergänzte Distraktoren zur Hauptfrage (Antwortschlüssel bleibt aus Fragen.txt). */
@@ -110,10 +120,28 @@ export interface AuthoredMainDistractors {
 /** Ein prüfungsreifer Fragenblock: Hauptfrage aus der Bank, Folgefragen ergänzt. */
 export interface OralExamPoolBlock {
   blockId: string;
+  /**
+   * Überarbeitete Formulierung der Hauptfrage. Der fachliche Inhalt bleibt
+   * unverändert gegenüber `Fragen.txt`; die Frage wird nur prüfungsgerechter
+   * formuliert (kein Akronym als Lösungshinweis, keine Stichwortfrage).
+   * Fehlt das Feld, wird die Formulierung aus `Fragen.txt` verwendet.
+   */
+  questionOverride?: string;
+  /**
+   * Überarbeitete richtige Antwort zur Hauptfrage. Der fachliche Sinn der
+   * Antwort aus `Fragen.txt` bleibt erhalten; die Antwort wird nur als
+   * vollständiger Satz formuliert. Fehlt das Feld, wird der Antwortschlüssel
+   * aus `Fragen.txt` verwendet.
+   */
+  answerOverride?: string;
   /** Ergänzte Distraktoren zur Hauptfrage. */
   main: AuthoredMainDistractors;
   followUp1: AuthoredFollowUp;
   followUp2: AuthoredFollowUp;
+  /** Abweichende Schwierigkeit (1–5) der Hauptfrage gegenüber der Blockstufe. */
+  mainDifficulty?: number;
+  /** Einschlägige Rechtsgrundlage der Hauptfrage, erst nach der Auflösung sichtbar. */
+  mainLegalBasis?: string;
 }
 
 /** Rolle einer Frage im Fragenblock. */
@@ -135,8 +163,15 @@ export interface ExamQuestion {
   role: ExamQuestionRole;
   /** Position im Gesamtdurchlauf (1-basiert). */
   position: number;
+  /** Schwierigkeit der konkreten Frage (1–5). */
+  difficulty: number;
   question: string;
   correctAnswer: string;
+  /**
+   * Einschlägige Rechtsgrundlage. Wird bewusst nicht unter den fünf
+   * Antwortmöglichkeiten geführt, sondern erst nach der Auflösung angezeigt.
+   */
+  legalBasis?: string;
   /** Genau fünf Antwortmöglichkeiten (1 richtig, 4 Distraktoren), gemischt. */
   options: ExamAnswerOption[];
   source: OralExamSource;

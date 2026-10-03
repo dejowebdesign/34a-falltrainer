@@ -96,6 +96,11 @@ Rules:
 - Per category the pool must contain several candidate blocks
   (`oral-exam-authored.data.ts`) so the choice is genuinely random;
   `validatePool` enforces full category coverage and 4 distractors per question.
+- `validatePoolQuality` enforces the formal answer-quality rules (no paragraph
+  or acronym leaks in any option, no absolute/extreme/mirror/redundant/ambiguous
+  distractors, balanced option lengths, valid difficulty 1–5). It must stay
+  green against the shipped pool. Question-level difficulty and legal basis are
+  data-model fields shown in the run/evaluation UI after answering.
 - Source/verification flags (`QUESTIONS_TXT`, `AUTHORED_FROM_BIBEL`,
   `AUTHORED_FROM_FACHWISSEN`/`UNVERIFIED`) are data-model and audit-view only.
   They must never appear in the participant-facing exam UI.
