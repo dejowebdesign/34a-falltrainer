@@ -6,7 +6,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { OralExamService } from '../../core/services/oral-exam.service';
-import { ExamQuestionRole } from '../../core/models';
+import { ExamQuestionRole, formatExamClock } from '../../core/models';
 
 const ROLE_LABELS: Record<ExamQuestionRole, string> = {
   HAUPTFRAGE: 'Hauptfrage',
@@ -60,7 +60,27 @@ const ROLE_LABELS: Record<ExamQuestionRole, string> = {
                 <dt>Bestehensgrenze</dt>
                 <dd>{{ result.thresholdPercent }} % ({{ result.requiredPoints }} Punkte)</dd>
               </div>
+              <div>
+                <dt>Prüfungszeit</dt>
+                <dd>{{ clock(result.durationSeconds) }}</dd>
+              </div>
+              <div>
+                <dt>Bearbeitungszeit</dt>
+                <dd>{{ clock(result.elapsedSeconds) }}</dd>
+              </div>
+              @if (result.unansweredCount > 0) {
+                <div>
+                  <dt>Nicht beantwortet</dt>
+                  <dd>{{ result.unansweredCount }}</dd>
+                </div>
+              }
             </dl>
+            @if (result.timedOut) {
+              <p class="timeout-note" role="status">
+                <mat-icon aria-hidden="true">timer_off</mat-icon>
+                Prüfung wegen Zeitablauf beendet.
+              </p>
+            }
             <mat-progress-bar
               mode="determinate"
               [value]="result.percent"
@@ -95,25 +115,38 @@ const ROLE_LABELS: Record<ExamQuestionRole, string> = {
 
                 <ul class="question-list">
                   @for (item of topic.questions; track item.question.id) {
-                    <li class="question-item" [class.correct]="item.correct">
+                    <li
+                      class="question-item"
+                      [class.correct]="item.correct"
+                      [class.unanswered]="!item.answered"
+                    >
                       <div class="q-head">
                         <span class="q-meta">
                           <span class="q-topic">{{ item.question.categoryLabel }}</span>
                           <span class="q-difficulty">Schwierigkeit {{ item.question.difficulty }}</span>
                         </span>
-                        <span class="q-flag" [class.ok]="item.correct" [class.bad]="!item.correct">
-                          <mat-icon aria-hidden="true">{{
-                            item.correct ? 'check' : 'close'
-                          }}</mat-icon>
-                          {{ item.correct ? 'richtig' : 'falsch' }}
-                        </span>
+                        @if (item.answered) {
+                          <span class="q-flag" [class.ok]="item.correct" [class.bad]="!item.correct">
+                            <mat-icon aria-hidden="true">{{
+                              item.correct ? 'check' : 'close'
+                            }}</mat-icon>
+                            {{ item.correct ? 'richtig' : 'falsch' }}
+                          </span>
+                        } @else {
+                          <span class="q-flag unanswered-flag">
+                            <mat-icon aria-hidden="true">remove</mat-icon>
+                            Nicht beantwortet – 0 Punkte
+                          </span>
+                        }
                       </div>
                       <p class="q-role-line">{{ roleLabel(item.question.role) }}</p>
                       <p class="q-text">{{ item.question.question }}</p>
-                      <p class="q-line">
-                        <span class="label">Ihre Antwort:</span>
-                        <span [class.wrong]="!item.correct">{{ item.selectedText ?? '–' }}</span>
-                      </p>
+                      @if (item.answered) {
+                        <p class="q-line">
+                          <span class="label">Ihre Antwort:</span>
+                          <span [class.wrong]="!item.correct">{{ item.selectedText ?? '–' }}</span>
+                        </p>
+                      }
                       @if (!item.correct) {
                         <p class="q-line">
                           <span class="label">Richtige Antwort:</span>
@@ -146,6 +179,16 @@ const ROLE_LABELS: Record<ExamQuestionRole, string> = {
               Sie haben <strong>{{ result.correctCount }} von {{ result.total }}</strong> Fragen
               richtig beantwortet. Das entspricht <strong>{{ result.percent }} %</strong>.
             </p>
+            <p class="overall-line">
+              Prüfungszeit: <strong>{{ clock(result.durationSeconds) }}</strong> ·
+              Bearbeitungszeit: <strong>{{ clock(result.elapsedSeconds) }}</strong>
+              @if (result.unansweredCount > 0) {
+                · Nicht beantwortet: <strong>{{ result.unansweredCount }}</strong> (0 Punkte)
+              }
+            </p>
+            @if (result.timedOut) {
+              <p class="overall-line">Prüfung wegen Zeitablauf beendet.</p>
+            }
             <p class="overall-verdict" [class.ok]="result.passed" [class.bad]="!result.passed">
               {{ result.passed ? 'BESTANDEN' : 'NICHT BESTANDEN' }}
               – Bestehensgrenze {{ result.thresholdPercent }} %
@@ -211,7 +254,7 @@ const ROLE_LABELS: Record<ExamQuestionRole, string> = {
       .stats {
         display: grid;
         gap: 1rem;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
         margin: 0 0 1rem;
       }
       .stats dt {
@@ -266,6 +309,10 @@ const ROLE_LABELS: Record<ExamQuestionRole, string> = {
       .question-item.correct {
         border-color: var(--ft-ok-border);
       }
+      .question-item.unanswered {
+        border-color: var(--ft-danger-border);
+        background: var(--ft-danger-surface);
+      }
       .q-head {
         display: flex;
         align-items: center;
@@ -316,6 +363,9 @@ const ROLE_LABELS: Record<ExamQuestionRole, string> = {
       }
       .q-flag.bad {
         color: var(--ft-danger);
+      }
+      .q-flag.unanswered-flag {
+        color: var(--ft-danger-text);
       }
       .q-text {
         margin: 0 0 0.5rem;
@@ -373,6 +423,17 @@ const ROLE_LABELS: Record<ExamQuestionRole, string> = {
       .overall-verdict.bad {
         color: var(--ft-danger-text);
       }
+      .timeout-note {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        margin: 0 0 0.75rem;
+        padding: 0.6rem 0.85rem;
+        border-radius: 10px;
+        background: var(--ft-danger-surface);
+        color: var(--ft-danger-text);
+        font-weight: 600;
+      }
       .actions {
         display: flex;
         gap: 0.75rem;
@@ -395,6 +456,10 @@ export class OralExamEvaluationComponent {
 
   roleLabel(role: ExamQuestionRole): string {
     return ROLE_LABELS[role];
+  }
+
+  clock(seconds: number): string {
+    return formatExamClock(seconds);
   }
 
   restart(): void {

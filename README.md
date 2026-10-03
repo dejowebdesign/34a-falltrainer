@@ -165,6 +165,8 @@ Ablauf:
 - je Block eine Hauptfrage und zwei Folgefragen
 - **27 bewertete Fragen**, je richtige Antwort 1 Punkt
 - **Bestehensgrenze 50 % = 14 von 27 Punkten**
+- **Prüfungszeit 15 Minuten** mit sichtbarem Timer oben rechts im Kopf der
+  Durchführung (Warnstufen ab 2 Minuten, 1 Minute und 30 Sekunden)
 - Ergebnis mit Gesamtpunkten, Prozentwert, BESTANDEN/NICHT BESTANDEN,
   Bewertung je Themengebiet, anklickbaren Themengebieten und Detailansicht
   (gestellte Frage, gegebene Antwort, richtige Antwort, richtig/falsch,
@@ -182,6 +184,13 @@ und nie die Antwort verraten:
 Die Bewertung erfolgt in der Engine `buildExam`/`evaluateExam`
 (`src/app/core/rules/oral-exam-engine.ts`). Die richtige Antwort wird über den
 Durchlauf rotiert und steht nicht immer an derselben Position.
+
+Der Prüfungstimer startet mit dem tatsächlichen Prüfungsbeginn und wird aus dem
+gespeicherten Startzeitpunkt berechnet. Ein Neuladen der Seite setzt die Zeit
+daher nicht zurück; nach 15 Minuten wird die Prüfung automatisch beendet, alle
+Eingaben werden gesperrt und unbeantwortete Fragen zählen als falsch (0 Punkte).
+Die Auswertung weist Prüfungszeit, tatsächliche Bearbeitungszeit und die Anzahl
+unbeantworteter Fragen aus.
 
 ### Qualitätssicherung der Antwortoptionen
 

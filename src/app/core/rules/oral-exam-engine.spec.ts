@@ -3,6 +3,9 @@ import {
   ORAL_EXAM_PASS_PERCENT,
   buildExam,
   evaluateExam,
+  examRemainingSeconds,
+  finishExamSession,
+  isExamExpired,
   questionDifficulty,
   questionText,
   validatePool,
@@ -10,7 +13,15 @@ import {
 } from './oral-exam-engine';
 import { ORAL_EXAM_POOL } from '../data/oral-exam-authored.data';
 import { ORAL_EXAM_QUESTIONS } from '../data/oral-exam-questions.data';
-import { ExamResponse, OralExam, OralExamPoolBlock } from '../models';
+import {
+  ExamResponse,
+  OralExam,
+  OralExamPoolBlock,
+  OralExamSession,
+  ORAL_EXAM_DURATION_SECONDS,
+  formatExamClock,
+  oralExamTimerLevel,
+} from '../models';
 
 const NORM_PATTERN = /§\s*\d|Art\.\s*\d/;
 
@@ -545,5 +556,134 @@ describe('oral-exam-engine', () => {
       }
     });
 
+  });
+
+  describe('Prüfungstimer', () => {
+    const T0 = 1_700_000_000_000;
+    const exam = buildExam(ORAL_EXAM_QUESTIONS, ORAL_EXAM_POOL, first, 'timer-exam');
+
+    function sessionAt(now: number): OralExamSession {
+      return { exam, responses: [], startedAt: T0 };
+    }
+
+    it('formatiert MM:SS ohne Dezimalstellen und nie negativ', () => {
+      expect(formatExamClock(900)).toBe('15:00');
+      expect(formatExamClock(899)).toBe('14:59');
+      expect(formatExamClock(3)).toBe('00:03');
+      expect(formatExamClock(0)).toBe('00:00');
+      expect(formatExamClock(-5)).toBe('00:00');
+      expect(formatExamClock(61.9)).toBe('01:01');
+    });
+
+    it('startet bei 15:00 und zählt sekündlich herunter', () => {
+      expect(examRemainingSeconds(sessionAt(T0), T0)).toBe(ORAL_EXAM_DURATION_SECONDS);
+      expect(examRemainingSeconds(sessionAt(T0), T0 + 1000)).toBe(899);
+      expect(examRemainingSeconds(sessionAt(T0), T0 + 60_000)).toBe(840);
+      expect(examRemainingSeconds(sessionAt(T0), T0 + 61_000)).toBe(839);
+    });
+
+    it('berechnet die Restzeit aus dem Startzeitpunkt, nicht aus einem Zähler', () => {
+      // Ein Sprung (z. B. Navigation oder Refresh) ändert nichts am Startzeitpunkt.
+      const before = examRemainingSeconds(sessionAt(T0), T0 + 120_000);
+      const after = examRemainingSeconds(sessionAt(T0), T0 + 120_000);
+      expect(before).toBe(after);
+      expect(before).toBe(780);
+    });
+
+    it('meldet Ablauf erst nach 15 Minuten', () => {
+      expect(isExamExpired(sessionAt(T0), T0 + 899_000)).toBe(false);
+      expect(isExamExpired(sessionAt(T0), T0 + 900_000)).toBe(true);
+      expect(isExamExpired(sessionAt(T0), T0 + 901_000)).toBe(true);
+    });
+
+    it('setzt das Ende bei Zeitablauf exakt auf den Ablaufzeitpunkt', () => {
+      const finished = finishExamSession(sessionAt(T0), T0 + 950_000, true);
+      expect(finished.timedOut).toBe(true);
+      expect(finished.finishedAt).toBe(T0 + ORAL_EXAM_DURATION_SECONDS * 1000);
+      expect(examRemainingSeconds(finished, T0 + 950_000)).toBe(0);
+    });
+
+    it('behält bei regulärem Ende den tatsächlichen Endzeitpunkt', () => {
+      const finished = finishExamSession(sessionAt(T0), T0 + 761_000, false);
+      expect(finished.timedOut).toBe(false);
+      expect(finished.finishedAt).toBe(T0 + 761_000);
+      expect(examRemainingSeconds(finished, T0 + 761_000)).toBe(139);
+    });
+
+    it('stuft die Warnstufen korrekt ein', () => {
+      expect(oralExamTimerLevel(900)).toBe('normal');
+      expect(oralExamTimerLevel(121)).toBe('normal');
+      expect(oralExamTimerLevel(120)).toBe('warning');
+      expect(oralExamTimerLevel(61)).toBe('warning');
+      expect(oralExamTimerLevel(60)).toBe('critical');
+      expect(oralExamTimerLevel(31)).toBe('critical');
+      expect(oralExamTimerLevel(30)).toBe('danger');
+      expect(oralExamTimerLevel(1)).toBe('danger');
+      expect(oralExamTimerLevel(0)).toBe('expired');
+    });
+
+    it('wertet unbeantwortete Fragen als falsch und zählt sie', () => {
+      const responses: ExamResponse[] = exam.questions.slice(0, 20).map((question) => ({
+        questionId: question.id,
+        selectedOptionId: question.options.find((option) => option.correct)!.id,
+      }));
+      const session: OralExamSession = {
+        exam,
+        responses,
+        startedAt: T0,
+        finishedAt: T0 + ORAL_EXAM_DURATION_SECONDS * 1000,
+        timedOut: true,
+      };
+      const result = evaluateExam(exam, responses, session);
+      expect(result.correctCount).toBe(20);
+      expect(result.unansweredCount).toBe(7);
+      expect(result.timedOut).toBe(true);
+      expect(result.durationSeconds).toBe(ORAL_EXAM_DURATION_SECONDS);
+      expect(result.elapsedSeconds).toBe(ORAL_EXAM_DURATION_SECONDS);
+      const unanswered = result.topics
+        .flatMap((topic) => topic.questions)
+        .filter((entry) => !entry.answered);
+      expect(unanswered.length).toBe(7);
+      expect(unanswered.every((entry) => !entry.correct)).toBe(true);
+    });
+
+    it('behält die Antworten beantworteter Fragen und meldet die Bearbeitungszeit', () => {
+      const responses: ExamResponse[] = exam.questions.map((question) => ({
+        questionId: question.id,
+        selectedOptionId: question.options.find((option) => option.correct)!.id,
+      }));
+      const session: OralExamSession = {
+        exam,
+        responses,
+        startedAt: T0,
+        finishedAt: T0 + 761_000,
+        timedOut: false,
+      };
+      const result = evaluateExam(exam, responses, session);
+      expect(result.correctCount).toBe(27);
+      expect(result.unansweredCount).toBe(0);
+      expect(result.timedOut).toBe(false);
+      expect(result.elapsedSeconds).toBe(761);
+      expect(result.topics.flatMap((t) => t.questions).every((entry) => entry.answered)).toBe(true);
+    });
+
+    it('begrenzt die Bearbeitungszeit auf höchstens die Prüfungsdauer', () => {
+      const session: OralExamSession = {
+        exam,
+        responses: [],
+        startedAt: T0,
+        finishedAt: T0 + 5_000_000,
+        timedOut: false,
+      };
+      const result = evaluateExam(exam, [], session);
+      expect(result.elapsedSeconds).toBe(ORAL_EXAM_DURATION_SECONDS);
+    });
+
+    it('wertet ohne Sitzung ohne Zeitbezug aus', () => {
+      const result = evaluateExam(exam, []);
+      expect(result.timedOut).toBe(false);
+      expect(result.elapsedSeconds).toBe(0);
+      expect(result.unansweredCount).toBe(27);
+    });
   });
 });

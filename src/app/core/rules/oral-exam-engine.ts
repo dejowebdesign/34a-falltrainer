@@ -10,7 +10,9 @@ import {
   OralExam,
   OralExamPoolBlock,
   OralExamQuestionBlock,
+  OralExamSession,
   ORAL_EXAM_CATEGORIES,
+  ORAL_EXAM_DURATION_SECONDS,
 } from '../models';
 
 /** Zufallsfunktion, standardmäßig `Math.random` (in Tests ersetzbar). */
@@ -769,19 +771,30 @@ function round1(value: number): number {
   return Math.round(value * 10) / 10;
 }
 
-/** Wertet einen Durchlauf anhand der Antworten des Teilnehmers aus. */
-export function evaluateExam(exam: OralExam, responses: readonly ExamResponse[]): ExamEvaluation {
+/**
+ * Wertet einen Durchlauf anhand der Antworten des Teilnehmers aus.
+ *
+ * `session` liefert die Zeitdaten (Start, Ende, Zeitablauf). Fehlt sie, wird
+ * ohne Zeitbezug ausgewertet (reine Antwortauswertung).
+ */
+export function evaluateExam(
+  exam: OralExam,
+  responses: readonly ExamResponse[],
+  session?: Pick<OralExamSession, 'startedAt' | 'finishedAt' | 'timedOut'>,
+): ExamEvaluation {
   const selectedByQuestion = new Map(responses.map((r) => [r.questionId, r.selectedOptionId]));
 
   const topics: ExamTopicEvaluation[] = exam.topics.map((topic) => {
     const questionEvaluations: ExamQuestionEvaluation[] = topic.questions.map((question) => {
       const selectedOptionId = selectedByQuestion.get(question.id);
       const selected = question.options.find((option) => option.id === selectedOptionId);
+      const answered = selected !== undefined;
       return {
         question,
         selectedOptionId,
         selectedText: selected?.text,
         correct: selected?.correct === true,
+        answered,
       };
     });
     const correctCount = questionEvaluations.filter((entry) => entry.correct).length;
@@ -799,6 +812,21 @@ export function evaluateExam(exam: OralExam, responses: readonly ExamResponse[])
   const total = exam.questions.length;
   const correctCount = topics.reduce((sum, topic) => sum + topic.correctCount, 0);
   const percent = round1((correctCount / total) * 100);
+  const unansweredCount = topics.reduce(
+    (sum, topic) => sum + topic.questions.filter((entry) => !entry.answered).length,
+    0,
+  );
+
+  const timedOut = session?.timedOut === true;
+  const startedAt = session?.startedAt;
+  const finishedAt = session?.finishedAt;
+  const elapsedRaw =
+    startedAt !== undefined && finishedAt !== undefined
+      ? Math.round((finishedAt - startedAt) / 1000)
+      : 0;
+  const elapsedSeconds = timedOut
+    ? ORAL_EXAM_DURATION_SECONDS
+    : Math.min(Math.max(0, elapsedRaw), ORAL_EXAM_DURATION_SECONDS);
 
   return {
     examId: exam.id,
@@ -808,6 +836,52 @@ export function evaluateExam(exam: OralExam, responses: readonly ExamResponse[])
     passed: percent >= ORAL_EXAM_PASS_PERCENT,
     thresholdPercent: ORAL_EXAM_PASS_PERCENT,
     requiredPoints: Math.ceil((total * ORAL_EXAM_PASS_PERCENT) / 100),
+    unansweredCount,
+    timedOut,
+    durationSeconds: ORAL_EXAM_DURATION_SECONDS,
+    elapsedSeconds,
     topics,
   };
+}
+
+type SessionTiming = Pick<OralExamSession, 'startedAt' | 'finishedAt' | 'timedOut'>;
+
+/**
+ * Verbleibende Prüfungszeit in Sekunden zum Zeitpunkt `now`.
+ *
+ * Basis ist immer der gespeicherte Startzeitpunkt, nicht ein UI-Zähler. Ist die
+ * Prüfung bereits beendet, wird die zum Ende verbleibende Zeit geliefert.
+ */
+export function examRemainingSeconds(session: SessionTiming, now: number): number {
+  if (session.timedOut) {
+    return 0;
+  }
+  const reference = session.finishedAt ?? now;
+  const elapsed = Math.floor((reference - session.startedAt) / 1000);
+  return Math.max(0, ORAL_EXAM_DURATION_SECONDS - elapsed);
+}
+
+/** Ist die Prüfungszeit abgelaufen? (nur für noch laufende Sitzungen) */
+export function isExamExpired(session: SessionTiming, now: number): boolean {
+  if (session.finishedAt !== undefined) {
+    return false;
+  }
+  return now - session.startedAt >= ORAL_EXAM_DURATION_SECONDS * 1000;
+}
+
+/**
+ * Beendet eine Sitzung. Bei Zeitablauf wird das Ende auf den Ablaufzeitpunkt
+ * gesetzt (nicht auf einen späteren `now`), damit die Bearbeitungszeit exakt
+ * der Prüfungsdauer entspricht.
+ */
+export function finishExamSession(
+  session: OralExamSession,
+  now: number,
+  timedOut: boolean,
+): OralExamSession {
+  if (session.finishedAt !== undefined) {
+    return session;
+  }
+  const finishedAt = timedOut ? session.startedAt + ORAL_EXAM_DURATION_SECONDS * 1000 : now;
+  return { ...session, finishedAt, timedOut };
 }

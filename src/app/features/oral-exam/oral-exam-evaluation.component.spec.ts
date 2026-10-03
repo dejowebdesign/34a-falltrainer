@@ -3,7 +3,7 @@ import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { provideRouter } from '@angular/router';
 import { OralExamEvaluationComponent } from './oral-exam-evaluation.component';
 import { OralExamService } from '../../core/services/oral-exam.service';
-import { ExamQuestion } from '../../core/models';
+import { ExamQuestion, ORAL_EXAM_DURATION_SECONDS } from '../../core/models';
 
 describe('OralExamEvaluationComponent', () => {
   let fixture: ComponentFixture<OralExamEvaluationComponent>;
@@ -21,6 +21,7 @@ describe('OralExamEvaluationComponent', () => {
   }
 
   async function create(): Promise<void> {
+    window.sessionStorage.clear();
     await TestBed.configureTestingModule({
       imports: [OralExamEvaluationComponent],
       providers: [provideNoopAnimations(), provideRouter([])],
@@ -136,5 +137,41 @@ describe('OralExamEvaluationComponent', () => {
       }
     }
     expect(element.textContent).toContain('Rechtsgrundlage:');
+  });
+
+  it('zeigt Prüfungszeit und Bearbeitungszeit', async () => {
+    await create();
+    answerAll(true);
+    service.finish(Date.now(), false);
+    fixture.detectChanges();
+    const text = element.textContent ?? '';
+    expect(text).toContain('Prüfungszeit');
+    expect(text).toContain('Bearbeitungszeit');
+    expect(text).toContain('15:00');
+  });
+
+  it('kennzeichnet unbeantwortete Fragen als „Nicht beantwortet – 0 Punkte“', async () => {
+    await create();
+    const exam = service.exam()!;
+    for (const question of exam.questions.slice(0, 20)) {
+      service.answer(question.id, question.options.find((o) => o.correct)!.id);
+    }
+    service.finish(Date.now(), true);
+    fixture.detectChanges();
+
+    const text = element.textContent ?? '';
+    expect(text).toContain('Nicht beantwortet – 0 Punkte');
+    expect(text).toContain('Prüfung wegen Zeitablauf beendet.');
+    const unanswered = element.querySelectorAll('.question-item.unanswered');
+    expect(unanswered.length).toBe(7);
+  });
+
+  it('zeigt bei vollständiger Beantwortung keine unbeantworteten Fragen', async () => {
+    await create();
+    answerAll(true);
+    service.finish(Date.now(), false);
+    fixture.detectChanges();
+    expect(element.textContent).not.toContain('Nicht beantwortet – 0 Punkte');
+    expect(element.querySelectorAll('.question-item.unanswered').length).toBe(0);
   });
 });

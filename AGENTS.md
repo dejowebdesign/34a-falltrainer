@@ -107,6 +107,16 @@ Rules:
   legacy label `Technik` is rejected by `LEGACY_CATEGORY_LABEL`.
 - `buildExam` prefers per category a difficulty level not yet used in the run,
   so the nine topics produce a mixed difficulty sequence.
+- The exam is time-boxed to **15 minutes** (`ORAL_EXAM_DURATION_SECONDS`). The
+  run state stores `startedAt`/`finishedAt`/`timedOut` in `sessionStorage`, so
+  remaining time is derived from the start timestamp (a refresh does not reset
+  the clock) and is restored on reload. On expiry the service auto-finishes the
+  run, locks all inputs and the run component redirects to the evaluation.
+  `evaluateExam` reports `durationSeconds`, `elapsedSeconds`, `timedOut` and
+  `unansweredCount`; unanswered questions count as wrong (0 points).
+- The participant progress display is deliberately lean: `Themengebiet X von 9`
+  and `Frage Y von 27` in the header plus a progress bar. Do not re-add a
+  separate “Z von 27 Fragen beantwortet” text line (redundant with the bar).
 - Source/verification flags (`QUESTIONS_TXT`, `AUTHORED_FROM_BIBEL`,
   `AUTHORED_FROM_FACHWISSEN`/`UNVERIFIED`) are data-model and audit-view only.
   They must never appear in the participant-facing exam UI.

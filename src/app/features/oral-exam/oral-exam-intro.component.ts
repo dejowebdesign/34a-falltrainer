@@ -48,6 +48,11 @@ import { ORAL_EXAM_CATEGORIES, ORAL_EXAM_CATEGORY_LABELS } from '../../core/mode
           <strong>50 %</strong>
           <span>Bestehensgrenze</span>
         </div>
+        <div class="fact">
+          <mat-icon aria-hidden="true">timer</mat-icon>
+          <strong>15</strong>
+          <span>Minuten Prüfungszeit</span>
+        </div>
       </section>
 
       <mat-card appearance="outlined" class="panel">
@@ -70,6 +75,11 @@ import { ORAL_EXAM_CATEGORIES, ORAL_EXAM_CATEGORY_LABELS } from '../../core/mode
             <li>
               Für jede richtige Antwort gibt es <strong>1 Punkt</strong>. Ab
               <strong>14 von 27 Punkten (50 %)</strong> ist die Prüfung bestanden.
+            </li>
+            <li>
+              Die Prüfungszeit beträgt <strong>15 Minuten</strong>. Der Timer startet mit der ersten
+              Frage; nach Ablauf wird die Prüfung automatisch beendet und unbeantwortete Fragen
+              zählen als falsch (0 Punkte).
             </li>
           </ol>
         </mat-card-content>
