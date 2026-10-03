@@ -77,6 +77,23 @@ Befugnis ab:
 - Angriff ≠ automatisch jede beliebige Gewalt
 - Eigentum ≠ automatisch die Sache selbst wegnehmen
 
+## Startseite als Lernseite
+
+Die Startseite bildet die drei Prüfungsfragen direkt sichtbar in derselben
+Reihenfolge ab, in der sie später bei den Fallbeispielen bearbeitet werden:
+
+1. **Umgang mit Menschen** – „Wie verhalten Sie sich?“
+2. **Was liegt rechtlich vor?** – Strafrecht / Privatrecht / Gefahr
+3. **Mit welcher Rechtsgrundlage dürfen Sie eingreifen?** – Festnahme /
+   Selbsthilfe / Notstand und Rechtfertigung
+
+Die drei Lernbereiche sind ohne Accordion direkt sichtbar; es gibt keine
+versteckten Inhalte und keine vierte Lernstufe. Zwischen der rechtlichen
+Einordnung und der Rechtsgrundlage führt genau ein zentraler Pfeil. Die
+Fallbeispiele selbst werden ausschließlich über den Header-Menüpunkt
+„Fallbeispiele“ gestartet. Die Startseite schließt mit einem dezenten
+Copyright-Footer ab.
+
 ## Juristische Trennung
 
 Die interne Engine unterscheidet strikt:
@@ -122,7 +139,8 @@ src/
       rules/       Fallengine und juristische Trennprüfung
       services/    Knowledge-, Scenario- und Fallzustand-Services
     features/
-      home/        Startseite und Stufen-Erklärung
+      home/        Startseite als zentrale Lernseite (Umgang mit Menschen,
+                   rechtliche Einordnung, Rechtsgrundlage – ohne Accordions)
       scenarios/   Fallübersicht und Fallbeschreibung
       stage-one/   Stufe 1 – Verhalten
       stage-two/   Stufe 2 – rechtliche Einordnung

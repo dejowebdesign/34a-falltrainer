@@ -24,14 +24,11 @@ interface BehaviorGroup {
   imports: [MatCardModule, MatIconModule],
   template: `
     <mat-card appearance="outlined" class="behavior-card">
-      <mat-card-header>
-        <mat-card-title>Stufe 1 – Umgang mit Menschen</mat-card-title>
-        <mat-card-subtitle>
+      <mat-card-content>
+        <p class="behavior-note">
           Verhaltensbausteine, die in Stufe 1 trainiert werden. Sie sind Verhaltensempfehlungen,
           keine Rechtsgrundlagen.
-        </mat-card-subtitle>
-      </mat-card-header>
-      <mat-card-content>
+        </p>
         <div class="groups">
           @for (group of groups(); track group.category) {
             <section class="group">
@@ -57,6 +54,12 @@ interface BehaviorGroup {
     `
       .behavior-card {
         border-radius: 14px;
+      }
+      .behavior-note {
+        margin: 0 0 1rem;
+        color: var(--ft-muted);
+        font-size: 0.85rem;
+        line-height: 1.5;
       }
       .groups {
         column-count: 1;
