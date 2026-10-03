@@ -205,12 +205,71 @@ export interface ExamResponse {
   selectedOptionId: string;
 }
 
+/**
+ * Gespeicherter Zustand einer laufenden Prüfungssitzung.
+ *
+ * Die verbleibende Zeit wird nicht als flüchtiger Zähler gehalten, sondern aus
+ * `startedAt` berechnet. Dadurch übersteht ein Browser-Refresh die laufende
+ * Prüfung, ohne die Zeit zurückzusetzen.
+ */
+export interface OralExamSession {
+  exam: OralExam;
+  responses: ExamResponse[];
+  /** Zeitpunkt des tatsächlichen Prüfungsstarts (Unix-Millisekunden). */
+  startedAt: number;
+  /** Zeitpunkt der Beendigung, sofern die Prüfung abgeschlossen ist. */
+  finishedAt?: number;
+  /** Wurde die Prüfung wegen Zeitablauf beendet? */
+  timedOut?: boolean;
+}
+
+/** Prüfungsdauer in Sekunden (15 Minuten). */
+export const ORAL_EXAM_DURATION_SECONDS = 15 * 60;
+
+/** Warnstufe des Prüfungstimers. */
+export type OralExamTimerLevel = 'normal' | 'warning' | 'critical' | 'danger' | 'expired';
+
+/**
+ * Liefert die Warnstufe zu einer Restzeit.
+ *
+ * - mehr als 2 Minuten: normale Darstellung
+ * - 2 Minuten und weniger: Warnung
+ * - 1 Minute und weniger: deutliche Warnung
+ * - 30 Sekunden und weniger: Countdown-Warnung
+ * - 0: abgelaufen
+ */
+export function oralExamTimerLevel(remainingSeconds: number): OralExamTimerLevel {
+  if (remainingSeconds <= 0) {
+    return 'expired';
+  }
+  if (remainingSeconds <= 30) {
+    return 'danger';
+  }
+  if (remainingSeconds <= 60) {
+    return 'critical';
+  }
+  if (remainingSeconds <= 120) {
+    return 'warning';
+  }
+  return 'normal';
+}
+
+/** Formatiert Sekunden als `MM:SS` (ohne Dezimalstellen, nie negativ). */
+export function formatExamClock(totalSeconds: number): string {
+  const safe = Math.max(0, Math.floor(totalSeconds));
+  const minutes = Math.floor(safe / 60);
+  const seconds = safe % 60;
+  return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+}
+
 /** Auswertung einer einzelnen Frage. */
 export interface ExamQuestionEvaluation {
   question: ExamQuestion;
   selectedOptionId?: string;
   selectedText?: string;
   correct: boolean;
+  /** Wurde die Frage innerhalb der Prüfungszeit beantwortet? */
+  answered: boolean;
 }
 
 /** Auswertung eines Themengebiets. */
@@ -236,5 +295,13 @@ export interface ExamEvaluation {
   thresholdPercent: number;
   /** Mindestpunktzahl für „bestanden“. */
   requiredPoints: number;
+  /** Anzahl der unbeantworteten Fragen (0 Punkte, als falsch gewertet). */
+  unansweredCount: number;
+  /** Wurde die Prüfung wegen Zeitablauf beendet? */
+  timedOut: boolean;
+  /** Prüfungsdauer in Sekunden (15 Minuten). */
+  durationSeconds: number;
+  /** Tatsächliche Bearbeitungszeit in Sekunden (höchstens `durationSeconds`). */
+  elapsedSeconds: number;
   topics: ExamTopicEvaluation[];
 }
