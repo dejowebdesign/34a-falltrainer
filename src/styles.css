@@ -1,133 +1,249 @@
 @import 'tailwindcss';
 
+/* ============================================================
+   34a Falltrainer – zentrales Designsystem
+   Alle Farben, Radien, Schatten, Abstände und Übergänge werden
+   hier als Tokens definiert. Komponenten verwenden ausschließlich
+   diese Variablen.
+   ============================================================ */
+
+/* Gemeinsame, themenunabhängige Tokens (Radien, Übergänge, Layout). */
+:root {
+  --ft-radius-sm: 10px;
+  --ft-radius: 16px;
+  --ft-radius-lg: 22px;
+  --ft-radius-xl: 28px;
+  --ft-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ft-transition: 180ms var(--ft-ease);
+  --ft-transition-slow: 320ms var(--ft-ease);
+  --ft-container-max: 1140px;
+  --ft-container-wide: 1240px;
+  --ft-header-height: 70px;
+  --ft-font:
+    'Inter', 'Segoe UI', system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* ---------- Light Theme ---------- */
 :root,
 html.light {
-  --ft-bg: #f4f6fb;
+  color-scheme: light;
+
+  --ft-bg: #eef2f9;
+  --ft-bg-grid: rgba(30, 58, 138, 0.05);
   --ft-surface: #ffffff;
-  --ft-surface-2: #f8fafc;
-  --ft-primary: #1e3a8a;
-  --ft-primary-soft: #e8eefc;
-  --ft-accent: #0f766e;
+  --ft-surface-2: #f5f7fc;
+  --ft-surface-3: #eaeef7;
+  --ft-surface-inset: #eef2fa;
+
+  --ft-primary: #1d4ed8;
+  --ft-primary-strong: #1e3a8a;
+  --ft-primary-soft: #e6edfd;
+  --ft-secondary: #0e7490;
+  --ft-secondary-soft: #e0f2f6;
+
+  --ft-accent: #0d9488;
+  --ft-accent-strong: #0f766e;
+  --ft-accent-soft: #d8f3ef;
+  --ft-on-accent: #ffffff;
+
+  --ft-text: #0f172a;
+  --ft-muted: #55647e;
+  --ft-border: #dbe3f0;
+  --ft-border-strong: #c3cee1;
+  --ft-on-primary: #ffffff;
+
+  --ft-ok: #15803d;
+  --ft-ok-surface: #ecfdf3;
+  --ft-ok-border: #a7e8bf;
+  --ft-ok-text: #14532d;
+
   --ft-warn: #b45309;
   --ft-warn-surface: #fffbeb;
-  --ft-warn-border: #fcd34d;
+  --ft-warn-border: #f7d488;
   --ft-warn-text: #78350f;
-  --ft-danger: #b91c1c;
-  --ft-danger-surface: #fef2f2;
-  --ft-danger-border: #fca5a5;
-  --ft-danger-text: #7f1d1d;
-  --ft-ok: #15803d;
-  --ft-ok-surface: #f0fdf4;
-  --ft-ok-border: #86efac;
-  --ft-ok-text: #14532d;
+
   --ft-partial: #b45309;
-  --ft-partial-surface: #fef3c7;
-  --ft-partial-border: #fcd34d;
+  --ft-partial-surface: #fef6e3;
+  --ft-partial-border: #f3cf8f;
   --ft-partial-text: #78350f;
-  --ft-text: #0f172a;
-  --ft-muted: #52627a;
-  --ft-border: #dbe2ef;
-  --ft-on-primary: #ffffff;
-  --ft-hero-from: #1e3a8a;
-  --ft-hero-to: #0f766e;
-  --ft-header: #1e3a8a;
-  --ft-header-glass: rgba(30, 58, 138, 0.72);
-  --ft-header-glass-border: rgba(255, 255, 255, 0.18);
-  --ft-glass-surface: rgba(255, 255, 255, 0.66);
-  --ft-glass-border: rgba(30, 58, 138, 0.22);
-  --ft-shadow: 0 1px 3px rgba(15, 23, 42, 0.18);
-  --ft-rule-surface: #eaf2f8;
+
+  --ft-danger: #dc2626;
+  --ft-danger-surface: #fef2f2;
+  --ft-danger-border: #f6b4b4;
+  --ft-danger-text: #7f1d1d;
+
+  --ft-hero-from: #0b1a3a;
+  --ft-hero-mid: #102a54;
+  --ft-hero-to: #0d4f4a;
+
+  --ft-header: rgba(255, 255, 255, 0.72);
+  --ft-header-solid: #ffffff;
+  --ft-header-border: rgba(15, 23, 42, 0.08);
+  --ft-header-glass: rgba(255, 255, 255, 0.82);
+  --ft-header-text: #0f172a;
+
+  --ft-glass-surface: rgba(255, 255, 255, 0.7);
+  --ft-glass-strong: rgba(255, 255, 255, 0.86);
+  --ft-glass-border: rgba(29, 78, 216, 0.16);
+
+  --ft-shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.06), 0 1px 3px rgba(15, 23, 42, 0.05);
+  --ft-shadow: 0 8px 24px -12px rgba(15, 23, 42, 0.24), 0 2px 6px rgba(15, 23, 42, 0.05);
+  --ft-shadow-lg: 0 24px 48px -24px rgba(15, 23, 42, 0.34), 0 6px 14px rgba(15, 23, 42, 0.06);
+
+  --ft-rule-surface: #eef6fb;
   --ft-rule-border: #bfe0e6;
   --ft-rule-text: #0f3b52;
   --ft-rule-accent: #0f766e;
   --ft-rule-item: #ffffff;
 
-  /* Material-System-Tokens an das helle Farbschema koppeln. */
+  --ft-overlay: rgba(15, 23, 42, 0.45);
+
+  /* Material-System-Tokens an das Farbschema koppeln. */
   --mat-sys-surface: #ffffff;
-  --mat-sys-surface-container-low: #f8fafc;
+  --mat-sys-surface-container-low: #f5f7fc;
   --mat-sys-surface-container: #eef2f9;
-  --mat-sys-surface-container-high: #e6ecf7;
-  --mat-sys-surface-container-highest: #dde5f2;
+  --mat-sys-surface-container-high: #e7ecf6;
+  --mat-sys-surface-container-highest: #dee5f2;
   --mat-sys-surface-container-lowest: #ffffff;
   --mat-sys-on-surface: #0f172a;
-  --mat-sys-on-surface-variant: #52627a;
+  --mat-sys-on-surface-variant: #55647e;
   --mat-sys-outline: #b7c1d4;
-  --mat-sys-outline-variant: #dbe2ef;
+  --mat-sys-outline-variant: #dbe3f0;
 }
 
+/* ---------- Dark Theme (primäre Designrichtung) ---------- */
 html.dark {
-  --ft-bg: #0b1220;
-  --ft-surface: #131c2e;
-  --ft-surface-2: #0f1828;
-  --ft-primary: #8fb0ff;
-  --ft-primary-soft: #1d2b47;
+  color-scheme: dark;
+
+  --ft-bg: #070d1c;
+  --ft-bg-grid: rgba(45, 212, 191, 0.045);
+  --ft-surface: #0e1728;
+  --ft-surface-2: #121d33;
+  --ft-surface-3: #17243d;
+  --ft-surface-inset: #0b1424;
+
+  --ft-primary: #6ea8fe;
+  --ft-primary-strong: #8fb0ff;
+  --ft-primary-soft: #16233f;
+  --ft-secondary: #38bdf8;
+  --ft-secondary-soft: #102a3d;
+
   --ft-accent: #2dd4bf;
-  --ft-warn: #fbbf24;
-  --ft-warn-surface: #2a2410;
-  --ft-warn-border: #7c5e12;
-  --ft-warn-text: #fde68a;
-  --ft-danger: #f87171;
-  --ft-danger-surface: #2a1416;
-  --ft-danger-border: #7f2a2a;
-  --ft-danger-text: #fecaca;
+  --ft-accent-strong: #5eead4;
+  --ft-accent-soft: #0f2e2c;
+  --ft-on-accent: #04211f;
+
+  --ft-text: #e8edf7;
+  --ft-muted: #94a3c0;
+  --ft-border: #223050;
+  --ft-border-strong: #33456b;
+  --ft-on-primary: #06101f;
+
   --ft-ok: #4ade80;
-  --ft-ok-surface: #10261a;
+  --ft-ok-surface: #0f2619;
   --ft-ok-border: #256b3e;
   --ft-ok-text: #bbf7d0;
+
+  --ft-warn: #fbbf24;
+  --ft-warn-surface: #241d0c;
+  --ft-warn-border: #7c5e12;
+  --ft-warn-text: #fde68a;
+
   --ft-partial: #fbbf24;
-  --ft-partial-surface: #2a2410;
+  --ft-partial-surface: #241d0c;
   --ft-partial-border: #7c5e12;
   --ft-partial-text: #fde68a;
-  --ft-text: #e6ebf5;
-  --ft-muted: #9aa8c0;
-  --ft-border: #2a3550;
-  --ft-on-primary: #08101f;
-  --ft-hero-from: #101a30;
-  --ft-hero-to: #0d2b33;
-  --ft-header: #0e1729;
-  --ft-header-glass: rgba(14, 23, 41, 0.72);
-  --ft-header-glass-border: rgba(143, 176, 255, 0.18);
-  --ft-glass-surface: rgba(19, 28, 46, 0.66);
-  --ft-glass-border: rgba(143, 176, 255, 0.22);
-  --ft-shadow: 0 1px 3px rgba(0, 0, 0, 0.55);
+
+  --ft-danger: #f87171;
+  --ft-danger-surface: #2a1417;
+  --ft-danger-border: #7f2a2a;
+  --ft-danger-text: #fecaca;
+
+  --ft-hero-from: #071022;
+  --ft-hero-mid: #0b2140;
+  --ft-hero-to: #0a3b39;
+
+  --ft-header: rgba(9, 16, 30, 0.62);
+  --ft-header-solid: #0b1424;
+  --ft-header-border: rgba(110, 168, 254, 0.14);
+  --ft-header-glass: rgba(9, 16, 30, 0.76);
+  --ft-header-text: #e8edf7;
+
+  --ft-glass-surface: rgba(18, 29, 51, 0.66);
+  --ft-glass-strong: rgba(18, 29, 51, 0.84);
+  --ft-glass-border: rgba(110, 168, 254, 0.18);
+
+  --ft-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --ft-shadow: 0 10px 30px -16px rgba(0, 0, 0, 0.8), 0 2px 8px rgba(0, 0, 0, 0.4);
+  --ft-shadow-lg: 0 30px 60px -28px rgba(0, 0, 0, 0.9), 0 8px 18px rgba(0, 0, 0, 0.5);
+
   --ft-rule-surface: #0e2531;
   --ft-rule-border: #1d4a58;
   --ft-rule-text: #d7f3f0;
   --ft-rule-accent: #2dd4bf;
   --ft-rule-item: #102a38;
 
-  /* Material-System-Tokens an das dunkle Farbschema koppeln. */
-  --mat-sys-surface: #131c2e;
-  --mat-sys-surface-container-low: #0f1828;
-  --mat-sys-surface-container: #162034;
-  --mat-sys-surface-container-high: #1b2740;
-  --mat-sys-surface-container-highest: #212f4c;
-  --mat-sys-surface-container-lowest: #0b1220;
-  --mat-sys-on-surface: #e6ebf5;
-  --mat-sys-on-surface-variant: #9aa8c0;
-  --mat-sys-outline: #3a4a6b;
-  --mat-sys-outline-variant: #2a3550;
+  --ft-overlay: rgba(3, 7, 16, 0.6);
+
+  --mat-sys-surface: #0e1728;
+  --mat-sys-surface-container-low: #0b1424;
+  --mat-sys-surface-container: #121d33;
+  --mat-sys-surface-container-high: #17243d;
+  --mat-sys-surface-container-highest: #1d2c4a;
+  --mat-sys-surface-container-lowest: #070d1c;
+  --mat-sys-on-surface: #e8edf7;
+  --mat-sys-on-surface-variant: #94a3c0;
+  --mat-sys-outline: #33456b;
+  --mat-sys-outline-variant: #223050;
 }
 
+/* ============================================================
+   Grundlagen
+   ============================================================ */
 html,
 body {
   height: 100%;
   margin: 0;
   background: var(--ft-bg);
   color: var(--ft-text);
-  font-family: Roboto, 'Helvetica Neue', 'Segoe UI', Arial, sans-serif;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  font-family: var(--ft-font);
+  font-size: 16px;
+  line-height: 1.55;
+  transition:
+    background-color var(--ft-transition-slow),
+    color var(--ft-transition-slow);
 }
 
 body {
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  /* Dezente technische Rasterstruktur im Hintergrund. */
+  background-image:
+    linear-gradient(var(--ft-bg-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--ft-bg-grid) 1px, transparent 1px);
+  background-size: 48px 48px;
+  background-attachment: fixed;
 }
 
+h1,
+h2,
+h3,
+h4 {
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+}
+
+/* ---------- Layout-Container ---------- */
 .ft-container {
   width: 100%;
-  max-width: 1100px;
+  max-width: var(--ft-container-max);
   margin-inline: auto;
-  padding-inline: 1rem;
+  padding-inline: 1.1rem;
+}
+
+.ft-container--wide {
+  max-width: var(--ft-container-wide);
 }
 
 @media (min-width: 768px) {
@@ -136,10 +252,184 @@ body {
   }
 }
 
+/* ---------- Wiederverwendbare Bausteine ---------- */
+.ft-page {
+  padding-block: 1.75rem 3.5rem;
+  display: grid;
+  gap: 1.5rem;
+}
+
+.ft-page-head h1 {
+  font-size: clamp(1.7rem, 3.4vw, 2.3rem);
+  margin: 0 0 0.5rem;
+}
+
+.ft-page-head p {
+  margin: 0;
+  color: var(--ft-muted);
+  max-width: 720px;
+  line-height: 1.6;
+}
+
+.ft-eyebrow {
+  display: inline-block;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ft-accent);
+}
+
+/* Glas-Karte mit klarer Surface-Hierarchie. */
+.ft-glass {
+  background: var(--ft-glass-surface);
+  border: 1px solid var(--ft-glass-border);
+  border-radius: var(--ft-radius-lg);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+}
+
+/* Dezentes Label/Chip für Metadaten. */
+.ft-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.22rem 0.62rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  line-height: 1.4;
+  background: var(--ft-surface-2);
+  border: 1px solid var(--ft-border);
+  color: var(--ft-text);
+}
+
+.ft-chip--accent {
+  background: var(--ft-accent-soft);
+  border-color: transparent;
+  color: var(--ft-accent-strong);
+}
+
+.ft-chip--primary {
+  background: var(--ft-primary-soft);
+  border-color: transparent;
+  color: var(--ft-primary);
+}
+
+/* ============================================================
+   Angular Material – an das Designsystem angleichen
+   ============================================================ */
+
+/* Cards: Surface, Radius, dezente Border/Schatten. */
+.mat-mdc-card {
+  --mdc-outlined-card-container-color: var(--ft-surface);
+  --mdc-outlined-card-outline-color: var(--ft-border);
+  --mdc-elevated-card-container-color: var(--ft-surface);
+  --mdc-card-container-shape: var(--ft-radius-lg);
+  border-radius: var(--ft-radius-lg);
+  border: 1px solid var(--ft-border);
+  box-shadow: var(--ft-shadow-sm);
+  background: var(--ft-surface);
+  transition:
+    border-color var(--ft-transition),
+    box-shadow var(--ft-transition),
+    transform var(--ft-transition);
+}
+
+.mat-mdc-card-title {
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  font-size: 1.15rem;
+}
+
+.mat-mdc-card-subtitle {
+  color: var(--ft-muted);
+}
+
+.mat-mdc-card-content {
+  color: var(--ft-text);
+}
+
+/* Buttons: moderner Radius, klarere Flächen, Hover-Lift. */
+.mat-mdc-button-base {
+  --mdc-text-button-label-text-font: var(--ft-font);
+  --mdc-filled-button-label-text-font: var(--ft-font);
+  --mdc-outlined-button-label-text-font: var(--ft-font);
+  --mat-button-filled-container-shape: var(--ft-radius-sm);
+  --mat-button-outlined-container-shape: var(--ft-radius-sm);
+  --mat-button-text-container-shape: var(--ft-radius-sm);
+  --mat-button-protected-container-shape: var(--ft-radius-sm);
+  border-radius: var(--ft-radius-sm);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  transition:
+    transform var(--ft-transition),
+    box-shadow var(--ft-transition),
+    background-color var(--ft-transition);
+}
+
+.mat-mdc-unelevated-button:not(:disabled):hover,
+.mat-mdc-raised-button:not(:disabled):hover {
+  transform: translateY(-1px);
+  box-shadow: var(--ft-shadow);
+}
+
+.mat-mdc-outlined-button {
+  --mdc-outlined-button-outline-color: var(--ft-border-strong);
+}
+
+/* Fortschrittsbalken: abgerundet, Akzentfarbe. */
+.mat-mdc-progress-bar {
+  --mdc-linear-progress-track-color: var(--ft-surface-3);
+  --mdc-linear-progress-active-indicator-color: var(--ft-accent);
+  --mdc-linear-progress-track-shape: 999px;
+  border-radius: 999px;
+  overflow: hidden;
+  height: 8px;
+}
+
+/* Expansion Panel (Auswertung). */
+.mat-expansion-panel {
+  --mat-expansion-container-background-color: var(--ft-surface);
+  --mat-expansion-container-text-color: var(--ft-text);
+  --mat-expansion-header-text-color: var(--ft-text);
+  --mat-expansion-header-description-color: var(--ft-muted);
+  --mat-expansion-header-indicator-color: var(--ft-muted);
+  --mat-expansion-container-shape: var(--ft-radius);
+  border: 1px solid var(--ft-border);
+  border-radius: var(--ft-radius) !important;
+  box-shadow: var(--ft-shadow-sm) !important;
+  margin-bottom: 0.5rem;
+}
+
+.mat-expansion-panel-header {
+  font-weight: 600;
+}
+
+/* Radio: ruhiger Akzent statt Standard-Material-Blau. */
+.mat-mdc-radio-button {
+  --mdc-radio-selected-focus-icon-color: var(--ft-accent);
+  --mdc-radio-selected-hover-icon-color: var(--ft-accent);
+  --mdc-radio-selected-icon-color: var(--ft-accent);
+  --mdc-radio-selected-pressed-icon-color: var(--ft-accent);
+  --mat-radio-checked-ripple-color: var(--ft-accent);
+}
+
+/* Toolbar neutral behandeln; das Aussehen steuert der Header. */
+.mat-toolbar {
+  --mat-toolbar-container-background-color: transparent;
+  --mat-toolbar-container-text-color: var(--ft-header-text);
+}
+
+/* ============================================================
+   Fokus & Barrierefreiheit
+   ============================================================ */
 :focus-visible {
   outline: 3px solid var(--ft-accent);
   outline-offset: 2px;
-  border-radius: 4px;
+  border-radius: 6px;
 }
 
 .sr-only {
@@ -152,4 +442,18 @@ body {
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
+}
+
+/* ============================================================
+   Reduzierte Bewegung
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
 }

@@ -130,11 +130,11 @@ interface OrientationArea {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        width: 26px;
-        height: 26px;
+        width: 28px;
+        height: 28px;
         border-radius: 50%;
-        background: var(--ft-primary);
-        color: var(--ft-on-primary);
+        background: var(--ft-accent);
+        color: var(--ft-on-accent);
         font-size: 0.85rem;
         font-weight: 700;
         flex: 0 0 auto;
@@ -176,7 +176,7 @@ interface OrientationArea {
         flex-direction: column;
         align-items: center;
         gap: 0.15rem;
-        color: var(--ft-primary);
+        color: var(--ft-accent-strong);
         margin-block: 0.15rem;
       }
       .level-link-label {
@@ -191,9 +191,9 @@ interface OrientationArea {
       }
       .area {
         border: 1px solid var(--ft-border);
-        border-radius: 10px;
+        border-radius: var(--ft-radius);
         background: var(--ft-surface-2);
-        padding: 0.75rem 0.85rem;
+        padding: 0.85rem 0.95rem;
         display: flex;
         flex-direction: column;
         min-height: 8.5rem;
@@ -203,11 +203,11 @@ interface OrientationArea {
         display: flex;
         align-items: center;
         gap: 0.4rem;
-        font-weight: 600;
+        font-weight: 700;
         font-size: 0.8rem;
         text-transform: uppercase;
         letter-spacing: 0.05em;
-        color: var(--ft-primary);
+        color: var(--ft-accent-strong);
         margin-bottom: 0.6rem;
       }
       .area-head mat-icon {

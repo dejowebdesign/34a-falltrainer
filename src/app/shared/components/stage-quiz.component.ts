@@ -138,7 +138,7 @@ import { VerdictBadgeComponent } from './verdict-badge.component';
   styles: [
     `
       .quiz-card {
-        border-radius: 14px;
+        border-radius: var(--ft-radius-lg);
       }
       .hint {
         display: flex;
@@ -159,17 +159,24 @@ import { VerdictBadgeComponent } from './verdict-badge.component';
       }
       .option {
         display: flex;
-        gap: 0.5rem;
+        gap: 0.65rem;
         align-items: flex-start;
-        padding: 0.85rem;
+        padding: 0.95rem 1rem;
         border: 1px solid var(--ft-border);
-        border-radius: 12px;
+        border-radius: var(--ft-radius);
         background: var(--ft-surface);
-        transition: border-color 0.15s ease, background 0.15s ease;
+        transition:
+          border-color var(--ft-transition),
+          background-color var(--ft-transition),
+          box-shadow var(--ft-transition);
+      }
+      .option:hover {
+        border-color: var(--ft-border-strong);
       }
       .option.selected {
-        border-color: var(--ft-primary);
-        background: var(--ft-primary-soft);
+        border-color: var(--ft-accent);
+        background: var(--ft-accent-soft);
+        box-shadow: 0 0 0 1px var(--ft-accent) inset;
       }
       .option.verdict-ok {
         border-color: var(--ft-ok-border);
@@ -239,9 +246,9 @@ import { VerdictBadgeComponent } from './verdict-badge.component';
         margin-top: 2px;
       }
       .stage-summary {
-        margin-top: 1rem;
-        padding: 0.9rem 1rem;
-        border-radius: 12px;
+        margin-top: 1.1rem;
+        padding: 1rem 1.15rem;
+        border-radius: var(--ft-radius);
         display: grid;
         gap: 0.4rem;
       }

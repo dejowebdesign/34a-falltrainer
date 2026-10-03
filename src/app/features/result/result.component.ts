@@ -184,61 +184,74 @@ import { VerdictBadgeComponent } from '../../shared/components/verdict-badge.com
   styles: [
     `
       .page {
-        padding-block: 1.5rem 3.5rem;
+        padding-block: 1.75rem 3.5rem;
         display: grid;
-        gap: 1.25rem;
+        gap: 1.35rem;
       }
       .result-head,
       .model-solution,
       .stage-card,
       .norms-card,
       .case-card {
-        border-radius: 14px;
+        border-radius: var(--ft-radius-lg);
       }
       .case-details {
         border: 1px solid var(--ft-border);
-        border-radius: 10px;
+        border-left: 3px solid var(--ft-accent);
+        border-radius: var(--ft-radius-sm);
         background: var(--ft-surface-2);
-        padding: 0.6rem 0.85rem;
+        padding: 0.75rem 1rem;
       }
       .case-details summary {
         cursor: pointer;
-        color: var(--ft-primary);
+        color: var(--ft-accent-strong);
         font-weight: 600;
       }
       .case-text {
-        margin: 0.6rem 0 0;
-        line-height: 1.6;
+        margin: 0.7rem 0 0;
+        line-height: 1.7;
       }
       .overall {
         display: flex;
-        align-items: center;
+        align-items: baseline;
         justify-content: space-between;
-        margin-bottom: 0.75rem;
+        gap: 1rem;
+        flex-wrap: wrap;
+        margin-bottom: 0.85rem;
       }
       .score {
-        font-size: 1.4rem;
+        font-size: clamp(1.8rem, 5vw, 2.6rem);
         font-weight: 700;
-        color: var(--ft-primary);
+        line-height: 1;
+        letter-spacing: -0.03em;
+        color: var(--ft-accent-strong);
+        font-variant-numeric: tabular-nums;
       }
       .explanation {
         margin: 1rem 0 0;
-        line-height: 1.6;
+        line-height: 1.65;
       }
       .solution {
         margin: 0;
-        padding-left: 1.1rem;
+        padding: 0;
+        list-style: none;
         display: grid;
-        gap: 0.9rem;
+        gap: 0.85rem;
+      }
+      .solution li {
+        border-left: 3px solid var(--ft-accent);
+        background: var(--ft-surface-2);
+        border-radius: 0 var(--ft-radius-sm) var(--ft-radius-sm) 0;
+        padding: 0.8rem 1rem;
       }
       .solution h3 {
-        margin: 0 0 0.25rem;
-        font-size: 1rem;
-        color: var(--ft-primary);
+        margin: 0 0 0.3rem;
+        font-size: 0.98rem;
+        color: var(--ft-accent-strong);
       }
       .solution p {
         margin: 0;
-        line-height: 1.6;
+        line-height: 1.65;
       }
       .stage-results {
         display: grid;

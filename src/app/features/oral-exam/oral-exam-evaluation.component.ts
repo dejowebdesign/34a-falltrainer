@@ -37,58 +37,72 @@ const ROLE_LABELS: Record<ExamQuestionRole, string> = {
     @if (evaluation(); as result) {
       <div class="ft-container page">
         <header class="page-head">
-          <span class="eyebrow">Auswertung</span>
+          <span class="ft-eyebrow">Auswertung</span>
           <h1>Ergebnis der Prüfungssimulation</h1>
         </header>
 
-        <mat-card appearance="outlined" class="summary" [class.passed]="result.passed">
+        <!-- Prüfungsbericht -->
+        <mat-card appearance="outlined" class="report" [class.passed]="result.passed" [class.failed]="!result.passed">
           <mat-card-content>
-            <div class="verdict">
-              <mat-icon aria-hidden="true">{{ result.passed ? 'verified' : 'cancel' }}</mat-icon>
-              <span class="verdict-text">{{ result.passed ? 'BESTANDEN' : 'NICHT BESTANDEN' }}</span>
+            <p class="report-label">Prüfung abgeschlossen</p>
+            <div class="report-main">
+              <div class="report-score">
+                <span class="score-value">{{ result.correctCount }} / {{ result.total }}</span>
+                <span class="score-percent">{{ result.percent }} %</span>
+              </div>
+              <div class="report-status">
+                <span
+                  class="status-badge"
+                  [class.ok]="result.passed"
+                  [class.bad]="!result.passed"
+                >
+                  <mat-icon aria-hidden="true">{{ result.passed ? 'verified' : 'cancel' }}</mat-icon>
+                  {{ result.passed ? 'BESTANDEN' : 'NICHT BESTANDEN' }}
+                </span>
+                @if (result.timedOut) {
+                  <span class="status-badge timeout">
+                    <mat-icon aria-hidden="true">timer_off</mat-icon>
+                    ZEITABLAUF
+                  </span>
+                }
+              </div>
             </div>
+
+            <mat-progress-bar
+              mode="determinate"
+              [value]="result.percent"
+              [attr.aria-label]="'Erreichte Punkte: ' + result.percent + ' Prozent'"
+            ></mat-progress-bar>
+
             <dl class="stats">
               <div>
-                <dt>Punkte</dt>
-                <dd>{{ result.correctCount }} / {{ result.total }}</dd>
-              </div>
-              <div>
-                <dt>Prozent</dt>
-                <dd>{{ result.percent }} %</dd>
-              </div>
-              <div>
-                <dt>Bestehensgrenze</dt>
-                <dd>{{ result.thresholdPercent }} % ({{ result.requiredPoints }} Punkte)</dd>
+                <dt>Bearbeitungszeit</dt>
+                <dd>{{ clock(result.elapsedSeconds) }}</dd>
               </div>
               <div>
                 <dt>Prüfungszeit</dt>
                 <dd>{{ clock(result.durationSeconds) }}</dd>
               </div>
               <div>
-                <dt>Bearbeitungszeit</dt>
-                <dd>{{ clock(result.elapsedSeconds) }}</dd>
+                <dt>Bestehensgrenze</dt>
+                <dd>{{ result.thresholdPercent }} % ({{ result.requiredPoints }} Punkte)</dd>
               </div>
-              @if (result.unansweredCount > 0) {
-                <div>
-                  <dt>Nicht beantwortet</dt>
-                  <dd>{{ result.unansweredCount }}</dd>
-                </div>
-              }
+              <div>
+                <dt>Nicht beantwortet</dt>
+                <dd>{{ result.unansweredCount }}</dd>
+              </div>
             </dl>
+
             @if (result.timedOut) {
               <p class="timeout-note" role="status">
                 <mat-icon aria-hidden="true">timer_off</mat-icon>
                 Prüfung wegen Zeitablauf beendet.
               </p>
             }
-            <mat-progress-bar
-              mode="determinate"
-              [value]="result.percent"
-              [attr.aria-label]="'Erreichte Punkte: ' + result.percent + ' Prozent'"
-            ></mat-progress-bar>
           </mat-card-content>
         </mat-card>
 
+        <!-- Themengebiete -->
         <section aria-labelledby="topics-heading" class="topics">
           <h2 id="topics-heading">Bewertung nach Themengebiet</h2>
           <p class="hint">Tippen Sie ein Themengebiet an, um die gestellten Fragen zu sehen.</p>
@@ -106,12 +120,20 @@ const ROLE_LABELS: Record<ExamQuestionRole, string> = {
                     >
                       {{ topic.correctCount === topic.total ? 'check_circle' : 'error_outline' }}
                     </mat-icon>
-                    {{ topic.categoryLabel }}
+                    <span class="topic-name">{{ topic.categoryLabel }}</span>
                   </mat-panel-title>
                   <mat-panel-description class="topic-score">
                     {{ topic.correctCount }} / {{ topic.total }} richtig
                   </mat-panel-description>
                 </mat-expansion-panel-header>
+
+                <div class="topic-bar">
+                  <mat-progress-bar
+                    mode="determinate"
+                    [value]="topic.percent"
+                    [attr.aria-label]="topic.categoryLabel + ': ' + topic.correctCount + ' von ' + topic.total"
+                  ></mat-progress-bar>
+                </div>
 
                 <ul class="question-list">
                   @for (item of topic.questions; track item.question.id) {
@@ -213,66 +235,112 @@ const ROLE_LABELS: Record<ExamQuestionRole, string> = {
         padding-block: 2rem 3.5rem;
         display: grid;
         gap: 1.5rem;
-        max-width: 900px;
-      }
-      .eyebrow {
-        display: inline-block;
-        font-size: 0.8rem;
-        font-weight: 600;
-        letter-spacing: 0.06em;
-        text-transform: uppercase;
-        color: var(--ft-accent);
+        max-width: 940px;
       }
       .page-head h1 {
         margin: 0.35rem 0 0;
-        font-size: 1.9rem;
+        font-size: clamp(1.7rem, 3.4vw, 2.2rem);
       }
-      .summary {
-        border-radius: 14px;
-        border-left: 6px solid var(--ft-danger);
+      /* Prüfungsbericht */
+      .report {
+        border-radius: var(--ft-radius-lg);
+        border-top: 4px solid var(--ft-danger);
       }
-      .summary.passed {
-        border-left-color: var(--ft-ok);
+      .report.passed {
+        border-top-color: var(--ft-ok);
       }
-      .verdict {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        margin-bottom: 0.75rem;
-      }
-      .verdict mat-icon {
-        color: var(--ft-danger);
-      }
-      .summary.passed .verdict mat-icon {
-        color: var(--ft-ok);
-      }
-      .verdict-text {
-        font-size: 1.35rem;
+      .report-label {
+        margin: 0 0 0.75rem;
+        font-size: 0.78rem;
         font-weight: 700;
-        letter-spacing: 0.04em;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--ft-muted);
+      }
+      .report-main {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+        margin-bottom: 1rem;
+      }
+      .report-score {
+        display: flex;
+        align-items: baseline;
+        gap: 0.75rem;
+      }
+      .score-value {
+        font-size: clamp(2.2rem, 6vw, 3.2rem);
+        font-weight: 700;
+        line-height: 1;
+        letter-spacing: -0.03em;
+        font-variant-numeric: tabular-nums;
+      }
+      .score-percent {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: var(--ft-muted);
+      }
+      .report-status {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+      .status-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        padding: 0.4rem 0.9rem;
+        border-radius: 999px;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        font-size: 0.92rem;
+        border: 1px solid transparent;
+      }
+      .status-badge mat-icon {
+        font-size: 18px;
+        width: 18px;
+        height: 18px;
+      }
+      .status-badge.ok {
+        background: var(--ft-ok-surface);
+        color: var(--ft-ok-text);
+        border-color: var(--ft-ok-border);
+      }
+      .status-badge.bad {
+        background: var(--ft-danger-surface);
+        color: var(--ft-danger-text);
+        border-color: var(--ft-danger-border);
+      }
+      .status-badge.timeout {
+        background: var(--ft-warn-surface);
+        color: var(--ft-warn-text);
+        border-color: var(--ft-warn-border);
       }
       .stats {
         display: grid;
         gap: 1rem;
         grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-        margin: 0 0 1rem;
+        margin: 1.25rem 0 0;
       }
       .stats dt {
         color: var(--ft-muted);
-        font-size: 0.85rem;
+        font-size: 0.82rem;
       }
       .stats dd {
-        margin: 0.15rem 0 0;
-        font-size: 1.15rem;
-        font-weight: 600;
+        margin: 0.2rem 0 0;
+        font-size: 1.2rem;
+        font-weight: 700;
+        font-variant-numeric: tabular-nums;
       }
       .topics h2 {
-        font-size: 1.25rem;
+        font-size: 1.3rem;
         margin: 0 0 0.35rem;
       }
       .hint {
         color: var(--ft-muted);
-        margin: 0 0 0.75rem;
+        margin: 0 0 0.9rem;
       }
       .accordion {
         display: grid;
@@ -284,6 +352,9 @@ const ROLE_LABELS: Record<ExamQuestionRole, string> = {
         gap: 0.5rem;
         font-weight: 600;
       }
+      .topic-name {
+        white-space: normal;
+      }
       .topic-status.ok {
         color: var(--ft-ok);
       }
@@ -293,32 +364,40 @@ const ROLE_LABELS: Record<ExamQuestionRole, string> = {
       .topic-score {
         justify-content: flex-end;
       }
+      .topic-bar {
+        margin: 0.35rem 0 0.9rem;
+      }
       .question-list {
         list-style: none;
         margin: 0;
         padding: 0;
         display: grid;
-        gap: 0.75rem;
+        gap: 0.85rem;
       }
       .question-item {
         border: 1px solid var(--ft-border);
-        border-radius: 12px;
-        padding: 0.85rem;
+        border-radius: var(--ft-radius);
+        padding: 1rem;
         background: var(--ft-surface-2);
       }
       .question-item.correct {
         border-color: var(--ft-ok-border);
+        border-left: 3px solid var(--ft-ok);
+      }
+      .question-item:not(.correct):not(.unanswered) {
+        border-left: 3px solid var(--ft-danger);
       }
       .question-item.unanswered {
         border-color: var(--ft-danger-border);
         background: var(--ft-danger-surface);
+        border-left: 3px solid var(--ft-danger);
       }
       .q-head {
         display: flex;
         align-items: center;
         justify-content: space-between;
         gap: 0.5rem;
-        margin-bottom: 0.35rem;
+        margin-bottom: 0.4rem;
       }
       .q-meta {
         display: flex;
@@ -333,30 +412,31 @@ const ROLE_LABELS: Record<ExamQuestionRole, string> = {
         letter-spacing: 0.05em;
         text-transform: uppercase;
         border-radius: 999px;
-        padding: 0.15rem 0.5rem;
+        padding: 0.16rem 0.55rem;
         line-height: 1.4;
       }
       .q-topic {
         background: var(--ft-primary-soft);
       }
       .q-difficulty {
-        background: var(--ft-surface-2);
+        background: var(--ft-surface);
         border: 1px solid var(--ft-border);
       }
       .q-role-line {
-        margin: 0 0 0.3rem;
+        margin: 0 0 0.35rem;
         font-size: 0.72rem;
         font-weight: 700;
         letter-spacing: 0.06em;
         text-transform: uppercase;
-        color: var(--ft-accent);
+        color: var(--ft-accent-strong);
       }
       .q-flag {
         display: inline-flex;
         align-items: center;
         gap: 0.2rem;
         font-size: 0.85rem;
-        font-weight: 600;
+        font-weight: 700;
+        white-space: nowrap;
       }
       .q-flag.ok {
         color: var(--ft-ok);
@@ -368,13 +448,13 @@ const ROLE_LABELS: Record<ExamQuestionRole, string> = {
         color: var(--ft-danger-text);
       }
       .q-text {
-        margin: 0 0 0.5rem;
+        margin: 0 0 0.6rem;
         font-weight: 600;
-        line-height: 1.45;
+        line-height: 1.5;
       }
       .q-line {
-        margin: 0.2rem 0;
-        line-height: 1.5;
+        margin: 0.25rem 0;
+        line-height: 1.55;
       }
       .q-line .label {
         color: var(--ft-muted);
@@ -386,8 +466,8 @@ const ROLE_LABELS: Record<ExamQuestionRole, string> = {
         color: var(--ft-ok-text);
       }
       .q-legal {
-        margin: 0.3rem 0;
-        line-height: 1.5;
+        margin: 0.35rem 0;
+        line-height: 1.55;
       }
       .q-legal .label {
         color: var(--ft-muted);
@@ -397,23 +477,23 @@ const ROLE_LABELS: Record<ExamQuestionRole, string> = {
         color: var(--ft-ok-text);
       }
       .q-explanation {
-        margin: 0.5rem 0 0;
-        padding: 0.5rem 0.75rem;
+        margin: 0.6rem 0 0;
+        padding: 0.6rem 0.85rem;
         border-left: 3px solid var(--ft-accent);
-        background: var(--ft-primary-soft);
-        border-radius: 0 8px 8px 0;
-        line-height: 1.5;
+        background: var(--ft-accent-soft);
+        border-radius: 0 var(--ft-radius-sm) var(--ft-radius-sm) 0;
+        line-height: 1.55;
         font-size: 0.92rem;
       }
       .overall {
-        border-radius: 14px;
+        border-radius: var(--ft-radius-lg);
       }
       .overall-line {
         margin: 0 0 0.5rem;
-        line-height: 1.55;
+        line-height: 1.6;
       }
       .overall-verdict {
-        margin: 0;
+        margin: 0.5rem 0 0;
         font-weight: 700;
         font-size: 1.05rem;
       }
@@ -427,9 +507,9 @@ const ROLE_LABELS: Record<ExamQuestionRole, string> = {
         display: flex;
         align-items: center;
         gap: 0.4rem;
-        margin: 0 0 0.75rem;
-        padding: 0.6rem 0.85rem;
-        border-radius: 10px;
+        margin: 1rem 0 0;
+        padding: 0.7rem 0.9rem;
+        border-radius: var(--ft-radius-sm);
         background: var(--ft-danger-surface);
         color: var(--ft-danger-text);
         font-weight: 600;
@@ -438,6 +518,14 @@ const ROLE_LABELS: Record<ExamQuestionRole, string> = {
         display: flex;
         gap: 0.75rem;
         flex-wrap: wrap;
+      }
+      @media (max-width: 560px) {
+        .report-main {
+          align-items: flex-start;
+        }
+        .q-head {
+          flex-wrap: wrap;
+        }
       }
     `,
   ],

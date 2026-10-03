@@ -53,13 +53,13 @@ interface BehaviorGroup {
   styles: [
     `
       .behavior-card {
-        border-radius: 14px;
+        border-radius: var(--ft-radius-lg);
       }
       .behavior-note {
         margin: 0 0 1rem;
         color: var(--ft-muted);
         font-size: 0.85rem;
-        line-height: 1.5;
+        line-height: 1.55;
       }
       .groups {
         column-count: 1;
