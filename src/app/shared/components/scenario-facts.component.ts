@@ -8,7 +8,7 @@ import { Scenario } from '../../core/models';
   selector: 'app-scenario-facts',
   imports: [MatCardModule, MatIconModule],
   template: `
-    <mat-card appearance="outlined" class="facts-card">
+    <mat-card appearance="outlined" class="facts-card ft-card--glass">
       <mat-card-header>
         <mat-card-title>{{ scenario().title }}</mat-card-title>
         <mat-card-subtitle>Fallbeschreibung</mat-card-subtitle>
