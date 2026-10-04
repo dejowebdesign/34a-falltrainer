@@ -147,6 +147,7 @@ src/
       stage-three/ Stufe 3 – Rechtsgrundlage
       result/      Ergebnis und Musterlösung
       oral-exam/   Mündliche Prüfungssimulation
+      strafgesetzbuch/ Lernseite „Strafgesetzbuch“ (kuratierte Deliktssteckbriefe)
     shared/
       components/  Wiederverwendbare UI-Bausteine
 ```
@@ -244,6 +245,7 @@ daher aus Fachwissen (`UNVERIFIED`) und sind im Abschlussbericht gelistet.
 | `/pruefungssimulation/durchfuehrung` | Durchführung (27 Fragen) |
 | `/pruefungssimulation/auswertung` | Auswertung und Detailansicht |
 | `/pruefungssimulation/audit` | Interne Quellenkennzeichnung (Audit) |
+| `/strafgesetzbuch` | Lernseite Strafgesetzbuch (relevante Delikte) |
 
 ## Technik
 
@@ -347,6 +349,33 @@ Der offizielle Titel stammt ausschließlich aus der zentralen Normdatenquelle
 Kurzbezeichnungen werden nie als amtlicher Titel ausgegeben: §228 BGB und
 §904 BGB haben beide den Gesetzestitel „Notstand“; „Defensivnotstand“ und
 „Aggressivnotstand“ stehen als `fachlicheEinordnung` getrennt daneben.
+
+### Lernseite „Strafgesetzbuch“ (`src/app/core/models/criminal-offense.model.ts`)
+
+Eigenständige, kuratierte Lernübersicht der für die Sachkundeprüfung
+relevanten Straftatbestände (Route `/strafgesetzbuch`). Bewusst getrennt von
+der juristischen Knowledge Base der Fallengine:
+
+- `CriminalOffense` – id, law, paragraph, officialTitle, category,
+  protectedInterest, objectiveElements, subjectiveElements, intentRequired,
+  negligence, specialSubjectiveElements, minimumPenalty, maximumPenalty,
+  classification (Verbrechen/Vergehen nach § 12 StGB), prosecution,
+  attemptPunishable, attemptExplanation, explanation, relevance,
+  securityNote, distinctions, officialText, sourceUrl, source
+- `NegligenceRelation` – intentional, negligentVariant, negligentNorm,
+  explanation (§ 15 StGB)
+- `ProsecutionInfo` – type (Offizial-/Antragsdelikt), applicationType
+  (absolut/relativ), applicationNorm, explanation
+- `LegalBasicsEntry` – Grundlagen des Allgemeinen Teils (§ 12, 15, 22, 23 StGB)
+- `OffenseSource` / `OffenseSourceType` – Herkunft des amtlichen Wortlauts
+  (`SOURCE_BIBEL`, `SOURCE_GESETZE_IM_INTERNET`, `SOURCE_NOT_IN_BIBEL`,
+  `SOURCE_MISSING`)
+
+Die Daten (`src/app/core/data/criminal-offenses.data.ts`) sind Seed-Daten und
+kein Teil der Fallengine. Wo die Bibel V5.3.1 den amtlichen Wortlaut enthält,
+wird er unverändert übernommen; Delikte, die die Bibel ausdrücklich aus dem
+Bestand ausschließt (§ 263, § 265a, § 266 StGB), werden als
+`SOURCE_NOT_IN_BIBEL` gekennzeichnet und nicht als Bibel-Bestand ausgegeben.
 
 ## Juristische Datenquelle
 
