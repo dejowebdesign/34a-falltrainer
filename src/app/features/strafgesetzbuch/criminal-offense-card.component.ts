@@ -1,13 +1,17 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { CriminalOffense } from '../../core/models';
-import { OFFENSE_CATEGORY_LABELS } from '../../core/data/criminal-offenses.data';
+import {
+  FAMILY_RELATION_LABELS,
+  OFFENSE_CATEGORY_LABELS,
+  OFFENSE_FAMILY_LABELS,
+} from '../../core/data/criminal-offenses.data';
 
 /**
  * Kompakte Übersichtskarte eines Straftatbestands.
  *
  * Die Karte zeigt nur die Kernmerkmale (Paragraph, Titel, Deliktsgruppe,
- * Status-Chips, Mindeststrafe) und öffnet per Klick die vollständige
+ * Relevanz, Status-Chips, Mindeststrafe) und öffnet per Klick die vollständige
  * Detailansicht als Dialog. Der lange Tatbestandstext bleibt bewusst im Modal –
  * die Liste dient dem schnellen Finden, das Modal dem Lernen.
  */
@@ -23,7 +27,7 @@ import { OFFENSE_CATEGORY_LABELS } from '../../core/data/criminal-offenses.data'
     >
       <span class="card-top">
         <span class="card-paragraph">{{ offense.paragraph }} {{ offense.law }}</span>
-        @if (isExamRelevant) {
+        @if (isCore) {
           <span class="card-star" aria-hidden="true">
             <mat-icon>star</mat-icon>
           </span>
@@ -31,7 +35,9 @@ import { OFFENSE_CATEGORY_LABELS } from '../../core/data/criminal-offenses.data'
       </span>
 
       <span class="card-title">{{ offense.officialTitle }}</span>
-      <span class="card-category">{{ categoryLabel }}</span>
+      <span class="card-category">
+        {{ familyLabel }} · {{ familyRelationLabel }}
+      </span>
 
       <span class="card-chips" aria-label="Kernmerkmale">
         <span class="ft-chip" [class.ft-chip--primary]="isVerbrechen">
@@ -41,6 +47,9 @@ import { OFFENSE_CATEGORY_LABELS } from '../../core/data/criminal-offenses.data'
           {{ isAntragsdelikt ? 'Antragsdelikt' : 'Offizialdelikt' }}
         </span>
         <span class="ft-chip">Versuch: {{ offense.attemptPunishable ? 'Ja' : 'Nein' }}</span>
+        @if (isCore) {
+          <span class="ft-chip ft-chip--star">Besonders §34a-relevant</span>
+        }
       </span>
 
       <span class="card-penalty">
@@ -187,6 +196,14 @@ export class CriminalOffenseCardComponent {
     return OFFENSE_CATEGORY_LABELS[this.offense.category];
   }
 
+  get familyLabel(): string {
+    return OFFENSE_FAMILY_LABELS[this.offense.family];
+  }
+
+  get familyRelationLabel(): string {
+    return FAMILY_RELATION_LABELS[this.offense.familyRelation];
+  }
+
   get isVerbrechen(): boolean {
     return this.offense.classification === 'VERBRECHEN';
   }
@@ -195,7 +212,7 @@ export class CriminalOffenseCardComponent {
     return this.offense.prosecution.type === 'ANTRAGSDELIKT';
   }
 
-  get isExamRelevant(): boolean {
-    return Boolean(this.offense.securityNote);
+  get isCore(): boolean {
+    return this.offense.relevanceLevel === 'CORE_34A';
   }
 }

@@ -152,7 +152,25 @@ describe('CriminalOffenseService (Mehrfachauswahl-Filter)', () => {
     const result = service.query({ ...EMPTY_OFFENSE_QUERY, examRelevantOnly: true });
     expect(result.length).toBeGreaterThan(0);
     expect(result.every((o) => service.isExamRelevant(o))).toBe(true);
-    expect(result.every((o) => Boolean(o.securityNote))).toBe(true);
+  });
+
+  it('filtert auf die Kern-Delikte (CORE_34A)', () => {
+    const result = service.query({ ...EMPTY_OFFENSE_QUERY, coreOnly: true });
+    expect(result.length).toBeGreaterThan(0);
+    expect(result.every((o) => o.relevanceLevel === 'CORE_34A')).toBe(true);
+    // RELATED_34A-Delikte dürfen nicht enthalten sein.
+    expect(result.some((o) => o.relevanceLevel === 'RELATED_34A')).toBe(false);
+  });
+
+  it('filtert über die Deliktsfamilie', () => {
+    const result = service.query({ ...EMPTY_OFFENSE_QUERY, families: ['DIEBSTAHL'] });
+    expect(result.length).toBeGreaterThan(0);
+    expect(result.every((o) => o.family === 'DIEBSTAHL')).toBe(true);
+    expect(result.some((o) => o.id === 'stgb-242')).toBe(true);
+  });
+
+  it('blendet Delikte der Stufe NOT_INCLUDE nicht aus der Gesamtliste aus', () => {
+    expect(service.getOffenses().every((o) => o.relevanceLevel !== 'NOT_INCLUDE')).toBe(true);
   });
 });
 

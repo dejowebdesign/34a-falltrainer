@@ -1,8 +1,11 @@
 import {
   CriminalOffense,
-  LegalBasicsEntry,
+  FamilyRelation,
+  LegalBasicsCard,
   OffenseCategory,
+  OffenseFamily,
   OffenseSource,
+  RelevanceLevel,
 } from '../models';
 
 /**
@@ -55,12 +58,14 @@ export const OFFENSE_CATEGORY_LABELS: Record<OffenseCategory, string> = {
   SACHBESCHAEDIGUNG: 'Sachbeschädigungsdelikte',
   URKUNDENDELIKTE: 'Urkundendelikte',
   GEMEINGEFAEHRLICHE_DELIKTE: 'Gemeingefährliche und sonstige Delikte',
+  HAUSRECHT: 'Hausrecht / Hausfriedensbruch',
   AMTS_BEFUGNISDELIKTE: 'Amts- und Befugnisdelikte',
 };
 
 /** Reihenfolge der Deliktsgruppen in der Übersicht. */
 export const OFFENSE_CATEGORY_ORDER: OffenseCategory[] = [
   'AMTS_BEFUGNISDELIKTE',
+  'HAUSRECHT',
   'STRAFTATEN_GEGEN_PERSON',
   'EHRLICHKEITSDELIKTE',
   'KOERPERVERLETZUNG',
@@ -72,55 +77,381 @@ export const OFFENSE_CATEGORY_ORDER: OffenseCategory[] = [
   'GEMEINGEFAEHRLICHE_DELIKTE',
 ];
 
+/** Anzeigenamen der Deliktsfamilien. */
+export const OFFENSE_FAMILY_LABELS: Record<OffenseFamily, string> = {
+  DIEBSTAHL: 'Diebstahlsdelikte',
+  UNTERSCHLAGUNG: 'Unterschlagung',
+  KOERPERVERLETZUNG: 'Körperverletzungsdelikte',
+  RAUB: 'Raubdelikte',
+  ERPRESSUNG: 'Erpressungsdelikte',
+  FREIHEIT: 'Delikte gegen die persönliche Freiheit',
+  EHRE: 'Ehrdelikte',
+  HAUSFRIEDENSBRUCH: 'Hausfriedensbruch',
+  AMTSANMASSUNG: 'Amtsanmaßung und Titelmissbrauch',
+  VERMOEGEN: 'Vermögensdelikte',
+  SACHBESCHAEDIGUNG: 'Sachbeschädigung',
+  URKUNDE: 'Urkundendelikte',
+  UNTERLASSUNG: 'Unterlassungsdelikte',
+};
+
+/** Anzeigenamen der Stellung innerhalb einer Deliktsfamilie. */
+export const FAMILY_RELATION_LABELS: Record<FamilyRelation, string> = {
+  GRUNDDELIKT: 'Grunddelikt',
+  REGELBEISPIEL: 'Besonders schwerer Fall (Regelbeispiel)',
+  QUALIFIKATION: 'Eigenständige Qualifikation',
+  EIGENSTAENDIG: 'Eigenständige Norm',
+  ERFOLGSQUALIFIKATION: 'Erfolgsqualifikation',
+};
+
+/** Anzeigenamen der §34a-Relevanzstufen. */
+export const RELEVANCE_LEVEL_LABELS: Record<RelevanceLevel, string> = {
+  CORE_34A: 'Besonders relevant für §34a',
+  RELATED_34A: 'Relevant für §34a',
+  NOT_INCLUDE: 'Nicht Bestandteil dieser Lernseite',
+};
+
 /** Standardtexte, damit dieselben Formulierungen konsistent bleiben. */
 const NO_MIN_FS = 'Geldstrafe bzw. keine gesetzliche Mindestfreiheitsstrafe';
 const NO_NEGLIGENT =
   'Keine eigenständige fahrlässige Variante. Nach §15 StGB ist nur vorsätzliches Handeln strafbar.';
 
-/** Grundlagen des Allgemeinen Teils, die die Einordnung erklären. */
-export const LEGAL_BASICS: LegalBasicsEntry[] = [
+/**
+ * Grundlagen des Strafrechts als Lernkarten.
+ *
+ * Didaktische Aufbereitung nach `Grundlagen_Straftaten.pdf` (Rechtsstand
+ * 01.10.2026). Wo eine führende Norm existiert, ist der amtliche Wortlaut
+ * hinterlegt und mit gesetze-im-internet.de abgeglichen.
+ *
+ * Bewusst NICHT enthalten (Auftrag Nr. 2/7): Täterschaft und Teilnahme
+ * (§§ 25–27 StGB, Tatherrschaft, Anstiftung, Beihilfe) sowie das Fallbeispiel
+ * „Der gestohlene Wagen“. Diese Themen werden als eigene Lerneinheit geführt.
+ */
+export const LEGAL_BASICS_CARDS: LegalBasicsCard[] = [
   {
-    id: 'stgb-12',
+    id: 'basics-verbrechen-vergehen',
     paragraph: '§ 12',
     officialTitle: 'Verbrechen und Vergehen',
+    eyebrow: 'Deliktsarten',
+    summary:
+      'Verbrechen und Vergehen unterscheiden sich allein nach dem gesetzlichen Mindestmaß der Strafe.',
     officialText:
       '(1) Verbrechen sind rechtswidrige Taten, die im Mindestmaß mit Freiheitsstrafe von einem Jahr oder darüber bedroht sind. (2) Vergehen sind rechtswidrige Taten, die im Mindestmaß mit einer geringeren Freiheitsstrafe oder die mit Geldstrafe bedroht sind. (3) Schärfungen oder Milderungen, die nach den Vorschriften des Allgemeinen Teils oder für besonders schwere oder minder schwere Fälle vorgesehen sind, bleiben für die Einteilung außer Betracht.',
-    explanation:
-      'Die Einordnung richtet sich ausschließlich nach dem gesetzlichen Mindestmaß, nicht nach dem Höchstmaß und nicht nach der zu erwartenden Strafe. Schärfungen und Milderungen für besonders schwere oder minder schwere Fälle bleiben außer Betracht (§12 Abs. 3).',
+    sections: [
+      {
+        heading: 'Verbrechen (§ 12 Abs. 1 StGB)',
+        bullets: [
+          'Rechtswidrige Taten, die im Mindestmaß mit Freiheitsstrafe von einem Jahr oder darüber bedroht sind.',
+          'Beispiel: Totschlag nach § 212 StGB – Mindeststrafe fünf Jahre Freiheitsstrafe.',
+          'Der Versuch eines Verbrechens ist stets strafbar.',
+        ],
+      },
+      {
+        heading: 'Vergehen (§ 12 Abs. 2 StGB)',
+        bullets: [
+          'Rechtswidrige Taten, die im Mindestmaß mit einer geringeren Freiheitsstrafe oder mit Geldstrafe bedroht sind.',
+          'Beispiele: Diebstahl (§ 242 StGB) und einfache Körperverletzung (§ 223 StGB).',
+          'Der Versuch eines Vergehens ist nur strafbar, wenn das Gesetz es ausdrücklich anordnet.',
+        ],
+      },
+      {
+        heading: 'Entscheidend ist das Mindestmaß',
+        paragraphs: [
+          'Maßgeblich ist ausschließlich das gesetzliche Mindestmaß und nicht das Höchstmaß.',
+          'Schärfungen und Milderungen für besonders schwere oder minder schwere Fälle bleiben nach § 12 Abs. 3 StGB außer Betracht.',
+        ],
+      },
+    ],
+    merksatz: 'Verbrechen = Mindeststrafe mindestens 1 Jahr Freiheitsstrafe.',
+    examples: [
+      'Totschlag (§ 212 StGB): Mindeststrafe fünf Jahre → Verbrechen, Versuch stets strafbar.',
+      'Diebstahl (§ 242 StGB): Geldstrafe oder Freiheitsstrafe möglich → Vergehen.',
+    ],
+    examRelevant:
+      'Die Einordnung steuert, ob der Versuch strafbar ist und wie das Delikt in der Prüfung eingeordnet wird.',
     sourceUrl: 'https://www.gesetze-im-internet.de/stgb/__12.html',
     source: GII_SOURCE,
   },
   {
-    id: 'stgb-15',
-    paragraph: '§ 15',
-    officialTitle: 'Vorsätzliches und fahrlässiges Handeln',
-    officialText:
-      'Strafbar ist nur vorsätzliches Handeln, wenn nicht das Gesetz fahrlässiges Handeln ausdrücklich mit Strafe bedroht.',
-    explanation:
-      'Vorsatz ist der Regelfall. Fahrlässigkeit ist nur strafbar, wenn das jeweilige Delikt sie ausdrücklich unter Strafe stellt (z. B. §229 StGB als eigenständige fahrlässige Körperverletzung).',
-    sourceUrl: 'https://www.gesetze-im-internet.de/stgb/__15.html',
-    source: BIBEL_SOURCE,
+    id: 'basics-offizial-antragsdelikt',
+    officialTitle: 'Offizialdelikt und Antragsdelikt',
+    eyebrow: 'Verfolgung',
+    summary:
+      'Offizialdelikte verfolgt der Staat von Amts wegen; Antragsdelikte grundsätzlich nur auf Antrag des Opfers.',
+    officialTextRefs: ['§ 77 StGB', '§ 77b StGB', '§ 230 StGB', '§ 123 Abs. 2 StGB', '§ 303c StGB'],
+    sections: [
+      {
+        heading: 'Offizialdelikt',
+        bullets: [
+          'Die Behörden verfolgen die Tat automatisch von Amts wegen, sobald sie davon erfahren.',
+          'Es braucht keinen Antrag des Opfers; eine Anzeige oder das Bekanntwerden reicht aus.',
+          'Beispiele: Mord und Totschlag, Raub, Diebstahl (§ 242 StGB), gefährliche Körperverletzung.',
+        ],
+      },
+      {
+        heading: 'Antragsdelikt',
+        bullets: [
+          'Die Tat wird grundsätzlich nur auf ausdrücklichen Strafantrag des Opfers verfolgt.',
+          'Die Antragsfrist beträgt drei Monate ab Kenntnis von Tat und Täter (§ 77b StGB).',
+        ],
+      },
+      {
+        heading: 'Absolutes und relatives Antragsdelikt',
+        bullets: [
+          'Absolutes Antragsdelikt: Ohne Antrag gibt es niemals eine Strafverfolgung (z. B. Beleidigung, Hausfriedensbruch).',
+          'Relatives Antragsdelikt: Ein Antrag ist nötig, die Staatsanwaltschaft ermittelt aber auch ohne Antrag, wenn ein besonderes öffentliches Interesse besteht (z. B. einfache Körperverletzung).',
+        ],
+      },
+      {
+        heading: 'Einordnung ist nicht automatisch',
+        paragraphs: [
+          'Nicht jede Straftat ist ein absolutes oder relatives Antragsdelikt. Ob ein Antragserfordernis besteht, ergibt sich aus der jeweiligen Norm.',
+        ],
+      },
+    ],
+    merksatz:
+      'Offizialdelikt = von Amts wegen. Antragsdelikt = nur auf Antrag – absolut ohne Ausnahme, relativ bei besonderem öffentlichem Interesse.',
+    examples: [
+      'Beleidigung (§ 185 StGB) und Hausfriedensbruch (§ 123 StGB) sind absolute Antragsdelikte.',
+      'Einfache Körperverletzung (§ 223 StGB) ist ein relatives Antragsdelikt (§ 230 StGB).',
+    ],
+    examRelevant:
+      'Die Verfolgungsart erklärt, warum ein Sicherheitsmitarbeiter Vorfälle dokumentiert und ggf. Strafantrag anregt.',
+    sourceUrl: 'https://www.gesetze-im-internet.de/stgb/__77.html',
+    source: GII_SOURCE,
   },
   {
-    id: 'stgb-22',
+    id: 'basics-versuch',
     paragraph: '§ 22',
-    officialTitle: 'Begriffsbestimmung (Versuch)',
+    officialTitle: 'Der Versuch',
+    eyebrow: 'Allgemeiner Teil',
+    summary:
+      'Ein Versuch liegt vor, wenn der Täter nach seiner Vorstellung unmittelbar zur Tatbestandsverwirklichung ansetzt, die Tat aber nicht vollendet wird.',
     officialText:
       'Eine Straftat versucht, wer nach seiner Vorstellung von der Tat zur Verwirklichung des Tatbestandes unmittelbar ansetzt.',
-    explanation: 'Der Versuch beginnt mit dem unmittelbaren Ansetzen zur Tatbestandsverwirklichung.',
+    officialTextRefs: ['§ 22 StGB', '§ 23 StGB'],
+    sections: [
+      {
+        heading: 'Voraussetzungen des Versuchs',
+        bullets: [
+          'Die Tat ist nicht vollendet.',
+          'Es liegt ein Tatentschluss vor (Vorsatz).',
+          'Der Täter hat unmittelbar zur Tatbestandsverwirklichung angesetzt.',
+        ],
+      },
+      {
+        heading: 'Fahrlässige Versuche gibt es nicht',
+        paragraphs: [
+          'Der Versuch setzt Vorsatz voraus. Einen fahrlässigen Versuch kennt das Strafrecht nicht.',
+        ],
+      },
+      {
+        heading: 'Strafbarkeit des Versuchs (§ 23 StGB)',
+        bullets: [
+          'Der Versuch eines Verbrechens ist immer strafbar.',
+          'Der Versuch eines Vergehens ist nur strafbar, wenn das Gesetz es ausdrücklich bestimmt.',
+        ],
+      },
+    ],
+    merksatz: 'Versuch = Tatentschluss + unmittelbares Ansetzen, aber keine Vollendung.',
+    examples: [
+      'Der Täter zielt und drückt ab, trifft aber nicht → versuchte Tat.',
+      'Der Täter überlegt nur, ohne zu handeln → noch kein Versuch.',
+    ],
+    examRelevant:
+      'Der Versuch erklärt, warum eine Tat schon vor Vollendung strafbar sein kann und warum die Abgrenzung Verbrechen/Vergehen wichtig ist.',
     sourceUrl: 'https://www.gesetze-im-internet.de/stgb/__22.html',
     source: BIBEL_SOURCE,
   },
   {
-    id: 'stgb-23',
-    paragraph: '§ 23',
-    officialTitle: 'Strafbarkeit des Versuchs',
+    id: 'basics-ruecktritt',
+    paragraph: '§ 24',
+    officialTitle: 'Rücktritt vom Versuch',
+    eyebrow: 'Allgemeiner Teil',
+    summary:
+      'Wer die weitere Ausführung freiwillig aufgibt oder die Vollendung verhindert, wird wegen des Versuchs nicht bestraft.',
     officialText:
-      '(1) Der Versuch eines Verbrechens ist stets strafbar, der Versuch eines Vergehens nur dann, wenn das Gesetz es ausdrücklich bestimmt.',
-    explanation:
-      'Ob ein Versuch strafbar ist, folgt aus der Einordnung nach §12 StGB und einer etwaigen ausdrücklichen Anordnung im jeweiligen Tatbestand.',
-    sourceUrl: 'https://www.gesetze-im-internet.de/stgb/__23.html',
-    source: BIBEL_SOURCE,
+      '(1) Wegen Versuchs wird nicht bestraft, wer freiwillig die weitere Ausführung der Tat aufgibt oder deren Vollendung verhindert. Wird die Tat ohne Zutun des Zurücktretenden nicht vollendet, so wird er straflos, wenn er sich freiwillig und ernsthaft bemüht, die Vollendung zu verhindern.',
+    sections: [
+      {
+        heading: 'Zwei Wege zum Rücktritt',
+        bullets: [
+          'Freiwillige Aufgabe der weiteren Ausführung.',
+          'Freiwillige Verhinderung der Vollendung.',
+        ],
+      },
+      {
+        heading: 'Freiwilligkeit',
+        paragraphs: [
+          'Der Täter muss aus eigenem Antrieb zurücktreten. Geschieht die Nichtvollendung ohne sein Zutun, muss er sich freiwillig und ernsthaft um die Verhinderung bemühen.',
+        ],
+      },
+    ],
+    merksatz:
+      'Die „goldene Brücke“ des Gesetzgebers: freiwilliger Rücktritt führt zur Straflosigkeit des Versuchs.',
+    examples: [
+      'Der Täter bricht den Einbruch aus eigenem Entschluss ab → Rücktritt.',
+      'Der Täter wird vom Eigentümer überrascht und flieht → kein freiwilliger Rücktritt.',
+    ],
+    examRelevant:
+      'Der Rücktritt zeigt, dass Straflosigkeit nicht nur durch Rechtfertigung, sondern auch durch Aufgabe der Tat eintreten kann.',
+    sourceUrl: 'https://www.gesetze-im-internet.de/stgb/__24.html',
+    source: GII_SOURCE,
+  },
+  {
+    id: 'basics-vorsatz',
+    officialTitle: 'Vorsatz – Wissen und Wollen',
+    eyebrow: 'Subjektiver Tatbestand',
+    summary:
+      'Vorsätzlich handelt, wer die Tatbestandsverwirklichung mit Wissen und Wollen erkennt und ausführt.',
+    officialTextRefs: ['§ 15 StGB'],
+    sections: [
+      {
+        heading: 'Wissen und Wollen',
+        paragraphs: [
+          'Vorsatz verlangt, dass der Täter die Tatbestandsverwirklichung erkennt (Wissen) und sie will (Wollen).',
+        ],
+      },
+      {
+        heading: 'Formen des Vorsatzes',
+        bullets: [
+          'Absicht: Es kommt dem Täter gerade auf den Erfolg an; das Ziel steht im Vordergrund.',
+          'Wissentlichkeit: Der Täter weiß sicher, dass sein Handeln den Erfolg herbeiführt, auch wenn es nicht sein Hauptziel ist.',
+          'Eventualvorsatz: Der Täter hält den Erfolg ernstlich für möglich und billigt ihn bzw. lässt ihn gleichgültig geschehen.',
+        ],
+      },
+    ],
+    merksatz: 'Vorsatz = Wissen und Wollen der Tatbestandsverwirklichung.',
+    examples: [
+      'Jemand wirft absichtlich einen Stein in ein fremdes Fenster, um es zu zerstören → Absicht.',
+      'Der Täter wirft einen Stein in eine Menschenmenge und nimmt Treffer billigend in Kauf → Eventualvorsatz.',
+    ],
+    examRelevant:
+      'Vorsatz ist der Regelfall des strafbaren Handelns; die Abgrenzung zum Eventualvorsatz ist prüfungsrelevant.',
+    sourceUrl: 'https://www.gesetze-im-internet.de/stgb/__15.html',
+    source: GII_SOURCE,
+  },
+  {
+    id: 'basics-fahrlaessigkeit',
+    officialTitle: 'Fahrlässigkeit – Sorgfaltspflichtverletzung',
+    eyebrow: 'Subjektiver Tatbestand',
+    summary:
+      'Fahrlässig handelt, wer die im Verkehr erforderliche Sorgfalt außer Acht lässt und den Erfolg hätte erkennen und vermeiden können.',
+    officialTextRefs: ['§ 15 StGB', '§ 229 StGB'],
+    sections: [
+      {
+        heading: 'Sorgfaltspflichtverletzung',
+        paragraphs: [
+          'Fahrlässigkeit bedeutet, die erforderliche Sorgfalt außer Acht zu lassen. Strafrechtlich kommt es auf das Erkennenmüssen und Vermeidenkönnen des Erfolgs an.',
+        ],
+      },
+      {
+        heading: 'Bewusste und unbewusste Fahrlässigkeit',
+        bullets: [
+          'Bewusste Fahrlässigkeit: Der Täter erkennt die Gefahr, vertraut aber darauf, dass nichts passieren wird.',
+          'Unbewusste Fahrlässigkeit: Der Täter erkennt die Gefahr nicht, obwohl er sie hätte erkennen müssen.',
+        ],
+      },
+      {
+        heading: 'Zivilrecht und Strafrecht trennen',
+        paragraphs: [
+          'Die zivilrechtliche Fahrlässigkeit nach § 276 BGB und die strafrechtliche Fahrlässigkeitsprüfung sind nicht dasselbe. Für die Strafbarkeit muss das jeweilige Delikt die Fahrlässigkeit ausdrücklich unter Strafe stellen (§ 15 StGB).',
+        ],
+      },
+    ],
+    merksatz: 'Fahrlässigkeit ist nur strafbar, wenn das Gesetz sie ausdrücklich anordnet (§ 15 StGB).',
+    examples: [
+      'Ein schwerer Blumentopf wird ungesichert auf die Balkonkante gestellt; ein Windstoß lässt ihn herabfallen und verletzt einen Passanten → fahrlässige Körperverletzung (§ 229 StGB).',
+    ],
+    examRelevant:
+      'Fahrlässigkeit ist im Sicherheitsdienst zentral, weil Sorgfaltspflichtverletzungen (z. B. bei Aufsichtspflichten) strafbar sein können.',
+    sourceUrl: 'https://www.gesetze-im-internet.de/stgb/__15.html',
+    source: GII_SOURCE,
+  },
+  {
+    id: 'basics-unterlassen',
+    paragraph: '§ 13',
+    officialTitle: 'Begehen durch Unterlassen',
+    eyebrow: 'Allgemeiner Teil',
+    summary:
+      'Unterlassen ist strafbar, wenn der Täter rechtlich dafür einzustehen hat, dass der Erfolg nicht eintritt.',
+    officialText:
+      '(1) Wer es unterläßt, einen Erfolg abzuwenden, der zum Tatbestand eines Strafgesetzes gehört, ist nach diesem Gesetz nur dann strafbar, wenn er rechtlich dafür einzustehen hat, daß der Erfolg nicht eintritt, und wenn das Unterlassen der Verwirklichung des gesetzlichen Tatbestandes durch ein Tun entspricht.',
+    sections: [
+      {
+        heading: 'Echtes Unterlassungsdelikt',
+        bullets: [
+          'Das Gesetz stellt das Nichtstun selbst unter Strafe.',
+          'Eine besondere Garantenstellung ist nicht erforderlich.',
+          'Beispiel: § 323c StGB – Unterlassene Hilfeleistung.',
+        ],
+      },
+      {
+        heading: 'Unechtes Unterlassungsdelikt (§ 13 StGB)',
+        bullets: [
+          'Ein normales Erfolgsdelikt wird durch Nichtstun verwirklicht.',
+          'Erforderlich ist eine Garantenstellung.',
+          'Beispiel: Totschlag durch Unterlassen (§§ 212, 13 StGB), wenn eine Schutzpflicht besteht.',
+        ],
+      },
+    ],
+    merksatz:
+      'Echtes Unterlassen = das Nichthelfen selbst ist strafbar. Unechtes Unterlassen = Erfolgsdelikt durch Nichtstun bei Garantenstellung.',
+    examples: [
+      'Wer bei einem Unglücksfall nicht hilft, obwohl Hilfe zumutbar ist → § 323c StGB.',
+      'Eine Mutter lässt ihr Kind verhungern → Totschlag durch Unterlassen (§§ 212, 13 StGB).',
+    ],
+    examRelevant:
+      'Für Sicherheitsmitarbeiter ist die Abgrenzung zwischen § 323c StGB (Jedermannspflicht) und § 13 StGB (Garantenpflicht) prüfungsrelevant.',
+    sourceUrl: 'https://www.gesetze-im-internet.de/stgb/__13.html',
+    source: GII_SOURCE,
+  },
+  {
+    id: 'basics-garantenstellung',
+    officialTitle: 'Garantenstellung',
+    eyebrow: 'Unterlassungsdelikte',
+    summary:
+      'Eine Garantenstellung verpflichtet rechtlich dazu, einen bestimmten Erfolg zu verhindern.',
+    officialTextRefs: ['§ 13 StGB'],
+    sections: [
+      {
+        heading: 'Was ist eine Garantenstellung?',
+        paragraphs: [
+          'Eine Garantenstellung bedeutet, dass eine Person rechtlich verpflichtet ist, einen bestimmten Schaden oder Erfolg zu verhindern. Garanten müssen handeln, wenn sie rechtlich dafür verantwortlich sind, einen bestimmten Erfolg abzuwenden.',
+        ],
+      },
+      {
+        heading: 'Beschützergarant und Überwachergarant',
+        bullets: [
+          'Beschützergarant: muss ein bestimmtes Rechtsgut oder eine bestimmte Person vor Gefahren schützen (z. B. Eltern für ihre Kinder).',
+          'Überwachergarant: muss eine Gefahrenquelle kontrollieren, damit von ihr keine Schäden ausgehen (z. B. Tierhalter eines gefährlichen Tieres; Ingerenz bei selbst geschaffener Gefahr).',
+        ],
+      },
+      {
+        heading: 'Wie entsteht eine Garantenstellung?',
+        bullets: [
+          'Durch Gesetz oder familiäre Beziehung (z. B. Eltern und Kinder).',
+          'Durch Vertrag oder freiwillige Übernahme einer besonderen Schutzpflicht (z. B. Babysitter, Bademeister, Pflegepersonal).',
+          'Nicht jeder Vertrag macht automatisch zum Garanten. Entscheidend ist, ob tatsächlich eine besondere rechtliche Schutz- oder Überwachungspflicht übernommen wurde.',
+        ],
+      },
+      {
+        heading: 'Bedeutung für Sicherheitsmitarbeiter',
+        paragraphs: [
+          'Ein Sicherheitsmitarbeiter wird nicht allein deshalb Garant, weil er Sicherheitsmitarbeiter ist. Entscheidend ist, welche Aufgaben und Pflichten er übernommen hat.',
+          'Aus der konkret übernommenen Aufgabe können sich besondere Überwachungs- und Schutzpflichten ergeben. Unterlässt er eine gebotene Handlung, kann neben anderen Voraussetzungen eine Strafbarkeit durch Unterlassen (§ 13 StGB) in Betracht kommen.',
+        ],
+      },
+    ],
+    merksatz:
+      'Ein Sicherheitsmitarbeiter wird nicht allein deshalb Garant, weil er Sicherheitsmitarbeiter ist. Die konkrete Garantenstellung hängt von den übernommenen Pflichten ab.',
+    examples: [
+      'Ein Mitarbeiter ist in der Dienstanweisung für Brandmeldezentrale, Brandschutz und Evakuierung zuständig. Durch diese übernommenen Schutz- und Überwachungspflichten hat er für diesen Bereich eine Garantenstellung.',
+      'Unterlässt er eine vorgeschriebene Evakuierungsmaßnahme und wird dadurch eine Person verletzt, kommt eine Körperverletzung durch Unterlassen in Betracht.',
+    ],
+    examRelevant:
+      'Kernwissen: Garantenstellung folgt aus übernommenen Pflichten, nicht aus der Berufsbezeichnung. Abgrenzung zu § 323c StGB.',
+    sourceUrl: 'https://www.gesetze-im-internet.de/stgb/__13.html',
+    source: GII_SOURCE,
   },
 ];
 
@@ -135,6 +466,12 @@ export const CRIMINAL_OFFENSES: CriminalOffense[] = [
     paragraph: '§ 132',
     officialTitle: 'Amtsanmaßung',
     category: 'AMTS_BEFUGNISDELIKTE',
+    family: 'AMTSANMASSUNG',
+    familyRelation: 'EIGENSTAENDIG',
+    relevanceLevel: 'RELATED_34A',
+    relevanceReason: 'Sicherheitsmitarbeiter dürfen keine Polizeibefugnisse ausüben; Amtsanmaßung grenzt zulässiges Auftreten von unzulässiger Amtshandlung ab.',
+    examRelevance: 'Wichtig für die Abgrenzung „Sicherheitsdienst ≠ Polizei“: Wer sich unbefugt als Amtsträger geriert, macht sich strafbar.',
+    relatedOffenses: ['stgb-132a'],
     protectedInterest: 'Staatliche Hoheitsordnung',
     objectiveElements: [
       'unbefugtes Sich-Befassen mit der Ausübung eines öffentlichen Amtes',
@@ -171,6 +508,12 @@ export const CRIMINAL_OFFENSES: CriminalOffense[] = [
     paragraph: '§ 132a',
     officialTitle: 'Mißbrauch von Titeln, Berufsbezeichnungen und Abzeichen',
     category: 'AMTS_BEFUGNISDELIKTE',
+    family: 'AMTSANMASSUNG',
+    familyRelation: 'EIGENSTAENDIG',
+    relevanceLevel: 'RELATED_34A',
+    relevanceReason: 'Missbrauch von Titeln und Abzeichen betrifft das Auftreten von Sicherheitskräften mit Dienstkleidung, Ausweisen und Abzeichen.',
+    examRelevance: 'Prüfungsrelevant bei der Frage, welche Bezeichnungen und Kennzeichen ein Sicherheitsmitarbeiter führen darf.',
+    relatedOffenses: ['stgb-132'],
     protectedInterest: 'Schutz bestimmter Amts-, Dienst- und Berufsbezeichnungen sowie Abzeichen',
     objectiveElements: [
       'unbefugtes Führen inländischer oder ausländischer Amts- oder Dienstbezeichnungen, akademischer Grade, Titel oder öffentlicher Würden',
@@ -207,7 +550,13 @@ export const CRIMINAL_OFFENSES: CriminalOffense[] = [
     law: 'StGB',
     paragraph: '§ 123',
     officialTitle: 'Hausfriedensbruch',
-    category: 'STRAFTATEN_GEGEN_PERSON',
+    category: 'HAUSRECHT',
+    family: 'HAUSFRIEDENSBRUCH',
+    familyRelation: 'GRUNDDELIKT',
+    relevanceLevel: 'CORE_34A',
+    relevanceReason: 'Hausfriedensbruch ist der zentrale Straftatbestand zum Hausrecht und damit Kernstoff für den Sicherheitsdienst.',
+    examRelevance: 'Kernwissen: Eindringen oder Verweilen trotz Aufforderung. Der Straftatbestand ist vom zivilrechtlichen Hausrecht und Besitzschutz zu trennen.',
+    relatedOffenses: [],
     protectedInterest: 'Hausrecht / befriedeter Besitz',
     objectiveElements: [
       'geschützter Bereich: Wohnung, Geschäftsräume, befriedetes Besitztum oder abgeschlossene Räume, die zum öffentlichen Dienst oder Verkehr bestimmt sind',
@@ -247,6 +596,12 @@ export const CRIMINAL_OFFENSES: CriminalOffense[] = [
     paragraph: '§ 239',
     officialTitle: 'Freiheitsberaubung',
     category: 'STRAFTATEN_GEGEN_PERSON',
+    family: 'FREIHEIT',
+    familyRelation: 'GRUNDDELIKT',
+    relevanceLevel: 'CORE_34A',
+    relevanceReason: 'Freiheitsberaubung ist Abgrenzungsdelikt zu jeder Form des Festhaltens und für Sicherheitskräfte besonders haftungsträchtig.',
+    examRelevance: 'Prüfungsrelevant: Festhalten ist nur mit Rechtsgrundlage zulässig; bloßer Verdacht genügt nicht.',
+    relatedOffenses: ['stgb-240', 'stgb-241'],
     protectedInterest: 'Fortbewegungsfreiheit / persönliche Freiheit',
     objectiveElements: [
       'Einsperren eines Menschen (räumliche Abgeschlossenheit)',
@@ -279,6 +634,12 @@ export const CRIMINAL_OFFENSES: CriminalOffense[] = [
     paragraph: '§ 240',
     officialTitle: 'Nötigung',
     category: 'STRAFTATEN_GEGEN_PERSON',
+    family: 'FREIHEIT',
+    familyRelation: 'EIGENSTAENDIG',
+    relevanceLevel: 'CORE_34A',
+    relevanceReason: 'Nötigung betrifft die Grenze zulässigen Einwirkens auf Personen und ist für Sicherheitskräfte im Umgang mit Gästen und Besuchern wichtig.',
+    examRelevance: 'Kernwissen: Nötigung durch Gewalt oder Drohung mit einem empfindlichen Übel; Abgrenzung zu zulässigem Hausrechtsverweis.',
+    relatedOffenses: ['stgb-239', 'stgb-241'],
     protectedInterest: 'Freiheit der Willensentschließung und Willensbetätigung',
     objectiveElements: [
       'Nötigungsopfer: ein Mensch',
@@ -314,6 +675,12 @@ export const CRIMINAL_OFFENSES: CriminalOffense[] = [
     paragraph: '§ 241',
     officialTitle: 'Bedrohung',
     category: 'STRAFTATEN_GEGEN_PERSON',
+    family: 'FREIHEIT',
+    familyRelation: 'EIGENSTAENDIG',
+    relevanceLevel: 'CORE_34A',
+    relevanceReason: 'Bedrohung betrifft Drohungen im Sicherheitsumfeld und wird in der Prüfung mit Nötigung abgegrenzt.',
+    examRelevance: 'Prüfungsrelevant: Bedrohung ist das In-Aussicht-Stellen einer Straftat; Abgrenzung zur Nötigung.',
+    relatedOffenses: ['stgb-240', 'stgb-239'],
     protectedInterest: 'Rechtsfrieden / persönliche Sicherheit',
     objectiveElements: [
       'Bedrohung eines Menschen',
@@ -354,6 +721,12 @@ export const CRIMINAL_OFFENSES: CriminalOffense[] = [
     paragraph: '§ 185',
     officialTitle: 'Beleidigung',
     category: 'EHRLICHKEITSDELIKTE',
+    family: 'EHRE',
+    familyRelation: 'GRUNDDELIKT',
+    relevanceLevel: 'CORE_34A',
+    relevanceReason: 'Beleidigung ist das häufigste Ehrdelikt im Sicherheitsdienst und ein Kernfall des §34a-Stoffs.',
+    examRelevance: 'Kernwissen: Beleidigung ist absolutes Antragsdelikt; die drei Ehrdelikte müssen unterschieden werden.',
+    relatedOffenses: ['stgb-186', 'stgb-187'],
     protectedInterest: 'Ehre',
     objectiveElements: [
       'konkrete Äußerung oder Handlung',
@@ -393,6 +766,12 @@ export const CRIMINAL_OFFENSES: CriminalOffense[] = [
     paragraph: '§ 186',
     officialTitle: 'Üble Nachrede',
     category: 'EHRLICHKEITSDELIKTE',
+    family: 'EHRE',
+    familyRelation: 'EIGENSTAENDIG',
+    relevanceLevel: 'RELATED_34A',
+    relevanceReason: 'Üble Nachrede grenzt sich von der Beleidigung durch Tatsachenbezug und von der Verleumdung durch die Wahrheitsfrage ab.',
+    examRelevance: 'Prüfungsrelevant: Abgrenzung Beleidigung – üble Nachrede – Verleumdung.',
+    relatedOffenses: ['stgb-185', 'stgb-187'],
     protectedInterest: 'Ehre',
     objectiveElements: [
       'Behaupten oder Verbreiten einer Tatsache in Beziehung auf einen anderen',
@@ -430,6 +809,12 @@ export const CRIMINAL_OFFENSES: CriminalOffense[] = [
     paragraph: '§ 187',
     officialTitle: 'Verleumdung',
     category: 'EHRLICHKEITSDELIKTE',
+    family: 'EHRE',
+    familyRelation: 'EIGENSTAENDIG',
+    relevanceLevel: 'RELATED_34A',
+    relevanceReason: 'Verleumdung ist die schwerste Form der Ehrverletzung, weil bewusst unwahre Tatsachen behauptet werden.',
+    examRelevance: 'Prüfungsrelevant: Abgrenzung zur üblen Nachrede über die Kenntnis der Unwahrheit.',
+    relatedOffenses: ['stgb-185', 'stgb-186'],
     protectedInterest: 'Ehre',
     objectiveElements: [
       'Behaupten oder Verbreiten einer unwahren Tatsache in Beziehung auf einen anderen',
@@ -472,6 +857,12 @@ export const CRIMINAL_OFFENSES: CriminalOffense[] = [
     paragraph: '§ 223',
     officialTitle: 'Körperverletzung',
     category: 'KOERPERVERLETZUNG',
+    family: 'KOERPERVERLETZUNG',
+    familyRelation: 'GRUNDDELIKT',
+    relevanceLevel: 'CORE_34A',
+    relevanceReason: 'Einfache Körperverletzung ist Grunddelikt der Körperverletzungsdelikte und Grundlage jeder weiteren Qualifikation.',
+    examRelevance: 'Kernwissen: Grundtatbestand und relatives Antragsdelikt nach §230 StGB; Ausgangspunkt der Deliktsfamilie.',
+    relatedOffenses: ['stgb-224', 'stgb-226', 'stgb-227', 'stgb-229'],
     protectedInterest: 'Körperliche Unversehrtheit und Gesundheit',
     objectiveElements: [
       'andere Person',
@@ -520,6 +911,12 @@ export const CRIMINAL_OFFENSES: CriminalOffense[] = [
     paragraph: '§ 224',
     officialTitle: 'Gefährliche Körperverletzung',
     category: 'KOERPERVERLETZUNG',
+    family: 'KOERPERVERLETZUNG',
+    familyRelation: 'QUALIFIKATION',
+    relevanceLevel: 'CORE_34A',
+    relevanceReason: 'Gefährliche Körperverletzung ist eine eigenständige Qualifikation und für Sicherheitskräfte wegen Waffen- und Gruppenbezug wichtig.',
+    examRelevance: 'Kernwissen: Qualifikation durch Begehungsweise (z. B. Waffe, hinterlistiger Überfall, gemeinschaftlich); Verbrechen.',
+    relatedOffenses: ['stgb-223', 'stgb-226', 'stgb-227'],
     protectedInterest: 'Körperliche Unversehrtheit und Gesundheit',
     objectiveElements: [
       'eine Körperverletzung nach §223 StGB',
@@ -559,6 +956,12 @@ export const CRIMINAL_OFFENSES: CriminalOffense[] = [
     paragraph: '§ 226',
     officialTitle: 'Schwere Körperverletzung',
     category: 'KOERPERVERLETZUNG',
+    family: 'KOERPERVERLETZUNG',
+    familyRelation: 'ERFOLGSQUALIFIKATION',
+    relevanceLevel: 'RELATED_34A',
+    relevanceReason: 'Schwere Körperverletzung ist Erfolgsqualifikation und rundet die Systematik der Körperverletzungsdelikte ab.',
+    examRelevance: 'Prüfungsrelevant für die Einordnung schwerer Folgen (z. B. Verlust des Sehvermögens).',
+    relatedOffenses: ['stgb-223', 'stgb-224', 'stgb-227'],
     protectedInterest: 'Körperliche Unversehrtheit und Gesundheit',
     objectiveElements: [
       'eine Körperverletzung nach §§223 bis 225 StGB',
@@ -599,6 +1002,12 @@ export const CRIMINAL_OFFENSES: CriminalOffense[] = [
     paragraph: '§ 227',
     officialTitle: 'Körperverletzung mit Todesfolge',
     category: 'KOERPERVERLETZUNG',
+    family: 'KOERPERVERLETZUNG',
+    familyRelation: 'ERFOLGSQUALIFIKATION',
+    relevanceLevel: 'RELATED_34A',
+    relevanceReason: 'Körperverletzung mit Todesfolge ist Erfolgsqualifikation und wichtig für die Systematik der Körperverletzungsdelikte.',
+    examRelevance: 'Prüfungsrelevant: Erfolgsqualifikation – der Versuch der Todesfolge ist nicht strafbar, nur der Versuch der Grundtat.',
+    relatedOffenses: ['stgb-226', 'stgb-223'],
     protectedInterest: 'Leben und körperliche Unversehrtheit',
     objectiveElements: [
       'eine Körperverletzung nach §§223 bis 226 StGB',
@@ -639,6 +1048,12 @@ export const CRIMINAL_OFFENSES: CriminalOffense[] = [
     paragraph: '§ 229',
     officialTitle: 'Fahrlässige Körperverletzung',
     category: 'KOERPERVERLETZUNG',
+    family: 'KOERPERVERLETZUNG',
+    familyRelation: 'EIGENSTAENDIG',
+    relevanceLevel: 'CORE_34A',
+    relevanceReason: 'Fahrlässige Körperverletzung ist eigenständige Norm und für Sicherheitskräfte im Zusammenhang mit Sorgfaltspflichten wichtig.',
+    examRelevance: 'Kernwissen: Eigenständige fahrlässige Strafnorm (§15 StGB); Abgrenzung zu vorsätzlicher Körperverletzung.',
+    relatedOffenses: ['stgb-223', 'stgb-224'],
     protectedInterest: 'Körperliche Unversehrtheit und Gesundheit',
     objectiveElements: [
       'Körperverletzung einer anderen Person (wie §223 StGB)',
@@ -681,6 +1096,12 @@ export const CRIMINAL_OFFENSES: CriminalOffense[] = [
     paragraph: '§ 231',
     officialTitle: 'Beteiligung an einer Schlägerei',
     category: 'KOERPERVERLETZUNG',
+    family: 'KOERPERVERLETZUNG',
+    familyRelation: 'ERFOLGSQUALIFIKATION',
+    relevanceLevel: 'CORE_34A',
+    relevanceReason: 'Beteiligung an einer Schlägerei ist typisches Sicherheitsdienst-Delikt bei Auseinandersetzungen mit mehreren Personen.',
+    examRelevance: 'Kernwissen: Strafbarkeit schon wegen Beteiligung, wenn Tod oder schwere Körperverletzung verursacht wurde.',
+    relatedOffenses: ['stgb-223', 'stgb-224', 'stgb-226'],
     protectedInterest: 'Leben und körperliche Unversehrtheit',
     objectiveElements: [
       'Beteiligung an einer Schlägerei oder an einem von mehreren verübten Angriff',
@@ -718,6 +1139,12 @@ export const CRIMINAL_OFFENSES: CriminalOffense[] = [
     paragraph: '§ 242',
     officialTitle: 'Diebstahl',
     category: 'DIEBSTAHL_UNTERSCHLAGUNG',
+    family: 'DIEBSTAHL',
+    familyRelation: 'GRUNDDELIKT',
+    relevanceLevel: 'CORE_34A',
+    relevanceReason: 'Diebstahl ist der zentrale Vermögensstraftatbestand im Sicherheitsdienst (z. B. Ladendiebstahl).',
+    examRelevance: 'Kernwissen: Grunddelikt der Diebstahlsdelikte. Aus bloßem Diebstahlsverdacht folgt keine Festhaltebefugnis.',
+    relatedOffenses: ['stgb-243', 'stgb-244', 'stgb-244a', 'stgb-246', 'stgb-248a'],
     protectedInterest: 'Eigentum und Gewahrsam',
     objectiveElements: [
       'fremde Sache (nicht im Alleineigentum des Täters)',
@@ -754,6 +1181,12 @@ export const CRIMINAL_OFFENSES: CriminalOffense[] = [
     paragraph: '§ 243',
     officialTitle: 'Besonders schwerer Fall des Diebstahls',
     category: 'DIEBSTAHL_UNTERSCHLAGUNG',
+    family: 'DIEBSTAHL',
+    familyRelation: 'REGELBEISPIEL',
+    relevanceLevel: 'CORE_34A',
+    relevanceReason: 'Der besonders schwere Fall ist Regelbeispiel des Diebstahls und wird in der Prüfung von §244 abgegrenzt.',
+    examRelevance: 'Kernwissen: Kein eigener Grundtatbestand, sondern Regelbeispielskatalog; §12 Abs. 3 StGB bleibt für die Einordnung außer Betracht.',
+    relatedOffenses: ['stgb-242', 'stgb-244', 'stgb-244a'],
     protectedInterest: 'Eigentum und Gewahrsam',
     objectiveElements: [
       'ein Diebstahl nach §242 StGB',
@@ -785,6 +1218,12 @@ export const CRIMINAL_OFFENSES: CriminalOffense[] = [
     paragraph: '§ 244',
     officialTitle: 'Diebstahl mit Waffen; Bandendiebstahl; Wohnungseinbruchdiebstahl',
     category: 'DIEBSTAHL_UNTERSCHLAGUNG',
+    family: 'DIEBSTAHL',
+    familyRelation: 'QUALIFIKATION',
+    relevanceLevel: 'CORE_34A',
+    relevanceReason: 'Diebstahl mit Waffen, Bandendiebstahl und Wohnungseinbruchdiebstahl sind eigenständige Qualifikationen mit erhöhter Gefahr.',
+    examRelevance: 'Kernwissen: Eigenständige Qualifikation (nicht „dasselbe mit mehr Gewalt“). Die Waffe muss nicht eingesetzt, sondern nur bei sich geführt werden.',
+    relatedOffenses: ['stgb-242', 'stgb-243', 'stgb-244a'],
     protectedInterest: 'Eigentum und Gewahrsam',
     objectiveElements: [
       'ein Diebstahl, bei dem der Täter oder ein Beteiligter eine Waffe oder ein anderes gefährliches Werkzeug bei sich führt',
@@ -813,11 +1252,63 @@ export const CRIMINAL_OFFENSES: CriminalOffense[] = [
     source: GII_SOURCE,
   },
   {
+    id: 'stgb-244a',
+    law: 'StGB',
+    paragraph: '§ 244a',
+    officialTitle: 'Schwerer Bandendiebstahl',
+    category: 'DIEBSTAHL_UNTERSCHLAGUNG',
+    family: 'DIEBSTAHL',
+    familyRelation: 'QUALIFIKATION',
+    relevanceLevel: 'RELATED_34A',
+    relevanceReason:
+      'Schwerer Bandendiebstahl kombiniert bandenmäßige Begehung mit Regelbeispielen bzw. Qualifikationen und ist eine eigenständige Qualifikation.',
+    examRelevance:
+      'Prüfungsrelevant für die vollständige Systematik der Diebstahlsdelikte. Die Regelbeispiele des §243 Abs. 1 Satz 2 StGB werden hier zu echten Tatbestandsmerkmalen.',
+    relatedOffenses: ['stgb-244', 'stgb-243', 'stgb-242'],
+    protectedInterest: 'Eigentum und Gewahrsam',
+    objectiveElements: [
+      'ein Diebstahl nach §242 StGB',
+      'unter den in §243 Abs. 1 Satz 2 StGB genannten Voraussetzungen oder in den Fällen des §244 Abs. 1 Nr. 1 oder 3 StGB',
+      'als Mitglied einer Bande, die sich zur fortgesetzten Begehung von Raub oder Diebstahl verbunden hat',
+      'unter Mitwirkung eines anderen Bandenmitglieds',
+    ],
+    subjectiveElements: [
+      'Vorsatz; hinsichtlich der Qualifikationsmerkmale (Bandenabrede, Mitwirkung) entsprechender Vorsatz',
+    ],
+    intentRequired: true,
+    negligence: { intentional: true, negligentVariant: false, explanation: NO_NEGLIGENT },
+    minimumPenalty: 'Freiheitsstrafe nicht unter einem Jahr',
+    maximumPenalty:
+      'Freiheitsstrafe bis zu zehn Jahren (minder schwere Fälle: sechs Monate bis fünf Jahre)',
+    classification: 'VERBRECHEN',
+    prosecution: { type: 'OFFIZIALDELIKT', explanation: 'Verfolgung von Amts wegen.' },
+    attemptPunishable: true,
+    attemptExplanation:
+      'Verbrechen nach §12 Abs. 1 StGB; der Versuch ist nach §23 Abs. 1 StGB stets strafbar.',
+    explanation:
+      '§244a StGB ist eine eigenständige Qualifikation: bandenmäßiger Diebstahl, bei dem zusätzlich Regelbeispiele des §243 StGB oder Merkmale des §244 Abs. 1 Nr. 1 oder 3 StGB erfüllt sind. Anders als bei §243 sind diese Merkmale hier echte Tatbestandsmerkmale.',
+    relevance:
+      'Ordnet die schwerste Form des Bandendiebstahls ein und grenzt §243 (Regelbeispiel), §244 (Qualifikation) und §244a (Qualifikation mit Bandenbezug) sauber voneinander ab.',
+    securityNote:
+      'Bei bandenmäßigem Vorgehen besteht erhöhte Gefahr; Eigensicherung und Polizei verständigen stehen im Vordergrund, nicht der eigene Zugriff.',
+    distinctions: ['§244 StGB – Bandendiebstahl', '§243 StGB – Regelbeispiel'],
+    officialText:
+      '(1) Mit Freiheitsstrafe von einem Jahr bis zu zehn Jahren wird bestraft, wer den Diebstahl unter den in § 243 Abs. 1 Satz 2 genannten Voraussetzungen oder in den Fällen des § 244 Abs. 1 Nr. 1 oder 3 als Mitglied einer Bande, die sich zur fortgesetzten Begehung von Raub oder Diebstahl verbunden hat, unter Mitwirkung eines anderen Bandenmitglieds begeht. (2) In minder schweren Fällen ist die Strafe Freiheitsstrafe von sechs Monaten bis zu fünf Jahren.',
+    sourceUrl: 'https://www.gesetze-im-internet.de/stgb/__244a.html',
+    source: GII_SOURCE,
+  },
+  {
     id: 'stgb-246',
     law: 'StGB',
     paragraph: '§ 246',
     officialTitle: 'Unterschlagung',
     category: 'DIEBSTAHL_UNTERSCHLAGUNG',
+    family: 'UNTERSCHLAGUNG',
+    familyRelation: 'EIGENSTAENDIG',
+    relevanceLevel: 'CORE_34A',
+    relevanceReason: 'Unterschlagung grenzt sich vom Diebstahl durch die fehlende Wegnahme ab und ist im Sicherheitsdienst (z. B. Fundsachen) relevant.',
+    examRelevance: 'Kernwissen: Abgrenzung zum Diebstahl – keine Wegnahme, sondern rechtswidrige Zueignung.',
+    relatedOffenses: ['stgb-242', 'stgb-248a'],
     protectedInterest: 'Eigentum',
     objectiveElements: [
       'fremde bewegliche Sache',
@@ -851,6 +1342,12 @@ export const CRIMINAL_OFFENSES: CriminalOffense[] = [
     paragraph: '§ 247',
     officialTitle: 'Haus- und Familiendiebstahl',
     category: 'DIEBSTAHL_UNTERSCHLAGUNG',
+    family: 'DIEBSTAHL',
+    familyRelation: 'EIGENSTAENDIG',
+    relevanceLevel: 'RELATED_34A',
+    relevanceReason: 'Haus- und Familiendiebstahl ist eine Verfahrensbesonderheit und rundet das Verständnis der Diebstahlsdelikte ab.',
+    examRelevance: 'Prüfungsrelevant als Sonderregel der Strafverfolgung, nicht als eigener Grundtatbestand.',
+    relatedOffenses: ['stgb-242', 'stgb-246', 'stgb-248a'],
     protectedInterest: 'Eigentum (Verfolgungsregelung, kein eigener Tatbestand)',
     objectiveElements: [
       'Diebstahl oder Unterschlagung',
@@ -889,6 +1386,12 @@ export const CRIMINAL_OFFENSES: CriminalOffense[] = [
     paragraph: '§ 248a',
     officialTitle: 'Diebstahl und Unterschlagung geringwertiger Sachen',
     category: 'DIEBSTAHL_UNTERSCHLAGUNG',
+    family: 'DIEBSTAHL',
+    familyRelation: 'EIGENSTAENDIG',
+    relevanceLevel: 'RELATED_34A',
+    relevanceReason: 'Geringwertige Sachen betreffen die Alltagspraxis im Sicherheitsdienst (z. B. Ladendiebstahl geringer Werte).',
+    examRelevance: 'Kernwissen: Strafverfolgungsregelung und relatives Antragsdelikt bei geringwertigen Sachen.',
+    relatedOffenses: ['stgb-242', 'stgb-246', 'stgb-247'],
     protectedInterest: 'Eigentum (Verfolgungsregelung, kein eigener Tatbestand)',
     objectiveElements: [
       'Diebstahl (§242 StGB) oder Unterschlagung (§246 StGB)',
@@ -928,6 +1431,12 @@ export const CRIMINAL_OFFENSES: CriminalOffense[] = [
     paragraph: '§ 248b',
     officialTitle: 'Unbefugter Gebrauch eines Fahrzeugs',
     category: 'DIEBSTAHL_UNTERSCHLAGUNG',
+    family: 'DIEBSTAHL',
+    familyRelation: 'EIGENSTAENDIG',
+    relevanceLevel: 'RELATED_34A',
+    relevanceReason: 'Unbefugter Gebrauch eines Fahrzeugs betrifft typische Sicherheitsdienst-Situationen rund um Fahrzeuge.',
+    examRelevance: 'Prüfungsrelevant für die Abgrenzung zu Diebstahl und Unterschlagung bei Fahrzeugen.',
+    relatedOffenses: ['stgb-242', 'stgb-246'],
     protectedInterest: 'Gebrauchsrecht des Berechtigten am Fahrzeug',
     objectiveElements: [
       'Kraftfahrzeug oder Fahrrad',
@@ -968,6 +1477,12 @@ export const CRIMINAL_OFFENSES: CriminalOffense[] = [
     paragraph: '§ 249',
     officialTitle: 'Raub',
     category: 'RAUB_ERPRESSUNG',
+    family: 'RAUB',
+    familyRelation: 'GRUNDDELIKT',
+    relevanceLevel: 'CORE_34A',
+    relevanceReason: 'Raub ist Grunddelikt der Raubdelikte und wegen der Gewaltkomponente für Sicherheitskräfte besonders relevant.',
+    examRelevance: 'Kernwissen: Grunddelikt des Raubs – Wegnahme mit Gewalt gegen eine Person oder Drohung mit gegenwärtiger Gefahr.',
+    relatedOffenses: ['stgb-250', 'stgb-252', 'stgb-253', 'stgb-255'],
     protectedInterest: 'Eigentum, Gewahrsam, persönliche Freiheit und körperliche Integrität',
     objectiveElements: [
       'fremde bewegliche Sache',
@@ -1004,6 +1519,12 @@ export const CRIMINAL_OFFENSES: CriminalOffense[] = [
     paragraph: '§ 250',
     officialTitle: 'Schwerer Raub',
     category: 'RAUB_ERPRESSUNG',
+    family: 'RAUB',
+    familyRelation: 'QUALIFIKATION',
+    relevanceLevel: 'RELATED_34A',
+    relevanceReason: 'Schwerer Raub ist eigenständige Qualifikation und nicht einfach „Raub mit mehr Gewalt“.',
+    examRelevance: 'Prüfungsrelevant für die Strafrahmen und die gesetzlichen Varianten des schweren Raubs.',
+    relatedOffenses: ['stgb-249', 'stgb-252'],
     protectedInterest: 'Eigentum, Gewahrsam, persönliche Freiheit und körperliche Integrität',
     objectiveElements: [
       'ein Raub nach §249 StGB',
@@ -1035,6 +1556,12 @@ export const CRIMINAL_OFFENSES: CriminalOffense[] = [
     paragraph: '§ 252',
     officialTitle: 'Räuberischer Diebstahl',
     category: 'RAUB_ERPRESSUNG',
+    family: 'RAUB',
+    familyRelation: 'QUALIFIKATION',
+    relevanceLevel: 'CORE_34A',
+    relevanceReason: 'Räuberischer Diebstahl ist ein eigenständiger Tatbestand auf Basis des §242 und im Sicherheitsdienst praxisnah.',
+    examRelevance: 'Kernwissen: Abgrenzung zu Raub und Diebstahl; Gewalt oder Drohung beim Betreten auf frischer Tat.',
+    relatedOffenses: ['stgb-242', 'stgb-249', 'stgb-250'],
     protectedInterest: 'Eigentum, Gewahrsam und persönliche/körperliche Integrität',
     objectiveElements: [
       'Täter wird bei einem Diebstahl auf frischer Tat betroffen',
@@ -1071,6 +1598,12 @@ export const CRIMINAL_OFFENSES: CriminalOffense[] = [
     paragraph: '§ 253',
     officialTitle: 'Erpressung',
     category: 'RAUB_ERPRESSUNG',
+    family: 'ERPRESSUNG',
+    familyRelation: 'GRUNDDELIKT',
+    relevanceLevel: 'CORE_34A',
+    relevanceReason: 'Erpressung ist Grunddelikt der Erpressungsdelikte und betrifft die Vermögensnötigung.',
+    examRelevance: 'Kernwissen: Grunddelikt der Erpressung; Abgrenzung zur Nötigung durch den Vermögensbezug.',
+    relatedOffenses: ['stgb-255', 'stgb-249', 'stgb-240'],
     protectedInterest: 'Vermögen sowie Freiheit der Willensentschließung und Willensbetätigung',
     objectiveElements: [
       'Nötigung eines Menschen mit Gewalt oder Drohung mit einem empfindlichen Übel zu einer Handlung, Duldung oder Unterlassung',
@@ -1107,6 +1640,12 @@ export const CRIMINAL_OFFENSES: CriminalOffense[] = [
     paragraph: '§ 255',
     officialTitle: 'Räuberische Erpressung',
     category: 'RAUB_ERPRESSUNG',
+    family: 'ERPRESSUNG',
+    familyRelation: 'QUALIFIKATION',
+    relevanceLevel: 'RELATED_34A',
+    relevanceReason: 'Räuberische Erpressung ist eine eigenständige Qualifikation der Erpressung.',
+    examRelevance: 'Prüfungsrelevant für die Systematik der Raub- und Erpressungsdelikte.',
+    relatedOffenses: ['stgb-253', 'stgb-249'],
     protectedInterest: 'Vermögen sowie persönliche/körperliche Integrität',
     objectiveElements: [
       'eine Erpressung nach §253 StGB',
@@ -1146,6 +1685,12 @@ export const CRIMINAL_OFFENSES: CriminalOffense[] = [
     paragraph: '§ 259',
     officialTitle: 'Hehlerei',
     category: 'VERMOEGENSDELIKTE',
+    family: 'VERMOEGEN',
+    familyRelation: 'EIGENSTAENDIG',
+    relevanceLevel: 'RELATED_34A',
+    relevanceReason: 'Hehlerei betrifft den Umgang mit Diebesgut und ist im Sicherheitsumfeld (z. B. Weiterverkauf) relevant.',
+    examRelevance: 'Prüfungsrelevant für die Abgrenzung von Diebstahl und Begünstigung.',
+    relatedOffenses: ['stgb-242', 'stgb-263'],
     protectedInterest: 'Vermögen (insbesondere das Interesse des Vortatgeschädigten)',
     objectiveElements: [
       'eine Sache, die ein anderer gestohlen oder sonst durch eine gegen fremdes Vermögen gerichtete rechtswidrige Tat erlangt hat',
@@ -1177,6 +1722,12 @@ export const CRIMINAL_OFFENSES: CriminalOffense[] = [
     paragraph: '§ 263',
     officialTitle: 'Betrug',
     category: 'VERMOEGENSDELIKTE',
+    family: 'VERMOEGEN',
+    familyRelation: 'EIGENSTAENDIG',
+    relevanceLevel: 'CORE_34A',
+    relevanceReason: 'Betrug ist ein zentrales Vermögensdelikt und im Sicherheitsdienst (z. B. Trickdiebstahl, Leistungserschleichung) bedeutsam.',
+    examRelevance: 'Kernwissen: Täuschung, Irrtum, Vermögensverfügung, Schaden; Abgrenzung zum Diebstahl.',
+    relatedOffenses: ['stgb-265a', 'stgb-259'],
     protectedInterest: 'Vermögen',
     objectiveElements: [
       'Täuschung durch Vorspiegelung falscher oder Entstellung/Unterdrückung wahrer Tatsachen',
@@ -1214,6 +1765,12 @@ export const CRIMINAL_OFFENSES: CriminalOffense[] = [
     paragraph: '§ 265a',
     officialTitle: 'Erschleichen von Leistungen',
     category: 'VERMOEGENSDELIKTE',
+    family: 'VERMOEGEN',
+    familyRelation: 'EIGENSTAENDIG',
+    relevanceLevel: 'RELATED_34A',
+    relevanceReason: 'Erschleichen von Leistungen betrifft Alltagsfälle (z. B. Schwarzfahren) im Sicherheitsumfeld.',
+    examRelevance: 'Prüfungsrelevant als Sondertatbestand des Vermögensstrafrechts.',
+    relatedOffenses: ['stgb-263'],
     protectedInterest: 'Vermögen (Leistungsentgelt)',
     objectiveElements: [
       'Erschleichen der Leistung eines Automaten, eines öffentlichen Telekommunikationsnetzes, einer Beförderung oder des Zutritts zu einer Veranstaltung oder Einrichtung',
@@ -1254,6 +1811,12 @@ export const CRIMINAL_OFFENSES: CriminalOffense[] = [
     paragraph: '§ 303',
     officialTitle: 'Sachbeschädigung',
     category: 'SACHBESCHAEDIGUNG',
+    family: 'SACHBESCHAEDIGUNG',
+    familyRelation: 'GRUNDDELIKT',
+    relevanceLevel: 'CORE_34A',
+    relevanceReason: 'Sachbeschädigung ist ein häufiges Delikt im Sicherheitsdienst (z. B. Vandalismus).',
+    examRelevance: 'Kernwissen: Beschädigung, Zerstörung, Veränderung des Erscheinungsbilds; relatives Antragsdelikt nach §303c StGB.',
+    relatedOffenses: ['stgb-303a'],
     protectedInterest: 'Eigentum',
     objectiveElements: [
       'fremde Sache',
@@ -1291,6 +1854,12 @@ export const CRIMINAL_OFFENSES: CriminalOffense[] = [
     paragraph: '§ 303a',
     officialTitle: 'Datenveränderung',
     category: 'SACHBESCHAEDIGUNG',
+    family: 'SACHBESCHAEDIGUNG',
+    familyRelation: 'EIGENSTAENDIG',
+    relevanceLevel: 'RELATED_34A',
+    relevanceReason: 'Datenveränderung erweitert die Sachbeschädigung auf Daten und ist für moderne Sicherheitslagen relevant.',
+    examRelevance: 'Prüfungsrelevant für die Abgrenzung zur Sachbeschädigung.',
+    relatedOffenses: ['stgb-303'],
     protectedInterest: 'Daten / Vermögen',
     objectiveElements: [
       'rechtswidriges Löschen, Unterdrücken, Unbrauchbarmachen oder Verändern von Daten (§202a Abs. 2 StGB)',
@@ -1330,6 +1899,12 @@ export const CRIMINAL_OFFENSES: CriminalOffense[] = [
     paragraph: '§ 267',
     officialTitle: 'Urkundenfälschung',
     category: 'URKUNDENDELIKTE',
+    family: 'URKUNDE',
+    familyRelation: 'GRUNDDELIKT',
+    relevanceLevel: 'RELATED_34A',
+    relevanceReason: 'Urkundenfälschung ist im Sicherheitsdienst bei Ausweiskontrollen und gefälschten Papieren relevant.',
+    examRelevance: 'Prüfungsrelevant für die Einordnung gefälschter Ausweise und Dokumente.',
+    relatedOffenses: ['stgb-263'],
     protectedInterest: 'Sicherheit und Zuverlässigkeit des Rechtsverkehrs mit Urkunden',
     objectiveElements: [
       'zur Täuschung im Rechtsverkehr',
@@ -1368,6 +1943,12 @@ export const CRIMINAL_OFFENSES: CriminalOffense[] = [
     paragraph: '§ 323c',
     officialTitle: 'Unterlassene Hilfeleistung; Behinderung von hilfeleistenden Personen',
     category: 'GEMEINGEFAEHRLICHE_DELIKTE',
+    family: 'UNTERLASSUNG',
+    familyRelation: 'GRUNDDELIKT',
+    relevanceLevel: 'CORE_34A',
+    relevanceReason: 'Unterlassene Hilfeleistung ist Kernstoff für Sicherheitsmitarbeiter und grenzt sich von §13 StGB ab.',
+    examRelevance: 'Kernwissen: Jedermannspflicht bei Unglücksfällen; Abgrenzung zur Garantenstellung nach §13 StGB.',
+    relatedOffenses: [],
     protectedInterest: 'Solidarität / Hilfe in Notlagen',
     objectiveElements: [
       'Unglücksfall oder gemeine Gefahr oder Not',

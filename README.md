@@ -361,15 +361,26 @@ der juristischen Knowledge Base der Fallengine:
   negligence, specialSubjectiveElements, minimumPenalty, maximumPenalty,
   classification (Verbrechen/Vergehen nach § 12 StGB), prosecution,
   attemptPunishable, attemptExplanation, explanation, relevance,
-  securityNote, distinctions, officialText, sourceUrl, source
+  securityNote, distinctions, officialText, sourceUrl, source sowie die
+  didaktischen Felder family, familyRelation, relevanceLevel,
+  relevanceReason, examRelevance und relatedOffenses
 - `NegligenceRelation` – intentional, negligentVariant, negligentNorm,
   explanation (§ 15 StGB)
 - `ProsecutionInfo` – type (Offizial-/Antragsdelikt), applicationType
   (absolut/relativ), applicationNorm, explanation
-- `LegalBasicsEntry` – Grundlagen des Allgemeinen Teils (§ 12, 15, 22, 23 StGB)
+- `LegalBasicsCard` – Lernkarte eines Grundlagenthemas (Rubrik, Paragraph,
+  Titel, Kurzfassung, Lernabschnitte, Merksatz, Beispiele, Prüfungsrelevanz).
+  Die acht Karten (Verbrechen/Vergehen, Offizial-/Antragsdelikt, Versuch,
+  Rücktritt, Vorsatz, Fahrlässigkeit, Begehen durch Unterlassen,
+  Garantenstellung) sind eine didaktische Aufbereitung der Unterlage
+  `Grundlagen_Straftaten.pdf`.
 - `OffenseSource` / `OffenseSourceType` – Herkunft des amtlichen Wortlauts
   (`SOURCE_BIBEL`, `SOURCE_GESETZE_IM_INTERNET`, `SOURCE_NOT_IN_BIBEL`,
-  `SOURCE_MISSING`)
+  `SOURCE_GRUNDLAGEN_PDF`, `SOURCE_MISSING`)
+
+Täterschaft und Teilnahme (§§ 25–27 StGB, Tatherrschaft, Anstiftung, Beihilfe)
+sowie das Fallbeispiel „Der gestohlene Wagen“ sind bewusst **nicht** Teil dieser
+Lernseite; sie bilden eine eigene Lerneinheit.
 
 Die Daten (`src/app/core/data/criminal-offenses.data.ts`) sind Seed-Daten und
 kein Teil der Fallengine. Wo die Bibel V5.3.1 den amtlichen Wortlaut enthält,
@@ -409,6 +420,13 @@ Die Unterlage ist die didaktische Leitlinie; die juristische Begründung bleibt
 ausschließlich die V5.3.1-Bibel. Die Fallbeispiele der Unterlage werden als
 eigene Seed-Szenarien abgebildet (u. a. Wegnahme aus dem Einkaufswagen,
 Marktschließung/Hausverbot) und nicht in die Knowledge Base eingebaut.
+
+Für die Lernseite „Strafgesetzbuch“ kommt ergänzend die Unterlage
+**`Grundlagen_Straftaten.pdf`** hinzu. Aus ihr stammen die acht Grundlagenkarten
+(Verbrechen/Vergehen, Offizial-/Antragsdelikt, Versuch, Rücktritt, Vorsatz,
+Fahrlässigkeit, Begehen durch Unterlassen, Garantenstellung). Der amtliche
+Wortlaut der führenden Normen (§ 12, 13, 15, 22, 23, 24 StGB) ist hinterlegt und
+mit gesetze-im-internet.de abgeglichen.
 
 ### Fragenbank der Prüfungssimulation
 

@@ -1,5 +1,10 @@
-import { CRIMINAL_OFFENSES, LEGAL_BASICS, OFFENSE_CATEGORY_LABELS } from './criminal-offenses.data';
-import { OffenseCategory } from '../models';
+import {
+  CRIMINAL_OFFENSES,
+  LEGAL_BASICS_CARDS,
+  OFFENSE_CATEGORY_LABELS,
+  OFFENSE_FAMILY_LABELS,
+} from './criminal-offenses.data';
+import { OffenseCategory, OffenseFamily, RelevanceLevel } from '../models';
 
 /**
  * Fachliche Konsistenzprüfung der kuratierten Strafgesetzbuch-Daten.
@@ -168,12 +173,84 @@ describe('Strafgesetzbuch-Daten (Konsistenz)', () => {
     }
   });
 
-  it('legt die Grundlagen des Allgemeinen Teils (§12, §15, §22, §23) vor', () => {
-    const paragraphs = LEGAL_BASICS.map((basic) => basic.paragraph);
-    expect(paragraphs).toEqual(['§ 12', '§ 15', '§ 22', '§ 23']);
-    for (const basic of LEGAL_BASICS) {
-      expect(basic.officialText.length).withContext(basic.paragraph).toBeGreaterThan(0);
-      expect(basic.sourceUrl).withContext(basic.paragraph).toContain('gesetze-im-internet.de');
+  it('legt die Grundlagen des Strafrechts als Karten vor', () => {
+    const ids = LEGAL_BASICS_CARDS.map((card) => card.id);
+    expect(new Set(ids).size).toBe(ids.length);
+    expect(LEGAL_BASICS_CARDS.length).toBeGreaterThanOrEqual(8);
+    for (const card of LEGAL_BASICS_CARDS) {
+      const context = card.id;
+      expect(card.officialTitle.length).withContext(context).toBeGreaterThan(0);
+      expect(card.summary.length).withContext(context).toBeGreaterThan(0);
+      expect(card.merksatz.length).withContext(context).toBeGreaterThan(0);
+      expect(card.sections.length).withContext(context).toBeGreaterThan(0);
+      expect(card.examRelevant.length).withContext(context).toBeGreaterThan(0);
+      expect(card.sourceUrl).withContext(context).toContain('gesetze-im-internet.de');
     }
+  });
+
+  it('enthält die im Auftrag genannten Grundlagenthemen aus Grundlagen_Straftaten.pdf', () => {
+    const titles = LEGAL_BASICS_CARDS.map((card) => card.officialTitle);
+    expect(titles).toContain('Verbrechen und Vergehen');
+    expect(titles).toContain('Offizialdelikt und Antragsdelikt');
+    expect(titles).toContain('Der Versuch');
+    expect(titles).toContain('Rücktritt vom Versuch');
+    expect(titles).toContain('Vorsatz – Wissen und Wollen');
+    expect(titles).toContain('Fahrlässigkeit – Sorgfaltspflichtverletzung');
+    expect(titles).toContain('Begehen durch Unterlassen');
+    expect(titles).toContain('Garantenstellung');
+  });
+
+  it('nimmt Täterschaft und Teilnahme nicht in die Grundlagen auf', () => {
+    // Auftrag Nr. 2/7: §§25–27 StGB sind eine eigene Lerneinheit.
+    const joined = LEGAL_BASICS_CARDS.map((card) => JSON.stringify(card)).join(' ');
+    expect(joined).not.toMatch(/Täterschaft/);
+    expect(joined).not.toMatch(/Anstiftung/);
+    expect(joined).not.toMatch(/Beihilfe/);
+    expect(joined).not.toMatch(/gestohlene Wagen/);
+  });
+
+  it('ordnet jede Norm einer bekannten Deliktsfamilie und Relevanzstufe zu', () => {
+    const families = new Set(Object.keys(OFFENSE_FAMILY_LABELS) as OffenseFamily[]);
+    const levels: RelevanceLevel[] = ['CORE_34A', 'RELATED_34A', 'NOT_INCLUDE'];
+    for (const offense of CRIMINAL_OFFENSES) {
+      const context = offense.paragraph;
+      expect(families.has(offense.family)).withContext(context).toBe(true);
+      expect(levels).withContext(context).toContain(offense.relevanceLevel);
+      expect(offense.relevanceReason.length).withContext(context).toBeGreaterThan(0);
+      expect(offense.examRelevance.length).withContext(context).toBeGreaterThan(0);
+      expect(Array.isArray(offense.relatedOffenses)).withContext(context).toBe(true);
+    }
+  });
+
+  it('verweist in relatedOffenses nur auf vorhandene IDs', () => {
+    const ids = new Set(CRIMINAL_OFFENSES.map((offense) => offense.id));
+    for (const offense of CRIMINAL_OFFENSES) {
+      for (const relatedId of offense.relatedOffenses) {
+        expect(ids.has(relatedId))
+          .withContext(`${offense.paragraph} → ${relatedId}`)
+          .toBe(true);
+      }
+    }
+  });
+
+  it('führt §123 StGB in der eigenen Kategorie Hausrecht (Auftrag Nr. 15)', () => {
+    const hausfriedensbruch = CRIMINAL_OFFENSES.find((o) => o.id === 'stgb-123');
+    expect(hausfriedensbruch?.category).toBe('HAUSRECHT');
+  });
+
+  it('führt §244a StGB als eigenständige Qualifikation des Bandendiebstahls', () => {
+    const schwererBandendiebstahl = CRIMINAL_OFFENSES.find((o) => o.id === 'stgb-244a');
+    expect(schwererBandendiebstahl?.family).toBe('DIEBSTAHL');
+    expect(schwererBandendiebstahl?.familyRelation).toBe('QUALIFIKATION');
+    expect(schwererBandendiebstahl?.classification).toBe('VERBRECHEN');
+  });
+
+  it('stellt §243 StGB als Regelbeispiel und §244 StGB als Qualifikation dar', () => {
+    expect(CRIMINAL_OFFENSES.find((o) => o.id === 'stgb-243')?.familyRelation).toBe(
+      'REGELBEISPIEL',
+    );
+    expect(CRIMINAL_OFFENSES.find((o) => o.id === 'stgb-244')?.familyRelation).toBe(
+      'QUALIFIKATION',
+    );
   });
 });

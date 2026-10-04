@@ -52,7 +52,7 @@ describe('CriminalOffenseDetailComponent', () => {
     expect(text).toContain('Einordnung (§ 12 StGB)');
     expect(text).toContain('Verfolgung');
     expect(text).toContain('Versuch');
-    expect(text).toContain('Prüfungsrelevanz');
+    expect(text).toContain('Für §34a wichtig');
     expect(text).toContain('Amtlicher Gesetzeswortlaut');
   });
 
@@ -63,8 +63,10 @@ describe('CriminalOffenseDetailComponent', () => {
 
   it('zeigt ähnliche Delikte und wechselt auf Klick', async () => {
     const { fixture, element } = await create(dataFor('stgb-242'));
-    const chip = element.querySelector<HTMLButtonElement>('.related-chip');
-    expect(chip?.textContent).toContain('§ 246');
+    const chip = Array.from(element.querySelectorAll<HTMLButtonElement>('.related-chip')).find(
+      (item) => item.textContent?.includes('§ 246'),
+    );
+    expect(chip).toBeTruthy();
     chip!.click();
     fixture.detectChanges();
     expect(element.textContent).toContain('Unterschlagung');

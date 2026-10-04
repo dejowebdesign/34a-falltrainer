@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { StrafgesetzbuchComponent } from './strafgesetzbuch.component';
 import { CriminalOffenseService } from '../../core/services/criminal-offense.service';
+import { OFFENSE_FAMILY_LABELS } from '../../core/data/criminal-offenses.data';
 
 describe('StrafgesetzbuchComponent', () => {
   let fixture: ComponentFixture<StrafgesetzbuchComponent>;
@@ -89,11 +90,24 @@ describe('StrafgesetzbuchComponent', () => {
     expect(card.textContent).toContain('Details öffnen');
   });
 
-  it('blendet die Grundlagen des Allgemeinen Teils ein', () => {
-    const basics = element.querySelectorAll('.basic-panel');
-    expect(basics.length).toBe(4);
+  it('blendet die Grundlagen des Strafrechts als Lernkarten ein', () => {
+    const basics = element.querySelectorAll('app-legal-basics-card');
+    expect(basics.length).toBe(service().getBasics().length);
+    expect(basics.length).toBeGreaterThanOrEqual(8);
     expect(element.textContent).toContain('Verbrechen und Vergehen');
-    expect(element.textContent).toContain('Strafbarkeit des Versuchs');
+    expect(element.textContent).toContain('Garantenstellung');
+  });
+
+  it('öffnet ein Grundlagenthema als Lern-Modal', () => {
+    const card = element.querySelector<HTMLButtonElement>('app-legal-basics-card .basics-card')!;
+    card.click();
+    flush();
+    const dialog = overlay.querySelector('app-legal-basics-detail');
+    expect(dialog).toBeTruthy();
+    const text = dialog?.textContent ?? '';
+    expect(text).toContain('Merksatz');
+    expect(text).toContain('Prüfungsrelevant');
+    expect(text).toContain('Amtlicher Wortlaut');
   });
 
   it('reduziert die Liste über die Suche', () => {
@@ -171,8 +185,24 @@ describe('StrafgesetzbuchComponent', () => {
     fixture.componentInstance.categories.set(['RAUB_ERPRESSUNG']);
     fixture.detectChanges();
     expect(cards().length).toBeGreaterThan(0);
+    const familyLabels = service()
+      .getOffenses()
+      .filter((o) => o.category === 'RAUB_ERPRESSUNG')
+      .map((o) => o.family);
     for (const card of cards()) {
-      expect(card.textContent).toContain('Raub und Erpressung');
+      const matches = familyLabels.some((family) =>
+        card.textContent?.includes(OFFENSE_FAMILY_LABELS[family]),
+      );
+      expect(matches).toBe(true);
+    }
+  });
+
+  it('filtert über die Deliktsfamilie', () => {
+    fixture.componentInstance.families.set(['DIEBSTAHL']);
+    fixture.detectChanges();
+    expect(cards().length).toBeGreaterThan(0);
+    for (const card of cards()) {
+      expect(card.textContent).toContain('Diebstahlsdelikte');
     }
   });
 
@@ -229,8 +259,8 @@ describe('StrafgesetzbuchComponent', () => {
     expect(status?.textContent).toContain('1 von');
   });
 
-  it('sortiert standardmäßig nach Paragraph aufsteigend', () => {
-    expect(cards()[0].textContent).toContain('§ 123');
+  it('sortiert standardmäßig nach Relevanz (§34a-Kerndelikte zuerst)', () => {
+    expect(cards()[0].textContent).toContain('Besonders §34a-relevant');
   });
 
   it('sortiert alphabetisch', () => {
@@ -268,13 +298,13 @@ describe('StrafgesetzbuchComponent', () => {
     expect(lastVerbrechen).toBeLessThan(firstVergehen);
   });
 
-  it('gruppiert nach Strafmaß, wenn aktiviert', () => {
+  it('gruppiert nach Deliktsfamilie, wenn aktiviert', () => {
     fixture.componentInstance.grouped.set(true);
     fixture.detectChanges();
     const groups = element.querySelectorAll('.penalty-group');
     expect(groups.length).toBeGreaterThan(1);
-    expect(element.textContent).toContain('Geldstrafe bzw. kein gesetzliches Mindestmaß');
-    expect(element.textContent).toContain('Verbrechen – Mindestmaß ab 1 Jahr');
+    expect(element.textContent).toContain('Diebstahlsdelikte');
+    expect(element.textContent).toContain('Körperverletzungsdelikte');
     expect(cards().length).toBe(service().getOffenses().length);
   });
 
@@ -291,7 +321,7 @@ describe('StrafgesetzbuchComponent', () => {
     expect(text).toContain('Verfolgung');
     expect(text).toContain('Versuch');
     expect(text).toContain('Geschütztes Rechtsgut');
-    expect(text).toContain('Prüfungsrelevanz');
+    expect(text).toContain('Für §34a wichtig');
     expect(text).toContain('Amtlicher Gesetzeswortlaut');
   });
 
@@ -313,6 +343,8 @@ describe('StrafgesetzbuchComponent', () => {
   });
 
   it('navigiert im Modal zum nächsten Delikt', () => {
+    fixture.componentInstance.sortKey.set('PARAGRAPH');
+    fixture.detectChanges();
     openCard('§ 123');
     navButton('Nächstes').click();
     flush();
@@ -321,8 +353,10 @@ describe('StrafgesetzbuchComponent', () => {
 
   it('navigiert über ähnliche Delikte im Modal', () => {
     openCard('§ 242');
-    const related = overlay.querySelector<HTMLButtonElement>('.related-chip');
-    expect(related?.textContent).toContain('§ 246');
+    const related = Array.from(
+      overlay.querySelectorAll<HTMLButtonElement>('.related-chip'),
+    ).find((chip) => chip.textContent?.includes('§ 246'));
+    expect(related).toBeTruthy();
     related!.click();
     flush();
     expect(overlay.querySelector('app-criminal-offense-detail')?.textContent).toContain(
