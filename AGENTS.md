@@ -138,6 +138,34 @@ Rules:
   `AUTHORED_FROM_FACHWISSEN`/`UNVERIFIED`) are data-model and audit-view only.
   They must never appear in the participant-facing exam UI.
 
+## Lernseite „Strafgesetzbuch“
+
+- Standalone feature (`src/app/features/strafgesetzbuch`, route
+  `/strafgesetzbuch`), independent of the three-stage case flow. It is **not** a
+  general StGB database but a curated learning page for §34a GewO.
+- Data lives in `core/data/criminal-offenses.data.ts`:
+  `CRIMINAL_OFFENSES` (delicts) and `LEGAL_BASICS_CARDS` (Allgemeiner Teil /
+  Verfolgung / Unterlassen). Both use the models in
+  `core/models/criminal-offense.model.ts`.
+- Grundlagen cards are a didactic digest of `Grundlagen_Straftaten.pdf`. Täterschaft
+  und Teilnahme (§§ 25–27 StGB, Tatherrschaft, Anstiftung, Beihilfe) and the
+  Fallbeispiel „Der gestohlene Wagen“ are deliberately **not** part of this page;
+  they are a separate learning unit. Do not add them here.
+- Every delict carries `family`, `familyRelation`, `relevanceLevel`,
+  `relevanceReason`, `examRelevance` and `relatedOffenses`. `relatedOffenses`
+  only references existing IDs (guarded by the data spec); `getRelated()` also
+  resolves legacy free-text `distinctions`.
+- `relevanceLevel` drives the UI: `CORE_34A` (star, quick filter), `RELATED_34A`,
+  `NOT_INCLUDE` (filtered out in `CriminalOffenseService`). Never derive
+  relevance from a mere `securityNote` anymore.
+- §123 StGB lives in the dedicated `HAUSRECHT` category. §243 is a
+  `REGELBEISPIEL`, §244/§244a are `QUALIFIKATION` (family `DIEBSTAHL`).
+- The service offers `groupByFamily()` (didactic default grouping) alongside
+  `group()` (penalty classes). The page default sort is `RELEVANCE`.
+- Basics cards open a large learning modal (`LegalBasicsDetailComponent`); the
+  delict detail is the `CriminalOffenseDetailComponent` dialog. No legal logic in
+  templates.
+
 ## Testing notes
 
 - Test files are colocated as `*.spec.ts`.

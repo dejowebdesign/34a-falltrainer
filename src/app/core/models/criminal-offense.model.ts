@@ -26,6 +26,8 @@ export type OffenseSourceType =
   | 'SOURCE_GESETZE_IM_INTERNET'
   /** Bibel V5.3.1 enthält das Delikt ausdrücklich nicht; Wortlaut aus Primärquelle. */
   | 'SOURCE_NOT_IN_BIBEL'
+  /** Didaktische Aufbereitung aus Grundlagen_Straftaten.pdf. */
+  | 'SOURCE_GRUNDLAGEN_PDF'
   /** Kein amtlicher Wortlaut verfügbar – als fehlend markiert. */
   | 'SOURCE_MISSING';
 
@@ -49,7 +51,50 @@ export type OffenseCategory =
   | 'SACHBESCHAEDIGUNG'
   | 'URKUNDENDELIKTE'
   | 'GEMEINGEFAEHRLICHE_DELIKTE'
+  | 'HAUSRECHT'
   | 'AMTS_BEFUGNISDELIKTE';
+
+/**
+ * Deliktsfamilie – didaktische Gruppierung verwandter Normen (z. B. alle
+ * Diebstahlsdelikte). Die Familie ist keine juristische Kategorie, sondern
+ * bündelt Grunddelikt, Regelbeispiele und Qualifikationen für das Lernen.
+ */
+export type OffenseFamily =
+  | 'DIEBSTAHL'
+  | 'UNTERSCHLAGUNG'
+  | 'KOERPERVERLETZUNG'
+  | 'RAUB'
+  | 'ERPRESSUNG'
+  | 'FREIHEIT'
+  | 'EHRE'
+  | 'HAUSFRIEDENSBRUCH'
+  | 'AMTSANMASSUNG'
+  | 'VERMOEGEN'
+  | 'SACHBESCHAEDIGUNG'
+  | 'URKUNDE'
+  | 'UNTERLASSUNG';
+
+/**
+ * Verhältnis einer Norm innerhalb ihrer Deliktsfamilie. Verhindert den falschen
+ * Eindruck, jeder höhere Paragraph sei lediglich „dieselbe Tat mit mehr Gewalt“.
+ */
+export type FamilyRelation =
+  /** Eigenständiger Grundtatbestand (z. B. §242, §223). */
+  | 'GRUNDDELIKT'
+  /** Benannter besonders schwerer Fall / Regelbeispiel (z. B. §243). */
+  | 'REGELBEISPIEL'
+  /** Eigenständige Qualifikation mit eigenen Tatbestandsmerkmalen (z. B. §244, §250). */
+  | 'QUALIFIKATION'
+  /** Eigenständige, selbständige Norm neben dem Grunddelikt (z. B. §246, §229). */
+  | 'EIGENSTAENDIG'
+  /** Erfolgsqualifikation (z. B. §227, §231). */
+  | 'ERFOLGSQUALIFIKATION';
+
+/**
+ * Interne §34a-Relevanzstufe. Nur `CORE_34A` und `RELATED_34A` werden auf der
+ * Lernseite gerendert; `NOT_INCLUDE` wird nicht angezeigt.
+ */
+export type RelevanceLevel = 'CORE_34A' | 'RELATED_34A' | 'NOT_INCLUDE';
 
 /** Einordnung nach §12 StGB (Verbrechen / Vergehen). */
 export type OffenseClassification = 'VERBRECHEN' | 'VERGEHEN';
@@ -66,6 +111,7 @@ export type PenaltyClass =
 
 /** Sortierschlüssel der Deliktsliste. */
 export type OffenseSortKey =
+  | 'RELEVANCE'
   | 'PARAGRAPH'
   | 'ALPHABETICAL'
   | 'PENALTY_ASC'
@@ -97,6 +143,9 @@ export interface OffenseQuery {
   prosecutions: ProsecutionType[];
   attempts: AttemptFilter[];
   culpabilities: CulpabilityFilter[];
+  families: OffenseFamily[];
+  /** Nur Delikte der Stufe `CORE_34A`. */
+  coreOnly: boolean;
   /** Nur Delikte, die über `securityNote` als besonders §34a-relevant belegt sind. */
   examRelevantOnly: boolean;
 }
@@ -138,6 +187,19 @@ export interface CriminalOffense {
   officialTitle: string;
   /** Deliktsgruppe. */
   category: OffenseCategory;
+  /** Didaktische Deliktsfamilie (z. B. alle Diebstahlsdelikte). */
+  family: OffenseFamily;
+  /** Stellung der Norm innerhalb ihrer Deliktsfamilie. */
+  familyRelation: FamilyRelation;
+  /**
+   * §34a-Relevanzstufe. Nur `CORE_34A` und `RELATED_34A` werden gerendert.
+   * Datensätze mit `NOT_INCLUDE` erscheinen nicht auf der Lernseite.
+   */
+  relevanceLevel: RelevanceLevel;
+  /** Warum die Norm in die Lernseite aufgenommen (oder ausgeschlossen) wurde. */
+  relevanceReason: string;
+  /** Konkrete Prüfungsrelevanz für die Sachkundeprüfung §34a GewO. */
+  examRelevance: string;
   /** Geschütztes Rechtsgut. */
   protectedInterest: string;
   /** Objektiver Tatbestand – äußerlich feststellbare Merkmale. */
@@ -170,6 +232,11 @@ export interface CriminalOffense {
   securityNote?: string;
   /** Wichtige Abgrenzungen zu anderen Delikten. */
   distinctions?: string[];
+  /**
+   * IDs verwandter Delikte derselben oder benachbarter Familien für die
+   * „Ähnliche Delikte“-Navigation im Modal. Leer, wenn keine Beziehung bekannt ist.
+   */
+  relatedOffenses: string[];
   /** Amtlicher Gesetzeswortlaut (gekürzt, sofern sehr umfangreich). */
   officialText: string;
   /** Primärquellen-URL (gesetze-im-internet.de). */
@@ -178,13 +245,44 @@ export interface CriminalOffense {
   source: OffenseSource;
 }
 
-/** Ein Grundlagenartikel des Allgemeinen Teils (z. B. §12, §15, §23 StGB). */
-export interface LegalBasicsEntry {
+/** Ein inhaltsabschnitt einer Grundlagenkarte (Überschrift + Absätze/Stichpunkte). */
+export interface LegalBasicsSection {
+  heading: string;
+  paragraphs?: string[];
+  bullets?: string[];
+}
+
+/**
+ * Grundlagenkarte des Strafrechts (Allgemeiner Teil).
+ *
+ * Didaktische Aufbereitung nach `Grundlagen_Straftaten.pdf`. Öffnet als große
+ * Lernansicht (Modal). Nicht jede Karte beruht auf genau einer Norm (z. B.
+ * Vorsatz/Fahrlässigkeit); deshalb ist `paragraph` optional und
+ * `officialTextRefs` kann mehrere Normen benennen.
+ *
+ * Bewusst NICHT enthalten: Täterschaft und Teilnahme (§§25–27 StGB) – diese
+ * werden als eigene Lerneinheit geführt.
+ */
+export interface LegalBasicsCard {
   id: string;
-  paragraph: string;
+  /** Führende Norm, z. B. "§ 12"; leer, wenn keine einzelne Norm führt. */
+  paragraph?: string;
   officialTitle: string;
-  officialText: string;
-  explanation: string;
+  /** Rubrik, z. B. "Allgemeiner Teil" oder "Deliktsarten". */
+  eyebrow: string;
+  /** Kurzfassung für die Karte (1–2 Sätze). */
+  summary: string;
+  /** Amtlicher Wortlaut, sofern eine führende Norm existiert. */
+  officialText?: string;
+  /** Normen, auf die sich die Karte stützt (z. B. ["§ 22 StGB", "§ 23 StGB"]). */
+  officialTextRefs?: string[];
+  sections: LegalBasicsSection[];
+  /** Didaktisch hervorgehobener Merksatz. */
+  merksatz: string;
+  /** Kurze, verständliche Beispiele. */
+  examples: string[];
+  /** Prüfungsrelevanz für die Sachkundeprüfung §34a GewO. */
+  examRelevant: string;
   sourceUrl: string;
   source: OffenseSource;
 }

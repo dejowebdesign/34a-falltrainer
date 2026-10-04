@@ -17,21 +17,31 @@ import {
 import {
   OFFENSE_CATEGORY_LABELS,
   OFFENSE_CATEGORY_ORDER,
+  OFFENSE_FAMILY_LABELS,
 } from '../../core/data/criminal-offenses.data';
 import {
   AttemptFilter,
   CriminalOffense,
   CulpabilityFilter,
+  LegalBasicsCard,
   OffenseCategory,
   OffenseClassification,
+  OffenseFamily,
   OffenseSortKey,
   ProsecutionType,
 } from '../../core/models';
 import { CriminalOffenseCardComponent } from './criminal-offense-card.component';
 import { CriminalOffenseDetailComponent } from './criminal-offense-detail.component';
+import { LegalBasicsCardComponent } from './legal-basics-card.component';
+import { LegalBasicsDetailComponent } from './legal-basics-detail.component';
 
 interface CategoryOption {
   value: OffenseCategory;
+  label: string;
+}
+
+interface FamilyOption {
+  value: OffenseFamily;
   label: string;
 }
 
@@ -60,6 +70,7 @@ interface CategoryOption {
     MatSelectModule,
     MatSlideToggleModule,
     CriminalOffenseCardComponent,
+    LegalBasicsCardComponent,
   ],
   template: `
     <div class="ft-container ft-page">
@@ -76,28 +87,26 @@ interface CategoryOption {
 
       <section class="ft-section basics" aria-labelledby="basics-heading">
         <div class="ft-section-head">
-          <h2 id="basics-heading">Grundlagen des Allgemeinen Teils</h2>
+          <h2 id="basics-heading">Grundlagen des Strafrechts</h2>
           <p>
-            Diese Normen erklären, wie die Delikte eingeordnet werden – Verbrechen/Vergehen,
-            Vorsatz/Fahrlässigkeit und die Strafbarkeit des Versuchs.
+            Die wichtigsten Grundlagen, die Sie für die strafrechtliche Einordnung in der
+            Sachkundeprüfung benötigen.
           </p>
         </div>
         <div class="basics-grid">
           @for (basic of basics; track basic.id) {
-            <mat-expansion-panel class="basic-panel">
-              <mat-expansion-panel-header [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
-                <span class="basic-head">
-                  <strong>{{ basic.paragraph }} StGB</strong>
-                  <span>{{ basic.officialTitle }}</span>
-                </span>
-              </mat-expansion-panel-header>
-              <p class="basic-text">{{ basic.officialText }}</p>
-              <p class="basic-explanation">{{ basic.explanation }}</p>
-              <a class="basic-source" [href]="basic.sourceUrl" target="_blank" rel="noopener noreferrer">
-                Amtliche Quelle
-              </a>
-            </mat-expansion-panel>
+            <app-legal-basics-card [basics]="basic" (open)="openBasics($event)" />
           }
+        </div>
+      </section>
+
+      <section class="ft-section ft-section--plain" aria-labelledby="offenses-heading">
+        <div class="ft-section-head">
+          <h2 id="offenses-heading">Relevante Straftatbestände</h2>
+          <p>
+            Die für die Sachkundeprüfung nach §34a GewO besonders relevanten Straftaten – nach
+            Deliktsfamilien geordnet.
+          </p>
         </div>
       </section>
 
@@ -111,7 +120,7 @@ interface CategoryOption {
               type="search"
               [ngModel]="text()"
               (ngModelChange)="text.set($event)"
-              placeholder="Paragraph, Straftat, Fachbegriff …"
+              placeholder="Paragraph oder Straftat suchen …"
               aria-label="Straftaten durchsuchen"
             />
             @if (text()) {
@@ -156,6 +165,20 @@ interface CategoryOption {
 
           @if (showExtended()) {
             <div class="extended ft-reveal" role="group" aria-label="Weitere Filter">
+              <mat-form-field appearance="outline">
+                <mat-label>Deliktsfamilie</mat-label>
+                <mat-select
+                  multiple
+                  [ngModel]="families()"
+                  (ngModelChange)="families.set($event)"
+                  aria-label="Deliktsfamilie filtern"
+                >
+                  @for (option of familyOptions; track option.value) {
+                    <mat-option [value]="option.value">{{ option.label }}</mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+
               <mat-form-field appearance="outline">
                 <mat-label>Deliktsgruppe</mat-label>
                 <mat-select
@@ -230,7 +253,7 @@ interface CategoryOption {
               [checked]="grouped()"
               (change)="grouped.set($event.checked)"
             >
-              Nach Strafmaß gruppieren
+              Nach Deliktsfamilie gruppieren
             </mat-slide-toggle>
 
             <div class="controls-actions">
@@ -278,7 +301,7 @@ interface CategoryOption {
         @if (visibleCount()) {
           @if (grouped()) {
             <div class="penalty-groups">
-              @for (group of groups(); track group.penaltyClass) {
+              @for (group of familyGroups(); track group.family) {
                 <section class="penalty-group" [attr.aria-label]="group.label">
                   <h2 class="penalty-group-head">
                     {{ group.label }}
@@ -322,43 +345,18 @@ interface CategoryOption {
       }
       .basics-grid {
         display: grid;
-        gap: 0.7rem;
+        gap: 0.9rem;
         grid-template-columns: minmax(0, 1fr);
       }
-      @media (min-width: 820px) {
+      @media (min-width: 720px) {
         .basics-grid {
           grid-template-columns: repeat(2, minmax(0, 1fr));
         }
       }
-      .basic-panel {
-        border: 1px solid var(--ft-border);
-        border-radius: var(--ft-radius);
-        background: var(--ft-surface);
-        box-shadow: var(--ft-elevation-1);
-      }
-      .basic-head {
-        display: flex;
-        flex-direction: column;
-        gap: 0.15rem;
-      }
-      .basic-head strong {
-        color: var(--ft-accent-strong);
-      }
-      .basic-head span {
-        font-size: 0.9rem;
-      }
-      .basic-text {
-        margin: 0 0 0.6rem;
-        line-height: 1.6;
-      }
-      .basic-explanation {
-        margin: 0 0 0.6rem;
-        color: var(--ft-muted);
-        line-height: 1.6;
-      }
-      .basic-source {
-        color: var(--ft-primary);
-        font-weight: 600;
+      @media (min-width: 1100px) {
+        .basics-grid {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
       }
 
       .controls {
@@ -570,6 +568,11 @@ export class StrafgesetzbuchComponent {
     value,
     label: OFFENSE_CATEGORY_LABELS[value],
   }));
+  readonly familyOptions: FamilyOption[] = (
+    Object.keys(OFFENSE_FAMILY_LABELS) as OffenseFamily[]
+  )
+    .map((value) => ({ value, label: OFFENSE_FAMILY_LABELS[value] }))
+    .sort((a, b) => a.label.localeCompare(b.label, 'de'));
   readonly sortOptions = (Object.keys(OFFENSE_SORT_LABELS) as OffenseSortKey[]).map((value) => ({
     value,
     label: OFFENSE_SORT_LABELS[value],
@@ -577,15 +580,15 @@ export class StrafgesetzbuchComponent {
 
   /** Schnellfilter: prüft, ob mindestens ein Delikt in der Liste passt. */
   readonly quickFilters: { key: string; label: string }[] = [
-    { key: 'ANTRAGSDELIKT', label: 'Antragsdelikte' },
-    { key: 'OFFIZIALDELIKT', label: 'Offizialdelikte' },
+    { key: 'CORE_RELEVANT', label: 'Besonders relevant für §34a' },
     { key: 'VERBRECHEN', label: 'Verbrechen' },
     { key: 'VERGEHEN', label: 'Vergehen' },
+    { key: 'OFFIZIALDELIKT', label: 'Offizialdelikt' },
+    { key: 'ANTRAGSDELIKT', label: 'Antragsdelikt' },
     { key: 'ATTEMPT_PUNISHABLE', label: 'Versuch strafbar' },
     { key: 'ATTEMPT_NOT_PUNISHABLE', label: 'Versuch nicht strafbar' },
     { key: 'VORSATZ', label: 'Vorsatz' },
     { key: 'FAEHLAESSIGKEIT', label: 'Fahrlässigkeit' },
-    { key: 'EXAM_RELEVANT', label: 'Besonders relevant für §34a' },
   ];
 
   readonly text = signal('');
@@ -594,8 +597,10 @@ export class StrafgesetzbuchComponent {
   readonly prosecutions = signal<ProsecutionType[]>([]);
   readonly attempts = signal<AttemptFilter[]>([]);
   readonly culpabilities = signal<CulpabilityFilter[]>([]);
+  readonly families = signal<OffenseFamily[]>([]);
+  readonly coreOnly = signal(false);
   readonly examRelevantOnly = signal(false);
-  readonly sortKey = signal<OffenseSortKey>('PARAGRAPH');
+  readonly sortKey = signal<OffenseSortKey>('RELEVANCE');
   readonly grouped = signal(false);
   readonly showExtended = signal(false);
 
@@ -606,13 +611,15 @@ export class StrafgesetzbuchComponent {
     prosecutions: this.prosecutions(),
     attempts: this.attempts(),
     culpabilities: this.culpabilities(),
+    families: this.families(),
+    coreOnly: this.coreOnly(),
     examRelevantOnly: this.examRelevantOnly(),
   }));
 
   /** Gefilterte, aber noch nicht sortierte Trefferliste. */
   readonly filtered = computed(() => this.service.query(this.query()));
   readonly sorted = computed(() => this.service.sort(this.filtered(), this.sortKey()));
-  readonly groups = computed(() => this.service.group(this.filtered()));
+  readonly familyGroups = computed(() => this.service.groupByFamily(this.filtered()));
   readonly stats = computed(() => this.service.getStats(this.filtered()));
   readonly visibleCount = computed(() => this.filtered().length);
 
@@ -622,7 +629,8 @@ export class StrafgesetzbuchComponent {
       this.classifications().length > 0 ||
       this.prosecutions().length > 0 ||
       this.attempts().length > 0 ||
-      this.culpabilities().length > 0,
+      this.culpabilities().length > 0 ||
+      this.families().length > 0,
   );
 
   readonly extendedCount = computed(
@@ -631,11 +639,16 @@ export class StrafgesetzbuchComponent {
       this.classifications().length +
       this.prosecutions().length +
       this.attempts().length +
-      this.culpabilities().length,
+      this.culpabilities().length +
+      this.families().length,
   );
 
   readonly hasActiveFilter = computed(
-    () => this.text().trim().length > 0 || this.hasExtendedFilter() || this.examRelevantOnly(),
+    () =>
+      this.text().trim().length > 0 ||
+      this.hasExtendedFilter() ||
+      this.coreOnly() ||
+      this.examRelevantOnly(),
   );
 
   isQuickActive(key: string): boolean {
@@ -656,6 +669,8 @@ export class StrafgesetzbuchComponent {
         return this.culpabilities().includes('FAEHLAESSIGKEIT');
       case 'EXAM_RELEVANT':
         return this.examRelevantOnly();
+      case 'CORE_RELEVANT':
+        return this.coreOnly();
       default:
         return false;
     }
@@ -688,9 +703,24 @@ export class StrafgesetzbuchComponent {
       case 'EXAM_RELEVANT':
         this.examRelevantOnly.update((value) => !value);
         return;
+      case 'CORE_RELEVANT':
+        this.coreOnly.update((value) => !value);
+        return;
       default:
         return;
     }
+  }
+
+  openBasics(card: LegalBasicsCard): void {
+    this.dialog.open(LegalBasicsDetailComponent, {
+      data: card,
+      width: 'min(95vw, 1320px)',
+      maxWidth: '95vw',
+      maxHeight: '90vh',
+      panelClass: 'basics-dialog',
+      autoFocus: 'dialog',
+      restoreFocus: true,
+    });
   }
 
   openDetail(offense: CriminalOffense): void {
@@ -717,6 +747,8 @@ export class StrafgesetzbuchComponent {
     this.prosecutions.set([]);
     this.attempts.set([]);
     this.culpabilities.set([]);
+    this.families.set([]);
+    this.coreOnly.set(false);
     this.examRelevantOnly.set(false);
   }
 }

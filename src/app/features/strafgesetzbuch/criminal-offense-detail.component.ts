@@ -5,7 +5,12 @@ import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/materia
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { CriminalOffense } from '../../core/models';
-import { OFFENSE_CATEGORY_LABELS } from '../../core/data/criminal-offenses.data';
+import {
+  FAMILY_RELATION_LABELS,
+  OFFENSE_CATEGORY_LABELS,
+  OFFENSE_FAMILY_LABELS,
+  RELEVANCE_LEVEL_LABELS,
+} from '../../core/data/criminal-offenses.data';
 import { CriminalOffenseService } from '../../core/services/criminal-offense.service';
 
 /** Datenübergabe an den Delikt-Dialog: die aktuelle Liste und der Startindex. */
@@ -49,6 +54,9 @@ export interface CriminalOffenseDialogData {
             </span>
           }
         </div>
+        <span class="head-family">
+          {{ familyLabel() }} · {{ familyRelationLabel() }}
+        </span>
       </div>
       <button
         mat-icon-button
@@ -150,19 +158,25 @@ export interface CriminalOffenseDialogData {
         </section>
       </div>
 
+      <section class="detail relevance" aria-label="Für §34a wichtig">
+        <h3>Für §34a wichtig</h3>
+        <p>{{ offense().examRelevance }}</p>
+      </section>
+
       @if (offense().securityNote) {
-        <aside class="security-note" aria-label="Besonderheit für Sicherheitsmitarbeiter">
-          <mat-icon aria-hidden="true">shield</mat-icon>
-          <div>
-            <h3>Für die Sachkunde besonders wichtig</h3>
-            <p>{{ offense().securityNote }}</p>
-          </div>
-        </aside>
+        <section class="detail relevance" aria-label="Typische Situation im Sicherheitsdienst">
+          <h3>Typische Situation im Sicherheitsdienst</h3>
+          <p>{{ offense().securityNote }}</p>
+        </section>
       }
 
-      <section class="detail relevance" aria-label="Prüfungsrelevanz">
-        <h3>Prüfungsrelevanz</h3>
-        <p>{{ offense().relevance }}</p>
+      <section class="detail relevance" aria-label="Warum dieses Delikt hier steht">
+        <h3>Warum dieses Delikt hier steht</h3>
+        <p>{{ offense().relevanceReason }}</p>
+        <p class="detail-note">
+          Relevanzstufe:
+          {{ relevanceLevelLabel() }}
+        </p>
       </section>
 
       @if (related().length) {
@@ -261,6 +275,10 @@ export interface CriminalOffenseDialogData {
       }
       .head-category {
         font-size: 0.85rem;
+        color: var(--ft-muted);
+      }
+      .head-family {
+        font-size: 0.8rem;
         color: var(--ft-muted);
       }
       .head-chips {
@@ -454,6 +472,13 @@ export class CriminalOffenseDetailComponent {
   readonly related = computed(() => this.service.getRelated(this.offense()));
 
   readonly categoryLabel = computed(() => OFFENSE_CATEGORY_LABELS[this.offense().category]);
+  readonly familyLabel = computed(() => OFFENSE_FAMILY_LABELS[this.offense().family]);
+  readonly familyRelationLabel = computed(
+    () => FAMILY_RELATION_LABELS[this.offense().familyRelation],
+  );
+  readonly relevanceLevelLabel = computed(
+    () => RELEVANCE_LEVEL_LABELS[this.offense().relevanceLevel],
+  );
   readonly isVerbrechen = computed(() => this.offense().classification === 'VERBRECHEN');
   readonly isAntragsdelikt = computed(
     () => this.offense().prosecution.type === 'ANTRAGSDELIKT',

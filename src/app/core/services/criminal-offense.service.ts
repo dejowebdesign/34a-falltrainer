@@ -1,13 +1,20 @@
 import { Injectable } from '@angular/core';
-import { CRIMINAL_OFFENSES, LEGAL_BASICS } from '../data/criminal-offenses.data';
+import {
+  CRIMINAL_OFFENSES,
+  LEGAL_BASICS_CARDS,
+  OFFENSE_CATEGORY_LABELS,
+  OFFENSE_FAMILY_LABELS,
+} from '../data/criminal-offenses.data';
 import {
   CriminalOffense,
-  LegalBasicsEntry,
+  LegalBasicsCard,
   OffenseClassification,
+  OffenseFamily,
   OffenseQuery,
   OffenseSortKey,
   PenaltyClass,
   ProsecutionType,
+  RelevanceLevel,
 } from '../models';
 
 /** Leerer, mehrfachauswahlfähiger Filterzustand der Lernseite. */
@@ -18,6 +25,8 @@ export const EMPTY_OFFENSE_QUERY: OffenseQuery = {
   prosecutions: [],
   attempts: [],
   culpabilities: [],
+  families: [],
+  coreOnly: false,
   examRelevantOnly: false,
 };
 
@@ -39,13 +48,21 @@ export const PENALTY_CLASS_ORDER: PenaltyClass[] = [
 
 /** Anzeigenamen der Sortieroptionen. */
 export const OFFENSE_SORT_LABELS: Record<OffenseSortKey, string> = {
-  PARAGRAPH: 'Paragraph aufsteigend',
+  RELEVANCE: 'Nach Relevanz',
+  PARAGRAPH: 'Nach Paragraph',
   ALPHABETICAL: 'Alphabetisch',
   PENALTY_ASC: 'Mindeststrafe aufsteigend',
   PENALTY_DESC: 'Mindeststrafe absteigend',
   VERBRECHEN_FIRST: 'Verbrechen zuerst',
   VERGEHEN_FIRST: 'Vergehen zuerst',
 };
+
+/** Eine nach Deliktsfamilie gruppierte Teilmenge der Deliktsliste. */
+export interface OffenseFamilyGroup {
+  family: OffenseFamily;
+  label: string;
+  offenses: CriminalOffense[];
+}
 
 /** Eine nach Strafmaß gruppierte Teilmenge der Deliktsliste. */
 export interface OffensePenaltyGroup {
@@ -137,17 +154,24 @@ export function minimumPenaltyMonths(minimumPenalty: string): number | null {
  */
 @Injectable({ providedIn: 'root' })
 export class CriminalOffenseService {
-  private readonly offenses: CriminalOffense[] = CRIMINAL_OFFENSES;
-  private readonly basics: LegalBasicsEntry[] = LEGAL_BASICS;
+  private readonly offenses: CriminalOffense[] = CRIMINAL_OFFENSES.filter(
+    (offense) => offense.relevanceLevel !== 'NOT_INCLUDE',
+  );
+  private readonly basics: LegalBasicsCard[] = LEGAL_BASICS_CARDS;
 
-  /** Alle kuratierten Straftatbestände. */
+  /** Alle kuratierten Straftatbestände (nur sichtbare Relevanzstufen). */
   getOffenses(): CriminalOffense[] {
     return this.offenses;
   }
 
-  /** Grundlagen des Allgemeinen Teils (§12, §15, §22, §23 StGB). */
-  getBasics(): LegalBasicsEntry[] {
+  /** Grundlagenkarten des Strafrechts (Allgemeiner Teil, Verfolgung, Unterlassen). */
+  getBasics(): LegalBasicsCard[] {
     return this.basics;
+  }
+
+  /** Eine Grundlagenkarte anhand ihrer ID. */
+  getBasic(id: string): LegalBasicsCard | undefined {
+    return this.basics.find((card) => card.id === id);
   }
 
   /** Ein Delikt anhand seiner ID. */
@@ -188,6 +212,8 @@ export class CriminalOffenseService {
         return sorted.sort(
           (a, b) => classificationRank(b) - classificationRank(a) || byParagraph(a, b),
         );
+      case 'RELEVANCE':
+        return sorted.sort((a, b) => relevanceRank(a) - relevanceRank(b) || byParagraph(a, b));
       case 'PARAGRAPH':
       default:
         return sorted.sort(byParagraph);
@@ -210,11 +236,32 @@ export class CriminalOffenseService {
   }
 
   /**
-   * Besonders §34a-relevant sind Delikte mit einer kuratierten `securityNote`.
-   * Die Zuordnung stammt damit aus der Datenbasis und ist nicht willkürlich.
+   * Gruppiert die Liste nach Deliktsfamilie. Die Delikte innerhalb einer Gruppe
+   * bleiben nach Paragraph sortiert, damit die didaktische Reihenfolge
+   * (Grunddelikt vor Qualifikation) erhalten bleibt.
+   */
+  groupByFamily(offenses: CriminalOffense[]): OffenseFamilyGroup[] {
+    const groups = new Map<OffenseFamily, CriminalOffense[]>();
+    for (const offense of offenses) {
+      const list = groups.get(offense.family) ?? [];
+      list.push(offense);
+      groups.set(offense.family, list);
+    }
+    return [...groups.entries()]
+      .map(([family, list]) => ({
+        family,
+        label: OFFENSE_FAMILY_LABELS[family],
+        offenses: this.sort(list, 'PARAGRAPH'),
+      }))
+      .sort((a, b) => a.label.localeCompare(b.label, 'de'));
+  }
+
+  /**
+   * Besonders §34a-relevant sind Delikte mit einer kuratierten `securityNote`
+   * oder der Relevanzstufe `CORE_34A`.
    */
   isExamRelevant(offense: CriminalOffense): boolean {
-    return Boolean(offense.securityNote);
+    return offense.relevanceLevel === 'CORE_34A' || Boolean(offense.securityNote);
   }
 
   /** Aus den tatsächlichen Daten berechnete Kennzahlen der übergebenen Liste. */
@@ -229,31 +276,32 @@ export class CriminalOffenseService {
   }
 
   /**
-   * Liefert zu einem Delikt verwandte Delikte über die Abgrenzungen. Die
-   * Verweise sind Freitext (z. B. „§246 StGB – Unterschlagung“); es wird über
-   * die Paragraphennummer aufgelöst. Nicht auflösbare Verweise werden ausgelassen.
+   * Liefert zu einem Delikt die verwandten Delikte. Grundlage sind die
+   * kuratierten `relatedOffenses`-IDs; ältere Freitext-Verweise in
+   * `distinctions` werden ergänzend über die Paragraphennummer aufgelöst.
+   * Nicht auflösbare Verweise werden ausgelassen.
    */
   getRelated(offense: CriminalOffense): CriminalOffense[] {
-    if (!offense.distinctions?.length) {
-      return [];
-    }
-    const ownParagraph = offense.paragraph.replace(/\s+/g, '');
     const related: CriminalOffense[] = [];
-    for (const distinction of offense.distinctions) {
+    const add = (candidate: CriminalOffense | undefined) => {
+      if (candidate && candidate.id !== offense.id && !related.includes(candidate)) {
+        related.push(candidate);
+      }
+    };
+    for (const id of offense.relatedOffenses) {
+      add(this.offenses.find((candidate) => candidate.id === id));
+    }
+    for (const distinction of offense.distinctions ?? []) {
       const match = distinction.match(/§\s*(\d+[a-z]?)/i);
       if (!match) {
         continue;
       }
       const paragraph = `§${match[1]}`;
-      if (paragraph === ownParagraph) {
-        continue;
-      }
-      const found = this.offenses.find(
-        (candidate) => candidate.paragraph.replace(/\s+/g, '') === paragraph,
+      add(
+        this.offenses.find(
+          (candidate) => candidate.paragraph.replace(/\s+/g, '') === paragraph.replace(/\s+/g, ''),
+        ),
       );
-      if (found && !related.includes(found)) {
-        related.push(found);
-      }
     }
     return related;
   }
@@ -264,6 +312,9 @@ export class CriminalOffenseService {
    */
   private matchesQuery(offense: CriminalOffense, query: OffenseQuery, needle: string): boolean {
     if (query.categories.length && !query.categories.includes(offense.category)) {
+      return false;
+    }
+    if (query.families.length && !query.families.includes(offense.family)) {
       return false;
     }
     if (query.classifications.length && !query.classifications.includes(offense.classification)) {
@@ -288,6 +339,9 @@ export class CriminalOffenseService {
         return false;
       }
     }
+    if (query.coreOnly && offense.relevanceLevel !== 'CORE_34A') {
+      return false;
+    }
     if (query.examRelevantOnly && !this.isExamRelevant(offense)) {
       return false;
     }
@@ -304,7 +358,12 @@ export class CriminalOffenseService {
       offense.protectedInterest,
       offense.explanation,
       offense.relevance,
+      offense.relevanceReason,
+      offense.examRelevance,
       offense.category,
+      OFFENSE_CATEGORY_LABELS[offense.category],
+      offense.family,
+      OFFENSE_FAMILY_LABELS[offense.family],
       offense.minimumPenalty,
       offense.maximumPenalty,
       ...offense.objectiveElements,
@@ -321,6 +380,16 @@ export class CriminalOffenseService {
       .toLowerCase();
     return haystack.includes(needle);
   }
+}
+
+/** Sortierrang nach Relevanz: 0 = besonders relevant, 1 = relevant. */
+function relevanceRank(offense: CriminalOffense): number {
+  const rank: Record<RelevanceLevel, number> = {
+    CORE_34A: 0,
+    RELATED_34A: 1,
+    NOT_INCLUDE: 2,
+  };
+  return rank[offense.relevanceLevel];
 }
 
 /** Sortierrang nach Strafmaß: 0 = kein Mindestfreiheitsstrafmaß (Geldstrafe). */
