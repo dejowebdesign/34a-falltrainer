@@ -142,6 +142,25 @@ describe('OralExamRunComponent', () => {
     expect(navButtons.every((button) => button.disabled)).toBe(true);
   });
 
+  it('öffnet und schließt die Frage-Fokusansicht ohne Timer oder Navigation zu verändern', () => {
+    const before = service.remainingSeconds();
+    fixture.componentInstance.openFocus();
+    fixture.detectChanges();
+    expect(fixture.componentInstance.focusOpen()).toBe(true);
+    const overlay = element.querySelector('app-focus-overlay')!;
+    expect(overlay.querySelector('.focus-question')?.textContent).toContain(
+      service.exam()!.questions[0].question,
+    );
+
+    const trigger = element.querySelector<HTMLButtonElement>('.ft-focus-trigger')!;
+    fixture.componentInstance.closeFocus();
+    fixture.detectChanges();
+    expect(fixture.componentInstance.focusOpen()).toBe(false);
+    expect(document.activeElement).toBe(trigger);
+    expect(fixture.componentInstance.index()).toBe(0);
+    expect(service.remainingSeconds()).toBeLessThanOrEqual(before);
+  });
+
   it('zeigt die Warnstufe des Timers', () => {
     const timer = () => element.querySelector('.exam-timer')!;
     expect(timer().classList.contains('warning')).toBe(false);

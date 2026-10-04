@@ -48,6 +48,20 @@
   --ft-motion-fast: 140ms var(--ft-ease);
   --ft-motion: 220ms var(--ft-ease);
   --ft-motion-slow: 420ms var(--ft-ease);
+
+  /* Höhe der sticky Navigation – Focus-Overlays starten darunter. */
+  --ft-focus-top: 92px;
+
+  /* Section-Rhythmus: großzügige, konsistente Abstände zwischen den
+     Seitenebenen. */
+  --ft-section-gap: 1.6rem;
+  --ft-section-pad: 2rem;
+}
+
+@media (max-width: 600px) {
+  :root {
+    --ft-section-pad: 1.25rem;
+  }
 }
 
 /* ---------- Light Theme ---------- */
@@ -55,12 +69,20 @@
 html.light {
   color-scheme: light;
 
-  --ft-bg: #eef2f9;
-  --ft-bg-grid: rgba(30, 58, 138, 0.05);
+  /* Seitenhintergrund: kühles, leicht bläuliches Grau. Klar vom Weiß der
+     Cards unterscheidbar. */
+  --ft-bg: #e5eaf4;
+  --ft-bg-grid: rgba(30, 58, 138, 0.045);
+  /* Section-Ebene: merklich heller als die Seite, aber dunkler als die Card –
+     so entsteht eine sichtbare dreistufige Tiefe (Seite → Section → Card). */
+  --ft-section: #f1f4fb;
+  /* Card: weiß. */
   --ft-surface: #ffffff;
-  --ft-surface-2: #f5f7fc;
-  --ft-surface-3: #eaeef7;
-  --ft-surface-inset: #eef2fa;
+  /* Sekundärfläche: hauchzart getönt, damit Card-Innenflächen lesbar
+     bleiben, ohne wie der Seitenhintergrund zu wirken. */
+  --ft-surface-2: #f6f8fd;
+  --ft-surface-3: #e9eef8;
+  --ft-surface-inset: #edf1f9;
 
   --ft-primary: #1d4ed8;
   --ft-primary-strong: #1e3a8a;
@@ -75,8 +97,8 @@ html.light {
 
   --ft-text: #0f172a;
   --ft-muted: #55647e;
-  --ft-border: #dbe3f0;
-  --ft-border-strong: #c3cee1;
+  --ft-border: #d6dfef;
+  --ft-border-strong: #b8c5dc;
   --ft-on-primary: #ffffff;
 
   --ft-ok: #15803d;
@@ -109,14 +131,16 @@ html.light {
   --ft-header-glass: rgba(255, 255, 255, 0.82);
   --ft-header-text: #0f172a;
 
-  --ft-glass-surface: rgba(255, 255, 255, 0.7);
-  --ft-glass-strong: rgba(255, 255, 255, 0.86);
-  --ft-glass-border: rgba(29, 78, 216, 0.16);
-  --ft-glass-tint: rgba(255, 255, 255, 0.6);
+  --ft-glass-surface: rgba(255, 255, 255, 0.62);
+  --ft-glass-strong: rgba(255, 255, 255, 0.82);
+  --ft-glass-border: rgba(29, 78, 216, 0.2);
+  --ft-glass-tint: rgba(255, 255, 255, 0.72);
 
-  --ft-shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.06), 0 1px 3px rgba(15, 23, 42, 0.05);
-  --ft-shadow: 0 8px 24px -12px rgba(15, 23, 42, 0.24), 0 2px 6px rgba(15, 23, 42, 0.05);
-  --ft-shadow-lg: 0 24px 48px -24px rgba(15, 23, 42, 0.34), 0 6px 14px rgba(15, 23, 42, 0.06);
+  /* Light-Elevation: weicher und etwas präsenter als zuvor, damit weiße
+     Cards auf dem grauen Seitenhintergrund eine klare Ebene bilden. */
+  --ft-shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.07), 0 1px 3px rgba(15, 23, 42, 0.05);
+  --ft-shadow: 0 10px 26px -14px rgba(15, 23, 42, 0.26), 0 2px 8px rgba(15, 23, 42, 0.06);
+  --ft-shadow-lg: 0 28px 52px -26px rgba(15, 23, 42, 0.36), 0 8px 18px rgba(15, 23, 42, 0.07);
 
   --ft-rule-surface: #eef6fb;
   --ft-rule-border: #bfe0e6;
@@ -145,6 +169,8 @@ html.dark {
 
   --ft-bg: #070d1c;
   --ft-bg-grid: rgba(45, 212, 191, 0.045);
+  /* Section-Ebene im Dark Mode: minimal heller als der Seitenhintergrund. */
+  --ft-section: #0a1222;
   --ft-surface: #0e1728;
   --ft-surface-2: #121d33;
   --ft-surface-3: #17243d;
@@ -293,7 +319,51 @@ h4 {
 .ft-page {
   padding-block: 1.75rem 3.5rem;
   display: grid;
-  gap: 1.5rem;
+  gap: var(--ft-section-gap);
+}
+
+/* ---------- Seitenebenen (Section-Hierarchie) ----------
+   Ebene 1: Seitenhintergrund (--ft-bg, kühles Grau).
+   Ebene 2: Section (--ft-section, leicht heller, große Rundung).
+   Ebene 3: Card (--ft-surface, weiß).
+   Ebene 4: Elevated Card (weiß + Elevation).
+   Ebene 5: Glass (leicht transparente Surface).
+
+   Sections geben der Seite Tiefe, ohne harte Trennlinien. */
+.ft-section {
+  background: var(--ft-section);
+  border: 1px solid var(--ft-border);
+  border-radius: var(--ft-radius-xl);
+  padding: var(--ft-section-pad);
+}
+
+/* Section ohne eigene Fläche – nur als semantischer Abstandshalter. */
+.ft-section--plain {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+}
+
+/* Bereich mit alternierender, minimal anders getönter Fläche. */
+.ft-section--tint {
+  background: var(--ft-surface-2);
+}
+
+.ft-section-head {
+  margin: 0 0 1.1rem;
+}
+
+.ft-section-head h2 {
+  margin: 0.25rem 0 0.3rem;
+  font-size: clamp(1.4rem, 2.6vw, 1.85rem);
+}
+
+.ft-section-head p {
+  margin: 0;
+  color: var(--ft-muted);
+  max-width: 720px;
+  line-height: 1.6;
 }
 
 .ft-page-head h1 {
@@ -409,6 +479,147 @@ h4 {
   background: var(--ft-primary-soft);
   border-color: transparent;
   color: var(--ft-primary);
+}
+
+/* ============================================================
+   Interaktion: Einblenden, Fokus/Zoom
+   ============================================================ */
+
+/* Dezente Einblendung beim Wechsel von Fragen/Stufen (150–250ms). */
+.ft-reveal {
+  animation: ft-reveal-in 220ms var(--ft-ease) both;
+}
+
+@keyframes ft-reveal-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 8px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Trigger für den Fokus-/Zoom-Modus („Sachverhalt vergrößern“). */
+.ft-focus-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.7rem;
+  border: 1px solid var(--ft-border);
+  border-radius: 999px;
+  background: var(--ft-surface);
+  color: var(--ft-muted);
+  font-size: 0.78rem;
+  font-weight: 600;
+  line-height: 1.4;
+  cursor: pointer;
+  transition:
+    color var(--ft-motion),
+    border-color var(--ft-motion),
+    background-color var(--ft-motion);
+}
+.ft-focus-trigger:hover {
+  color: var(--ft-accent-strong);
+  border-color: var(--ft-accent);
+  background: var(--ft-accent-soft);
+}
+.ft-focus-trigger mat-icon {
+  font-size: 17px;
+  width: 17px;
+  height: 17px;
+}
+
+/* Fokus-Overlay: gezielte Darstellung der Karte – kein Seiten-Zoom.
+   Der Inhalt bleibt vollständig lesbar und bedienbar. */
+.ft-focus-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: var(--ft-focus-top) 1rem 1.5rem;
+  background: var(--ft-overlay);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  overflow-y: auto;
+  animation: ft-fade-in 180ms var(--ft-ease) both;
+}
+
+@keyframes ft-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.ft-focus-panel {
+  position: relative;
+  width: 100%;
+  max-width: 820px;
+  margin: 0 auto;
+  background: var(--ft-surface);
+  border: 1px solid var(--ft-border);
+  border-radius: var(--ft-radius-lg);
+  box-shadow: var(--ft-shadow-lg);
+  padding: clamp(1.25rem, 3vw, 2rem);
+  animation: ft-focus-in 220ms var(--ft-ease) both;
+}
+
+@keyframes ft-focus-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 10px, 0) scale(0.99);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+.ft-focus-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.ft-focus-head h2 {
+  margin: 0;
+  font-size: clamp(1.25rem, 2.6vw, 1.6rem);
+}
+
+.ft-focus-close {
+  flex: 0 0 auto;
+}
+
+.ft-focus-body {
+  font-size: clamp(1.02rem, 1.8vw, 1.15rem);
+  line-height: 1.75;
+}
+
+@media (max-width: 600px) {
+  .ft-focus-overlay {
+    padding: calc(var(--ft-focus-top) - 14px) 0.75rem 1rem;
+  }
+  .ft-focus-panel {
+    border-radius: var(--ft-radius);
+  }
+}
+
+/* Reduced Motion: Einblend- und Fokus-Animationen deaktivieren,
+   die Funktion (Sichtbarkeit, Fokus) bleibt vollständig erhalten. */
+@media (prefers-reduced-motion: reduce) {
+  .ft-reveal,
+  .ft-focus-overlay,
+  .ft-focus-panel {
+    animation: none;
+  }
 }
 
 /* ============================================================

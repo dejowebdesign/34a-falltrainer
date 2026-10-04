@@ -1,4 +1,4 @@
-import { Component, computed, effect, inject, signal } from '@angular/core';
+import { Component, ElementRef, computed, effect, inject, signal, viewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -6,6 +6,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { OralExamService } from '../../core/services/oral-exam.service';
+import { FocusOverlayComponent } from '../../shared/components/focus-overlay.component';
 import {
   ExamQuestionRole,
   ORAL_EXAM_DURATION_SECONDS,
@@ -37,6 +38,7 @@ const OPTION_LETTERS = ['A', 'B', 'C', 'D', 'E'];
     MatCardModule,
     MatRadioModule,
     MatProgressBarModule,
+    FocusOverlayComponent,
   ],
   template: `
     @if (currentQuestion(); as question) {
@@ -67,36 +69,50 @@ const OPTION_LETTERS = ['A', 'B', 'C', 'D', 'E'];
           ></mat-progress-bar>
         </header>
 
-        <mat-card appearance="outlined" class="question-card">
-          <mat-card-header class="question-head">
-            <div class="question-meta">
-              <span class="meta-topic">{{ question.categoryLabel }}</span>
-              <span class="meta-difficulty">Schwierigkeit {{ question.difficulty }}</span>
-              <span class="meta-role">{{ roleLabel() }}</span>
-            </div>
-            <mat-card-title class="question-title">{{ question.question }}</mat-card-title>
-          </mat-card-header>
-          <mat-card-content>
-            <mat-radio-group
-              class="options"
-              [value]="selectedOptionId() ?? ''"
-              (change)="select($event.value)"
-              [disabled]="isLocked()"
-              [attr.aria-label]="question.question"
-            >
-              @for (option of question.options; track option.id; let i = $index) {
-                <mat-radio-button
-                  class="option"
-                  [class.selected]="selectedOptionId() === option.id"
-                  [value]="option.id"
-                >
-                  <span class="option-letter" aria-hidden="true">{{ letter(i) }}</span>
-                  <span class="option-text">{{ option.text }}</span>
-                </mat-radio-button>
-              }
-            </mat-radio-group>
-          </mat-card-content>
-        </mat-card>
+        @for (q of [question]; track q.id) {
+          <mat-card
+            appearance="outlined"
+            class="question-card ft-elevation-2 ft-reveal"
+            [attr.data-q]="index()"
+          >
+            <mat-card-header class="question-head">
+              <div class="question-head-row">
+                <div class="question-head-text">
+                  <div class="question-meta">
+                    <span class="meta-topic">{{ q.categoryLabel }}</span>
+                    <span class="meta-difficulty">Schwierigkeit {{ q.difficulty }}</span>
+                    <span class="meta-role">{{ roleLabel() }}</span>
+                  </div>
+                  <mat-card-title class="question-title">{{ q.question }}</mat-card-title>
+                </div>
+                <button #examFocus type="button" class="ft-focus-trigger" (click)="openFocus()">
+                  <mat-icon aria-hidden="true">zoom_out_map</mat-icon>
+                  Frage fokussieren
+                </button>
+              </div>
+            </mat-card-header>
+            <mat-card-content>
+              <mat-radio-group
+                class="options"
+                [value]="selectedOptionId() ?? ''"
+                (change)="select($event.value)"
+                [disabled]="isLocked()"
+                [attr.aria-label]="q.question"
+              >
+                @for (option of q.options; track option.id; let i = $index) {
+                  <mat-radio-button
+                    class="option"
+                    [class.selected]="selectedOptionId() === option.id"
+                    [value]="option.id"
+                  >
+                    <span class="option-letter" aria-hidden="true">{{ letter(i) }}</span>
+                    <span class="option-text">{{ option.text }}</span>
+                  </mat-radio-button>
+                }
+              </mat-radio-group>
+            </mat-card-content>
+          </mat-card>
+        }
 
         @if (isLocked()) {
           <p class="timeout-note" role="status">
@@ -140,6 +156,20 @@ const OPTION_LETTERS = ['A', 'B', 'C', 'D', 'E'];
           }
         </nav>
       </div>
+    }
+
+    @if (focusOpen() && currentQuestion(); as question) {
+      <app-focus-overlay
+        heading="Frage"
+        ariaLabel="Frage in Fokusansicht"
+        (close)="closeFocus()"
+      >
+        <p class="focus-question">{{ question.question }}</p>
+        <p class="focus-hint">
+          Die Antwortauswahl bleibt in der Fragekarte unverändert nutzbar. Die Prüfungszeit läuft
+          während der Fokusansicht normal weiter.
+        </p>
+      </app-focus-overlay>
     }
   `,
   styles: [
@@ -272,6 +302,25 @@ const OPTION_LETTERS = ['A', 'B', 'C', 'D', 'E'];
       .question-head {
         display: block;
       }
+      .question-head-row {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 0.75rem 1rem;
+        flex-wrap: wrap;
+      }
+      .question-head-text {
+        min-width: 0;
+      }
+      .focus-question {
+        margin: 0 0 0.6rem;
+        font-weight: 600;
+      }
+      .focus-hint {
+        margin: 0;
+        color: var(--ft-muted);
+        font-size: 0.92rem;
+      }
       .question-meta {
         display: flex;
         flex-wrap: wrap;
@@ -324,11 +373,14 @@ const OPTION_LETTERS = ['A', 'B', 'C', 'D', 'E'];
         transition:
           border-color var(--ft-motion),
           background-color var(--ft-motion),
-          box-shadow var(--ft-motion);
+          box-shadow var(--ft-motion),
+          transform var(--ft-motion);
       }
       .option:hover {
         border-color: var(--ft-border-strong);
         background: var(--ft-surface-2);
+        transform: translateY(-2px);
+        box-shadow: var(--ft-elevation-2);
       }
       .option.selected {
         border-color: var(--ft-accent);
@@ -405,6 +457,11 @@ const OPTION_LETTERS = ['A', 'B', 'C', 'D', 'E'];
           padding: 0.85rem 0.9rem;
         }
       }
+      @media (prefers-reduced-motion: reduce) {
+        .option:hover {
+          transform: none;
+        }
+      }
     `,
   ],
 })
@@ -416,6 +473,22 @@ export class OralExamRunComponent {
   readonly total = this.examService.totalCount;
   readonly answered = this.examService.answeredCount;
   readonly isLocked = this.examService.isLocked;
+
+  /** Rein visuelle Fokusansicht der Frage – ohne Einfluss auf Timer/Navigation. */
+  readonly focusOpen = signal(false);
+
+  private readonly examFocus = viewChild<ElementRef<HTMLButtonElement>>('examFocus');
+
+  openFocus(): void {
+    this.focusOpen.set(true);
+  }
+
+  /** Schließt die Fokusansicht und gibt den Fokus an den Auslöser zurück. */
+  closeFocus(): void {
+    this.focusOpen.set(false);
+    this.examFocus()?.nativeElement.focus();
+  }
+
   readonly selectedOptionId = computed(() => {
     const question = this.currentQuestion();
     return question ? this.examService.selectedOptionId(question.id) : undefined;

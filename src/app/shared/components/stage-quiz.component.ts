@@ -1,4 +1,4 @@
-import { Component, input, output } from '@angular/core';
+import { Component, ElementRef, input, output, signal, viewChild } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -7,6 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
 import { StageEvaluation, StageOption } from '../../core/models';
 import { VerdictBadgeComponent } from './verdict-badge.component';
+import { FocusOverlayComponent } from './focus-overlay.component';
 
 /**
  * Wiederverwendbare Stufenansicht: Frage, Optionen, Feedback.
@@ -24,12 +25,21 @@ import { VerdictBadgeComponent } from './verdict-badge.component';
     MatIconModule,
     FormsModule,
     VerdictBadgeComponent,
+    FocusOverlayComponent,
   ],
   template: `
-    <mat-card appearance="outlined" class="quiz-card">
-      <mat-card-header>
-        <mat-card-title>{{ heading() }}</mat-card-title>
-        <mat-card-subtitle>{{ prompt() }}</mat-card-subtitle>
+    <mat-card appearance="outlined" class="quiz-card ft-elevation-2 ft-reveal">
+      <mat-card-header class="quiz-head">
+        <div class="quiz-head-row">
+          <div class="quiz-head-text">
+            <mat-card-title>{{ heading() }}</mat-card-title>
+            <mat-card-subtitle>{{ prompt() }}</mat-card-subtitle>
+          </div>
+          <button #quizFocus type="button" class="ft-focus-trigger" (click)="openFocus()">
+            <mat-icon aria-hidden="true">zoom_out_map</mat-icon>
+            Frage fokussieren
+          </button>
+        </div>
       </mat-card-header>
       <mat-card-content>
         @if (allowMultiple()) {
@@ -134,11 +144,47 @@ import { VerdictBadgeComponent } from './verdict-badge.component';
         }
       </mat-card-actions>
     </mat-card>
+
+    @if (focusOpen()) {
+      <app-focus-overlay
+        heading="Frage"
+        ariaLabel="Frage in Fokusansicht"
+        (close)="closeFocus()"
+      >
+        <p class="focus-prompt">{{ prompt() }}</p>
+        <p class="focus-hint">
+          Die Antwortauswahl bleibt in der Karte unverändert nutzbar. Die Prüfung läuft während der
+          Fokusansicht normal weiter.
+        </p>
+      </app-focus-overlay>
+    }
   `,
   styles: [
     `
       .quiz-card {
         border-radius: var(--ft-radius-lg);
+      }
+      .quiz-head {
+        display: block;
+      }
+      .quiz-head-row {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+      .quiz-head-text {
+        min-width: 0;
+      }
+      .focus-prompt {
+        margin: 0 0 0.6rem;
+        font-weight: 600;
+      }
+      .focus-hint {
+        margin: 0;
+        color: var(--ft-muted);
+        font-size: 0.92rem;
       }
       .hint {
         display: flex;
@@ -168,11 +214,14 @@ import { VerdictBadgeComponent } from './verdict-badge.component';
         transition:
           border-color var(--ft-motion),
           background-color var(--ft-motion),
-          box-shadow var(--ft-motion);
+          box-shadow var(--ft-motion),
+          transform var(--ft-motion);
       }
       .option:hover {
         border-color: var(--ft-border-strong);
         background: var(--ft-surface-2);
+        transform: translateY(-2px);
+        box-shadow: var(--ft-elevation-2);
       }
       .option:focus-within {
         outline: 3px solid var(--ft-accent);
@@ -276,6 +325,11 @@ import { VerdictBadgeComponent } from './verdict-badge.component';
         background: var(--ft-danger-surface);
         border: 1px solid var(--ft-danger-border);
       }
+      @media (prefers-reduced-motion: reduce) {
+        .option:hover {
+          transform: none;
+        }
+      }
     `,
   ],
 })
@@ -297,6 +351,20 @@ export class StageQuizComponent {
   readonly selectOption = output<string>();
   readonly submit = output<void>();
   readonly next = output<void>();
+
+  readonly focusOpen = signal(false);
+
+  private readonly quizFocus = viewChild<ElementRef<HTMLButtonElement>>('quizFocus');
+
+  openFocus(): void {
+    this.focusOpen.set(true);
+  }
+
+  /** Schließt die Fokusansicht und gibt den Fokus an den Auslöser zurück. */
+  closeFocus(): void {
+    this.focusOpen.set(false);
+    this.quizFocus()?.nativeElement.focus();
+  }
 
   isSelected(optionId: string): boolean {
     return this.selectedIds().includes(optionId);
