@@ -284,8 +284,26 @@ import { LearningPathComponent } from '../../shared/components/learning-path.com
         justify-content: space-between;
         gap: 2rem;
       }
+      /* Hero-Container breiter als der übrige Seiteninhalt, damit die linke
+         Content-Card weiter nach links reichen und mehr Textbreite aufnehmen
+         kann. Spezifität über zwei Klassen, um die globale .ft-container-Regel
+         sicher zu übersteuern. */
+      .ft-container.hero-inner {
+        max-width: 1320px;
+      }
+      /* Breite der linken Glass-Card: deutlich mehr horizontale Textfläche für
+         die Headline. Die 78vw-Grenze hält die rechte Bildhälfte (Gebäude +
+         Security) bei kleineren Desktopbreiten frei, damit der Mitarbeiter
+         nicht von der Card überdeckt wird. */
       .hero-text {
         max-width: 680px;
+      }
+      /* Nur Desktop: breitere Textfläche. Tablet (≤960px) und Mobile behalten
+         die bestehende responsive Logik unverändert. */
+      @media (min-width: 961px) {
+        .hero-text {
+          max-width: min(840px, 78vw);
+        }
       }
       /* Subtile Material-/Glass-Surface, die den Text vom Hero-Bild absetzt –
          dezent, nur um den Textblock, damit das Bild sichtbar bleibt. */
