@@ -3,44 +3,137 @@ import { CRIMINAL_OFFENSES, LEGAL_BASICS } from '../data/criminal-offenses.data'
 import {
   CriminalOffense,
   LegalBasicsEntry,
-  OffenseCategory,
   OffenseClassification,
+  OffenseQuery,
+  OffenseSortKey,
+  PenaltyClass,
   ProsecutionType,
 } from '../models';
 
-/** Ein aktiver Filterzustand der Lernseite. */
-export interface OffenseFilter {
-  /** Freitextsuche (Paragraph, Titel, Begriff, Deliktsgruppe). */
-  query: string;
-  /** Deliktsgruppe oder `null` für alle. */
-  category: OffenseCategory | null;
-  /** Verbrechen / Vergehen oder `null` für alle. */
-  classification: OffenseClassification | null;
-  /** Offizial- / Antragsdelikt oder `null` für alle. */
-  prosecution: ProsecutionType | null;
-  /** Versuch strafbar ja/nein oder `null` für alle. */
-  attemptPunishable: boolean | null;
-  /** Nur Delikte mit Vorsatz-Erfordernis (intentRequired). */
-  intentOnly: boolean;
-  /** Nur Delikte mit eigenständiger fahrlässiger Variante. */
-  negligenceOnly: boolean;
+/** Leerer, mehrfachauswahlfähiger Filterzustand der Lernseite. */
+export const EMPTY_OFFENSE_QUERY: OffenseQuery = {
+  text: '',
+  categories: [],
+  classifications: [],
+  prosecutions: [],
+  attempts: [],
+  culpabilities: [],
+  examRelevantOnly: false,
+};
+
+/** Anzeigenamen der Strafmaßklassen (fachlich aus dem Mindestmaß abgeleitet). */
+export const PENALTY_CLASS_LABELS: Record<PenaltyClass, string> = {
+  GELDSTRASSE: 'Geldstrafe bzw. kein gesetzliches Mindestmaß',
+  FREIHEITSSTRAFE_UNTER_1_JAHR: 'Freiheitsstrafe unter 1 Jahr',
+  VERBRECHEN_AB_1_JAHR: 'Verbrechen – Mindestmaß ab 1 Jahr',
+  OHNE_EIGENE_STRAFANDROHUNG: 'Keine eigene Strafandrohung',
+};
+
+/** Reihenfolge der Strafmaßgruppen (niedriges Mindestmaß zuerst). */
+export const PENALTY_CLASS_ORDER: PenaltyClass[] = [
+  'GELDSTRASSE',
+  'OHNE_EIGENE_STRAFANDROHUNG',
+  'FREIHEITSSTRAFE_UNTER_1_JAHR',
+  'VERBRECHEN_AB_1_JAHR',
+];
+
+/** Anzeigenamen der Sortieroptionen. */
+export const OFFENSE_SORT_LABELS: Record<OffenseSortKey, string> = {
+  PARAGRAPH: 'Paragraph aufsteigend',
+  ALPHABETICAL: 'Alphabetisch',
+  PENALTY_ASC: 'Mindeststrafe aufsteigend',
+  PENALTY_DESC: 'Mindeststrafe absteigend',
+  VERBRECHEN_FIRST: 'Verbrechen zuerst',
+  VERGEHEN_FIRST: 'Vergehen zuerst',
+};
+
+/** Eine nach Strafmaß gruppierte Teilmenge der Deliktsliste. */
+export interface OffensePenaltyGroup {
+  penaltyClass: PenaltyClass;
+  label: string;
+  offenses: CriminalOffense[];
 }
 
-export const EMPTY_OFFENSE_FILTER: OffenseFilter = {
-  query: '',
-  category: null,
-  classification: null,
-  prosecution: null,
-  attemptPunishable: null,
-  intentOnly: false,
-  negligenceOnly: false,
+/** Aus den Daten berechnete Kennzahlen der aktuellen Liste. */
+export interface OffenseStats {
+  total: number;
+  antragsdelikte: number;
+  verbrechen: number;
+  vergehen: number;
+  examRelevant: number;
+}
+
+const MONTHS_PER_YEAR = 12;
+
+const NUMBER_WORDS: Record<string, number> = {
+  einem: 1,
+  einer: 1,
+  eins: 1,
+  zwei: 2,
+  drei: 3,
+  vier: 4,
+  fünf: 5,
+  sechs: 6,
+  sieben: 7,
+  acht: 8,
+  neun: 9,
+  zehn: 10,
 };
 
 /**
- * Suche und Filter der Lernseite „Strafgesetzbuch“.
+ * Ordnet ein Delikt anhand seines gesetzlichen Mindestmaßes einer Strafmaßklasse
+ * zu. Maßgeblich ist ausschließlich das gesetzliche Mindestmaß, nicht die
+ * tatsächlich verhängte Strafe. Delikte ohne eigene Strafandrohung
+ * (z. B. Strafverfolgungsregelungen wie §247, §248a StGB) erhalten eine eigene
+ * Klasse, damit sie nicht fälschlich als „Geldstrafe“ erscheinen.
+ */
+export function penaltyClassOf(offense: CriminalOffense): PenaltyClass {
+  if (/keine eigene Strafandrohung/i.test(offense.minimumPenalty)) {
+    return 'OHNE_EIGENE_STRAFANDROHUNG';
+  }
+  if (offense.classification === 'VERBRECHEN') {
+    return 'VERBRECHEN_AB_1_JAHR';
+  }
+  const months = minimumPenaltyMonths(offense.minimumPenalty);
+  if (months !== null && months > 0) {
+    return 'FREIHEITSSTRAFE_UNTER_1_JAHR';
+  }
+  return 'GELDSTRASSE';
+}
+
+/**
+ * Wandelt das gesetzliche Mindestmaß in Monate um, um es vergleichbar zu
+ * sortieren. `null` bedeutet „kein gesetzliches Mindestfreiheitsstrafmaß“
+ * (Geldstrafe) und wird für die aufsteigende Sortierung als 0 behandelt.
+ * Die Umrechnung liest ausschließlich die vorhandenen Wortlaute der Datenbasis.
+ */
+export function minimumPenaltyMonths(minimumPenalty: string): number | null {
+  const text = minimumPenalty.toLowerCase();
+  if (text.includes('keine eigene strafandrohung')) {
+    return 0;
+  }
+  const numeric = text.match(/nicht unter (\d+)\s*(jahr|jahren|monat|monaten)/);
+  if (numeric) {
+    const value = Number(numeric[1]);
+    return numeric[2].startsWith('monat') ? value : value * MONTHS_PER_YEAR;
+  }
+  const wordMatch = text.match(/nicht unter ([a-zäöüß]+)(?:\s*(jahr|jahren|monat|monaten))?/);
+  if (wordMatch) {
+    const value = NUMBER_WORDS[wordMatch[1]];
+    const unit = wordMatch[2] ?? 'jahr';
+    if (value !== undefined) {
+      return unit.startsWith('monat') ? value : value * MONTHS_PER_YEAR;
+    }
+  }
+  return null;
+}
+
+/**
+ * Suche, Filter, Sortierung und Gruppierung der Lernseite „Strafgesetzbuch“.
  *
- * Reine, seiteneffektfreie Funktionen, damit die Filterlogik unabhängig vom UI
- * getestet werden kann (AGENTS.md: keine Rechtslogik in Templates).
+ * Reine, seiteneffektfreie Funktionen, damit die Logik unabhängig vom UI
+ * getestet werden kann (AGENTS.md: keine Rechtslogik in Templates). Es werden
+ * keine fachlichen Daten verändert – nur gefiltert, sortiert und gruppiert.
  */
 @Injectable({ providedIn: 'root' })
 export class CriminalOffenseService {
@@ -63,12 +156,76 @@ export class CriminalOffenseService {
   }
 
   /**
-   * Wendet Suche und Filter an. Die Reihenfolge bleibt stabil (Datenreihenfolge),
-   * damit die Anzeige nicht springt.
+   * Wendet den mehrfachauswahlfähigen Filter der Lernseite an.
    */
-  filter(filter: OffenseFilter): CriminalOffense[] {
-    const needle = filter.query.trim().toLowerCase();
-    return this.offenses.filter((offense) => this.matches(offense, filter, needle));
+  query(query: OffenseQuery): CriminalOffense[] {
+    const needle = query.text.trim().toLowerCase();
+    return this.offenses.filter((offense) => this.matchesQuery(offense, query, needle));
+  }
+
+  /**
+   * Sortiert eine Kopie der Liste. Sekundärkriterium ist immer der Paragraph
+   * aufsteigend, damit die Reihenfolge bei Gleichstand deterministisch bleibt.
+   */
+  sort(offenses: CriminalOffense[], key: OffenseSortKey): CriminalOffense[] {
+    const sorted = [...offenses];
+    const byParagraph = (a: CriminalOffense, b: CriminalOffense) =>
+      compareParagraphs(a.paragraph, b.paragraph);
+    switch (key) {
+      case 'ALPHABETICAL':
+        return sorted.sort(
+          (a, b) => a.officialTitle.localeCompare(b.officialTitle, 'de') || byParagraph(a, b),
+        );
+      case 'PENALTY_ASC':
+        return sorted.sort((a, b) => penaltyRank(a) - penaltyRank(b) || byParagraph(a, b));
+      case 'PENALTY_DESC':
+        return sorted.sort((a, b) => penaltyRank(b) - penaltyRank(a) || byParagraph(a, b));
+      case 'VERBRECHEN_FIRST':
+        return sorted.sort(
+          (a, b) => classificationRank(a) - classificationRank(b) || byParagraph(a, b),
+        );
+      case 'VERGEHEN_FIRST':
+        return sorted.sort(
+          (a, b) => classificationRank(b) - classificationRank(a) || byParagraph(a, b),
+        );
+      case 'PARAGRAPH':
+      default:
+        return sorted.sort(byParagraph);
+    }
+  }
+
+  /**
+   * Gruppiert die Liste nach Strafmaßklasse (gesetzliches Mindestmaß). Leere
+   * Gruppen werden weggelassen, die Reihenfolge folgt `PENALTY_CLASS_ORDER`.
+   */
+  group(offenses: CriminalOffense[]): OffensePenaltyGroup[] {
+    return PENALTY_CLASS_ORDER.map((penaltyClass) => ({
+      penaltyClass,
+      label: PENALTY_CLASS_LABELS[penaltyClass],
+      offenses: this.sort(
+        offenses.filter((offense) => penaltyClassOf(offense) === penaltyClass),
+        'PARAGRAPH',
+      ),
+    })).filter((group) => group.offenses.length > 0);
+  }
+
+  /**
+   * Besonders §34a-relevant sind Delikte mit einer kuratierten `securityNote`.
+   * Die Zuordnung stammt damit aus der Datenbasis und ist nicht willkürlich.
+   */
+  isExamRelevant(offense: CriminalOffense): boolean {
+    return Boolean(offense.securityNote);
+  }
+
+  /** Aus den tatsächlichen Daten berechnete Kennzahlen der übergebenen Liste. */
+  getStats(offenses: CriminalOffense[]): OffenseStats {
+    return {
+      total: offenses.length,
+      antragsdelikte: offenses.filter((o) => o.prosecution.type === 'ANTRAGSDELIKT').length,
+      verbrechen: offenses.filter((o) => o.classification === 'VERBRECHEN').length,
+      vergehen: offenses.filter((o) => o.classification === 'VERGEHEN').length,
+      examRelevant: offenses.filter((o) => this.isExamRelevant(o)).length,
+    };
   }
 
   /**
@@ -101,32 +258,46 @@ export class CriminalOffenseService {
     return related;
   }
 
-  private matches(offense: CriminalOffense, filter: OffenseFilter, needle: string): boolean {
-    if (filter.category && offense.category !== filter.category) {
+  /**
+   * Mehrfachauswahl-Filter: innerhalb einer Dimension ODER, zwischen den
+   * Dimensionen UND.
+   */
+  private matchesQuery(offense: CriminalOffense, query: OffenseQuery, needle: string): boolean {
+    if (query.categories.length && !query.categories.includes(offense.category)) {
       return false;
     }
-    if (filter.classification && offense.classification !== filter.classification) {
+    if (query.classifications.length && !query.classifications.includes(offense.classification)) {
       return false;
     }
-    if (filter.prosecution && offense.prosecution.type !== filter.prosecution) {
+    if (query.prosecutions.length && !query.prosecutions.includes(offense.prosecution.type)) {
       return false;
     }
-    if (filter.attemptPunishable !== null && offense.attemptPunishable !== filter.attemptPunishable) {
+    if (query.attempts.length) {
+      const matchesAttempt = query.attempts.some((attempt) =>
+        attempt === 'PUNISHABLE' ? offense.attemptPunishable : !offense.attemptPunishable,
+      );
+      if (!matchesAttempt) {
+        return false;
+      }
+    }
+    if (query.culpabilities.length) {
+      const matchesCulpability = query.culpabilities.some((culpability) =>
+        culpability === 'VORSATZ' ? offense.intentRequired : offense.negligence.negligentVariant,
+      );
+      if (!matchesCulpability) {
+        return false;
+      }
+    }
+    if (query.examRelevantOnly && !this.isExamRelevant(offense)) {
       return false;
     }
-    if (filter.intentOnly && !offense.intentRequired) {
-      return false;
-    }
-    if (filter.negligenceOnly && !offense.negligence.negligentVariant) {
-      return false;
-    }
-    if (needle.length > 0 && !this.matchesQuery(offense, needle)) {
+    if (needle.length > 0 && !this.textMatches(offense, needle)) {
       return false;
     }
     return true;
   }
 
-  private matchesQuery(offense: CriminalOffense, needle: string): boolean {
+  private textMatches(offense: CriminalOffense, needle: string): boolean {
     const haystack = [
       offense.paragraph,
       offense.officialTitle,
@@ -150,4 +321,25 @@ export class CriminalOffenseService {
       .toLowerCase();
     return haystack.includes(needle);
   }
+}
+
+/** Sortierrang nach Strafmaß: 0 = kein Mindestfreiheitsstrafmaß (Geldstrafe). */
+function penaltyRank(offense: CriminalOffense): number {
+  return minimumPenaltyMonths(offense.minimumPenalty) ?? 0;
+}
+
+/** 0 = Verbrechen, 1 = Vergehen (für die „… zuerst“-Sortierungen). */
+function classificationRank(offense: CriminalOffense): number {
+  return offense.classification === 'VERBRECHEN' ? 0 : 1;
+}
+
+/** Paragraphen aufsteigend, inkl. Buchstabensuffix (z. B. §248a nach §248). */
+function compareParagraphs(a: string, b: string): number {
+  const parsed = (value: string) => {
+    const match = value.match(/(\d+)\s*([a-z]?)/i);
+    return { number: match ? Number(match[1]) : 0, suffix: match?.[2]?.toLowerCase() ?? '' };
+  };
+  const left = parsed(a);
+  const right = parsed(b);
+  return left.number - right.number || left.suffix.localeCompare(right.suffix);
 }

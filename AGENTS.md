@@ -160,6 +160,17 @@ Rules:
   `core/services/oral-exam.service.spec.ts` guard exam selection, scoring and
   the 14/27 pass threshold; the four `oral-exam-*.component.spec.ts` cover the
   intro, run, evaluation and audit views.
+- Material dialogs render through the app-level `ApplicationRef`, not through
+  the component fixture. In specs, call `TestBed.inject(ApplicationRef).tick()`
+  after opening (and after `await fixture.whenStable()` when closing) before
+  asserting on overlay content — a plain `fixture.detectChanges()` leaves the
+  dialog template empty. Query the dialog DOM via
+  `TestBed.inject(OverlayContainer).getContainerElement()`.
+- Never call `TestBed.inject(...)` in a `beforeEach` and then
+  `TestBed.configureTestingModule(...)` inside the test body: the injection
+  instantiates the module and Angular throws "Cannot configure the test module
+  when the test module has already been instantiated". Build fixtures through a
+  shared async `create()` helper that configures first.
 
 ## Deployment
 

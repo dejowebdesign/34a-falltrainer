@@ -1,22 +1,34 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatDialog } from '@angular/material/dialog';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import {
   CriminalOffenseService,
-  EMPTY_OFFENSE_FILTER,
+  OFFENSE_SORT_LABELS,
 } from '../../core/services/criminal-offense.service';
 import {
   OFFENSE_CATEGORY_LABELS,
   OFFENSE_CATEGORY_ORDER,
 } from '../../core/data/criminal-offenses.data';
-import { OffenseCategory, CriminalOffense } from '../../core/models';
+import {
+  AttemptFilter,
+  CriminalOffense,
+  CulpabilityFilter,
+  OffenseCategory,
+  OffenseClassification,
+  OffenseSortKey,
+  ProsecutionType,
+} from '../../core/models';
 import { CriminalOffenseCardComponent } from './criminal-offense-card.component';
+import { CriminalOffenseDetailComponent } from './criminal-offense-detail.component';
 
 interface CategoryOption {
   value: OffenseCategory;
@@ -30,18 +42,23 @@ interface CategoryOption {
  * Keine vollständige StGB-Datenbank: Auswahl und Rechtswerte stammen aus der
  * Bibel V5.3.1 bzw. – wo diese keinen amtlichen Wortlaut enthält – aus der
  * amtlichen Primärquelle gesetze-im-internet.de.
+ *
+ * Die Liste dient dem schnellen Finden (kompakte Karten + Suche/Filter/
+ * Sortierung), das Modal dem vollständigen Lernen und Nachschlagen.
  */
 @Component({
   selector: 'app-strafgesetzbuch',
   imports: [
     FormsModule,
     MatButtonModule,
+    MatCheckboxModule,
     MatChipsModule,
     MatExpansionModule,
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
     MatSelectModule,
+    MatSlideToggleModule,
     CriminalOffenseCardComponent,
   ],
   template: `
@@ -52,7 +69,8 @@ interface CategoryOption {
         <p>Relevante Straftaten für die Sachkundeprüfung §34a GewO</p>
         <p class="intro">
           Hier finden Sie die für die Sachkundeprüfung besonders relevanten Straftatbestände mit
-          Tatbestandsmerkmalen, Strafrahmen, Verfahrensart und Versuchsstrafbarkeit.
+          Tatbestandsmerkmalen, Strafrahmen, Verfahrensart und Versuchsstrafbarkeit. Die Liste dient
+          dem schnellen Finden – ein Klick auf eine Karte öffnet die vollständige Detailansicht.
         </p>
       </header>
 
@@ -69,7 +87,7 @@ interface CategoryOption {
             <mat-expansion-panel class="basic-panel">
               <mat-expansion-panel-header [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
                 <span class="basic-head">
-                  <strong>{{ basic.paragraph }} {{ 'StGB' }}</strong>
+                  <strong>{{ basic.paragraph }} StGB</strong>
                   <span>{{ basic.officialTitle }}</span>
                 </span>
               </mat-expansion-panel-header>
@@ -83,132 +101,204 @@ interface CategoryOption {
         </div>
       </section>
 
-      <section class="ft-section ft-section--plain" aria-label="Suche und Filter">
-        <div class="filter-bar ft-glass--soft">
+      <section class="ft-section ft-section--plain" aria-label="Suche, Filter und Sortierung">
+        <div class="controls ft-glass--soft">
           <mat-form-field appearance="outline" class="search-field">
             <mat-label>Suche</mat-label>
             <mat-icon matPrefix aria-hidden="true">search</mat-icon>
             <input
               matInput
               type="search"
-              [ngModel]="query()"
-              (ngModelChange)="query.set($event)"
+              [ngModel]="text()"
+              (ngModelChange)="text.set($event)"
               placeholder="Paragraph, Straftat, Fachbegriff …"
               aria-label="Straftaten durchsuchen"
             />
-            @if (query()) {
+            @if (text()) {
               <button
                 matSuffix
                 mat-icon-button
                 type="button"
                 aria-label="Suche löschen"
-                (click)="query.set('')"
+                (click)="text.set('')"
               >
                 <mat-icon aria-hidden="true">close</mat-icon>
               </button>
             }
           </mat-form-field>
 
-          <mat-form-field appearance="outline">
-            <mat-label>Deliktsgruppe</mat-label>
-            <mat-select
-              [ngModel]="category()"
-              (ngModelChange)="category.set($event)"
-              aria-label="Deliktsgruppe filtern"
+          <div class="quick-filters" role="group" aria-label="Schnellfilter">
+            @for (chip of quickFilters; track chip.key) {
+              <button
+                type="button"
+                class="quick-chip"
+                [class.quick-chip--active]="isQuickActive(chip.key)"
+                [attr.aria-pressed]="isQuickActive(chip.key)"
+                (click)="toggleQuick(chip.key)"
+              >
+                {{ chip.label }}
+              </button>
+            }
+            <button
+              type="button"
+              class="quick-chip quick-chip--extended"
+              [class.quick-chip--active]="hasExtendedFilter()"
+              [attr.aria-expanded]="showExtended()"
+              (click)="showExtended.set(!showExtended())"
             >
-              <mat-option [value]="null">Alle Deliktsgruppen</mat-option>
-              @for (option of categoryOptions; track option.value) {
-                <mat-option [value]="option.value">{{ option.label }}</mat-option>
+              <mat-icon aria-hidden="true">tune</mat-icon>
+              Weitere Filter
+              @if (extendedCount()) {
+                <span class="quick-count">{{ extendedCount() }}</span>
               }
-            </mat-select>
-          </mat-form-field>
-
-          <mat-form-field appearance="outline">
-            <mat-label>Einordnung</mat-label>
-            <mat-select
-              [ngModel]="classification()"
-              (ngModelChange)="classification.set($event)"
-              aria-label="Verbrechen oder Vergehen filtern"
-            >
-              <mat-option [value]="null">Verbrechen und Vergehen</mat-option>
-              <mat-option value="VERBRECHEN">Verbrechen</mat-option>
-              <mat-option value="VERGEHEN">Vergehen</mat-option>
-            </mat-select>
-          </mat-form-field>
-
-          <mat-form-field appearance="outline">
-            <mat-label>Verfolgung</mat-label>
-            <mat-select
-              [ngModel]="prosecution()"
-              (ngModelChange)="prosecution.set($event)"
-              aria-label="Offizial- oder Antragsdelikt filtern"
-            >
-              <mat-option [value]="null">Offizial und Antrag</mat-option>
-              <mat-option value="OFFIZIALDELIKT">Offizialdelikte</mat-option>
-              <mat-option value="ANTRAGSDELIKT">Antragsdelikte</mat-option>
-            </mat-select>
-          </mat-form-field>
-
-          <mat-form-field appearance="outline">
-            <mat-label>Versuch</mat-label>
-            <mat-select
-              [ngModel]="attemptPunishable()"
-              (ngModelChange)="attemptPunishable.set($event)"
-              aria-label="Versuchsstrafbarkeit filtern"
-            >
-              <mat-option [value]="null">Versuch: alle</mat-option>
-              <mat-option [value]="true">Versuch strafbar</mat-option>
-              <mat-option [value]="false">Versuch nicht strafbar</mat-option>
-            </mat-select>
-          </mat-form-field>
-
-          <div class="toggle-row">
-            <button
-              mat-stroked-button
-              type="button"
-              [class.active]="intentOnly()"
-              [attr.aria-pressed]="intentOnly()"
-              (click)="intentOnly.set(!intentOnly())"
-            >
-              <mat-icon aria-hidden="true">psychology</mat-icon>
-              Vorsatz
             </button>
-            <button
-              mat-stroked-button
-              type="button"
-              [class.active]="negligenceOnly()"
-              [attr.aria-pressed]="negligenceOnly()"
-              (click)="negligenceOnly.set(!negligenceOnly())"
+          </div>
+
+          @if (showExtended()) {
+            <div class="extended ft-reveal" role="group" aria-label="Weitere Filter">
+              <mat-form-field appearance="outline">
+                <mat-label>Deliktsgruppe</mat-label>
+                <mat-select
+                  multiple
+                  [ngModel]="categories()"
+                  (ngModelChange)="categories.set($event)"
+                  aria-label="Deliktsgruppe filtern"
+                >
+                  @for (option of categoryOptions; track option.value) {
+                    <mat-option [value]="option.value">{{ option.label }}</mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Einordnung</mat-label>
+                <mat-select
+                  multiple
+                  [ngModel]="classifications()"
+                  (ngModelChange)="classifications.set($event)"
+                  aria-label="Verbrechen oder Vergehen filtern"
+                >
+                  <mat-option value="VERBRECHEN">Verbrechen</mat-option>
+                  <mat-option value="VERGEHEN">Vergehen</mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Verfolgung</mat-label>
+                <mat-select
+                  multiple
+                  [ngModel]="prosecutions()"
+                  (ngModelChange)="prosecutions.set($event)"
+                  aria-label="Offizial- oder Antragsdelikt filtern"
+                >
+                  <mat-option value="OFFIZIALDELIKT">Offizialdelikte</mat-option>
+                  <mat-option value="ANTRAGSDELIKT">Antragsdelikte</mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Versuch</mat-label>
+                <mat-select
+                  multiple
+                  [ngModel]="attempts()"
+                  (ngModelChange)="attempts.set($event)"
+                  aria-label="Versuchsstrafbarkeit filtern"
+                >
+                  <mat-option value="PUNISHABLE">Versuch strafbar</mat-option>
+                  <mat-option value="NOT_PUNISHABLE">Versuch nicht strafbar</mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Vorsatz / Fahrlässigkeit</mat-label>
+                <mat-select
+                  multiple
+                  [ngModel]="culpabilities()"
+                  (ngModelChange)="culpabilities.set($event)"
+                  aria-label="Vorsatz oder Fahrlässigkeit filtern"
+                >
+                  <mat-option value="VORSATZ">Vorsatz</mat-option>
+                  <mat-option value="FAEHLAESSIGKEIT">Fahrlässigkeit</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          }
+
+          <div class="controls-foot">
+            <mat-slide-toggle
+              class="group-toggle"
+              [checked]="grouped()"
+              (change)="grouped.set($event.checked)"
             >
-              <mat-icon aria-hidden="true">warning</mat-icon>
-              Fahrlässigkeit
-            </button>
-            <button
-              mat-button
-              type="button"
-              class="reset"
-              (click)="resetFilters()"
-              [disabled]="!hasActiveFilter()"
-            >
-              Filter zurücksetzen
-            </button>
+              Nach Strafmaß gruppieren
+            </mat-slide-toggle>
+
+            <div class="controls-actions">
+              <button
+                mat-button
+                type="button"
+                class="reset"
+                (click)="resetFilters()"
+                [disabled]="!hasActiveFilter()"
+              >
+                Filter zurücksetzen
+              </button>
+
+              <mat-form-field appearance="outline" class="sort-field">
+                <mat-label>Sortieren nach</mat-label>
+                <mat-select
+                  [ngModel]="sortKey()"
+                  (ngModelChange)="sortKey.set($event)"
+                  aria-label="Sortierung wählen"
+                >
+                  @for (option of sortOptions; track option.value) {
+                    <mat-option [value]="option.value">{{ option.label }}</mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+            </div>
           </div>
         </div>
 
         <p class="result-count" role="status" aria-live="polite">
-          {{ filtered().length }} von {{ total }} Straftatbeständen
+          @if (hasActiveFilter()) {
+            <strong>{{ stats().total }} von {{ total }}</strong> Straftatbeständen
+          } @else {
+            <strong>{{ total }} Straftatbestände</strong>
+          }
+          <span class="result-breakdown">
+            {{ stats().antragsdelikte }} Antragsdelikte · {{ stats().verbrechen }} Verbrechen ·
+            {{ stats().vergehen }} Vergehen
+            @if (stats().examRelevant) {
+              · {{ stats().examRelevant }} besonders §34a-relevant
+            }
+          </span>
         </p>
 
-        @if (filtered().length) {
-          <div class="offense-grid">
-            @for (offense of filtered(); track offense.id) {
-              <app-criminal-offense-card
-                [offense]="offense"
-                [related]="relatedFor(offense)"
-                (selectRelated)="jumpToParagraph($event)"
-              />
-            }
-          </div>
+        @if (visibleCount()) {
+          @if (grouped()) {
+            <div class="penalty-groups">
+              @for (group of groups(); track group.penaltyClass) {
+                <section class="penalty-group" [attr.aria-label]="group.label">
+                  <h2 class="penalty-group-head">
+                    {{ group.label }}
+                    <span class="penalty-group-count">{{ group.offenses.length }}</span>
+                  </h2>
+                  <div class="offense-grid">
+                    @for (offense of group.offenses; track offense.id) {
+                      <app-criminal-offense-card [offense]="offense" (open)="openDetail($event)" />
+                    }
+                  </div>
+                </section>
+              }
+            </div>
+          } @else {
+            <div class="offense-grid">
+              @for (offense of sorted(); track offense.id) {
+                <app-criminal-offense-card [offense]="offense" (open)="openDetail($event)" />
+              }
+            </div>
+          }
         } @else {
           <div class="empty-state ft-card" role="status">
             <mat-icon aria-hidden="true">search_off</mat-icon>
@@ -271,56 +361,129 @@ interface CategoryOption {
         font-weight: 600;
       }
 
-      .filter-bar {
+      .controls {
         display: grid;
-        gap: 0.75rem;
-        grid-template-columns: minmax(0, 1fr);
-        padding: 1rem;
+        gap: 0.85rem;
+        padding: 1rem 1.05rem 1.1rem;
         border-radius: var(--ft-radius-lg);
-      }
-      @media (min-width: 760px) {
-        .filter-bar {
-          grid-template-columns: repeat(2, minmax(0, 1fr));
-        }
-        .search-field {
-          grid-column: 1 / -1;
-        }
-      }
-      @media (min-width: 1080px) {
-        .filter-bar {
-          grid-template-columns: 1.6fr repeat(4, minmax(0, 1fr));
-          align-items: start;
-        }
-        .search-field {
-          grid-column: auto;
-        }
-        .toggle-row {
-          grid-column: 1 / -1;
-        }
       }
       .search-field {
         width: 100%;
       }
-      .filter-bar mat-form-field {
-        width: 100%;
-      }
-      .toggle-row {
+      .quick-filters {
         display: flex;
         flex-wrap: wrap;
-        gap: 0.5rem;
-        align-items: center;
+        gap: 0.45rem;
       }
-      .toggle-row button.active {
+      .quick-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        padding: 0.42rem 0.85rem;
+        border-radius: 999px;
+        border: 1px solid var(--ft-border-strong);
+        background: var(--ft-surface);
+        color: var(--ft-text);
+        font: inherit;
+        font-size: 0.85rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition:
+          border-color var(--ft-transition),
+          background-color var(--ft-transition),
+          color var(--ft-transition);
+      }
+      .quick-chip:hover {
+        border-color: var(--ft-accent);
+      }
+      .quick-chip:focus-visible {
+        outline: 3px solid var(--ft-accent);
+        outline-offset: 2px;
+      }
+      .quick-chip--active {
         background: var(--ft-accent-soft);
         border-color: var(--ft-accent);
         color: var(--ft-accent-strong);
       }
-      .toggle-row .reset {
+      .quick-chip--extended mat-icon {
+        font-size: 18px;
+        width: 18px;
+        height: 18px;
+      }
+      .quick-count {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 18px;
+        height: 18px;
+        padding-inline: 0.25rem;
+        border-radius: 999px;
+        background: var(--ft-accent);
+        color: var(--ft-on-accent);
+        font-size: 0.7rem;
+      }
+
+      .extended {
+        display: grid;
+        gap: 0.75rem;
+        grid-template-columns: minmax(0, 1fr);
+        padding: 0.9rem;
+        border-radius: var(--ft-radius);
+        background: var(--ft-surface-2);
+        border: 1px solid var(--ft-border);
+      }
+      @media (min-width: 700px) {
+        .extended {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+      @media (min-width: 1100px) {
+        .extended {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+      }
+      .extended mat-form-field {
+        width: 100%;
+      }
+
+      .controls-foot {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.75rem 1rem;
+      }
+      .group-toggle {
+        font-weight: 600;
+      }
+      .controls-actions {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.75rem;
         margin-left: auto;
       }
+      .sort-field {
+        width: 260px;
+        max-width: 100%;
+      }
+      @media (max-width: 600px) {
+        .controls-actions {
+          margin-left: 0;
+          width: 100%;
+        }
+        .sort-field {
+          width: 100%;
+        }
+      }
+
       .result-count {
-        margin: 0.9rem 0 0;
-        font-weight: 600;
+        margin: 1rem 0 0;
+        display: flex;
+        flex-direction: column;
+        gap: 0.15rem;
+      }
+      .result-breakdown {
+        font-size: 0.86rem;
         color: var(--ft-muted);
       }
 
@@ -329,16 +492,47 @@ interface CategoryOption {
         display: grid;
         gap: 1rem;
         grid-template-columns: minmax(0, 1fr);
+        align-items: stretch;
       }
-      @media (min-width: 900px) {
+      @media (min-width: 720px) {
         .offense-grid {
           grid-template-columns: repeat(2, minmax(0, 1fr));
         }
       }
-      @media (min-width: 1400px) {
+      @media (min-width: 1080px) {
         .offense-grid {
           grid-template-columns: repeat(3, minmax(0, 1fr));
         }
+      }
+
+      .penalty-groups {
+        display: grid;
+        gap: 1.4rem;
+        margin-top: 1rem;
+      }
+      .penalty-group-head {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        margin: 0 0 0.6rem;
+        font-size: 1.05rem;
+      }
+      .penalty-group-count {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 26px;
+        height: 22px;
+        padding-inline: 0.4rem;
+        border-radius: 999px;
+        background: var(--ft-surface-2);
+        border: 1px solid var(--ft-border);
+        color: var(--ft-muted);
+        font-size: 0.78rem;
+        font-weight: 700;
+      }
+      .penalty-group .offense-grid {
+        margin-top: 0;
       }
 
       .empty-state {
@@ -368,6 +562,7 @@ interface CategoryOption {
 })
 export class StrafgesetzbuchComponent {
   private readonly service = inject(CriminalOffenseService);
+  private readonly dialog = inject(MatDialog);
 
   readonly basics = this.service.getBasics();
   readonly total = this.service.getOffenses().length;
@@ -375,54 +570,158 @@ export class StrafgesetzbuchComponent {
     value,
     label: OFFENSE_CATEGORY_LABELS[value],
   }));
-
-  readonly query = signal('');
-  readonly category = signal<OffenseCategory | null>(null);
-  readonly classification = signal<'VERBRECHEN' | 'VERGEHEN' | null>(null);
-  readonly prosecution = signal<'OFFIZIALDELIKT' | 'ANTRAGSDELIKT' | null>(null);
-  readonly attemptPunishable = signal<boolean | null>(null);
-  readonly intentOnly = signal(false);
-  readonly negligenceOnly = signal(false);
-
-  private readonly filter = computed(() => ({
-    query: this.query(),
-    category: this.category(),
-    classification: this.classification(),
-    prosecution: this.prosecution(),
-    attemptPunishable: this.attemptPunishable(),
-    intentOnly: this.intentOnly(),
-    negligenceOnly: this.negligenceOnly(),
+  readonly sortOptions = (Object.keys(OFFENSE_SORT_LABELS) as OffenseSortKey[]).map((value) => ({
+    value,
+    label: OFFENSE_SORT_LABELS[value],
   }));
 
-  readonly filtered = computed(() => this.service.filter(this.filter()));
+  /** Schnellfilter: prüft, ob mindestens ein Delikt in der Liste passt. */
+  readonly quickFilters: { key: string; label: string }[] = [
+    { key: 'ANTRAGSDELIKT', label: 'Antragsdelikte' },
+    { key: 'OFFIZIALDELIKT', label: 'Offizialdelikte' },
+    { key: 'VERBRECHEN', label: 'Verbrechen' },
+    { key: 'VERGEHEN', label: 'Vergehen' },
+    { key: 'ATTEMPT_PUNISHABLE', label: 'Versuch strafbar' },
+    { key: 'ATTEMPT_NOT_PUNISHABLE', label: 'Versuch nicht strafbar' },
+    { key: 'VORSATZ', label: 'Vorsatz' },
+    { key: 'FAEHLAESSIGKEIT', label: 'Fahrlässigkeit' },
+    { key: 'EXAM_RELEVANT', label: 'Besonders relevant für §34a' },
+  ];
 
-  readonly hasActiveFilter = computed(
+  readonly text = signal('');
+  readonly categories = signal<OffenseCategory[]>([]);
+  readonly classifications = signal<OffenseClassification[]>([]);
+  readonly prosecutions = signal<ProsecutionType[]>([]);
+  readonly attempts = signal<AttemptFilter[]>([]);
+  readonly culpabilities = signal<CulpabilityFilter[]>([]);
+  readonly examRelevantOnly = signal(false);
+  readonly sortKey = signal<OffenseSortKey>('PARAGRAPH');
+  readonly grouped = signal(false);
+  readonly showExtended = signal(false);
+
+  private readonly query = computed(() => ({
+    text: this.text(),
+    categories: this.categories(),
+    classifications: this.classifications(),
+    prosecutions: this.prosecutions(),
+    attempts: this.attempts(),
+    culpabilities: this.culpabilities(),
+    examRelevantOnly: this.examRelevantOnly(),
+  }));
+
+  /** Gefilterte, aber noch nicht sortierte Trefferliste. */
+  readonly filtered = computed(() => this.service.query(this.query()));
+  readonly sorted = computed(() => this.service.sort(this.filtered(), this.sortKey()));
+  readonly groups = computed(() => this.service.group(this.filtered()));
+  readonly stats = computed(() => this.service.getStats(this.filtered()));
+  readonly visibleCount = computed(() => this.filtered().length);
+
+  readonly hasExtendedFilter = computed(
     () =>
-      this.query().trim().length > 0 ||
-      this.category() !== null ||
-      this.classification() !== null ||
-      this.prosecution() !== null ||
-      this.attemptPunishable() !== null ||
-      this.intentOnly() ||
-      this.negligenceOnly(),
+      this.categories().length > 0 ||
+      this.classifications().length > 0 ||
+      this.prosecutions().length > 0 ||
+      this.attempts().length > 0 ||
+      this.culpabilities().length > 0,
   );
 
-  relatedFor(offense: CriminalOffense) {
-    return this.service.getRelated(offense);
+  readonly extendedCount = computed(
+    () =>
+      this.categories().length +
+      this.classifications().length +
+      this.prosecutions().length +
+      this.attempts().length +
+      this.culpabilities().length,
+  );
+
+  readonly hasActiveFilter = computed(
+    () => this.text().trim().length > 0 || this.hasExtendedFilter() || this.examRelevantOnly(),
+  );
+
+  isQuickActive(key: string): boolean {
+    switch (key) {
+      case 'ANTRAGSDELIKT':
+      case 'OFFIZIALDELIKT':
+        return this.prosecutions().includes(key as ProsecutionType);
+      case 'VERBRECHEN':
+      case 'VERGEHEN':
+        return this.classifications().includes(key as OffenseClassification);
+      case 'ATTEMPT_PUNISHABLE':
+        return this.attempts().includes('PUNISHABLE');
+      case 'ATTEMPT_NOT_PUNISHABLE':
+        return this.attempts().includes('NOT_PUNISHABLE');
+      case 'VORSATZ':
+        return this.culpabilities().includes('VORSATZ');
+      case 'FAEHLAESSIGKEIT':
+        return this.culpabilities().includes('FAEHLAESSIGKEIT');
+      case 'EXAM_RELEVANT':
+        return this.examRelevantOnly();
+      default:
+        return false;
+    }
+  }
+
+  toggleQuick(key: string): void {
+    switch (key) {
+      case 'ANTRAGSDELIKT':
+      case 'OFFIZIALDELIKT':
+        this.prosecutions.update((values) => toggleValue(values, key as ProsecutionType));
+        return;
+      case 'VERBRECHEN':
+      case 'VERGEHEN':
+        this.classifications.update((values) =>
+          toggleValue(values, key as OffenseClassification),
+        );
+        return;
+      case 'ATTEMPT_PUNISHABLE':
+        this.attempts.update((values) => toggleValue(values, 'PUNISHABLE'));
+        return;
+      case 'ATTEMPT_NOT_PUNISHABLE':
+        this.attempts.update((values) => toggleValue(values, 'NOT_PUNISHABLE'));
+        return;
+      case 'VORSATZ':
+        this.culpabilities.update((values) => toggleValue(values, 'VORSATZ'));
+        return;
+      case 'FAEHLAESSIGKEIT':
+        this.culpabilities.update((values) => toggleValue(values, 'FAEHLAESSIGKEIT'));
+        return;
+      case 'EXAM_RELEVANT':
+        this.examRelevantOnly.update((value) => !value);
+        return;
+      default:
+        return;
+    }
+  }
+
+  openDetail(offense: CriminalOffense): void {
+    const list = this.sorted();
+    const index = Math.max(
+      0,
+      list.findIndex((item) => item.id === offense.id),
+    );
+    this.dialog.open(CriminalOffenseDetailComponent, {
+      data: { offenses: list, index },
+      width: 'min(94vw, 1320px)',
+      maxWidth: '94vw',
+      maxHeight: '90vh',
+      panelClass: 'offense-dialog',
+      autoFocus: 'dialog',
+      restoreFocus: true,
+    });
   }
 
   resetFilters(): void {
-    this.query.set(EMPTY_OFFENSE_FILTER.query);
-    this.category.set(EMPTY_OFFENSE_FILTER.category);
-    this.classification.set(EMPTY_OFFENSE_FILTER.classification);
-    this.prosecution.set(EMPTY_OFFENSE_FILTER.prosecution);
-    this.attemptPunishable.set(EMPTY_OFFENSE_FILTER.attemptPunishable);
-    this.intentOnly.set(EMPTY_OFFENSE_FILTER.intentOnly);
-    this.negligenceOnly.set(EMPTY_OFFENSE_FILTER.negligenceOnly);
+    this.text.set('');
+    this.categories.set([]);
+    this.classifications.set([]);
+    this.prosecutions.set([]);
+    this.attempts.set([]);
+    this.culpabilities.set([]);
+    this.examRelevantOnly.set(false);
   }
+}
 
-  /** Springt über die Suche zu einem verwandten Delikt (Paragraph). */
-  jumpToParagraph(paragraph: string): void {
-    this.query.set(paragraph);
-  }
+/** Fügt einen Wert einer Mehrfachauswahl hinzu oder entfernt ihn. */
+function toggleValue<T>(values: T[], value: T): T[] {
+  return values.includes(value) ? values.filter((item) => item !== value) : [...values, value];
 }
