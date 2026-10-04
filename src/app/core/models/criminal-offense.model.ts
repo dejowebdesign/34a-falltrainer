@@ -54,11 +54,52 @@ export type OffenseCategory =
 /** Einordnung nach §12 StGB (Verbrechen / Vergehen). */
 export type OffenseClassification = 'VERBRECHEN' | 'VERGEHEN';
 
+/**
+ * Strafmaßklasse, abgeleitet aus dem gesetzlichen Mindestmaß (nicht aus der
+ * tatsächlich verhängten Strafe). Grundlage der optionalen Gruppierung.
+ */
+export type PenaltyClass =
+  | 'GELDSTRASSE'
+  | 'FREIHEITSSTRAFE_UNTER_1_JAHR'
+  | 'VERBRECHEN_AB_1_JAHR'
+  | 'OHNE_EIGENE_STRAFANDROHUNG';
+
+/** Sortierschlüssel der Deliktsliste. */
+export type OffenseSortKey =
+  | 'PARAGRAPH'
+  | 'ALPHABETICAL'
+  | 'PENALTY_ASC'
+  | 'PENALTY_DESC'
+  | 'VERBRECHEN_FIRST'
+  | 'VERGEHEN_FIRST';
+
+/** Versuchs-Schnellfilter. */
+export type AttemptFilter = 'PUNISHABLE' | 'NOT_PUNISHABLE';
+
+/** Vorsatz-/Fahrlässigkeits-Schnellfilter. */
+export type CulpabilityFilter = 'VORSATZ' | 'FAEHLAESSIGKEIT';
+
 /** Verfolgungsart. */
 export type ProsecutionType = 'OFFIZIALDELIKT' | 'ANTRAGSDELIKT';
 
 /** Bei Antragsdelikten: absolute oder relative Antragsdelikte. */
 export type ApplicationType = 'ABSOLUTES_ANTRAGSDELIKT' | 'RELATIVES_ANTRAGSDELIKT';
+
+/**
+ * Mehrfachauswahl-Filter der Lernseite. Leere Arrays bedeuten „keine
+ * Einschränkung“ in dieser Dimension; mehrere Werte innerhalb einer Dimension
+ * werden ODER-verknüpft, verschiedene Dimensionen UND-verknüpft.
+ */
+export interface OffenseQuery {
+  text: string;
+  categories: OffenseCategory[];
+  classifications: OffenseClassification[];
+  prosecutions: ProsecutionType[];
+  attempts: AttemptFilter[];
+  culpabilities: CulpabilityFilter[];
+  /** Nur Delikte, die über `securityNote` als besonders §34a-relevant belegt sind. */
+  examRelevantOnly: boolean;
+}
 
 /**
  * Fahrlässigkeitsverhältnis nach §15 StGB. Trennt sauber zwischen

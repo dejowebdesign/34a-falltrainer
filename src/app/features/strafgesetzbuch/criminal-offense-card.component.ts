@@ -1,322 +1,187 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatChipsModule } from '@angular/material/chips';
-import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 import { CriminalOffense } from '../../core/models';
 import { OFFENSE_CATEGORY_LABELS } from '../../core/data/criminal-offenses.data';
 
 /**
- * Einheitlicher Steckbrief einer Straftat als aufklappbares Panel.
+ * Kompakte Übersichtskarte eines Straftatbestands.
  *
- * Die kompakte Kopfzeile zeigt Paragraph, offiziellen Titel und die drei
- * Kernmerkmale (Verbrechen/Vergehen, Verfolgung, Versuch). Erst beim Öffnen
- * werden Tatbestandsmerkmale und weitere Details eingeblendet.
+ * Die Karte zeigt nur die Kernmerkmale (Paragraph, Titel, Deliktsgruppe,
+ * Status-Chips, Mindeststrafe) und öffnet per Klick die vollständige
+ * Detailansicht als Dialog. Der lange Tatbestandstext bleibt bewusst im Modal –
+ * die Liste dient dem schnellen Finden, das Modal dem Lernen.
  */
 @Component({
   selector: 'app-criminal-offense-card',
-  imports: [MatButtonModule, MatChipsModule, MatExpansionModule, MatIconModule],
+  imports: [MatIconModule],
   template: `
-    <mat-expansion-panel class="offense-panel" [togglePosition]="'after'">
-      <mat-expansion-panel-header [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
-        <div class="panel-head">
-          <div class="panel-title">
-            <span class="panel-paragraph">{{ offense.paragraph }} {{ offense.law }}</span>
-            <h3 class="panel-name">{{ offense.officialTitle }}</h3>
-            <span class="panel-category">{{ categoryLabel }}</span>
-          </div>
-          <div class="panel-chips" aria-label="Kernmerkmale">
-            <span class="ft-chip" [class.ft-chip--primary]="isVerbrechen">
-              {{ offense.classification === 'VERBRECHEN' ? 'Verbrechen' : 'Vergehen' }}
-            </span>
-            <span class="ft-chip" [class.ft-chip--accent]="isAntragsdelikt">
-              {{ isAntragsdelikt ? 'Antragsdelikt' : 'Offizialdelikt' }}
-            </span>
-            <span class="ft-chip">Versuch: {{ offense.attemptPunishable ? 'Ja' : 'Nein' }}</span>
-          </div>
-        </div>
-      </mat-expansion-panel-header>
-
-      <div class="panel-body ft-reveal">
-        <p class="lead">{{ offense.explanation }}</p>
-
-        <div class="detail-grid">
-          <section class="detail" aria-label="Geschütztes Rechtsgut">
-            <h4>Geschütztes Rechtsgut</h4>
-            <p>{{ offense.protectedInterest }}</p>
-          </section>
-
-          <section class="detail" aria-label="Objektiver Tatbestand">
-            <h4>Objektiver Tatbestand</h4>
-            <ul>
-              @for (element of offense.objectiveElements; track element) {
-                <li>{{ element }}</li>
-              }
-            </ul>
-          </section>
-
-          <section class="detail" aria-label="Subjektiver Tatbestand">
-            <h4>Subjektiver Tatbestand</h4>
-            <ul>
-              @for (element of offense.subjectiveElements; track element) {
-                <li>{{ element }}</li>
-              }
-            </ul>
-            @if (offense.specialSubjectiveElements?.length) {
-              <p class="detail-note">
-                Besondere subjektive Merkmale:
-                {{ offense.specialSubjectiveElements?.join(', ') }}
-              </p>
-            }
-          </section>
-
-          <section class="detail" aria-label="Vorsatz und Fahrlässigkeit">
-            <h4>Vorsatz / Fahrlässigkeit</h4>
-            <p>Vorsatz: <strong>{{ offense.intentRequired ? 'Ja' : 'Nein' }}</strong></p>
-            <p>
-              Fahrlässige Variante:
-              <strong>{{ offense.negligence.negligentVariant ? 'Ja' : 'Nein' }}</strong>
-              @if (offense.negligence.negligentNorm) {
-                <span> ({{ offense.negligence.negligentNorm }})</span>
-              }
-            </p>
-            <p class="detail-note">{{ offense.negligence.explanation }}</p>
-          </section>
-
-          <section class="detail" aria-label="Strafrahmen">
-            <h4>Strafrahmen</h4>
-            <p class="detail-strong">Mindeststrafe: {{ offense.minimumPenalty }}</p>
-            <p class="detail-note">Höchstmaß: {{ offense.maximumPenalty }}</p>
-          </section>
-
-          <section class="detail" aria-label="Einordnung">
-            <h4>Einordnung (§ 12 StGB)</h4>
-            <p class="detail-strong">
-              {{ offense.classification === 'VERBRECHEN' ? 'Verbrechen' : 'Vergehen' }}
-            </p>
-          </section>
-
-          <section class="detail" aria-label="Verfolgung">
-            <h4>Verfolgung</h4>
-            <p class="detail-strong">
-              {{ isAntragsdelikt ? 'Antragsdelikt' : 'Offizialdelikt' }}
-              @if (offense.prosecution.applicationType) {
-                <span class="detail-note">
-                  ({{ offense.prosecution.applicationType === 'ABSOLUTES_ANTRAGSDELIKT'
-                      ? 'absolut'
-                      : 'relativ' }})
-                </span>
-              }
-            </p>
-            @if (offense.prosecution.applicationNorm) {
-              <p class="detail-note">Regelung: {{ offense.prosecution.applicationNorm }}</p>
-            }
-            <p class="detail-note">{{ offense.prosecution.explanation }}</p>
-          </section>
-
-          <section class="detail" aria-label="Versuch">
-            <h4>Versuch</h4>
-            <p class="detail-strong">Strafbar: {{ offense.attemptPunishable ? 'Ja' : 'Nein' }}</p>
-            <p class="detail-note">{{ offense.attemptExplanation }}</p>
-          </section>
-        </div>
-
-        @if (offense.securityNote) {
-          <aside class="security-note" aria-label="Besonderheit für Sicherheitsmitarbeiter">
-            <mat-icon aria-hidden="true">shield</mat-icon>
-            <div>
-              <h4>Für die Sachkunde besonders wichtig</h4>
-              <p>{{ offense.securityNote }}</p>
-            </div>
-          </aside>
+    <button
+      type="button"
+      class="offense-card"
+      [attr.aria-label]="'Details zu ' + offense.paragraph + ' ' + offense.officialTitle + ' öffnen'"
+      (click)="open.emit(offense)"
+    >
+      <span class="card-top">
+        <span class="card-paragraph">{{ offense.paragraph }} {{ offense.law }}</span>
+        @if (isExamRelevant) {
+          <span class="card-star" aria-hidden="true">
+            <mat-icon>star</mat-icon>
+          </span>
         }
+      </span>
 
-        <section class="detail relevance" aria-label="Prüfungsrelevanz">
-          <h4>Prüfungsrelevanz</h4>
-          <p>{{ offense.relevance }}</p>
-        </section>
+      <span class="card-title">{{ offense.officialTitle }}</span>
+      <span class="card-category">{{ categoryLabel }}</span>
 
-        @if (related.length) {
-          <section class="detail" aria-label="Ähnliche Delikte">
-            <h4>Ähnliche Delikte</h4>
-            <mat-chip-set>
-              @for (item of related; track item.id) {
-                <mat-chip (click)="selectRelated.emit(item.paragraph)">
-                  {{ item.paragraph }} {{ item.officialTitle }}
-                </mat-chip>
-              }
-            </mat-chip-set>
-          </section>
-        }
+      <span class="card-chips" aria-label="Kernmerkmale">
+        <span class="ft-chip" [class.ft-chip--primary]="isVerbrechen">
+          {{ isVerbrechen ? 'Verbrechen' : 'Vergehen' }}
+        </span>
+        <span class="ft-chip" [class.ft-chip--accent]="isAntragsdelikt">
+          {{ isAntragsdelikt ? 'Antragsdelikt' : 'Offizialdelikt' }}
+        </span>
+        <span class="ft-chip">Versuch: {{ offense.attemptPunishable ? 'Ja' : 'Nein' }}</span>
+      </span>
 
-        <details class="official-text">
-          <summary>Amtlicher Gesetzeswortlaut</summary>
-          <p>{{ offense.officialText }}</p>
-          <p class="detail-note">
-            Quelle:
-            <a [href]="offense.sourceUrl" target="_blank" rel="noopener noreferrer">
-              {{ offense.sourceUrl }}
-            </a>
-          </p>
-          <p class="detail-note">
-            Herkunft: {{ sourceLabel }} · geprüft am {{ offense.source.lastVerified }}
-          </p>
-        </details>
-      </div>
-    </mat-expansion-panel>
+      <span class="card-penalty">
+        <span class="card-penalty-label">Mindeststrafe</span>
+        <span class="card-penalty-value">{{ offense.minimumPenalty }}</span>
+      </span>
+
+      <span class="card-cta">
+        Details öffnen
+        <mat-icon aria-hidden="true">arrow_forward</mat-icon>
+      </span>
+    </button>
   `,
   styles: [
     `
       :host {
         display: block;
         height: 100%;
+        min-width: 0;
       }
-      .offense-panel {
-        height: 100%;
-        border: 1px solid var(--ft-border);
-        border-radius: var(--ft-radius-lg);
-        background: var(--ft-surface);
-        box-shadow: var(--ft-elevation-1);
-      }
-      .panel-head {
+      .offense-card {
         display: flex;
         flex-direction: column;
-        gap: 0.6rem;
+        gap: 0.5rem;
         width: 100%;
-        padding-block: 0.35rem;
+        height: 100%;
+        min-width: 0;
+        text-align: left;
+        font: inherit;
+        color: inherit;
+        cursor: pointer;
+        padding: 1.1rem 1.15rem 1.2rem;
+        background: var(--ft-surface);
+        border: 1px solid var(--ft-border);
+        border-radius: var(--ft-radius-lg);
+        box-shadow: var(--ft-elevation-1);
+        transition:
+          transform var(--ft-motion),
+          box-shadow var(--ft-motion),
+          border-color var(--ft-motion);
       }
-      .panel-paragraph {
+      .offense-card:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--ft-elevation-3);
+        border-color: var(--ft-border-strong);
+      }
+      .offense-card:focus-visible {
+        outline: 3px solid var(--ft-accent);
+        outline-offset: 2px;
+      }
+
+      .card-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.5rem;
+      }
+      .card-paragraph {
         font-weight: 700;
-        font-size: 0.9rem;
+        font-size: 0.95rem;
         letter-spacing: 0.02em;
         color: var(--ft-accent-strong);
       }
-      .panel-name {
-        margin: 0.1rem 0 0.15rem;
-        font-size: 1.15rem;
-        line-height: 1.3;
+      .card-star {
+        display: inline-flex;
+        color: var(--ft-warn);
       }
-      .panel-category {
+      .card-star mat-icon {
+        font-size: 20px;
+        width: 20px;
+        height: 20px;
+      }
+
+      .card-title {
+        font-size: 1.12rem;
+        font-weight: 700;
+        line-height: 1.3;
+        overflow-wrap: anywhere;
+      }
+      .card-category {
         font-size: 0.8rem;
         color: var(--ft-muted);
       }
-      .panel-chips {
+
+      .card-chips {
         display: flex;
         flex-wrap: wrap;
-        gap: 0.4rem;
+        gap: 0.35rem;
+        margin-top: 0.15rem;
       }
-      .panel-body {
-        display: grid;
-        gap: 1rem;
+      .card-chips .ft-chip {
+        text-transform: none;
+        letter-spacing: 0.02em;
       }
-      .lead {
-        margin: 0;
-        line-height: 1.6;
+
+      .card-penalty {
+        display: flex;
+        flex-direction: column;
+        gap: 0.15rem;
+        margin-top: 0.35rem;
+        padding-top: 0.7rem;
+        border-top: 1px solid var(--ft-border);
       }
-      .detail-grid {
-        display: grid;
-        gap: 1rem;
-        grid-template-columns: minmax(0, 1fr);
-      }
-      @media (min-width: 720px) {
-        .detail-grid {
-          grid-template-columns: repeat(2, minmax(0, 1fr));
-        }
-      }
-      .detail {
-        background: var(--ft-surface-2);
-        border: 1px solid var(--ft-border);
-        border-radius: var(--ft-radius);
-        padding: 0.85rem 1rem;
-      }
-      .detail h4 {
-        margin: 0 0 0.45rem;
-        font-size: 0.78rem;
+      .card-penalty-label {
+        font-size: 0.72rem;
         text-transform: uppercase;
         letter-spacing: 0.07em;
         color: var(--ft-muted);
       }
-      .detail p {
-        margin: 0 0 0.35rem;
-        line-height: 1.55;
+      .card-penalty-value {
+        font-size: 0.92rem;
+        font-weight: 600;
+        line-height: 1.4;
+        overflow-wrap: anywhere;
       }
-      .detail ul {
-        margin: 0;
-        padding-left: 1.1rem;
-        display: grid;
+
+      .card-cta {
+        display: inline-flex;
+        align-items: center;
         gap: 0.3rem;
-        line-height: 1.5;
-      }
-      .detail-strong {
+        margin-top: auto;
+        padding-top: 0.5rem;
         font-weight: 600;
-      }
-      .detail-note {
-        font-size: 0.86rem;
-        color: var(--ft-muted);
-      }
-      .detail.relevance {
-        grid-column: 1 / -1;
-      }
-      .security-note {
-        display: flex;
-        gap: 0.7rem;
-        align-items: flex-start;
-        background: var(--ft-accent-soft);
-        border: 1px solid var(--ft-glass-border);
-        border-radius: var(--ft-radius);
-        padding: 0.85rem 1rem;
-      }
-      .security-note mat-icon {
-        color: var(--ft-accent-strong);
-        flex: 0 0 auto;
-      }
-      .security-note h4 {
-        margin: 0 0 0.3rem;
-        font-size: 0.9rem;
-      }
-      .security-note p {
-        margin: 0;
-        line-height: 1.55;
-      }
-      .official-text {
-        border: 1px dashed var(--ft-border-strong);
-        border-radius: var(--ft-radius);
-        padding: 0.6rem 0.9rem;
-      }
-      .official-text summary {
-        cursor: pointer;
-        font-weight: 600;
-      }
-      .official-text p {
-        margin: 0.6rem 0 0;
-        line-height: 1.6;
-      }
-      .official-text a {
+        font-size: 0.88rem;
         color: var(--ft-primary);
-        word-break: break-all;
       }
-      .detail mat-chip-set {
-        display: block;
+      .card-cta mat-icon {
+        font-size: 18px;
+        width: 18px;
+        height: 18px;
+        transition: transform var(--ft-motion);
       }
-      .detail .mdc-evolution-chip-set__chips {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.35rem;
-      }
-      .detail mat-chip {
-        max-width: 100%;
-      }
-      .detail mat-chip .mdc-evolution-chip__text-label {
-        white-space: normal;
-        line-height: 1.3;
+      .offense-card:hover .card-cta mat-icon {
+        transform: translateX(3px);
       }
     `,
   ],
 })
 export class CriminalOffenseCardComponent {
   @Input({ required: true }) offense!: CriminalOffense;
-  @Input() related: CriminalOffense[] = [];
-  @Output() selectRelated = new EventEmitter<string>();
+  @Output() open = new EventEmitter<CriminalOffense>();
 
   get categoryLabel(): string {
     return OFFENSE_CATEGORY_LABELS[this.offense.category];
@@ -330,17 +195,7 @@ export class CriminalOffenseCardComponent {
     return this.offense.prosecution.type === 'ANTRAGSDELIKT';
   }
 
-  /** Transparente Herkunftsangabe des amtlichen Wortlauts. */
-  get sourceLabel(): string {
-    switch (this.offense.source.sourceType) {
-      case 'SOURCE_BIBEL':
-        return 'Bibel V5.3.1 (amtlicher Wortlaut)';
-      case 'SOURCE_GESETZE_IM_INTERNET':
-        return 'gesetze-im-internet.de (Primärquelle)';
-      case 'SOURCE_NOT_IN_BIBEL':
-        return 'nicht in Bibel V5.3.1; Wortlaut gesetze-im-internet.de';
-      default:
-        return 'keine amtliche Quelle hinterlegt';
-    }
+  get isExamRelevant(): boolean {
+    return Boolean(this.offense.securityNote);
   }
 }
