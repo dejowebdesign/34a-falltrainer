@@ -20,10 +20,14 @@ import { LearningPathComponent } from '../../shared/components/learning-path.com
     <section class="hero">
       <!-- Dekorative Hintergrund-Ebene: ausschließlich im Hero, pointer-events: none. -->
       <div class="hero-bg" aria-hidden="true">
-        <span class="hero-grid"></span>
-        <span class="hero-orb hero-orb--a"></span>
-        <span class="hero-orb hero-orb--b"></span>
-        <span class="hero-sheen"></span>
+        <span class="hero-glow"></span>
+        <span class="hero-particle hero-particle--1"></span>
+        <span class="hero-particle hero-particle--2"></span>
+        <span class="hero-particle hero-particle--3"></span>
+        <span class="hero-particle hero-particle--4"></span>
+        <span class="hero-particle hero-particle--5"></span>
+        <span class="hero-particle hero-particle--6"></span>
+        <span class="hero-particle hero-particle--7"></span>
       </div>
       <div class="ft-container hero-inner">
         <div class="hero-text hero-surface">
@@ -112,111 +116,85 @@ import { LearningPathComponent } from '../../shared/components/learning-path.com
         overflow: hidden;
         pointer-events: none;
       }
-      /* Feines, langsam driftendes technisches Raster. */
-      .hero-grid {
-        position: absolute;
-        inset: -60px;
-        background-image:
-          linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-        background-size: 54px 54px;
-        mask-image: radial-gradient(circle at 72% 28%, #000 0%, transparent 74%);
-        -webkit-mask-image: radial-gradient(circle at 72% 28%, #000 0%, transparent 74%);
-        animation: hero-grid-drift 42s linear infinite;
-        will-change: transform;
-      }
-      /* Zwei langsam wandernde Glow-Flächen in der Marken-Farbwelt. */
-      .hero-orb {
-        position: absolute;
-        border-radius: 50%;
-        filter: blur(46px);
-        opacity: 0.5;
-        will-change: transform, opacity;
-      }
-      .hero-orb--a {
-        width: 420px;
-        height: 420px;
-        top: -140px;
-        right: -80px;
-        background: radial-gradient(circle, rgba(45, 212, 191, 0.5), transparent 68%);
-        animation: hero-orb-a 26s ease-in-out infinite;
-      }
-      .hero-orb--b {
-        width: 360px;
-        height: 360px;
-        bottom: -160px;
-        left: -60px;
-        background: radial-gradient(circle, rgba(110, 168, 254, 0.42), transparent 70%);
-        animation: hero-orb-b 32s ease-in-out infinite;
-      }
-      /* Sehr langsame, breite Lichtbewegung über die Fläche. */
-      .hero-sheen {
+      /* Statischer Marken-Glow im Hintergrund (keine Bewegung). */
+      .hero-glow {
         position: absolute;
         inset: 0;
-        background: linear-gradient(
-          100deg,
-          transparent 30%,
-          rgba(255, 255, 255, 0.06) 48%,
-          transparent 66%
+        background: radial-gradient(
+          60% 80% at 78% 18%,
+          rgba(45, 212, 191, 0.16),
+          transparent 62%
         );
-        background-size: 220% 100%;
-        animation: hero-sheen 30s ease-in-out infinite;
-        will-change: background-position;
       }
-      @keyframes hero-grid-drift {
-        from {
+      /* Schwebende Leuchtpunkte: sanftes Auf- und Abschweben (rein CSS). */
+      .hero-particle {
+        position: absolute;
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: rgba(170, 240, 232, 0.9);
+        box-shadow: 0 0 8px rgba(45, 212, 191, 0.8);
+        opacity: 0.3;
+        will-change: transform, opacity;
+        animation: hero-particle-float 13s ease-in-out infinite;
+      }
+      .hero-particle--1 {
+        left: 8%;
+        top: 62%;
+        animation-duration: 12s;
+      }
+      .hero-particle--2 {
+        left: 22%;
+        top: 30%;
+        animation-duration: 15s;
+        animation-delay: -3s;
+      }
+      .hero-particle--3 {
+        left: 38%;
+        top: 74%;
+        animation-duration: 11s;
+        animation-delay: -6s;
+      }
+      .hero-particle--4 {
+        left: 52%;
+        top: 42%;
+        animation-duration: 17s;
+        animation-delay: -2s;
+      }
+      .hero-particle--5 {
+        left: 66%;
+        top: 70%;
+        animation-duration: 13s;
+        animation-delay: -8s;
+      }
+      .hero-particle--6 {
+        left: 80%;
+        top: 28%;
+        animation-duration: 16s;
+        animation-delay: -5s;
+      }
+      .hero-particle--7 {
+        left: 92%;
+        top: 58%;
+        animation-duration: 14s;
+        animation-delay: -10s;
+      }
+      @keyframes hero-particle-float {
+        0%,
+        100% {
           transform: translate3d(0, 0, 0);
-        }
-        to {
-          transform: translate3d(-54px, -54px, 0);
-        }
-      }
-      @keyframes hero-orb-a {
-        0%,
-        100% {
-          transform: translate3d(0, 0, 0) scale(1);
-          opacity: 0.46;
+          opacity: 0.24;
         }
         50% {
-          transform: translate3d(-34px, 26px, 0) scale(1.08);
-          opacity: 0.58;
+          transform: translate3d(6px, -46px, 0);
+          opacity: 0.95;
         }
       }
-      @keyframes hero-orb-b {
-        0%,
-        100% {
-          transform: translate3d(0, 0, 0) scale(1);
-          opacity: 0.42;
-        }
-        50% {
-          transform: translate3d(30px, -22px, 0) scale(1.06);
-          opacity: 0.52;
-        }
-      }
-      @keyframes hero-sheen {
-        0%,
-        100% {
-          background-position: 130% 0;
-        }
-        50% {
-          background-position: -30% 0;
-        }
-      }
-      /* Reduced Motion: Bewegung vollständig aus, statische, ruhige Fläche. */
+      /* Reduced Motion: Bewegung vollständig aus, statische ruhige Fläche. */
       @media (prefers-reduced-motion: reduce) {
-        .hero-grid,
-        .hero-orb,
-        .hero-sheen {
+        .hero-particle {
           animation: none !important;
-        }
-        .hero-orb--a {
-          opacity: 0.5;
-        }
-        .hero-orb--b {
-          opacity: 0.44;
-        }
-        .hero-sheen {
-          background-position: 50% 0;
+          opacity: 0.4;
         }
       }
       .hero-inner {
