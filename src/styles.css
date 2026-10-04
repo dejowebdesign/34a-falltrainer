@@ -35,6 +35,10 @@
   --ft-blur-glass: 14px;
   --ft-blur-soft: 8px;
 
+  /* Glass-Tint für sekundäre Cards: semitransparente Surface, die die
+     Material-Surface leicht durchscheinen lässt (Lesbarkeit zuerst). */
+  --ft-glass-tint: rgba(255, 255, 255, 0.6);
+
   /* Material-Elevation – ruhige, konsistente Tiefenstaffelung. */
   --ft-elevation-1: 0 1px 2px rgba(15, 23, 42, 0.06), 0 1px 3px rgba(15, 23, 42, 0.05);
   --ft-elevation-2: 0 4px 12px -6px rgba(15, 23, 42, 0.22), 0 2px 6px rgba(15, 23, 42, 0.06);
@@ -108,6 +112,7 @@ html.light {
   --ft-glass-surface: rgba(255, 255, 255, 0.7);
   --ft-glass-strong: rgba(255, 255, 255, 0.86);
   --ft-glass-border: rgba(29, 78, 216, 0.16);
+  --ft-glass-tint: rgba(255, 255, 255, 0.6);
 
   --ft-shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.06), 0 1px 3px rgba(15, 23, 42, 0.05);
   --ft-shadow: 0 8px 24px -12px rgba(15, 23, 42, 0.24), 0 2px 6px rgba(15, 23, 42, 0.05);
@@ -195,6 +200,7 @@ html.dark {
   --ft-glass-surface: rgba(18, 29, 51, 0.66);
   --ft-glass-strong: rgba(18, 29, 51, 0.84);
   --ft-glass-border: rgba(110, 168, 254, 0.18);
+  --ft-glass-tint: rgba(18, 29, 51, 0.55);
 
   --ft-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
   --ft-shadow: 0 10px 30px -16px rgba(0, 0, 0, 0.8), 0 2px 8px rgba(0, 0, 0, 0.4);
@@ -365,6 +371,17 @@ h4 {
   outline-offset: 2px;
 }
 
+/* Sekundäre Card als Material-Glass-Hybrid: Material-Surface bleibt die
+   Basis, darüber eine semitransparente Glass-Schicht mit dezentem Blur.
+   Bewusst nur für ausgewählte Karten – nicht für jede Oberfläche. */
+.ft-card--glass,
+.mat-mdc-card.ft-card--glass {
+  background: var(--ft-glass-tint);
+  border-color: var(--ft-glass-border);
+  backdrop-filter: blur(var(--ft-blur-soft)) saturate(140%);
+  -webkit-backdrop-filter: blur(var(--ft-blur-soft)) saturate(140%);
+}
+
 /* Dezentes Label/Chip für Metadaten. */
 .ft-chip {
   display: inline-flex;
@@ -443,7 +460,16 @@ h4 {
   transition:
     transform var(--ft-motion),
     box-shadow var(--ft-motion),
-    background-color var(--ft-motion);
+    background-color var(--ft-motion),
+    border-color var(--ft-motion);
+}
+
+/* Fokus: klarer Akzent-Ring statt Material-Standard – konsistent mit
+   dem globalen :focus-visible. */
+.mat-mdc-button-base:focus-visible,
+.mat-mdc-icon-button:focus-visible {
+  outline: 3px solid var(--ft-accent);
+  outline-offset: 2px;
 }
 
 .mat-mdc-unelevated-button:not(:disabled):hover,
@@ -452,8 +478,35 @@ h4 {
   box-shadow: var(--ft-elevation-2);
 }
 
+/* Primärer CTA: kräftige Fläche, ruhige Elevation im Ruhezustand. */
+.mat-mdc-unelevated-button.mat-primary:not(:disabled) {
+  box-shadow: var(--ft-elevation-1);
+}
+
+/* Sekundär: Outline-/Glass-Variante mit dezentem Hover-Tint. */
 .mat-mdc-outlined-button {
   --mdc-outlined-button-outline-color: var(--ft-border-strong);
+}
+.mat-mdc-outlined-button:not(:disabled):hover {
+  background: var(--ft-surface-2);
+  border-color: var(--ft-accent);
+}
+
+/* Disabled-State bewusst ruhig und klar erkennbar. */
+.mat-mdc-button-base:disabled,
+.mat-mdc-icon-button:disabled {
+  opacity: 0.5;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Chips: Material-Container + dezente Glass-Kante. */
+.mat-mdc-chip {
+  --mdc-chip-container-shape-radius: 999px;
+  --mdc-chip-elevated-container-color: var(--ft-surface-2);
+  --mdc-chip-outline-color: var(--ft-border);
+  --mdc-chip-label-text-color: var(--ft-text);
+  border-radius: 999px;
 }
 
 /* Fortschrittsbalken: abgerundet, Akzentfarbe. */
@@ -478,10 +531,26 @@ h4 {
   border-radius: var(--ft-radius) !important;
   box-shadow: var(--ft-shadow-sm) !important;
   margin-bottom: 0.5rem;
+  transition:
+    border-color var(--ft-motion),
+    box-shadow var(--ft-motion);
 }
 
 .mat-expansion-panel-header {
   font-weight: 600;
+}
+
+/* Hover-/Expanded-State: dezente Elevation und Akzentkante. */
+.mat-expansion-panel:not(.mat-expanded):hover {
+  border-color: var(--ft-border-strong);
+  box-shadow: var(--ft-elevation-2) !important;
+}
+.mat-expansion-panel.mat-expanded {
+  border-color: var(--ft-accent);
+}
+.mat-expansion-panel-header:focus-visible {
+  outline: 3px solid var(--ft-accent);
+  outline-offset: -3px;
 }
 
 /* Radio: ruhiger Akzent statt Standard-Material-Blau. */
@@ -491,6 +560,21 @@ h4 {
   --mdc-radio-selected-icon-color: var(--ft-accent);
   --mdc-radio-selected-pressed-icon-color: var(--ft-accent);
   --mat-radio-checked-ripple-color: var(--ft-accent);
+}
+.mat-mdc-radio-button:focus-visible .mdc-radio {
+  outline: 3px solid var(--ft-accent);
+  outline-offset: 2px;
+  border-radius: 50%;
+}
+
+/* Checkbox an das Designsystem angleichen. */
+.mat-mdc-checkbox {
+  --mdc-checkbox-selected-checkmark-color: var(--ft-on-accent);
+  --mdc-checkbox-selected-focus-icon-color: var(--ft-accent);
+  --mdc-checkbox-selected-hover-icon-color: var(--ft-accent);
+  --mdc-checkbox-selected-icon-color: var(--ft-accent);
+  --mdc-checkbox-selected-pressed-icon-color: var(--ft-accent);
+  --mat-checkbox-checked-ripple-color: var(--ft-accent);
 }
 
 /* Toolbar neutral behandeln; das Aussehen steuert der Header. */

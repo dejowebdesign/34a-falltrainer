@@ -26,7 +26,7 @@ import { LearningPathComponent } from '../../shared/components/learning-path.com
         <span class="hero-sheen"></span>
       </div>
       <div class="ft-container hero-inner">
-        <div class="hero-text">
+        <div class="hero-text hero-surface">
           <p class="eyebrow">Sachkundeprüfung § 34a GewO</p>
           <h1>Rechtssicher handeln.<br />Situationen richtig einordnen.</h1>
           <p class="hero-sub">
@@ -229,6 +229,23 @@ import { LearningPathComponent } from '../../shared/components/learning-path.com
       }
       .hero-text {
         max-width: 760px;
+      }
+      /* Subtile Material-/Glass-Surface, die den Text vom animierten
+         Hintergrund absetzt – dezent, nur um den Textblock, nicht über den
+         gesamten Hero. */
+      .hero-surface {
+        position: relative;
+        padding: clamp(1.4rem, 3vw, 2.1rem);
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        border-radius: var(--ft-radius-xl);
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.08) 0%,
+          rgba(255, 255, 255, 0.03) 100%
+        );
+        backdrop-filter: blur(6px) saturate(120%);
+        -webkit-backdrop-filter: blur(6px) saturate(120%);
+        box-shadow: 0 24px 60px -34px rgba(0, 0, 0, 0.7);
       }
       .eyebrow {
         text-transform: uppercase;

@@ -4,7 +4,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { CaseResult, LegalNorm, Scenario } from '../../core/models';
+import { CaseResult, LegalNorm, OptionVerdict, Scenario } from '../../core/models';
 import { CaseEngineService } from '../../core/rules/case-engine.service';
 import { CaseStateService } from '../../core/services/case-state.service';
 import { LegalKnowledgeService } from '../../core/services/legal-knowledge.service';
@@ -41,7 +41,10 @@ import { VerdictBadgeComponent } from '../../shared/components/verdict-badge.com
             </mat-card>
           }
 
-          <mat-card appearance="outlined" class="result-head">
+          <mat-card
+            appearance="outlined"
+            [class]="'result-head ft-card--glass tone-' + toneFor(result.overallVerdict)"
+          >
             <mat-card-header>
               <mat-card-title>Ergebnis: {{ current.title }}</mat-card-title>
               <mat-card-subtitle>Gesamtbewertung</mat-card-subtitle>
@@ -92,7 +95,10 @@ import { VerdictBadgeComponent } from '../../shared/components/verdict-badge.com
 
           <div class="stage-results">
             @for (evaluation of result.evaluations; track evaluation.stage) {
-              <mat-card appearance="outlined" class="stage-card">
+              <mat-card
+                appearance="outlined"
+                [class]="'stage-card tone-' + toneFor(evaluation.verdict)"
+              >
                 <mat-card-header>
                   <mat-card-title>Stufe {{ evaluation.stage }}</mat-card-title>
                   <mat-card-subtitle>
@@ -195,6 +201,53 @@ import { VerdictBadgeComponent } from '../../shared/components/verdict-badge.com
       .case-card {
         border-radius: var(--ft-radius-lg);
       }
+      /* Ergebnis- und Stufen-Cards: klare Statuskante passend zum Urteil. */
+      .result-head,
+      .stage-card {
+        position: relative;
+        overflow: hidden;
+      }
+      .result-head::before,
+      .stage-card::before {
+        content: '';
+        position: absolute;
+        inset: 0 0 auto 0;
+        height: 3px;
+        background: var(--ft-accent);
+        opacity: 0.9;
+      }
+      .tone-ok::before {
+        background: var(--ft-ok);
+      }
+      .tone-partial::before {
+        background: var(--ft-partial);
+      }
+      .tone-bad::before {
+        background: var(--ft-danger);
+      }
+      /* Ergebnis-Card: Material-Surface + dezente Glass-Kante. */
+      .result-head {
+        border-color: var(--ft-glass-border);
+      }
+      .result-head .overall {
+        align-items: center;
+      }
+      /* Fortschrittsbalken etwas kräftiger im Ergebnis-Kontext. */
+      .result-head mat-progress-bar {
+        height: 10px;
+        margin-top: 0.35rem;
+      }
+      /* Stufen-Cards: interaktive Material-Anmutung, gleiche Höhe im Grid. */
+      .stage-card {
+        display: flex;
+        flex-direction: column;
+      }
+      .stage-card mat-card-content {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        flex: 1 1 auto;
+      }
       .case-details {
         border: 1px solid var(--ft-border);
         border-left: 3px solid var(--ft-accent);
@@ -240,7 +293,12 @@ import { VerdictBadgeComponent } from '../../shared/components/verdict-badge.com
       }
       .solution li {
         border-left: 3px solid var(--ft-accent);
-        background: var(--ft-surface-2);
+        background: var(--ft-glass-tint);
+        border-top: 1px solid var(--ft-glass-border);
+        border-right: 1px solid var(--ft-glass-border);
+        border-bottom: 1px solid var(--ft-glass-border);
+        backdrop-filter: blur(var(--ft-blur-soft)) saturate(130%);
+        -webkit-backdrop-filter: blur(var(--ft-blur-soft)) saturate(130%);
         border-radius: 0 var(--ft-radius-sm) var(--ft-radius-sm) 0;
         padding: 0.8rem 1rem;
       }
@@ -414,6 +472,18 @@ export class ResultComponent implements OnInit {
     }
     this.scenario.set(scenario);
     this.caseResult.set(this.state.evaluate());
+  }
+
+  /** Farbschema der Ergebnis-/Stufen-Cards passend zum Urteil. */
+  toneFor(verdict: OptionVerdict): 'ok' | 'partial' | 'bad' {
+    switch (verdict) {
+      case 'RICHTIG':
+        return 'ok';
+      case 'TEILWEISE_RICHTIG':
+        return 'partial';
+      case 'FALSCH':
+        return 'bad';
+    }
   }
 
   /** Denkfehler einer Stufe aus dem Gesamtergebnis. */
