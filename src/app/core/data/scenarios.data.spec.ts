@@ -230,8 +230,8 @@ describe('Lernumfang – §128 StPO ist nicht prüfungsrelevant', () => {
 });
 
 describe('originalCaseText – mündlicher Prüfungssachverhalt', () => {
-  it('ist bei allen 8 Fällen vorhanden', () => {
-    expect(SCENARIOS.length).toBe(8);
+  it('ist bei allen 16 Fällen vorhanden', () => {
+    expect(SCENARIOS.length).toBe(16);
     for (const scenario of SCENARIOS) {
       expect(scenario.originalCaseText?.length)
         .withContext(`${scenario.id}: originalCaseText fehlt`)
@@ -300,4 +300,102 @@ describe('originalCaseText – mündlicher Prüfungssachverhalt', () => {
     expect(fall8.originalCaseText).toContain('Der Markt soll geschlossen werden');
     expect(fall8.originalCaseText).not.toContain('Hausverbot');
   });
+});
+
+describe('Erweiterte Fälle 09–16 – aus den Fallvorlagen konstruiert', () => {
+  const EXTENDED_IDS = [
+    'taschenkontrolle-verweigert',
+    'jugendlicher-diebstahl',
+    'schlaegerei-disko',
+    'fettbrand-kueche',
+    'videoueberwachung',
+    'schreckschusswaffe-dienst',
+    'garantenstellung-unterlassen',
+    'massenpanik',
+  ];
+
+  const expectedDifficulty: Record<string, number> = {
+    'taschenkontrolle-verweigert': 4,
+    'jugendlicher-diebstahl': 4,
+    'schlaegerei-disko': 3,
+    'fettbrand-kueche': 3,
+    'videoueberwachung': 4,
+    'schreckschusswaffe-dienst': 4,
+    'garantenstellung-unterlassen': 5,
+    'massenpanik': 4,
+  };
+
+  const expectedTopic: Record<string, string> = {
+    'taschenkontrolle-verweigert': 'Rechtslehre',
+    'jugendlicher-diebstahl': 'Strafrecht / Jugendlicher',
+    'schlaegerei-disko': 'Notwehrpraxis',
+    'fettbrand-kueche': 'Brandschutz',
+    'videoueberwachung': 'Datenschutz',
+    'schreckschusswaffe-dienst': 'Waffenrecht',
+    'garantenstellung-unterlassen': 'Garantenstellung',
+    'massenpanik': 'Großveranstaltung',
+  };
+
+  it('enthält die acht erweiterten Fälle und damit 16 Szenarien insgesamt', () => {
+    expect(SCENARIOS.length).toBe(16);
+    const ids = SCENARIOS.map((scenario) => scenario.id);
+    for (const id of EXTENDED_IDS) {
+      expect(ids).withContext(id).toContain(id);
+    }
+  });
+
+  it('behält die acht Bestandsfälle unverändert im Pool', () => {
+    const baseIds = [
+      'ladendiebstahl',
+      'hausverbot',
+      'koerperlicher-angriff',
+      'fahrraddiebstahl',
+      'kind-im-auto',
+      'beleidigung-deeskalation',
+      'klopapier-einkaufswagen',
+      'marktschliessung-hausverbot',
+    ];
+    for (const id of baseIds) {
+      expect(SCENARIOS.some((scenario) => scenario.id === id)).withContext(id).toBe(true);
+    }
+  });
+
+  for (const id of EXTENDED_IDS) {
+    describe(id, () => {
+      const scenario = SCENARIOS.find((entry) => entry.id === id)!;
+
+      it('ist vorhanden und hat einen vollständigen Sachverhalt', () => {
+        expect(scenario).withContext(id).toBeDefined();
+        expect(scenario.originalCaseText.length).toBeGreaterThan(0);
+        expect(scenario.description.length).toBeGreaterThan(0);
+        expect(scenario.facts.length).toBeGreaterThan(0);
+      });
+
+      it('hat Themengebiet, Difficulty und Rechtslehre', () => {
+        expect(scenario.topic).withContext(id).toBe(expectedTopic[id]);
+        expect(scenario.difficulty).withContext(id).toBe(expectedDifficulty[id]);
+        expect(scenario.legalReference?.length).withContext(id).toBeGreaterThan(0);
+      });
+
+      it('hat zwei Folgefragen', () => {
+        expect(scenario.followUp1?.length).withContext(id).toBeGreaterThan(0);
+        expect(scenario.followUp2?.length).withContext(id).toBeGreaterThan(0);
+      });
+
+      it('bildet alle drei Stufen ab', () => {
+        expect(scenario.stageOne.options.length).toBeGreaterThan(0);
+        expect(scenario.stageTwo.options.length).toBeGreaterThan(0);
+        expect(scenario.stageThree.options.length).toBeGreaterThan(0);
+      });
+
+      it('gibt eine vollständige Musterlösung an', () => {
+        const solution = scenario.result.modelSolution;
+        expect(solution.behavior.length).toBeGreaterThan(0);
+        expect(solution.legalClassification.length).toBeGreaterThan(0);
+        expect(solution.legalBasis.length).toBeGreaterThan(0);
+        expect(solution.reasoning.length).toBeGreaterThan(0);
+        expect(solution.limits.length).toBeGreaterThan(0);
+      });
+    });
+  }
 });

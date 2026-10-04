@@ -1,4 +1,5 @@
 import { Scenario } from '../models';
+import { EXTENDED_SCENARIOS } from './scenarios-extended.data';
 
 /**
  * Seed-Szenarien.
@@ -8,7 +9,7 @@ import { Scenario } from '../models';
  * Befugnisse der Knowledge Base und vermeidet die verbotenen Automatismen
  * aus Bibel-Kapitel 13/62.
  */
-export const SCENARIOS: Scenario[] = [
+const BASE_SCENARIOS: Scenario[] = [
   // ===========================================================================
   // FALL 1 – Ladendiebstahl: Diebstahl ≠ automatische Festhaltebefugnis
   // ===========================================================================
@@ -1395,3 +1396,10 @@ export const SCENARIOS: Scenario[] = [
     },
   },
 ];
+
+/**
+ * Gesamter Szenarien-Pool: acht Bestandsfälle (unverändert) plus die acht aus
+ * den Fallvorlagen konstruierten Fälle 09–16 (Fall 09–16, siehe
+ * `scenarios-extended.data.ts`).
+ */
+export const SCENARIOS: Scenario[] = [...BASE_SCENARIOS, ...EXTENDED_SCENARIOS];

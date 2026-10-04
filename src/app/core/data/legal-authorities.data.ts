@@ -187,4 +187,23 @@ export const LEGAL_AUTHORITIES: LegalAuthority[] = [
     proportionality: 'Nicht anwendbar – Schuldausschluss.',
     prohibitedConditions: ['§34 StGB und §35 StGB vermischen'],
   },
+  {
+    id: 'authority-bgb-903-hausrecht',
+    normId: 'bgb-903',
+    kind: 'BEFUGNIS',
+    holder: 'Eigentümer bzw. Betreiber der Räume (und seine Besitzdiener)',
+    prerequisites: ['Eigentum oder abgeleitete Nutzungsbefugnis an den Räumen', 'keine entgegenstehenden gesetzlichen Schranken oder Rechte Dritter'],
+    permittedAction:
+      'Der Betreiber darf den Zutritt von Personen ausschließen und als Bedingung des Zutritts eine freiwillige Taschenkontrolle verlangen; verweigert die Person, darf der Zutritt verweigert bzw. zum Verlassen aufgefordert werden.',
+    limits: [
+      'Keine Durchsuchung gegen den Willen des Besuchers',
+      'Keine Festnahme, keine körperliche Gewalt allein wegen der Verweigerung',
+      'Zwang nur, wenn eine eigenständige Befugnis (z. B. §127 StPO, §859 BGB) vorliegt',
+    ],
+    proportionality: 'Das mildeste Mittel ist die Zutrittsverweigerung; Zwang ist nicht verhältnismäßig, solange kein Rechtsgut gefährdet ist.',
+    prohibitedConditions: [
+      'Hausrecht → automatisch Durchsuchungsbefugnis',
+      'Hausrecht → automatisch Gewalt oder Festhalten',
+    ],
+  },
 ];

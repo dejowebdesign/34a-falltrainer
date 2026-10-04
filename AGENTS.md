@@ -144,6 +144,16 @@ Rules:
 - When adding scenarios or options, the integrity specs in
   `core/data/scenarios.data.spec.ts` must stay green (norm/authority/
   classification references, misconceptions on FALSCH options, model solution).
+- Scenario pool: 8 base cases in `core/data/scenarios.data.ts` (`BASE_SCENARIOS`)
+  plus the cases constructed from the Fallvorlagen in
+  `core/data/scenarios-extended.data.ts` (`EXTENDED_SCENARIOS`). `SCENARIOS`
+  concatenates both; keep the base array untouched and add new cases to the
+  extended file. Extended cases carry `topic`, `difficulty`, `clusters`,
+  `legalReference`, `followUp1`/`followUp2` (the base cases stay without them).
+  Where a legal basis is not in the V5.3.1 Bible (e.g. § 19 StGB, § 13 StGB,
+  Art. 6 DSGVO, WaffG, DGUV V23, DIN EN 2, Versammlungsrecht) the text is
+  marked "in der Knowledge Base nicht enthalten – als fehlend markiert" and no
+  norm ID is invented.
 - `core/rules/legal-reasoning.spec.ts` guards the forbidden automatisms and the
   Anspruch/Befugnis/Rechtfertigung/Entschuldigung separation.
 - `core/rules/oral-exam-engine.spec.ts` and
