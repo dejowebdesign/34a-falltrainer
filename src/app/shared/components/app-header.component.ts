@@ -22,7 +22,7 @@ export const HEADER_SCROLL_THRESHOLD = 16;
   template: `
     <a class="skip-link" href="#main-content">Zum Inhalt springen</a>
     <mat-toolbar class="app-toolbar" role="banner" [class.glass]="isScrolled()">
-      <div class="ft-container toolbar-inner">
+      <div class="toolbar-inner">
         <a routerLink="/" class="brand" aria-label="34a Falltrainer Startseite">
           <span class="brand-mark" aria-hidden="true">
             <mat-icon>gavel</mat-icon>
@@ -85,29 +85,49 @@ export const HEADER_SCROLL_THRESHOLD = 16;
       .skip-link:focus {
         left: 0;
       }
+      /* Shell für den schwebenden Zustand: Der Toolbar selbst übernimmt
+         Breite, Rundung und den oberen Abstand (per transform). */
       .app-toolbar {
         background: transparent;
         color: var(--ft-header-text);
         height: auto;
         min-height: var(--ft-header-height);
         padding-block: 0.4rem;
-        border-bottom: 1px solid transparent;
+        padding-inline: 1.1rem;
+        border: 1px solid transparent;
+        border-radius: 0;
         box-shadow: none;
+        width: 100%;
+        max-width: var(--ft-container-max);
+        margin-inline: auto;
         transition:
+          max-width var(--ft-motion),
+          margin var(--ft-motion),
+          padding var(--ft-motion),
+          transform var(--ft-motion),
           background-color var(--ft-motion),
           backdrop-filter var(--ft-motion),
           -webkit-backdrop-filter var(--ft-motion),
           border-color var(--ft-motion),
+          border-radius var(--ft-motion),
           box-shadow var(--ft-motion);
       }
-      /* Beim Scrollen: semi-transparente Surface + Backdrop-Blur.
-         Bleibt bewusst dezent – keine undurchsichtige Leiste. */
+      /* Beim Scrollen wird die Leiste per transform zur schwebenden,
+         zentrierten Glass-Card: begrenzte Breite, Abstand zum Viewport,
+         deutliche Rundung. transform verändert den Fluss nicht, daher
+         entsteht kein Layout-Sprung. */
       .app-toolbar.glass {
+        max-width: min(
+          var(--ft-header-max),
+          calc(100% - 2 * var(--ft-header-gap-x))
+        );
+        transform: translateY(var(--ft-header-gap-top));
         background: var(--ft-header-glass);
         backdrop-filter: blur(var(--ft-blur-header)) saturate(150%);
         -webkit-backdrop-filter: blur(var(--ft-blur-header)) saturate(150%);
-        border-bottom-color: var(--ft-header-border);
-        box-shadow: var(--ft-elevation-1);
+        border-color: var(--ft-header-border);
+        border-radius: var(--ft-header-radius);
+        box-shadow: var(--ft-elevation-2);
       }
       .toolbar-inner {
         display: flex;
@@ -175,18 +195,19 @@ export const HEADER_SCROLL_THRESHOLD = 16;
       .theme-toggle {
         color: var(--ft-header-text);
       }
-      @media (max-width: 640px) {
-        .brand-text small {
-          display: none;
-        }
-        .nav a {
-          padding-inline: 0.6rem;
-          font-size: 0.88rem;
+      @media (min-width: 768px) {
+        .app-toolbar {
+          padding-inline: 2rem;
         }
       }
-      /* Auf schmalen Screens darf die Navigation in eine zweite Zeile
-         umbrechen – so entsteht kein horizontaler Überlauf. */
-      @media (max-width: 560px) {
+      /* Auf schmalen Screens (inkl. Tablet-Hochformat) darf die Navigation
+         in eine zweite Zeile umbrechen – so entsteht kein horizontaler
+         Überlauf. Der schwebende Charakter (Abstand, Radius, Glass)
+         bleibt dabei erhalten. */
+      @media (max-width: 700px) {
+        .app-toolbar {
+          padding-inline: 0.9rem;
+        }
         .toolbar-inner {
           flex-wrap: wrap;
           row-gap: 0.3rem;
@@ -196,20 +217,55 @@ export const HEADER_SCROLL_THRESHOLD = 16;
         }
         .toolbar-actions {
           flex: 1 1 100%;
+          flex-wrap: wrap;
+          row-gap: 0.25rem;
           justify-content: space-between;
+        }
+        .nav {
+          flex-wrap: wrap;
+        }
+      }
+      @media (max-width: 640px) {
+        .brand-text small {
+          display: none;
+        }
+        .nav a {
+          padding-inline: 0.55rem;
+          font-size: 0.88rem;
+        }
+      }
+      @media (max-width: 560px) {
+        .app-toolbar {
+          padding-inline: 0.75rem;
         }
         .nav a {
           padding-inline: 0.5rem;
           font-size: 0.85rem;
         }
       }
-      @media (max-width: 420px) {
+      @media (max-width: 430px) {
+        .nav {
+          justify-content: center;
+        }
         .nav a {
-          padding-inline: 0.4rem;
+          padding-inline: 0.35rem;
           font-size: 0.8rem;
         }
         .brand-text strong {
           font-size: 1rem;
+        }
+      }
+      @media (max-width: 360px) {
+        .nav a {
+          padding-inline: 0.28rem;
+          font-size: 0.76rem;
+        }
+      }
+      /* Reduced Motion: direkt in den schwebenden Zustand, keine
+         aufwendige Übergangsanimation. */
+      @media (prefers-reduced-motion: reduce) {
+        .app-toolbar {
+          transition: none;
         }
       }
     `,

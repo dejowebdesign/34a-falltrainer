@@ -19,6 +19,13 @@
   --ft-container-max: 1140px;
   --ft-container-wide: 1240px;
   --ft-header-height: 70px;
+  /* Schwebende Navigation: begrenzte Breite (entspricht dem Inhalts-
+     Container, damit die linke Kante beim Scrollen nicht springt),
+     Abstand zum Viewport, deutlich abgerundete Ecken. */
+  --ft-header-max: 1140px;
+  --ft-header-radius: 22px;
+  --ft-header-gap-top: 14px;
+  --ft-header-gap-x: 14px;
   --ft-font:
     'Inter', 'Segoe UI', system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
 
