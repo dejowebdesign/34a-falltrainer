@@ -51,6 +51,9 @@ describe('AppHeaderComponent', () => {
     const examLink = host.querySelector('a[href="/pruefungssimulation"]');
     expect(examLink).toBeTruthy();
     expect(examLink?.textContent?.trim()).toBe('Prüfungssimulation');
+    const stgbLink = host.querySelector('a[href="/strafgesetzbuch"]');
+    expect(stgbLink).toBeTruthy();
+    expect(stgbLink?.textContent?.trim()).toBe('Strafgesetzbuch');
   });
 
   it('hat ein aria-label am Theme-Toggle', () => {

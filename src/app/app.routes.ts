@@ -42,6 +42,14 @@ export const routes: Routes = [
     title: '34a Falltrainer – Ergebnis',
   },
   {
+    path: 'strafgesetzbuch',
+    loadComponent: () =>
+      import('./features/strafgesetzbuch/strafgesetzbuch.component').then(
+        (m) => m.StrafgesetzbuchComponent,
+      ),
+    title: '34a Falltrainer – Strafgesetzbuch',
+  },
+  {
     path: 'pruefungssimulation',
     loadComponent: () =>
       import('./features/oral-exam/oral-exam-intro.component').then(

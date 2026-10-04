@@ -13,6 +13,10 @@ describe('App-Routen', () => {
     expect(paths).toContain('scenarios/:id/result');
   });
 
+  it('enthält die Lernseite Strafgesetzbuch', () => {
+    expect(paths).toContain('strafgesetzbuch');
+  });
+
   it('enthält die Prüfungssimulations-Routen', () => {
     expect(paths).toContain('pruefungssimulation');
     expect(paths).toContain('pruefungssimulation/durchfuehrung');

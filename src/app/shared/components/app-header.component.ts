@@ -43,6 +43,7 @@ export const HEADER_SCROLL_THRESHOLD = 16;
               Start
             </a>
             <a mat-button routerLink="/scenarios" routerLinkActive="active">Fallbeispiele</a>
+            <a mat-button routerLink="/strafgesetzbuch" routerLinkActive="active">Strafgesetzbuch</a>
             <a mat-button routerLink="/pruefungssimulation" routerLinkActive="active"
               >Prüfungssimulation</a
             >
