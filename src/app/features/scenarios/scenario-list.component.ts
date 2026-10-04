@@ -24,27 +24,32 @@ import { ScenarioService } from '../../core/services/scenario.service';
         </p>
       </header>
 
-      <div class="grid">
-        @for (scenario of scenarios; track scenario.id; let i = $index) {
-          <a class="case-card" [routerLink]="['/scenarios', scenario.id]">
-            <span class="case-number">Fall {{ pad(i + 1) }}</span>
-            <h2 class="case-title">{{ scenario.title }}</h2>
-            <p class="case-desc">{{ scenario.description }}</p>
-            <span class="case-tags">
-              <span class="ft-chip">3 Stufen</span>
-              <span class="ft-chip">Musterlösung</span>
-            </span>
-            <span class="case-cta">
-              Öffnen
-              <mat-icon aria-hidden="true">arrow_forward</mat-icon>
-            </span>
-          </a>
-        }
-      </div>
+      <section class="ft-section ft-section--plain list-section" aria-label="Fallübersicht">
+        <div class="grid">
+          @for (scenario of scenarios; track scenario.id; let i = $index) {
+            <a class="case-card" [routerLink]="['/scenarios', scenario.id]">
+              <span class="case-number">Fall {{ pad(i + 1) }}</span>
+              <h2 class="case-title">{{ scenario.title }}</h2>
+              <p class="case-desc">{{ scenario.description }}</p>
+              <span class="case-tags">
+                <span class="ft-chip">3 Stufen</span>
+                <span class="ft-chip">Musterlösung</span>
+              </span>
+              <span class="case-cta">
+                Öffnen
+                <mat-icon aria-hidden="true">arrow_forward</mat-icon>
+              </span>
+            </a>
+          }
+        </div>
+      </section>
     </div>
   `,
   styles: [
     `
+      .list-section {
+        padding: 0;
+      }
       .grid {
         display: grid;
         gap: 1.1rem;

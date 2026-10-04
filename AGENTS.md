@@ -166,3 +166,21 @@ Rules:
   add a `build:` section, the target host must not build anything.
 
 Do not change the app's legal/didactic logic when touching deployment files.
+
+## UI / interaction layer
+
+- `src/styles.css` is the single design system. Add tokens/utilities here
+  instead of hard-coding colours in components.
+- Light mode is the default; `html.dark` is the alternate. Both themes must
+  stay usable.
+- Layer model (light): page `--ft-bg` → section `--ft-section` → card
+  `--ft-surface` → elevated card → glass. Use `.ft-section` for page sections
+  and `.ft-card--glass`/`.ft-elevation-*` for cards; do not invent new surfaces.
+- Interaction primitives: `.ft-reveal` (per-stage/per-question fade-in),
+  `.ft-focus-trigger` + `FocusOverlayComponent` (`app-focus-overlay`) for the
+  purely visual focus/zoom view. The overlay never changes legal logic; the
+  underlying card stays in the DOM and remains operable.
+- Motion is limited to ~150–250 ms and must respect
+  `prefers-reduced-motion: reduce`.
+- `ScenarioFactsComponent` and the case detail page keep the original case text
+  verbatim; the toggle only hides/shows it, it is never shortened.

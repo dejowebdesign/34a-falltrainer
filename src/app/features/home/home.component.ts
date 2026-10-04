@@ -71,9 +71,11 @@ import { LearningPathComponent } from '../../shared/components/learning-path.com
     </section>
 
     <div class="ft-container content">
-      <app-learning-path />
+      <section class="ft-section ft-section--plain" aria-label="Lernpfad">
+        <app-learning-path />
+      </section>
 
-      <section class="learning-block" aria-labelledby="umgang-title">
+      <section class="learning-block ft-section" aria-labelledby="umgang-title">
         <header class="block-head">
           <span class="ft-eyebrow">Stufe 1</span>
           <h2 id="umgang-title">Umgang mit Menschen</h2>
@@ -82,7 +84,10 @@ import { LearningPathComponent } from '../../shared/components/learning-path.com
         <app-behavior-reference />
       </section>
 
-      <section class="learning-block" aria-label="Rechtliche Einordnung und Rechtsgrundlage">
+      <section
+        class="learning-block ft-section ft-section--tint"
+        aria-label="Rechtliche Einordnung und Rechtsgrundlage"
+      >
         <app-legal-orientation />
       </section>
 
@@ -366,11 +371,22 @@ import { LearningPathComponent } from '../../shared/components/learning-path.com
       .content {
         padding-block: 2.75rem 3rem;
         display: grid;
-        gap: 2.75rem;
+        gap: 1.75rem;
+      }
+      /* Der Lernpfad bringt seine eigenen Karten mit – die Section bleibt
+         daher flächenlos und dient nur dem vertikalen Rhythmus. */
+      .content .ft-section--plain {
+        padding: 0;
       }
       .learning-block {
         display: grid;
         gap: 1.1rem;
+      }
+      /* Section-Tiefe: dezenter Übergang zum grauen Seitenhintergrund. */
+      .content .ft-section {
+        transition:
+          background-color var(--ft-motion),
+          border-color var(--ft-motion);
       }
       .block-head h2 {
         margin: 0.3rem 0 0.25rem;
