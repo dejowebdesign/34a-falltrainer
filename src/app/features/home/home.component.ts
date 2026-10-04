@@ -18,16 +18,27 @@ import { LearningPathComponent } from '../../shared/components/learning-path.com
   ],
   template: `
     <section class="hero">
-      <!-- Dekorative Hintergrund-Ebene: ausschließlich im Hero, pointer-events: none. -->
+      <!-- Dekorative Hintergrund-Ebene: Hero-Bild + Sternengruppe, ausschließlich im Hero. -->
       <div class="hero-bg" aria-hidden="true">
-        <span class="hero-glow"></span>
-        <span class="hero-particle hero-particle--1"></span>
-        <span class="hero-particle hero-particle--2"></span>
-        <span class="hero-particle hero-particle--3"></span>
-        <span class="hero-particle hero-particle--4"></span>
-        <span class="hero-particle hero-particle--5"></span>
-        <span class="hero-particle hero-particle--6"></span>
-        <span class="hero-particle hero-particle--7"></span>
+        <picture class="hero-media">
+          <source srcset="hero/hero-upload.webp" type="image/webp" />
+          <img
+            src="hero/hero-upload.jpg"
+            alt=""
+            aria-hidden="true"
+            decoding="async"
+            fetchpriority="high"
+          />
+        </picture>
+        <span class="hero-overlay"></span>
+        <!-- Bestehender 5-Punkte-Effekt: als fünf dezente Sterne in den Himmel eingebettet. -->
+        <span class="hero-stars">
+          <span class="hero-star hero-star--1"></span>
+          <span class="hero-star hero-star--2"></span>
+          <span class="hero-star hero-star--3"></span>
+          <span class="hero-star hero-star--4"></span>
+          <span class="hero-star hero-star--5"></span>
+        </span>
       </div>
       <div class="ft-container hero-inner">
         <div class="hero-text hero-surface">
@@ -55,9 +66,6 @@ import { LearningPathComponent } from '../../shared/components/learning-path.com
             <li><strong>3</strong> Stufen je Fall</li>
             <li><strong>27</strong> Fragen in der Simulation</li>
           </ul>
-        </div>
-        <div class="hero-art" aria-hidden="true">
-          <mat-icon>balance</mat-icon>
         </div>
       </div>
     </section>
@@ -97,6 +105,10 @@ import { LearningPathComponent } from '../../shared/components/learning-path.com
         position: relative;
         overflow: hidden;
         isolation: isolate;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        min-height: clamp(520px, 70vh, 720px);
         background: linear-gradient(
           135deg,
           var(--ft-hero-from) 0%,
@@ -106,9 +118,9 @@ import { LearningPathComponent } from '../../shared/components/learning-path.com
         color: #fff;
         padding-block: clamp(3rem, 8vw, 5.5rem) clamp(3rem, 8vw, 5rem);
       }
-      /* ---------- Hero-Hintergrund (einzige animierte Fläche) ----------
-         Alle Ebenen liegen hinter dem Inhalt (z-index 0 < .hero-inner 1)
-         und sind pointer-events: none. Rein CSS-basiert (transform/opacity). */
+      /* ---------- Hero-Hintergrundbild ----------
+         Das Bild ist die visuelle Hauptebene (z-index 0), liegt hinter dem
+         Inhalt (.hero-inner z-index 1) und ist rein dekorativ. */
       .hero-bg {
         position: absolute;
         inset: 0;
@@ -116,85 +128,147 @@ import { LearningPathComponent } from '../../shared/components/learning-path.com
         overflow: hidden;
         pointer-events: none;
       }
-      /* Statischer Marken-Glow im Hintergrund (keine Bewegung). */
-      .hero-glow {
+      .hero-media,
+      .hero-media img {
         position: absolute;
         inset: 0;
-        background: radial-gradient(
-          60% 80% at 78% 18%,
-          rgba(45, 212, 191, 0.16),
-          transparent 62%
-        );
+        width: 100%;
+        height: 100%;
+        display: block;
       }
-      /* Schwebende Leuchtpunkte: sanftes Auf- und Abschweben (rein CSS). */
-      .hero-particle {
+      /* Bildschwerpunkt rechts: Gebäude + Security bleiben sichtbar.
+         Mobil wird der Ausschnitt nach rechts verschoben, damit das Motiv
+         nicht verloren geht. */
+      .hero-media img {
+        object-fit: cover;
+        object-position: 72% center;
+      }
+      /* Subtil dunkler Verlauf links → rechts: hält den Textbereich ruhig,
+         lässt den Sternenhimmel oben links und das Gebäude rechts sichtbar. */
+      .hero-overlay {
         position: absolute;
-        width: 5px;
-        height: 5px;
+        inset: 0;
+        background:
+          linear-gradient(
+            90deg,
+            rgba(7, 13, 28, 0.88) 0%,
+            rgba(7, 13, 28, 0.6) 40%,
+            rgba(7, 13, 28, 0.2) 58%,
+            rgba(7, 13, 28, 0.04) 100%
+          ),
+          linear-gradient(180deg, rgba(7, 13, 28, 0.3) 0%, rgba(7, 13, 28, 0) 34%);
+      }
+      /* Bestehender 5-Punkte-Effekt als kleine, dezente Sternengruppe im
+         freien Sternenhimmel oben links, oberhalb des Hero-Textbereichs.
+         Gleiche Farbwelt, weiterhin leicht animiert. */
+      .hero-stars {
+        position: absolute;
+        left: 3%;
+        top: 14px;
+        width: 24%;
+        height: 72px;
+      }
+      .hero-star {
+        position: absolute;
+        width: 4px;
+        height: 4px;
         border-radius: 50%;
-        background: rgba(170, 240, 232, 0.9);
-        box-shadow: 0 0 8px rgba(45, 212, 191, 0.8);
-        opacity: 0.3;
+        background: rgba(180, 244, 238, 0.95);
+        box-shadow: 0 0 6px rgba(45, 212, 191, 0.75);
+        opacity: 0.55;
         will-change: transform, opacity;
-        animation: hero-particle-float 13s ease-in-out infinite;
+        animation: hero-star-twinkle 6.5s ease-in-out infinite;
       }
-      .hero-particle--1 {
-        left: 8%;
-        top: 62%;
-        animation-duration: 12s;
+      .hero-star--1 {
+        left: 6%;
+        top: 12%;
+        animation-duration: 6s;
       }
-      .hero-particle--2 {
-        left: 22%;
-        top: 30%;
-        animation-duration: 15s;
-        animation-delay: -3s;
+      .hero-star--2 {
+        left: 26%;
+        top: 44%;
+        animation-duration: 7.5s;
+        animation-delay: -1.6s;
       }
-      .hero-particle--3 {
-        left: 38%;
-        top: 74%;
-        animation-duration: 11s;
-        animation-delay: -6s;
+      .hero-star--3 {
+        left: 46%;
+        top: 16%;
+        animation-duration: 5.6s;
+        animation-delay: -3.1s;
       }
-      .hero-particle--4 {
-        left: 52%;
-        top: 42%;
-        animation-duration: 17s;
-        animation-delay: -2s;
-      }
-      .hero-particle--5 {
+      .hero-star--4 {
         left: 66%;
-        top: 70%;
-        animation-duration: 13s;
-        animation-delay: -8s;
+        top: 52%;
+        animation-duration: 8.2s;
+        animation-delay: -0.8s;
       }
-      .hero-particle--6 {
-        left: 80%;
-        top: 28%;
-        animation-duration: 16s;
-        animation-delay: -5s;
+      .hero-star--5 {
+        left: 86%;
+        top: 22%;
+        animation-duration: 6.8s;
+        animation-delay: -4.4s;
       }
-      .hero-particle--7 {
-        left: 92%;
-        top: 58%;
-        animation-duration: 14s;
-        animation-delay: -10s;
-      }
-      @keyframes hero-particle-float {
+      @keyframes hero-star-twinkle {
         0%,
         100% {
-          transform: translate3d(0, 0, 0);
-          opacity: 0.24;
+          transform: translate3d(0, 0, 0) scale(0.9);
+          opacity: 0.4;
         }
         50% {
-          transform: translate3d(6px, -46px, 0);
+          transform: translate3d(2px, -4px, 0) scale(1.12);
           opacity: 0.95;
         }
       }
-      /* Reduced Motion: Bewegung vollständig aus, statische ruhige Fläche. */
+      /* Reduced Motion: Sternenbewegung aus, ruhige statische Punkte. */
       @media (prefers-reduced-motion: reduce) {
-        .hero-particle {
+        .hero-star {
           animation: none !important;
-          opacity: 0.4;
+          opacity: 0.6;
+        }
+      }
+      /* Tablet: Text und Bild ausbalancieren. */
+      @media (max-width: 960px) {
+        .hero {
+          min-height: clamp(480px, 66vh, 640px);
+        }
+        .hero-media img {
+          object-position: 78% center;
+        }
+        .hero-overlay {
+          background:
+            linear-gradient(
+              90deg,
+              rgba(7, 13, 28, 0.9) 0%,
+              rgba(7, 13, 28, 0.72) 46%,
+              rgba(7, 13, 28, 0.34) 78%,
+              rgba(7, 13, 28, 0.12) 100%
+            ),
+            linear-gradient(180deg, rgba(7, 13, 28, 0.4) 0%, rgba(7, 13, 28, 0) 40%);
+        }
+      }
+      /* Mobil: Text vollständig lesbar, Ausschnitt nach rechts (Motiv erhalten). */
+      @media (max-width: 600px) {
+        .hero {
+          min-height: 0;
+        }
+        .hero-media img {
+          object-position: 82% center;
+        }
+        .hero-overlay {
+          background:
+            linear-gradient(
+              180deg,
+              rgba(7, 13, 28, 0.86) 0%,
+              rgba(7, 13, 28, 0.68) 55%,
+              rgba(7, 13, 28, 0.5) 100%
+            ),
+            linear-gradient(90deg, rgba(7, 13, 28, 0.55) 0%, rgba(7, 13, 28, 0) 70%);
+        }
+        .hero-stars {
+          left: 3%;
+          top: 6px;
+          width: 40%;
+          height: 36px;
         }
       }
       .hero-inner {
@@ -206,11 +280,10 @@ import { LearningPathComponent } from '../../shared/components/learning-path.com
         gap: 2rem;
       }
       .hero-text {
-        max-width: 760px;
+        max-width: 680px;
       }
-      /* Subtile Material-/Glass-Surface, die den Text vom animierten
-         Hintergrund absetzt – dezent, nur um den Textblock, nicht über den
-         gesamten Hero. */
+      /* Subtile Material-/Glass-Surface, die den Text vom Hero-Bild absetzt –
+         dezent, nur um den Textblock, damit das Bild sichtbar bleibt. */
       .hero-surface {
         position: relative;
         padding: clamp(1.4rem, 3vw, 2.1rem);
@@ -289,21 +362,6 @@ import { LearningPathComponent } from '../../shared/components/learning-path.com
         color: #fff;
         font-size: 1.05rem;
         margin-right: 0.15rem;
-      }
-      .hero-art {
-        flex: 0 0 auto;
-        display: none;
-      }
-      .hero-art mat-icon {
-        font-size: 150px;
-        width: 150px;
-        height: 150px;
-        opacity: 0.12;
-      }
-      @media (min-width: 960px) {
-        .hero-art {
-          display: block;
-        }
       }
       .content {
         padding-block: 2.75rem 3rem;
