@@ -41,13 +41,13 @@ export const BACK_TO_TOP_THRESHOLD = 400;
         backdrop-filter: blur(14px) saturate(140%);
         -webkit-backdrop-filter: blur(14px) saturate(140%);
         border: 1px solid var(--ft-glass-border);
-        box-shadow: var(--ft-shadow);
+        box-shadow: var(--ft-elevation-2);
         border-radius: 50%;
         animation: btt-in 200ms var(--ft-ease);
         transition:
-          transform var(--ft-transition),
-          background-color var(--ft-transition),
-          border-color var(--ft-transition);
+          transform var(--ft-motion),
+          background-color var(--ft-motion),
+          border-color var(--ft-motion);
       }
       .back-to-top:hover {
         transform: translateY(-3px);

@@ -19,8 +19,31 @@
   --ft-container-max: 1140px;
   --ft-container-wide: 1240px;
   --ft-header-height: 70px;
+  /* Schwebende Navigation: begrenzte Breite (entspricht dem Inhalts-
+     Container, damit die linke Kante beim Scrollen nicht springt),
+     Abstand zum Viewport, deutlich abgerundete Ecken. */
+  --ft-header-max: 1140px;
+  --ft-header-radius: 22px;
+  --ft-header-gap-top: 14px;
+  --ft-header-gap-x: 14px;
   --ft-font:
     'Inter', 'Segoe UI', system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
+
+  /* Glass-Ebenen (Blur-Stärken) – zentral, damit nicht überall
+     willkürliche Blur-Werte entstehen. */
+  --ft-blur-header: 18px;
+  --ft-blur-glass: 14px;
+  --ft-blur-soft: 8px;
+
+  /* Material-Elevation – ruhige, konsistente Tiefenstaffelung. */
+  --ft-elevation-1: 0 1px 2px rgba(15, 23, 42, 0.06), 0 1px 3px rgba(15, 23, 42, 0.05);
+  --ft-elevation-2: 0 4px 12px -6px rgba(15, 23, 42, 0.22), 0 2px 6px rgba(15, 23, 42, 0.06);
+  --ft-elevation-3: 0 18px 40px -22px rgba(15, 23, 42, 0.32), 0 6px 14px rgba(15, 23, 42, 0.06);
+
+  /* Motion – eine Kurve, drei Geschwindigkeiten. */
+  --ft-motion-fast: 140ms var(--ft-ease);
+  --ft-motion: 220ms var(--ft-ease);
+  --ft-motion-slow: 420ms var(--ft-ease);
 }
 
 /* ---------- Light Theme ---------- */
@@ -177,6 +200,11 @@ html.dark {
   --ft-shadow: 0 10px 30px -16px rgba(0, 0, 0, 0.8), 0 2px 8px rgba(0, 0, 0, 0.4);
   --ft-shadow-lg: 0 30px 60px -28px rgba(0, 0, 0, 0.9), 0 8px 18px rgba(0, 0, 0, 0.5);
 
+  /* Elevation im Dark Mode: dunkler, aber weiterhin ruhig gestaffelt. */
+  --ft-elevation-1: 0 1px 2px rgba(0, 0, 0, 0.55);
+  --ft-elevation-2: 0 6px 16px -8px rgba(0, 0, 0, 0.75), 0 2px 6px rgba(0, 0, 0, 0.45);
+  --ft-elevation-3: 0 22px 48px -26px rgba(0, 0, 0, 0.9), 0 6px 16px rgba(0, 0, 0, 0.55);
+
   --ft-rule-surface: #0e2531;
   --ft-rule-border: #1d4a58;
   --ft-rule-text: #d7f3f0;
@@ -200,21 +228,21 @@ html.dark {
 /* ============================================================
    Grundlagen
    ============================================================ */
-html,
-body {
+html {
   height: 100%;
+}
+
+body {
+  /* `min-height` statt `height`: Der Body wächst mit dem Inhalt, damit
+     der sticky Header über die komplette Scrollstrecke haftet.
+     (Mit `height: 100%` endete der Sticky-Containing-Block nach 100vh.) */
+  min-height: 100%;
   margin: 0;
   background: var(--ft-bg);
   color: var(--ft-text);
   font-family: var(--ft-font);
   font-size: 16px;
   line-height: 1.55;
-  transition:
-    background-color var(--ft-transition-slow),
-    color var(--ft-transition-slow);
-}
-
-body {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   /* Dezente technische Rasterstruktur im Hintergrund. */
@@ -223,6 +251,9 @@ body {
     linear-gradient(90deg, var(--ft-bg-grid) 1px, transparent 1px);
   background-size: 48px 48px;
   background-attachment: fixed;
+  transition:
+    background-color var(--ft-transition-slow),
+    color var(--ft-transition-slow);
 }
 
 h1,
@@ -285,8 +316,53 @@ h4 {
   background: var(--ft-glass-surface);
   border: 1px solid var(--ft-glass-border);
   border-radius: var(--ft-radius-lg);
-  backdrop-filter: blur(14px) saturate(140%);
-  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  backdrop-filter: blur(var(--ft-blur-glass)) saturate(140%);
+  -webkit-backdrop-filter: blur(var(--ft-blur-glass)) saturate(140%);
+}
+
+/* Flache Glass-Variante für sekundäre Panels – dezenter Blur, keine
+   Übertreibung, damit Text jederzeit gut lesbar bleibt. */
+.ft-glass--soft {
+  background: var(--ft-glass-surface);
+  border: 1px solid var(--ft-glass-border);
+  border-radius: var(--ft-radius);
+  backdrop-filter: blur(var(--ft-blur-soft)) saturate(130%);
+  -webkit-backdrop-filter: blur(var(--ft-blur-soft)) saturate(130%);
+}
+
+/* Material-Elevation-Helfer (statt willkürlicher box-shadows). */
+.ft-elevation-1 {
+  box-shadow: var(--ft-elevation-1);
+}
+.ft-elevation-2 {
+  box-shadow: var(--ft-elevation-2);
+}
+.ft-elevation-3 {
+  box-shadow: var(--ft-elevation-3);
+}
+
+/* Standard-Fallkarte: Material-Surface + subtile Glass-Kante + Hover-Lift. */
+.ft-card {
+  background: var(--ft-surface);
+  border: 1px solid var(--ft-border);
+  border-radius: var(--ft-radius-lg);
+  box-shadow: var(--ft-elevation-1);
+  transition:
+    transform var(--ft-motion),
+    box-shadow var(--ft-motion),
+    border-color var(--ft-motion),
+    background-color var(--ft-motion);
+}
+
+.ft-card--interactive:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--ft-elevation-3);
+  border-color: var(--ft-border-strong);
+}
+
+.ft-card--interactive:focus-visible {
+  outline: 3px solid var(--ft-accent);
+  outline-offset: 2px;
 }
 
 /* Dezentes Label/Chip für Metadaten. */
@@ -322,7 +398,7 @@ h4 {
    Angular Material – an das Designsystem angleichen
    ============================================================ */
 
-/* Cards: Surface, Radius, dezente Border/Schatten. */
+/* Cards: Surface, Radius, dezente Border/Schatten (Material-Elevation 1). */
 .mat-mdc-card {
   --mdc-outlined-card-container-color: var(--ft-surface);
   --mdc-outlined-card-outline-color: var(--ft-border);
@@ -330,12 +406,12 @@ h4 {
   --mdc-card-container-shape: var(--ft-radius-lg);
   border-radius: var(--ft-radius-lg);
   border: 1px solid var(--ft-border);
-  box-shadow: var(--ft-shadow-sm);
+  box-shadow: var(--ft-elevation-1);
   background: var(--ft-surface);
   transition:
-    border-color var(--ft-transition),
-    box-shadow var(--ft-transition),
-    transform var(--ft-transition);
+    border-color var(--ft-motion),
+    box-shadow var(--ft-motion),
+    transform var(--ft-motion);
 }
 
 .mat-mdc-card-title {
@@ -365,15 +441,15 @@ h4 {
   font-weight: 600;
   letter-spacing: 0.01em;
   transition:
-    transform var(--ft-transition),
-    box-shadow var(--ft-transition),
-    background-color var(--ft-transition);
+    transform var(--ft-motion),
+    box-shadow var(--ft-motion),
+    background-color var(--ft-motion);
 }
 
 .mat-mdc-unelevated-button:not(:disabled):hover,
 .mat-mdc-raised-button:not(:disabled):hover {
   transform: translateY(-1px);
-  box-shadow: var(--ft-shadow);
+  box-shadow: var(--ft-elevation-2);
 }
 
 .mat-mdc-outlined-button {

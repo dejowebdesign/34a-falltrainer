@@ -18,7 +18,13 @@ import { LearningPathComponent } from '../../shared/components/learning-path.com
   ],
   template: `
     <section class="hero">
-      <div class="hero-glow" aria-hidden="true"></div>
+      <!-- Dekorative Hintergrund-Ebene: ausschließlich im Hero, pointer-events: none. -->
+      <div class="hero-bg" aria-hidden="true">
+        <span class="hero-grid"></span>
+        <span class="hero-orb hero-orb--a"></span>
+        <span class="hero-orb hero-orb--b"></span>
+        <span class="hero-sheen"></span>
+      </div>
       <div class="ft-container hero-inner">
         <div class="hero-text">
           <p class="eyebrow">Sachkundeprüfung § 34a GewO</p>
@@ -86,26 +92,136 @@ import { LearningPathComponent } from '../../shared/components/learning-path.com
       .hero {
         position: relative;
         overflow: hidden;
-        background:
-          radial-gradient(circle at 82% 18%, rgba(45, 212, 191, 0.22), transparent 46%),
-          linear-gradient(135deg, var(--ft-hero-from) 0%, var(--ft-hero-mid) 55%, var(--ft-hero-to) 100%);
+        isolation: isolate;
+        background: linear-gradient(
+          135deg,
+          var(--ft-hero-from) 0%,
+          var(--ft-hero-mid) 55%,
+          var(--ft-hero-to) 100%
+        );
         color: #fff;
         padding-block: clamp(3rem, 8vw, 5.5rem) clamp(3rem, 8vw, 5rem);
       }
-      /* Sehr dezente geometrische Glow-Fläche, kein Neon. */
-      .hero-glow {
+      /* ---------- Hero-Hintergrund (einzige animierte Fläche) ----------
+         Alle Ebenen liegen hinter dem Inhalt (z-index 0 < .hero-inner 1)
+         und sind pointer-events: none. Rein CSS-basiert (transform/opacity). */
+      .hero-bg {
         position: absolute;
         inset: 0;
-        background-image:
-          linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
-        background-size: 56px 56px;
-        mask-image: radial-gradient(circle at 70% 30%, #000 0%, transparent 72%);
-        -webkit-mask-image: radial-gradient(circle at 70% 30%, #000 0%, transparent 72%);
+        z-index: 0;
+        overflow: hidden;
         pointer-events: none;
+      }
+      /* Feines, langsam driftendes technisches Raster. */
+      .hero-grid {
+        position: absolute;
+        inset: -60px;
+        background-image:
+          linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+        background-size: 54px 54px;
+        mask-image: radial-gradient(circle at 72% 28%, #000 0%, transparent 74%);
+        -webkit-mask-image: radial-gradient(circle at 72% 28%, #000 0%, transparent 74%);
+        animation: hero-grid-drift 42s linear infinite;
+        will-change: transform;
+      }
+      /* Zwei langsam wandernde Glow-Flächen in der Marken-Farbwelt. */
+      .hero-orb {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(46px);
+        opacity: 0.5;
+        will-change: transform, opacity;
+      }
+      .hero-orb--a {
+        width: 420px;
+        height: 420px;
+        top: -140px;
+        right: -80px;
+        background: radial-gradient(circle, rgba(45, 212, 191, 0.5), transparent 68%);
+        animation: hero-orb-a 26s ease-in-out infinite;
+      }
+      .hero-orb--b {
+        width: 360px;
+        height: 360px;
+        bottom: -160px;
+        left: -60px;
+        background: radial-gradient(circle, rgba(110, 168, 254, 0.42), transparent 70%);
+        animation: hero-orb-b 32s ease-in-out infinite;
+      }
+      /* Sehr langsame, breite Lichtbewegung über die Fläche. */
+      .hero-sheen {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          100deg,
+          transparent 30%,
+          rgba(255, 255, 255, 0.06) 48%,
+          transparent 66%
+        );
+        background-size: 220% 100%;
+        animation: hero-sheen 30s ease-in-out infinite;
+        will-change: background-position;
+      }
+      @keyframes hero-grid-drift {
+        from {
+          transform: translate3d(0, 0, 0);
+        }
+        to {
+          transform: translate3d(-54px, -54px, 0);
+        }
+      }
+      @keyframes hero-orb-a {
+        0%,
+        100% {
+          transform: translate3d(0, 0, 0) scale(1);
+          opacity: 0.46;
+        }
+        50% {
+          transform: translate3d(-34px, 26px, 0) scale(1.08);
+          opacity: 0.58;
+        }
+      }
+      @keyframes hero-orb-b {
+        0%,
+        100% {
+          transform: translate3d(0, 0, 0) scale(1);
+          opacity: 0.42;
+        }
+        50% {
+          transform: translate3d(30px, -22px, 0) scale(1.06);
+          opacity: 0.52;
+        }
+      }
+      @keyframes hero-sheen {
+        0%,
+        100% {
+          background-position: 130% 0;
+        }
+        50% {
+          background-position: -30% 0;
+        }
+      }
+      /* Reduced Motion: Bewegung vollständig aus, statische, ruhige Fläche. */
+      @media (prefers-reduced-motion: reduce) {
+        .hero-grid,
+        .hero-orb,
+        .hero-sheen {
+          animation: none !important;
+        }
+        .hero-orb--a {
+          opacity: 0.5;
+        }
+        .hero-orb--b {
+          opacity: 0.44;
+        }
+        .hero-sheen {
+          background-position: 50% 0;
+        }
       }
       .hero-inner {
         position: relative;
+        z-index: 1;
         display: flex;
         align-items: center;
         justify-content: space-between;

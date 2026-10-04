@@ -68,15 +68,24 @@ import { ScenarioService } from '../../core/services/scenario.service';
         padding: 1.5rem;
         border: 1px solid var(--ft-border);
         border-radius: var(--ft-radius-lg);
-        background: var(--ft-surface);
-        box-shadow: var(--ft-shadow-sm);
+        background: linear-gradient(180deg, var(--ft-surface) 0%, var(--ft-surface-2) 100%);
+        box-shadow: var(--ft-elevation-1);
         text-decoration: none;
         color: var(--ft-text);
         overflow: hidden;
         transition:
-          transform var(--ft-transition),
-          border-color var(--ft-transition),
-          box-shadow var(--ft-transition);
+          transform var(--ft-motion),
+          border-color var(--ft-motion),
+          box-shadow var(--ft-motion);
+      }
+      /* Subtiler Glass-Schimmer oben – Material bleibt die Basis. */
+      .case-card::after {
+        content: '';
+        position: absolute;
+        inset: 0 0 auto 0;
+        height: 42%;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), transparent);
+        pointer-events: none;
       }
       .case-card::before {
         content: '';
@@ -85,15 +94,19 @@ import { ScenarioService } from '../../core/services/scenario.service';
         width: 4px;
         background: linear-gradient(180deg, var(--ft-accent), var(--ft-secondary));
         opacity: 0;
-        transition: opacity var(--ft-transition);
+        transition: opacity var(--ft-motion);
       }
       .case-card:hover {
         transform: translateY(-4px);
         border-color: var(--ft-accent);
-        box-shadow: var(--ft-shadow);
+        box-shadow: var(--ft-elevation-3);
       }
       .case-card:hover::before {
         opacity: 1;
+      }
+      .case-card:focus-visible {
+        outline: 3px solid var(--ft-accent);
+        outline-offset: 2px;
       }
       .case-number {
         font-size: 0.78rem;
@@ -130,7 +143,7 @@ import { ScenarioService } from '../../core/services/scenario.service';
         font-size: 18px;
         width: 18px;
         height: 18px;
-        transition: transform var(--ft-transition);
+        transition: transform var(--ft-motion);
       }
       .case-card:hover .case-cta mat-icon {
         transform: translateX(3px);

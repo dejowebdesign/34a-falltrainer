@@ -82,6 +82,23 @@ Rules:
   sits below its cards. The page ends with the copyright footer; case examples
   are started only via the header "Fallbeispiele" link.
 
+## Sticky header (floating glass navigation)
+
+- `shared/components/app-header.component.ts` is a sticky host
+  (`position: sticky; top: 0`); the body `min-height` keeps the containing
+  block scrollable, so do not give an ancestor `overflow`/`transform`/`filter`.
+- At the top the `mat-toolbar.app-toolbar` is flush with the page container
+  (width `--ft-container-max`, transparent). On scroll `isScrolled()` adds
+  `.glass`, which narrows it to `--ft-header-max`, rounds it
+  (`--ft-header-radius`), adds backdrop blur/border/elevation and offsets it
+  by `--ft-header-gap-top` via `transform` — not padding/margin, so the
+  sticky host keeps its flow height and no layout shift occurs.
+- Header layout tokens live in `src/styles.css` (`--ft-header-*`); the
+  `glass` class and `isScrolled()`/`HEADER_SCROLL_THRESHOLD` are covered by
+  `app-header.component.spec.ts`, keep them.
+- Keep the nav wrapping on narrow screens (≤700px) so the floating inset
+  never causes horizontal overflow.
+
 ## Mündliche Prüfungssimulation
 
 - Standalone feature (`src/app/features/oral-exam`, routes

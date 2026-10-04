@@ -127,10 +127,10 @@ import { ORAL_EXAM_CATEGORIES, ORAL_EXAM_CATEGORY_LABELS } from '../../core/mode
         display: grid;
         gap: 0.25rem;
         justify-items: start;
-        box-shadow: var(--ft-shadow-sm);
+        box-shadow: var(--ft-elevation-1);
         transition:
-          transform var(--ft-transition),
-          border-color var(--ft-transition);
+          transform var(--ft-motion),
+          border-color var(--ft-motion);
       }
       .fact:hover {
         transform: translateY(-2px);

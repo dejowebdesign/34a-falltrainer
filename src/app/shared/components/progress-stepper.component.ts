@@ -56,9 +56,9 @@ export interface ProgressStep {
         color: var(--ft-muted);
         font-size: 0.9rem;
         transition:
-          border-color var(--ft-transition),
-          background-color var(--ft-transition),
-          color var(--ft-transition);
+          border-color var(--ft-motion),
+          background-color var(--ft-motion),
+          color var(--ft-motion);
       }
       .marker {
         display: inline-flex;

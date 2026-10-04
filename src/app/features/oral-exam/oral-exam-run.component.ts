@@ -154,11 +154,12 @@ const OPTION_LETTERS = ['A', 'B', 'C', 'D', 'E'];
         display: grid;
         gap: 0.65rem;
         padding: 0.9rem 1.1rem;
-        border: 1px solid var(--ft-border);
+        border: 1px solid var(--ft-glass-border);
         border-radius: var(--ft-radius);
         background: var(--ft-glass-surface);
-        backdrop-filter: blur(12px) saturate(140%);
-        -webkit-backdrop-filter: blur(12px) saturate(140%);
+        backdrop-filter: blur(var(--ft-blur-glass)) saturate(140%);
+        -webkit-backdrop-filter: blur(var(--ft-blur-glass)) saturate(140%);
+        box-shadow: var(--ft-elevation-1);
       }
       .run-meta {
         display: flex;
@@ -181,22 +182,26 @@ const OPTION_LETTERS = ['A', 'B', 'C', 'D', 'E'];
         font-size: 0.9rem;
         margin: 0;
       }
-      /* Timer: kleine Glass-Capsule oben rechts. */
+      /* Timer: kleine Glass-Capsule oben rechts, Material-Elevation. */
       .exam-timer {
         display: inline-flex;
         align-items: center;
         gap: 0.4rem;
-        padding: 0.28rem 0.75rem;
+        padding: 0.3rem 0.8rem;
         border-radius: 999px;
         border: 1px solid var(--ft-glass-border);
         background: var(--ft-glass-strong);
-        backdrop-filter: blur(10px) saturate(140%);
-        -webkit-backdrop-filter: blur(10px) saturate(140%);
+        backdrop-filter: blur(var(--ft-blur-soft)) saturate(140%);
+        -webkit-backdrop-filter: blur(var(--ft-blur-soft)) saturate(140%);
         font-variant-numeric: tabular-nums;
         font-size: 1rem;
         font-weight: 700;
         line-height: 1.4;
-        box-shadow: var(--ft-shadow-sm);
+        box-shadow: var(--ft-elevation-1);
+        transition:
+          border-color var(--ft-motion),
+          background-color var(--ft-motion),
+          color var(--ft-motion);
       }
       .exam-timer mat-icon {
         font-size: 1.1rem;
@@ -317,9 +322,9 @@ const OPTION_LETTERS = ['A', 'B', 'C', 'D', 'E'];
         padding: 0.95rem 1.1rem;
         background: var(--ft-surface);
         transition:
-          border-color var(--ft-transition),
-          background-color var(--ft-transition),
-          box-shadow var(--ft-transition);
+          border-color var(--ft-motion),
+          background-color var(--ft-motion),
+          box-shadow var(--ft-motion);
       }
       .option:hover {
         border-color: var(--ft-border-strong);
