@@ -109,6 +109,24 @@ export interface Scenario {
   /** Kurzbeschreibung für die Übersicht. */
   description: string;
   /**
+   * Themengebiet des Falls. Übernimmt die fachliche Bezeichnung der
+   * Fallvorlage (z. B. „Notwehrpraxis“, „Brandschutz“). Optional, damit die
+   * acht Bestandsfälle unverändert bleiben.
+   */
+  topic?: string;
+  /** Schwierigkeit 1–5 gemäß Fallvorlage. Optional (Bestandsfälle ohne Wert). */
+  difficulty?: number;
+  /** Fachliche Schwerpunkte / Cluster des Falls. */
+  clusters?: string[];
+  /** Rechtslehre / tragende Rechtsgrundlage der Vorlage. */
+  legalReference?: string;
+  /**
+   * Folgefragen der mündlichen Prüfung zur Vorlage. Inhaltlich unverändert,
+   * sprachlich vollständig ausformuliert.
+   */
+  followUp1?: string;
+  followUp2?: string;
+  /**
    * Vollständiger, kurzer mündlicher Prüfungssachverhalt. Wird dem Lernenden
    * vor der Bearbeitung angezeigt und bleibt über „Sachverhalt anzeigen“
    * während aller drei Stufen sowie im Ergebnis erreichbar.

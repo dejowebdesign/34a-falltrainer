@@ -216,4 +216,14 @@ export const LEGAL_CLASSIFICATIONS: LegalClassification[] = [
     prerequisites: ['Eigentum an der Sache'],
     explanation: 'Eigentum ist von Besitz zu unterscheiden. Eigentum ist nicht dasselbe wie Besitz.',
   },
+  {
+    id: 'classification-hausrecht',
+    name: 'Hausrecht (Eigentümerbefugnis)',
+    level: 'PRIVATRECHT',
+    normIds: ['bgb-903'],
+    certainty: 'RECHTSBEGRIFF',
+    prerequisites: ['Eigentum oder daraus abgeleitete Nutzungsbefugnis', 'keine entgegenstehenden gesetzlichen Schranken oder Rechte Dritter'],
+    explanation:
+      'Nach §903 BGB kann der Eigentümer andere von jeder Einwirkung auf die Sache ausschließen. Daraus folgt das Hausrecht: Der Betreiber bestimmt, wer die Räume betreten darf und unter welchen Bedingungen. Aus dem Hausrecht folgt keine Durchsuchungs- oder Festhaltebefugnis gegen den Willen des Besuchers.',
+  },
 ];
