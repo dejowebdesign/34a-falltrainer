@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-labelledby="ftMarkTitle">
+  <title id="ftMarkTitle">34A Falltrainer</title>
+  <defs>
+    <linearGradient id="ft-shield" x1="12" y1="6" x2="84" y2="90" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#22d3ee" />
+      <stop offset="0.55" stop-color="#1d9bf0" />
+      <stop offset="1" stop-color="#1d4ed8" />
+    </linearGradient>
+    <linearGradient id="ft-inner" x1="48" y1="13" x2="48" y2="82" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0a1226" />
+      <stop offset="1" stop-color="#050912" />
+    </linearGradient>
+    <linearGradient id="ft-check" x1="58" y1="74" x2="90" y2="42" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#2dd4bf" />
+      <stop offset="1" stop-color="#22d3ee" />
+    </linearGradient>
+  </defs>
+
+  <!-- Mehrschichtiger Schild: außen kraeftiger Blau-/Cyan-Verlauf, innen Near-Black-Navy. -->
+  <path
+    d="M48 4 L84 16 L84 47 C84 70 68 84 48 91 C28 84 12 70 12 47 L12 16 Z"
+    fill="url(#ft-shield)"
+  />
+  <path
+    d="M48 13 L76 22.5 L76 47 C76 64.5 64.5 75.5 48 81.5 C31.5 75.5 20 64.5 20 47 L20 22.5 Z"
+    fill="url(#ft-inner)"
+    stroke="#38bdf8"
+    stroke-opacity="0.35"
+    stroke-width="1.5"
+  />
+
+  <!-- Zentrales weisses Paragraphenzeichen. -->
+  <text
+    x="48"
+    y="49"
+    text-anchor="middle"
+    dominant-baseline="central"
+    font-family="Inter, 'Segoe UI', system-ui, -apple-system, Arial, sans-serif"
+    font-weight="700"
+    font-size="40"
+    fill="#ffffff"
+  >&#167;</text>
+
+  <!-- Cyanfarbener Haken, diagonal von links unten nach rechts oben, teils ueber dem Schildrand. -->
+  <path
+    d="M58 63 L67 73 L90 44"
+    fill="none"
+    stroke="url(#ft-check)"
+    stroke-width="8"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+</svg>
