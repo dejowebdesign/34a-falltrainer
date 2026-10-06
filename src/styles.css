@@ -131,6 +131,11 @@ html.light {
   --ft-header-glass: rgba(255, 255, 255, 0.82);
   --ft-header-text: #0f172a;
 
+  /* Marken-Wortmarke: "34" und "FALLTRAINER" passen sich dem Theme an,
+     das "A" bleibt immer cyan (Brand-Akzent). */
+  --ft-brand-word: #0f172a;
+  --ft-brand-sub: #55647e;
+
   --ft-glass-surface: rgba(255, 255, 255, 0.62);
   --ft-glass-strong: rgba(255, 255, 255, 0.82);
   --ft-glass-border: rgba(29, 78, 216, 0.2);
@@ -230,6 +235,10 @@ html.dark {
   --ft-header-border: rgba(110, 168, 254, 0.14);
   --ft-header-glass: rgba(9, 16, 30, 0.76);
   --ft-header-text: #e8edf7;
+
+  /* Marken-Wortmarke im Dark Mode: Wortmarke/Untertitel hell, "A" cyan. */
+  --ft-brand-word: #f2f6ff;
+  --ft-brand-sub: #8aa0bf;
 
   --ft-glass-surface: rgba(18, 29, 51, 0.66);
   --ft-glass-strong: rgba(18, 29, 51, 0.84);

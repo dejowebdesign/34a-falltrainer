@@ -31,11 +31,19 @@ export const HEADER_SCROLL_THRESHOLD = 16;
     <mat-toolbar class="app-toolbar" role="banner" [class.glass]="isScrolled()">
       <div class="toolbar-inner">
         <a routerLink="/" class="brand" aria-label="34a Falltrainer Startseite">
-          <span class="brand-mark" aria-hidden="true">
-            <mat-icon>gavel</mat-icon>
-          </span>
+          <img
+            class="brand-mark"
+            src="brand/34a-falltrainer-mark.svg"
+            alt=""
+            width="96"
+            height="96"
+            aria-hidden="true"
+          />
           <span class="brand-text">
-            <strong>34a Falltrainer</strong>
+            <strong>
+              <span class="brand-34a">34<span class="brand-a">A</span></span>
+              <span class="brand-name">FALLTRAINER</span>
+            </strong>
             <small>Sachkundeprüfung § 34a GewO</small>
           </span>
         </a>
@@ -222,42 +230,47 @@ export const HEADER_SCROLL_THRESHOLD = 16;
         width: 100%;
       }
       .brand {
-        display: flex;
+        display: inline-flex;
         align-items: center;
-        gap: 0.7rem;
+        gap: 0.6rem;
         color: var(--ft-header-text);
         text-decoration: none;
       }
+      /* Marken-Schild als SVG-Asset; die Wortmarke bleibt HTML-Text,
+         damit sie in Light und Dark Mode lesbar bleibt. */
       .brand-mark {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 40px;
-        height: 40px;
-        border-radius: 12px;
-        background: linear-gradient(140deg, var(--ft-accent) 0%, var(--ft-secondary) 100%);
-        color: var(--ft-on-accent);
-        box-shadow: var(--ft-elevation-1);
+        display: block;
+        width: 38px;
+        height: 38px;
         flex: 0 0 auto;
-      }
-      .brand-mark mat-icon {
-        font-size: 22px;
-        width: 22px;
-        height: 22px;
       }
       .brand-text {
         display: flex;
         flex-direction: column;
-        line-height: 1.15;
+        line-height: 1.12;
       }
       .brand-text strong {
-        font-size: 1.08rem;
-        font-weight: 700;
+        display: inline-flex;
+        align-items: baseline;
+        gap: 0.3em;
+        color: var(--ft-brand-word);
+        font-weight: 800;
         letter-spacing: -0.01em;
+        white-space: nowrap;
+      }
+      .brand-34a {
+        font-size: 1.14rem;
+      }
+      .brand-a {
+        color: #22d3ee;
+      }
+      .brand-name {
+        font-size: 0.98rem;
+        letter-spacing: 0.06em;
       }
       .brand-text small {
-        font-size: 0.72rem;
-        color: var(--ft-muted);
+        font-size: 0.7rem;
+        color: var(--ft-brand-sub);
       }
       .toolbar-actions {
         display: flex;
@@ -389,6 +402,21 @@ export const HEADER_SCROLL_THRESHOLD = 16;
       @media (min-width: 768px) {
         .app-toolbar {
           padding-inline: 2rem;
+        }
+      }
+      /* Schmale Desktop-/Tablet-Breite: Der Untertitel entfällt (optional)
+         und die Navigation wird kompakter, damit der Header einzeilig
+         bleibt und nicht überläuft. */
+      @media (max-width: 900px) {
+        .app-toolbar {
+          padding-inline: 1.1rem;
+        }
+        .brand-text small {
+          display: none;
+        }
+        .nav a {
+          padding-inline: 0.45rem;
+          font-size: 0.9rem;
         }
       }
       /* Ab hier echte Hamburger-Navigation: Desktop-Links aus, Menü-Button an. */
