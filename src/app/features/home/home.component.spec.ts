@@ -62,4 +62,25 @@ describe('HomeComponent (Startseite als Lernseite)', () => {
     expect(text).not.toContain('≠');
     expect(text).not.toContain('nicht automatisch');
   });
+
+  it('bettet den Hero in einen abgerundeten Glass-Container ein', () => {
+    const hero = element.querySelector('.hero');
+    expect(hero).toBeTruthy();
+    expect(hero?.classList).toContain('ft-glass-panel');
+    expect(hero?.querySelector('.hero-media img')).toBeTruthy();
+    expect(hero?.querySelector('.hero-bg')).toBeTruthy();
+  });
+
+  it('gestaltet die großen Inhaltsbereiche als Glass-Panels', () => {
+    const panels = element.querySelectorAll('.content .ft-glass-panel.panel');
+    expect(panels.length).toBe(3);
+  });
+
+  it('behält Hero-Inhalte vollständig', () => {
+    const hero = element.querySelector('.hero')!;
+    expect(hero.textContent).toContain('Sachkundeprüfung § 34a GewO');
+    expect(hero.textContent).toContain('Fallbeispiele starten');
+    expect(hero.textContent).toContain('Prüfungssimulation');
+    expect(hero.querySelectorAll('.hero-badges li').length).toBe(3);
+  });
 });

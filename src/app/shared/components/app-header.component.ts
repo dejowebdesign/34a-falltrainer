@@ -1,4 +1,11 @@
-import { Component, HostListener, inject, signal } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  HostListener,
+  inject,
+  signal,
+  viewChild,
+} from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
@@ -33,7 +40,7 @@ export const HEADER_SCROLL_THRESHOLD = 16;
           </span>
         </a>
         <div class="toolbar-actions">
-          <nav aria-label="Hauptnavigation" class="nav">
+          <nav aria-label="Hauptnavigation" class="nav desktop-nav">
             <a
               mat-button
               routerLink="/"
@@ -60,9 +67,86 @@ export const HEADER_SCROLL_THRESHOLD = 16;
               theme.theme() === 'dark' ? 'light_mode' : 'dark_mode'
             }}</mat-icon>
           </button>
+          <button
+            #menuButton
+            mat-icon-button
+            type="button"
+            class="menu-toggle"
+            (click)="openMenu()"
+            aria-label="Menü öffnen"
+            aria-haspopup="true"
+            aria-controls="mobile-nav-panel"
+            [attr.aria-expanded]="menuOpen()"
+            matTooltip="Menü"
+          >
+            <mat-icon aria-hidden="true">menu</mat-icon>
+          </button>
         </div>
       </div>
     </mat-toolbar>
+
+    <!-- Mobile Navigation: Sandwich-Menü als Overlay-Drawer. -->
+    <div class="mobile-menu" [class.open]="menuOpen()">
+      <div class="mobile-menu__scrim" (click)="closeMenu()" aria-hidden="true"></div>
+      <nav
+        #mobilePanel
+        id="mobile-nav-panel"
+        class="mobile-menu__panel"
+        aria-label="Mobile Hauptnavigation"
+        tabindex="-1"
+      >
+        <div class="mobile-menu__head">
+          <span class="mobile-menu__title">Navigation</span>
+          <button
+            mat-icon-button
+            type="button"
+            class="mobile-menu__close"
+            (click)="closeMenu()"
+            aria-label="Menü schließen"
+          >
+            <mat-icon aria-hidden="true">close</mat-icon>
+          </button>
+        </div>
+        <ul class="mobile-menu__list">
+          <li>
+            <a
+              mat-button
+              routerLink="/"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              (click)="closeMenu()"
+            >
+              Start
+            </a>
+          </li>
+          <li>
+            <a mat-button routerLink="/scenarios" routerLinkActive="active" (click)="closeMenu()">
+              Fallbeispiele
+            </a>
+          </li>
+          <li>
+            <a
+              mat-button
+              routerLink="/strafgesetzbuch"
+              routerLinkActive="active"
+              (click)="closeMenu()"
+            >
+              Strafgesetzbuch
+            </a>
+          </li>
+          <li>
+            <a
+              mat-button
+              routerLink="/pruefungssimulation"
+              routerLinkActive="active"
+              (click)="closeMenu()"
+            >
+              Prüfungssimulation
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
   `,
   styles: [
     `
@@ -196,76 +280,145 @@ export const HEADER_SCROLL_THRESHOLD = 16;
       .theme-toggle {
         color: var(--ft-header-text);
       }
+      /* Hamburger nur auf schmalen Screens: 44px Touch-Target. */
+      .menu-toggle {
+        display: none;
+        width: 44px;
+        height: 44px;
+        padding: 0;
+        color: var(--ft-header-text);
+      }
+      .menu-toggle mat-icon {
+        font-size: 24px;
+        width: 24px;
+        height: 24px;
+      }
+
+      /* ---------- Mobile Navigation (Overlay-Drawer) ---------- */
+      .mobile-menu {
+        position: fixed;
+        inset: 0;
+        z-index: 60;
+        visibility: hidden;
+        pointer-events: none;
+        /* Beim Schließen bleibt der Drawer kurz sichtbar, damit die
+           Ausblend-Animation läuft. */
+        transition: visibility 0s linear 320ms;
+      }
+      .mobile-menu.open {
+        visibility: visible;
+        pointer-events: auto;
+        transition-delay: 0s;
+      }
+      .mobile-menu__scrim {
+        position: absolute;
+        inset: 0;
+        background: var(--ft-overlay);
+        backdrop-filter: blur(2px);
+        -webkit-backdrop-filter: blur(2px);
+        opacity: 0;
+        transition: opacity var(--ft-motion);
+      }
+      .mobile-menu.open .mobile-menu__scrim {
+        opacity: 1;
+      }
+      .mobile-menu__panel {
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 100%;
+        width: min(320px, 86vw);
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        padding: 1rem 1rem 1.5rem;
+        overflow-y: auto;
+        background: var(--ft-header-glass);
+        backdrop-filter: blur(var(--ft-blur-header)) saturate(150%);
+        -webkit-backdrop-filter: blur(var(--ft-blur-header)) saturate(150%);
+        border-left: 1px solid var(--ft-header-border);
+        border-top-left-radius: var(--ft-radius-xl);
+        border-bottom-left-radius: var(--ft-radius-xl);
+        box-shadow: var(--ft-elevation-3);
+        transform: translateX(100%);
+        transition: transform var(--ft-motion-slow);
+        outline: none;
+      }
+      .mobile-menu.open .mobile-menu__panel {
+        transform: translateX(0);
+      }
+      .mobile-menu__head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.5rem;
+        margin-bottom: 0.25rem;
+      }
+      .mobile-menu__title {
+        font-size: 0.76rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--ft-muted);
+      }
+      .mobile-menu__close {
+        color: var(--ft-header-text);
+      }
+      .mobile-menu__list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: grid;
+        gap: 0.25rem;
+      }
+      .mobile-menu__list a {
+        display: block;
+        justify-content: flex-start;
+        width: 100%;
+        padding: 0.75rem 0.9rem;
+        min-height: 44px;
+        color: var(--ft-header-text);
+        font-weight: 500;
+        border-radius: var(--ft-radius-sm);
+      }
+      .mobile-menu__list a.active {
+        background: var(--ft-accent-soft);
+        color: var(--ft-accent-strong);
+      }
+
       @media (min-width: 768px) {
         .app-toolbar {
           padding-inline: 2rem;
         }
       }
-      /* Auf schmalen Screens (inkl. Tablet-Hochformat) darf die Navigation
-         in eine zweite Zeile umbrechen – so entsteht kein horizontaler
-         Überlauf. Der schwebende Charakter (Abstand, Radius, Glass)
-         bleibt dabei erhalten. */
-      @media (max-width: 700px) {
-        .app-toolbar {
-          padding-inline: 0.9rem;
+      /* Ab hier echte Hamburger-Navigation: Desktop-Links aus, Menü-Button an. */
+      @media (max-width: 767.98px) {
+        .desktop-nav {
+          display: none;
         }
-        .toolbar-inner {
-          flex-wrap: wrap;
-          row-gap: 0.3rem;
-        }
-        .brand {
-          flex: 1 1 auto;
-        }
-        .toolbar-actions {
-          flex: 1 1 100%;
-          flex-wrap: wrap;
-          row-gap: 0.25rem;
-          justify-content: space-between;
-        }
-        .nav {
-          flex-wrap: wrap;
+        .menu-toggle {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
         }
       }
       @media (max-width: 640px) {
         .brand-text small {
           display: none;
         }
-        .nav a {
-          padding-inline: 0.55rem;
-          font-size: 0.88rem;
-        }
-      }
-      @media (max-width: 560px) {
-        .app-toolbar {
-          padding-inline: 0.75rem;
-        }
-        .nav a {
-          padding-inline: 0.5rem;
-          font-size: 0.85rem;
-        }
       }
       @media (max-width: 430px) {
-        .nav {
-          justify-content: center;
-        }
-        .nav a {
-          padding-inline: 0.35rem;
-          font-size: 0.8rem;
-        }
         .brand-text strong {
           font-size: 1rem;
-        }
-      }
-      @media (max-width: 360px) {
-        .nav a {
-          padding-inline: 0.28rem;
-          font-size: 0.76rem;
         }
       }
       /* Reduced Motion: direkt in den schwebenden Zustand, keine
          aufwendige Übergangsanimation. */
       @media (prefers-reduced-motion: reduce) {
-        .app-toolbar {
+        .app-toolbar,
+        .mobile-menu,
+        .mobile-menu__scrim,
+        .mobile-menu__panel {
           transition: none;
         }
       }
@@ -275,6 +428,10 @@ export const HEADER_SCROLL_THRESHOLD = 16;
 export class AppHeaderComponent {
   readonly theme = inject(ThemeService);
   readonly isScrolled = signal(false);
+  readonly menuOpen = signal(false);
+
+  private readonly menuButton = viewChild('menuButton', { read: ElementRef });
+  private readonly mobilePanel = viewChild('mobilePanel', { read: ElementRef });
 
   constructor() {
     this.syncScrollState();
@@ -283,6 +440,27 @@ export class AppHeaderComponent {
   @HostListener('window:scroll')
   onWindowScroll(): void {
     this.syncScrollState();
+  }
+
+  /** ESC schließt das mobile Menü und gibt den Fokus zurück. */
+  @HostListener('document:keydown.escape')
+  onEscape(): void {
+    if (this.menuOpen()) {
+      this.closeMenu();
+    }
+  }
+
+  openMenu(): void {
+    this.menuOpen.set(true);
+    setTimeout(() => this.mobilePanel()?.nativeElement.focus());
+  }
+
+  closeMenu(): void {
+    if (!this.menuOpen()) {
+      return;
+    }
+    this.menuOpen.set(false);
+    this.menuButton()?.nativeElement.focus();
   }
 
   toggleLabel(): string {

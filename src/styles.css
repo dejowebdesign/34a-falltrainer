@@ -135,6 +135,14 @@ html.light {
   --ft-glass-strong: rgba(255, 255, 255, 0.82);
   --ft-glass-border: rgba(29, 78, 216, 0.2);
   --ft-glass-tint: rgba(255, 255, 255, 0.72);
+  /* Zwei Glass-Ebenen für die Startseite: der große Panel-Rahmen ist
+     transparenter, die innere Karte deckender – so bleibt die Hierarchie
+     Seite → Glass-Panel → Glass-Karte klar erkennbar. */
+  --ft-glass-panel: rgba(255, 255, 255, 0.5);
+  --ft-glass-panel-border: rgba(29, 78, 216, 0.16);
+  --ft-glass-panel-shadow: 0 24px 60px -38px rgba(15, 23, 42, 0.34), 0 4px 14px rgba(15, 23, 42, 0.06);
+  --ft-glass-card: rgba(255, 255, 255, 0.74);
+  --ft-glass-card-border: rgba(29, 78, 216, 0.2);
 
   /* Light-Elevation: weicher und etwas präsenter als zuvor, damit weiße
      Cards auf dem grauen Seitenhintergrund eine klare Ebene bilden. */
@@ -227,6 +235,12 @@ html.dark {
   --ft-glass-strong: rgba(18, 29, 51, 0.84);
   --ft-glass-border: rgba(110, 168, 254, 0.18);
   --ft-glass-tint: rgba(18, 29, 51, 0.55);
+  /* Glass-Ebenen im Dark Mode: Panel transparenter, innere Karte deckender. */
+  --ft-glass-panel: rgba(18, 29, 51, 0.5);
+  --ft-glass-panel-border: rgba(110, 168, 254, 0.16);
+  --ft-glass-panel-shadow: 0 26px 64px -40px rgba(0, 0, 0, 0.92), 0 4px 16px rgba(0, 0, 0, 0.4);
+  --ft-glass-card: rgba(23, 36, 61, 0.72);
+  --ft-glass-card-border: rgba(110, 168, 254, 0.22);
 
   --ft-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
   --ft-shadow: 0 10px 30px -16px rgba(0, 0, 0, 0.8), 0 2px 8px rgba(0, 0, 0, 0.4);
@@ -404,6 +418,48 @@ h4 {
   border-radius: var(--ft-radius);
   backdrop-filter: blur(var(--ft-blur-soft)) saturate(130%);
   -webkit-backdrop-filter: blur(var(--ft-blur-soft)) saturate(130%);
+}
+
+/* ---------- Glass-Ebenen der Startseite ----------
+   Großer, schwebender Glass-Panel-Rahmen (Ebene 2). Bewusst transparenter
+   und stärker geblurrt als die inneren Karten, damit die Hierarchie
+   Seite → Panel → Karte sichtbar bleibt. */
+.ft-glass-panel {
+  background: var(--ft-glass-panel);
+  border: 1px solid var(--ft-glass-panel-border);
+  border-radius: var(--ft-radius-xl);
+  backdrop-filter: blur(var(--ft-blur-glass)) saturate(140%);
+  -webkit-backdrop-filter: blur(var(--ft-blur-glass)) saturate(140%);
+  box-shadow: var(--ft-glass-panel-shadow);
+}
+
+/* Kleinere Glass-Karte innerhalb eines Panels (Ebene 3): deckender,
+   schwächerer Blur, feine Border, dezente Elevation. */
+.ft-glass-card {
+  background: var(--ft-glass-card);
+  border: 1px solid var(--ft-glass-card-border);
+  border-radius: var(--ft-radius-lg);
+  backdrop-filter: blur(var(--ft-blur-soft)) saturate(135%);
+  -webkit-backdrop-filter: blur(var(--ft-blur-soft)) saturate(135%);
+  box-shadow: var(--ft-elevation-1);
+  transition:
+    transform var(--ft-motion),
+    border-color var(--ft-motion),
+    box-shadow var(--ft-motion),
+    background-color var(--ft-motion);
+}
+
+.ft-glass-card--interactive:hover {
+  transform: translateY(-3px);
+  border-color: var(--ft-accent);
+  box-shadow: var(--ft-elevation-2);
+}
+
+/* Material-Cards, die als innere Glass-Karte dienen, müssen die globale
+   `.mat-mdc-card`-Surface übersteuern. */
+.mat-mdc-card.ft-glass-card {
+  background: var(--ft-glass-card);
+  border-color: var(--ft-glass-card-border);
 }
 
 /* Material-Elevation-Helfer (statt willkürlicher box-shadows). */

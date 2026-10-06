@@ -29,7 +29,7 @@ interface LearningStep {
 
       <ol class="steps">
         @for (step of steps; track step.number; let last = $last) {
-          <li class="step">
+          <li class="step ft-glass-card ft-glass-card--interactive">
             <span class="step-number" aria-hidden="true">{{ step.number }}</span>
             <span class="step-icon" aria-hidden="true">
               <mat-icon>{{ step.icon }}</mat-icon>
@@ -73,15 +73,8 @@ interface LearningStep {
       .step {
         position: relative;
         overflow: hidden;
-        background: linear-gradient(180deg, var(--ft-surface) 0%, var(--ft-surface-2) 100%);
-        border: 1px solid var(--ft-border);
         border-radius: var(--ft-radius-lg);
         padding: 1.4rem 1.4rem 1.5rem;
-        box-shadow: var(--ft-elevation-1);
-        transition:
-          transform var(--ft-motion),
-          border-color var(--ft-motion),
-          box-shadow var(--ft-motion);
       }
       /* Dezente Glass-Kante oben – Material bleibt die Basis. */
       .step::before {
