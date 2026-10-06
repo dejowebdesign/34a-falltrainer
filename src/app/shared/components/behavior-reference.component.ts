@@ -23,7 +23,7 @@ interface BehaviorGroup {
   selector: 'app-behavior-reference',
   imports: [MatCardModule, MatIconModule],
   template: `
-    <mat-card appearance="outlined" class="behavior-card">
+    <mat-card appearance="outlined" class="behavior-card ft-glass-card">
       <mat-card-content>
         <p class="behavior-note">
           Verhaltensbausteine, die in Stufe 1 trainiert werden. Sie sind Verhaltensempfehlungen,

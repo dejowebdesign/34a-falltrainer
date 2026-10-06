@@ -46,7 +46,7 @@ interface OrientationArea {
 
       <div class="areas-row">
         @for (area of classificationAreas; track area.key; let i = $index) {
-          <div class="area">
+          <div class="area ft-glass-card">
             <div class="area-head">
               <mat-icon aria-hidden="true">{{ area.icon }}</mat-icon>
               <span>{{ area.label }}</span>
@@ -85,7 +85,7 @@ interface OrientationArea {
 
       <div class="areas areas-bottom">
         @for (area of authorityAreas; track area.key) {
-          <div class="area">
+          <div class="area ft-glass-card">
             <div class="area-head">
               <mat-icon aria-hidden="true">{{ area.icon }}</mat-icon>
               <span>{{ area.label }}</span>
@@ -190,9 +190,7 @@ interface OrientationArea {
         height: 26px;
       }
       .area {
-        border: 1px solid var(--ft-border);
         border-radius: var(--ft-radius);
-        background: var(--ft-surface-2);
         padding: 0.85rem 0.95rem;
         display: flex;
         flex-direction: column;

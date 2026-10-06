@@ -17,65 +17,67 @@ import { LearningPathComponent } from '../../shared/components/learning-path.com
     LearningPathComponent,
   ],
   template: `
-    <section class="hero">
-      <!-- Dekorative Hintergrund-Ebene: Hero-Bild + Sternengruppe, ausschließlich im Hero. -->
-      <div class="hero-bg" aria-hidden="true">
-        <picture class="hero-media">
-          <source srcset="hero/hero-upload.webp" type="image/webp" />
-          <img
-            src="hero/hero-upload.jpg"
-            alt=""
-            aria-hidden="true"
-            decoding="async"
-            fetchpriority="high"
-          />
-        </picture>
-        <span class="hero-overlay"></span>
-        <!-- Bestehender 5-Punkte-Effekt: als fünf dezente Sterne in den Himmel eingebettet. -->
-        <span class="hero-stars">
-          <span class="hero-star hero-star--1"></span>
-          <span class="hero-star hero-star--2"></span>
-          <span class="hero-star hero-star--3"></span>
-          <span class="hero-star hero-star--4"></span>
-          <span class="hero-star hero-star--5"></span>
-        </span>
-      </div>
-      <div class="ft-container hero-inner">
-        <div class="hero-text hero-surface">
-          <p class="eyebrow">Sachkundeprüfung § 34a GewO</p>
-          <h1>Rechtssicher handeln.<br />Situationen richtig einordnen.</h1>
-          <p class="hero-sub">
-            Vom Verhalten zur rechtlichen Einordnung zur konkreten Rechtsgrundlage.
-          </p>
-          <p class="lead">
-            Der Falltrainer führt Sie nicht einfach zur richtigen Paragraphennummer. Er trainiert
-            den Weg dorthin – in drei aufeinander aufbauenden Stufen.
-          </p>
-          <div class="hero-actions">
-            <a mat-flat-button class="cta" routerLink="/scenarios">
-              <mat-icon aria-hidden="true">play_arrow</mat-icon>
-              Fallbeispiele starten
-            </a>
-            <a mat-stroked-button class="cta-secondary" routerLink="/pruefungssimulation">
-              <mat-icon aria-hidden="true">quiz</mat-icon>
-              Prüfungssimulation
-            </a>
-          </div>
-          <ul class="hero-badges" aria-label="Umfang der Prüfung">
-            <li><strong>9</strong> Themengebiete</li>
-            <li><strong>3</strong> Stufen je Fall</li>
-            <li><strong>27</strong> Fragen in der Simulation</li>
-          </ul>
+    <div class="ft-container ft-container--wide hero-wrap">
+      <section class="hero ft-glass-panel">
+        <!-- Dekorative Hintergrund-Ebene: Hero-Bild + Sternengruppe, ausschließlich im Hero. -->
+        <div class="hero-bg" aria-hidden="true">
+          <picture class="hero-media">
+            <source srcset="hero/hero-upload.webp" type="image/webp" />
+            <img
+              src="hero/hero-upload.jpg"
+              alt=""
+              aria-hidden="true"
+              decoding="async"
+              fetchpriority="high"
+            />
+          </picture>
+          <span class="hero-overlay"></span>
+          <!-- Bestehender 5-Punkte-Effekt: als fünf dezente Sterne in den Himmel eingebettet. -->
+          <span class="hero-stars">
+            <span class="hero-star hero-star--1"></span>
+            <span class="hero-star hero-star--2"></span>
+            <span class="hero-star hero-star--3"></span>
+            <span class="hero-star hero-star--4"></span>
+            <span class="hero-star hero-star--5"></span>
+          </span>
         </div>
-      </div>
-    </section>
+        <div class="hero-inner">
+          <div class="hero-text hero-surface">
+            <p class="eyebrow">Sachkundeprüfung § 34a GewO</p>
+            <h1>Rechtssicher handeln.<br />Situationen richtig einordnen.</h1>
+            <p class="hero-sub">
+              Vom Verhalten zur rechtlichen Einordnung zur konkreten Rechtsgrundlage.
+            </p>
+            <p class="lead">
+              Der Falltrainer führt Sie nicht einfach zur richtigen Paragraphennummer. Er trainiert
+              den Weg dorthin – in drei aufeinander aufbauenden Stufen.
+            </p>
+            <div class="hero-actions">
+              <a mat-flat-button class="cta" routerLink="/scenarios">
+                <mat-icon aria-hidden="true">play_arrow</mat-icon>
+                Fallbeispiele starten
+              </a>
+              <a mat-stroked-button class="cta-secondary" routerLink="/pruefungssimulation">
+                <mat-icon aria-hidden="true">quiz</mat-icon>
+                Prüfungssimulation
+              </a>
+            </div>
+            <ul class="hero-badges" aria-label="Umfang der Prüfung">
+              <li><strong>9</strong> Themengebiete</li>
+              <li><strong>3</strong> Stufen je Fall</li>
+              <li><strong>27</strong> Fragen in der Simulation</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </div>
 
     <div class="ft-container content">
-      <section class="ft-section ft-section--plain" aria-label="Lernpfad">
+      <section class="ft-glass-panel panel learning-block" aria-labelledby="lernpfad-title">
         <app-learning-path />
       </section>
 
-      <section class="learning-block ft-section" aria-labelledby="umgang-title">
+      <section class="ft-glass-panel panel learning-block" aria-labelledby="umgang-title">
         <header class="block-head">
           <span class="ft-eyebrow">Stufe 1</span>
           <h2 id="umgang-title">Umgang mit Menschen</h2>
@@ -85,7 +87,7 @@ import { LearningPathComponent } from '../../shared/components/learning-path.com
       </section>
 
       <section
-        class="learning-block ft-section ft-section--tint"
+        class="ft-glass-panel panel learning-block"
         aria-label="Rechtliche Einordnung und Rechtsgrundlage"
       >
         <app-legal-orientation />
@@ -106,6 +108,12 @@ import { LearningPathComponent } from '../../shared/components/learning-path.com
   `,
   styles: [
     `
+      /* Abstand zwischen Header und schwebendem Hero-Container. */
+      .hero-wrap {
+        padding-top: clamp(1.1rem, 2.6vw, 1.9rem);
+      }
+      /* Hero als große, abgerundete Glass-Card: Bild und Inhalt liegen
+         innerhalb des Containers und folgen dessen Rundung (overflow). */
       .hero {
         position: relative;
         overflow: hidden;
@@ -121,7 +129,7 @@ import { LearningPathComponent } from '../../shared/components/learning-path.com
           var(--ft-hero-to) 100%
         );
         color: #fff;
-        padding-block: clamp(3rem, 8vw, 5.5rem) clamp(3rem, 8vw, 5rem);
+        padding-block: clamp(2.6rem, 7vw, 4.75rem) clamp(2.6rem, 7vw, 4.5rem);
       }
       /* ---------- Hero-Hintergrundbild ----------
          Das Bild ist die visuelle Hauptebene (z-index 0), liegt hinter dem
@@ -255,6 +263,7 @@ import { LearningPathComponent } from '../../shared/components/learning-path.com
       @media (max-width: 600px) {
         .hero {
           min-height: 0;
+          border-radius: var(--ft-radius-lg);
         }
         .hero-media img {
           object-position: 82% center;
@@ -275,6 +284,18 @@ import { LearningPathComponent } from '../../shared/components/learning-path.com
           width: 40%;
           height: 36px;
         }
+        .hero-inner {
+          padding-inline: 0;
+        }
+        .hero-surface {
+          border-radius: var(--ft-radius-lg);
+        }
+        .hero-actions {
+          gap: 0.6rem;
+        }
+        .hero-badges {
+          gap: 0.5rem 1.25rem;
+        }
       }
       .hero-inner {
         position: relative;
@@ -283,13 +304,7 @@ import { LearningPathComponent } from '../../shared/components/learning-path.com
         align-items: center;
         justify-content: space-between;
         gap: 2rem;
-      }
-      /* Hero-Container breiter als der übrige Seiteninhalt, damit die linke
-         Content-Card weiter nach links reichen und mehr Textbreite aufnehmen
-         kann. Spezifität über zwei Klassen, um die globale .ft-container-Regel
-         sicher zu übersteuern. */
-      .ft-container.hero-inner {
-        max-width: 1320px;
+        padding-inline: clamp(1.1rem, 3.4vw, 2.75rem);
       }
       /* Breite der linken Glass-Card: deutlich mehr horizontale Textfläche für
          die Headline. Die 78vw-Grenze hält die rechte Bildhälfte (Gebäude +
@@ -387,24 +402,19 @@ import { LearningPathComponent } from '../../shared/components/learning-path.com
         margin-right: 0.15rem;
       }
       .content {
-        padding-block: 2.75rem 3rem;
+        padding-block: 1.75rem 3rem;
         display: grid;
         gap: 1.75rem;
       }
-      /* Der Lernpfad bringt seine eigenen Karten mit – die Section bleibt
-         daher flächenlos und dient nur dem vertikalen Rhythmus. */
-      .content .ft-section--plain {
-        padding: 0;
+      /* Große Inhaltsbereiche als schwebende Glass-Panels (Ebene 2). */
+      .panel {
+        padding: var(--ft-section-pad);
+        display: grid;
+        gap: 1.1rem;
       }
       .learning-block {
         display: grid;
         gap: 1.1rem;
-      }
-      /* Section-Tiefe: dezenter Übergang zum grauen Seitenhintergrund. */
-      .content .ft-section {
-        transition:
-          background-color var(--ft-motion),
-          border-color var(--ft-motion);
       }
       .block-head h2 {
         margin: 0.3rem 0 0.25rem;

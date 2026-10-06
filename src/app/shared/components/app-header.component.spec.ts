@@ -60,4 +60,51 @@ describe('AppHeaderComponent', () => {
     const toggle = (fixture.nativeElement as HTMLElement).querySelector('.theme-toggle');
     expect(toggle?.getAttribute('aria-label')?.length).toBeGreaterThan(0);
   });
+
+  it('bietet einen Hamburger-Button mit ARIA-Attributen', () => {
+    const host = fixture.nativeElement as HTMLElement;
+    const menu = host.querySelector<HTMLButtonElement>('.menu-toggle');
+    expect(menu).toBeTruthy();
+    expect(menu?.getAttribute('aria-label')).toBe('Menü öffnen');
+    expect(menu?.getAttribute('aria-expanded')).toBe('false');
+    expect(menu?.getAttribute('aria-controls')).toBe('mobile-nav-panel');
+    const panel = host.querySelector('#mobile-nav-panel');
+    expect(panel).toBeTruthy();
+  });
+
+  it('öffnet und schließt das mobile Menü', () => {
+    const host = fixture.nativeElement as HTMLElement;
+    const menu = host.querySelector<HTMLButtonElement>('.menu-toggle')!;
+    menu.click();
+    fixture.detectChanges();
+    expect(fixture.componentInstance.menuOpen()).toBe(true);
+    expect(host.querySelector('.mobile-menu')?.classList).toContain('open');
+    expect(menu.getAttribute('aria-expanded')).toBe('true');
+
+    fixture.componentInstance.closeMenu();
+    fixture.detectChanges();
+    expect(fixture.componentInstance.menuOpen()).toBe(false);
+    expect(host.querySelector('.mobile-menu')?.classList).not.toContain('open');
+    expect(menu.getAttribute('aria-expanded')).toBe('false');
+  });
+
+  it('schließt das mobile Menü per ESC', () => {
+    fixture.componentInstance.openMenu();
+    fixture.detectChanges();
+    expect(fixture.componentInstance.menuOpen()).toBe(true);
+    fixture.componentInstance.onEscape();
+    fixture.detectChanges();
+    expect(fixture.componentInstance.menuOpen()).toBe(false);
+  });
+
+  it('enthält dieselben Navigationsziele im mobilen Menü', () => {
+    const panel = (fixture.nativeElement as HTMLElement).querySelector('#mobile-nav-panel');
+    const hrefs = Array.from(panel?.querySelectorAll('a') ?? []).map((a) =>
+      a.getAttribute('href'),
+    );
+    expect(hrefs).toContain('/');
+    expect(hrefs).toContain('/scenarios');
+    expect(hrefs).toContain('/strafgesetzbuch');
+    expect(hrefs).toContain('/pruefungssimulation');
+  });
 });
