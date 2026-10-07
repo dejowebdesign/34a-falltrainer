@@ -18,6 +18,7 @@
   --ft-transition-slow: 320ms var(--ft-ease);
   --ft-container-max: 1140px;
   --ft-container-wide: 1240px;
+  --ft-container-hero: 1600px;
   --ft-header-height: 70px;
   /* Schwebende Navigation: begrenzte Breite (entspricht dem Inhalts-
      Container, damit die linke Kante beim Scrollen nicht springt),
