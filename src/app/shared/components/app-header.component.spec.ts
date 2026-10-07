@@ -54,6 +54,12 @@ describe('AppHeaderComponent', () => {
     const stgbLink = host.querySelector('a[href="/strafgesetzbuch"]');
     expect(stgbLink).toBeTruthy();
     expect(stgbLink?.textContent?.trim()).toBe('Strafgesetzbuch');
+    const bgbLink = host.querySelector('a[href="/bgb"]');
+    expect(bgbLink).toBeTruthy();
+    expect(bgbLink?.textContent?.trim()).toBe('BGB');
+    const jedermannLink = host.querySelector('a[href="/jedermannsrechte"]');
+    expect(jedermannLink).toBeTruthy();
+    expect(jedermannLink?.textContent?.trim()).toBe('Jedermannsrechte');
   });
 
   it('hat ein aria-label am Theme-Toggle', () => {

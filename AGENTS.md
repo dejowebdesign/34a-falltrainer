@@ -45,6 +45,34 @@ npm test               # Karma/Chrome Headless, single run
 npm run test:ci        # ChromeHeadlessNoSandbox for containers
 ```
 
+## Lernseiten (StGB / BGB / Jedermannsrechte)
+
+- Three parallel knowledge pages under `features/strafgesetzbuch`, `features/bgb`
+  and `features/jedermannsrechte` (routes `/strafgesetzbuch`, `/bgb`,
+  `/jedermannsrechte`). They teach by compact cards + a large detail modal, and
+  must stay deliberately reduced to the §34a exam scope – they are **not**
+  legal reference databases.
+- The StGB page is curated in `core/data/criminal-offenses.data.ts`; BGB and
+  Jedermannsrechte use the shared `core/models/learning-topic.model.ts` +
+  `core/data/bgb-topics.data.ts` / `jedermannsrechte-topics.data.ts` and
+  `core/services/learning-topic.service.ts`.
+- Scope rule: only norms the V5.3.1 Bible explicitly names for the Sachkunde or
+  that are directly required to understand a named topic are shown. Do not add
+  further norms "because they are interesting". Explicitly excluded as own cards:
+  §812, §828, §833, §855, §860, §861, §862, §985, §986, §1004 BGB (BGB page) and
+  §§25–27 StGB (Täterschaft/Teilnahme), §§113–115 StGB and general StPO topics
+  (Jedermannsrechte page).
+- Keep the four core categories strictly separated (Anspruch ≠ Befugnis ≠
+  Rechtfertigung ≠ Entschuldigung). §228/§904 BGB keep the official title
+  "Notstand"; "Defensivnotstand"/"Aggressivnotstand" go into
+  `fachlicheEinordnung`.
+- Missing official text is never invented: set `verificationStatus: 'MISSING'`
+  and leave `officialText` empty (e.g. §226, §823 BGB – the Bible has no wording).
+- Reuse `shared/components/topic-card`, `topic-detail`, `core-categories` and
+  `authority-matrix`; the BGB page and the Jedermannsrechte page must not
+  duplicate the same norm with different explanations (BGB = civil-law
+  classification, Jedermannsrechte = "darf ich eingreifen?").
+
 ## Architecture / conventions
 
 - `src/app/core/data` – knowledge base + seed data. Legal knowledge and

@@ -51,6 +51,10 @@ export const HEADER_SCROLL_THRESHOLD = 16;
             </a>
             <a mat-button routerLink="/scenarios" routerLinkActive="active">Fallbeispiele</a>
             <a mat-button routerLink="/strafgesetzbuch" routerLinkActive="active">Strafgesetzbuch</a>
+            <a mat-button routerLink="/bgb" routerLinkActive="active">BGB</a>
+            <a mat-button routerLink="/jedermannsrechte" routerLinkActive="active"
+              >Jedermannsrechte</a
+            >
             <a mat-button routerLink="/pruefungssimulation" routerLinkActive="active"
               >Prüfungssimulation</a
             >
@@ -132,6 +136,21 @@ export const HEADER_SCROLL_THRESHOLD = 16;
               (click)="closeMenu()"
             >
               Strafgesetzbuch
+            </a>
+          </li>
+          <li>
+            <a mat-button routerLink="/bgb" routerLinkActive="active" (click)="closeMenu()">
+              Bürgerliches Gesetzbuch
+            </a>
+          </li>
+          <li>
+            <a
+              mat-button
+              routerLink="/jedermannsrechte"
+              routerLinkActive="active"
+              (click)="closeMenu()"
+            >
+              Jedermannsrechte
             </a>
           </li>
           <li>
@@ -266,6 +285,8 @@ export const HEADER_SCROLL_THRESHOLD = 16;
       }
       .nav {
         display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-end;
         gap: 0.15rem;
       }
       .nav a {
