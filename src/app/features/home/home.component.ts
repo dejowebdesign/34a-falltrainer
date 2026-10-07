@@ -108,6 +108,17 @@ import { LearningPathComponent } from '../../shared/components/learning-path.com
   `,
   styles: [
     `
+      /* Nur Desktop: Der Hero nutzt den verfügbaren Content-Bereich deutlich
+         breiter (ca. 92–94 % der Viewport-Breite) mit sinnvoller Obergrenze.
+         Links und rechts bleibt ein moderater Rand, da die Container-Padding
+         innerhalb der Breite liegen. Tablet (≤960px) und Mobile behalten die
+         bestehende responsive Logik unverändert. */
+      @media (min-width: 961px) {
+        .hero-wrap {
+          width: min(94vw, var(--ft-container-hero));
+          max-width: var(--ft-container-hero);
+        }
+      }
       /* Abstand zwischen Header und schwebendem Hero-Container. */
       .hero-wrap {
         padding-top: clamp(1.1rem, 2.6vw, 1.9rem);
