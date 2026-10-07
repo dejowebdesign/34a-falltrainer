@@ -50,6 +50,19 @@ export const routes: Routes = [
     title: '34a Falltrainer – Strafgesetzbuch',
   },
   {
+    path: 'bgb',
+    loadComponent: () => import('./features/bgb/bgb.component').then((m) => m.BgbComponent),
+    title: '34a Falltrainer – Bürgerliches Gesetzbuch',
+  },
+  {
+    path: 'jedermannsrechte',
+    loadComponent: () =>
+      import('./features/jedermannsrechte/jedermannsrechte.component').then(
+        (m) => m.JedermannsrechteComponent,
+      ),
+    title: '34a Falltrainer – Jedermannsrechte',
+  },
+  {
     path: 'pruefungssimulation',
     loadComponent: () =>
       import('./features/oral-exam/oral-exam-intro.component').then(

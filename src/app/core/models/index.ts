@@ -4,3 +4,4 @@ export * from './legal-authority.model';
 export * from './scenario.model';
 export * from './oral-exam.model';
 export * from './criminal-offense.model';
+export * from './learning-topic.model';
