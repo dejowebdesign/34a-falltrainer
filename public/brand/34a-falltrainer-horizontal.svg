@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 96" role="img" aria-labelledby="ftHorizontalTitle">
+  <title id="ftHorizontalTitle">34A Falltrainer – Sachkundeprüfung §34a GewO</title>
+  <defs>
+    <linearGradient id="ft-shield" x1="12" y1="6" x2="84" y2="90" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#22d3ee" />
+      <stop offset="0.55" stop-color="#1d9bf0" />
+      <stop offset="1" stop-color="#1d4ed8" />
+    </linearGradient>
+    <linearGradient id="ft-inner" x1="48" y1="13" x2="48" y2="82" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0a1226" />
+      <stop offset="1" stop-color="#050912" />
+    </linearGradient>
+    <linearGradient id="ft-check" x1="58" y1="74" x2="90" y2="42" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#2dd4bf" />
+      <stop offset="1" stop-color="#22d3ee" />
+    </linearGradient>
+  </defs>
+
+  <!-- Shield links. -->
+  <g>
+    <path
+      d="M48 4 L84 16 L84 47 C84 70 68 84 48 91 C28 84 12 70 12 47 L12 16 Z"
+      fill="url(#ft-shield)"
+    />
+    <path
+      d="M48 13 L76 22.5 L76 47 C76 64.5 64.5 75.5 48 81.5 C31.5 75.5 20 64.5 20 47 L20 22.5 Z"
+      fill="url(#ft-inner)"
+      stroke="#38bdf8"
+      stroke-opacity="0.35"
+      stroke-width="1.5"
+    />
+    <text
+      x="48"
+      y="49"
+      text-anchor="middle"
+      dominant-baseline="central"
+      font-family="Inter, 'Segoe UI', system-ui, -apple-system, Arial, sans-serif"
+      font-weight="700"
+      font-size="40"
+      fill="#ffffff"
+    >&#167;</text>
+    <path
+      d="M58 63 L67 73 L90 44"
+      fill="none"
+      stroke="url(#ft-check)"
+      stroke-width="8"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+  </g>
+
+  <!-- Wortmarke rechts: "34" weiss, "A" cyan, "FALLTRAINER" weiss. -->
+  <text
+    x="118"
+    y="43"
+    font-family="Inter, 'Segoe UI', system-ui, -apple-system, Arial, sans-serif"
+    font-weight="800"
+    font-size="29"
+    letter-spacing="0.5"
+  >
+    <tspan fill="#ffffff">34</tspan>
+    <tspan fill="#22d3ee">A</tspan>
+    <tspan fill="#ffffff"> FALLTRAINER</tspan>
+  </text>
+  <text
+    x="119"
+    y="69"
+    font-family="Inter, 'Segoe UI', system-ui, -apple-system, Arial, sans-serif"
+    font-weight="500"
+    font-size="14"
+    letter-spacing="0.4"
+    fill="#8aa0bf"
+  >Sachkundeprüfung &#167;34a GewO</text>
+</svg>

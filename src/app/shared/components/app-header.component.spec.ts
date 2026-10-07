@@ -44,7 +44,12 @@ describe('AppHeaderComponent', () => {
   it('behält Theme-Toggle, Branding und Navigation', () => {
     const host = fixture.nativeElement as HTMLElement;
     expect(host.querySelector('.theme-toggle')).toBeTruthy();
-    expect(host.textContent).toContain('34a Falltrainer');
+    const mark = host.querySelector<HTMLImageElement>('.brand-mark');
+    expect(mark).toBeTruthy();
+    expect(mark?.getAttribute('src')).toContain('brand/34a-falltrainer-mark.svg');
+    const brandText = host.querySelector('.brand-text')?.textContent ?? '';
+    expect(brandText).toContain('34');
+    expect(brandText).toContain('FALLTRAINER');
     const navLink = host.querySelector('a[href="/scenarios"]');
     expect(navLink).toBeTruthy();
     expect(navLink?.textContent?.trim()).toBe('Fallbeispiele');
